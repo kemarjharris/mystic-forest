@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Instruction
+public abstract class Instruction
 {
 
     protected bool successTimingDown;

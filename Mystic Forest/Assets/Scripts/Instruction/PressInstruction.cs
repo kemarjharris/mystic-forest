@@ -6,7 +6,6 @@ public class PressInstruction : Instruction {
 
     public static readonly PressInstruction instance = new PressInstruction();
 
-
     public InstructionKeyEvent lookAtTime(string input)
     {
         try

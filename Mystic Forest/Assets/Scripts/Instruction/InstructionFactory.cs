@@ -1,7 +1,5 @@
-﻿using UnityEngine;
-using UnityEditor;
-
-public abstract class InstructionFactory
+﻿
+public class InstructionFactory
 {
     public static Instruction GetInstruction(InstructionID instructionID)
     {
