@@ -5,6 +5,181 @@ using NSubstitute;
 
 namespace Tests
 {
+
+    public class HoldInstuctionTest
+    {
+        [SetUp]
+        public void Setup()
+        {
+            HoldInstruction.instance.reset();
+        }
+
+        // negative time
+        [Test]
+        public void NegativeInputTimeNoKeyTest()
+        {
+            Assert.AreEqual(InstructionKeyEvent.NOKEY, HoldInstruction.instance.lookAtTime("return", -1, 2));
+        }
+
+        // bad string input gives no key
+        [Test]
+        public void BadStringGivesNoKeyTest()
+        {
+            Assert.AreEqual(InstructionKeyEvent.NOKEY, HoldInstruction.instance.lookAtTime("", 0, 2));
+        }
+
+        // Negative release time throws value error
+        [Test]
+        public void NegativeReleaseTimeArgumentExceptionTest()
+        {
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                HoldInstruction.instance.lookAtTime("return", 0, -1);
+            });
+        }
+
+        // key down at start gives key down
+        [UnityTest]
+        public IEnumerator KeyDownAtStartGivesKeyDownTest()
+        {
+            HoldInstruction hold = HoldInstruction.instance;
+            IUnityService service = Substitute.For<IUnityService>();
+            service.GetKeyDown("return").Returns(true);
+            hold.service = service;
+
+            yield return null;
+
+            Assert.AreEqual(InstructionKeyEvent.KEYDOWN, HoldInstruction.instance.lookAtTime("return", 0, 2));
+
+        }
+
+        // key down outside of accepted range gives bad key
+        [UnityTest]
+        public IEnumerator KeyDownOutsideOfAcceptedRangeGivesBadKeyTest()
+        {
+            HoldInstruction hold = HoldInstruction.instance;
+            IUnityService service = Substitute.For<IUnityService>();
+            service.GetKeyDown("return").Returns(true);
+            hold.service = service;
+
+            yield return null;
+
+            Assert.AreEqual(InstructionKeyEvent.BADKEY, HoldInstruction.instance.lookAtTime("return", 2.5f, 2));
+
+        }
+
+        // no key down gives badkey
+        [Test]
+        public void NoKeyDownOutsideOfRangeGivesBadKeyTest()
+        {
+            Assert.AreEqual(InstructionKeyEvent.BADKEY, HoldInstruction.instance.lookAtTime("return", 2.5f, 2));
+        }
+
+        // no key down key held gives noKey
+        [Test]
+        public void NoKeyDownKeyHeldGivesNoKeyTest()
+        {
+            IUnityService service = Substitute.For<IUnityService>();
+            service.GetKeyDown("return").Returns(false);
+            service.GetKey("return").Returns(true);
+            HoldInstruction.instance.service = service;
+            Assert.AreEqual(InstructionKeyEvent.NOKEY, HoldInstruction.instance.lookAtTime("return", 1f, 2));
+        }
+
+        // get point at random time gives key held
+        [UnityTest]
+        public IEnumerator KeyHeldAfterKeyDownGivesKeyHeldTest()
+        {
+            IUnityService service = Substitute.For<IUnityService>();
+            HoldInstruction.instance.service = service;
+
+            // user presses key
+            service.GetKeyDown("return").Returns(true);
+            service.GetKey("return").Returns(true);
+
+            HoldInstruction.instance.lookAtTime("return", 0, 2);
+            yield return null;
+
+            //next frame, key is still down
+            service.GetKeyDown("return").Returns(false);
+
+            Assert.AreEqual(InstructionKeyEvent.KEYHELD, HoldInstruction.instance.lookAtTime("return", 0.1f, 2));
+        }
+
+        // key held outside of accepted range gives bad key
+        [UnityTest]
+        public IEnumerator KeyHeldOutsideOfRangegivesBadKey()
+        {
+            IUnityService service = Substitute.For<IUnityService>();
+            HoldInstruction.instance.service = service;
+
+            // user presses key
+            service.GetKeyDown("return").Returns(true);
+            service.GetKey("return").Returns(true);
+
+            HoldInstruction.instance.lookAtTime("return", 0, 2);
+            yield return null;
+
+            //next frame, key is still down
+            service.GetKeyDown("return").Returns(false);
+
+            Assert.AreEqual(InstructionKeyEvent.BADKEY, HoldInstruction.instance.lookAtTime("return", 2.5f, 2));
+        }
+
+        // key down then key up in accepted range gives key up
+        [UnityTest]
+        public IEnumerator KeyUpInRangeGivesKeyUpTest()
+        {
+
+            IUnityService service = Substitute.For<IUnityService>();
+            HoldInstruction.instance.service = service;
+
+            // user presses key
+            service.GetKeyDown("return").Returns(true);
+
+            HoldInstruction.instance.lookAtTime("return", 0, 2);
+            yield return null;
+
+            //next frame, key is still down
+            service.GetKeyDown("return").Returns(false);
+            service.GetKeyUp("return").Returns(true);
+
+            Assert.AreEqual(InstructionKeyEvent.KEYUP, HoldInstruction.instance.lookAtTime("return", 2f, 2));
+        }
+
+
+        // key up without key down gives no key 
+        [Test]
+        public void KeyUpNoKeyDownGivesNoKeyTest()
+        {
+            IUnityService service = Substitute.For<IUnityService>();
+            HoldInstruction.instance.service = service;
+            service.GetKeyUp("return").Returns(true);
+            Assert.AreEqual(InstructionKeyEvent.NOKEY, HoldInstruction.instance.lookAtTime("return", 2, 2));
+        }
+
+        // key up outside of accepted range gives bad key
+        [UnityTest]
+        public IEnumerator KeyUpOutsideOfRangeGivesBadKeyTest()
+        {
+            IUnityService service = Substitute.For<IUnityService>();
+            HoldInstruction.instance.service = service;
+
+            // user presses key
+            service.GetKeyDown("return").Returns(true);
+
+            HoldInstruction.instance.lookAtTime("return", 0, 2);
+            yield return null;
+
+            //next frame, key up outside of range
+            service.GetKeyDown("return").Returns(false);
+            service.GetKeyUp("return").Returns(true);
+
+            Assert.AreEqual(InstructionKeyEvent.BADKEY, HoldInstruction.instance.lookAtTime("return", 2.5f, 2));
+        }
+
+    }
+
     public class MashInstructionTests
     {
         [SetUp]
@@ -27,6 +202,15 @@ namespace Tests
         {
             MashInstruction mash = MashInstruction.instance;
             Assert.AreEqual(InstructionKeyEvent.NOKEY, mash.lookAtTime("return", -1, 2));
+        }
+
+        // Negative release time throws value error
+        public void NegativeEndTimeValueErrorTest()
+        {
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                MashInstruction.instance.lookAtTime("return", 0, -1);
+            });
         }
 
         // nothing pressed gives no key
@@ -137,8 +321,8 @@ namespace Tests
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
         // `yield return null;` to skip a frame.
-        [UnityTest]
-        public IEnumerator KeyDownGivesKeyDownEventTest()
+        [Test]
+        public void KeyDownGivesKeyDownEventTest()
         {
 
             PressInstruction press = PressInstruction.instance;
@@ -148,7 +332,7 @@ namespace Tests
             
             // Use the Assert class to test conditions.
             // Use yield to skip a frame.
-            yield return null;
+            //yield return null;
 
             Assert.AreEqual(InstructionKeyEvent.KEYDOWN, press.lookAtTime("return"));
         }
@@ -167,17 +351,13 @@ namespace Tests
             Assert.AreEqual(InstructionKeyEvent.NOKEY, press.lookAtTime(""));
         }
 
-        [UnityTest]
-        public IEnumerator KeyUpGivesNothingTest()
+        [Test]
+        public void KeyUpGivesNothingTest()
         {
             PressInstruction press = PressInstruction.instance;
             IUnityService service = Substitute.For<IUnityService>();
             service.GetKeyUp("return").Returns(true);
             press.service = service;
-
-            // Use the Assert class to test conditions.
-            // Use yield to skip a frame.
-            yield return null;
 
             Assert.AreEqual(InstructionKeyEvent.NOKEY, press.lookAtTime("return"));
         }
