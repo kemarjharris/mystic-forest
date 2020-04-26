@@ -8,8 +8,6 @@ public interface IExecutable
 
     void OnStart();
 
-    void OnFinish();
-
     bool IsTriggered();
 
     bool IsFinished();

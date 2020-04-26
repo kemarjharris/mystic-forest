@@ -8,7 +8,6 @@ public abstract class ExecutableSO : ScriptableObject, IExecutable
     public abstract bool IsFinished();
     public abstract bool IsInCancelTime();
     public abstract bool IsTriggered();
-    public abstract void OnFinish();
     public abstract void OnInput(string input, IBattler battler, ITargetSet targets);
     public abstract void OnStart();
 }

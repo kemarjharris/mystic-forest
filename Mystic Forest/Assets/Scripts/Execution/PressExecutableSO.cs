@@ -6,58 +6,71 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PressExecutableSO : ExecutableSO {
 
-    
-    public float cancelDuration;
-    public PressInstruction instruction;
-    //public ChainExecutionButton button;
-    public ExecutionEvent executionEvent;
-    public float timeBeforeCancel;
+    public PressInstruction instruction = null;
+    public ExecutionEvent executionEvent = null;
+    private bool isTriggered = false;
+    private bool cancellable = false;
+    private bool finished = false;
 
     //private static AttackVisual visualPrefab;
-    private float timeTriggered;
-    private float timeStarted;
+    //public ChainExecutionButton button;
 
-    public override bool IsTriggered()
+    public void Construct(PressInstruction instruction, ExecutionEvent executionEvent)
     {
-        return timeTriggered > 0;
+        
+        this.instruction = instruction;
+        this.executionEvent = executionEvent;
+        this.executionEvent.setOnCancellableEvent(delegate {
+            cancellable = true;
+        });
+        this.executionEvent.setOnFinishEvent(delegate {
+            finished = true;
+        });
     }
 
     public override void OnStart()
     {
+        if (executionEvent == null)
+        {
+            throw new ArgumentException();
+        }
         instruction = PressInstruction.instance;
         instruction.reset();
-        timeTriggered = 0;
-        timeStarted = Time.unscaledTime;
+        isTriggered = false;
+        cancellable = false;
+        isTriggered = false;
     }
 
     public override void OnInput(string input, IBattler battler, ITargetSet targets)
     {
-        if (input == "") return;
-        bool successfulInput = instruction.lookAtTime(input) > 0;
-        if (successfulInput)
+        InstructionKeyEvent keyEvent = instruction.lookAtTime(input);
+        // only react on keydown
+        if (keyEvent == InstructionKeyEvent.KEYDOWN)
         {
-            timeTriggered = Time.unscaledTime;
-            executionEvent.OnExecute(battler, targets);
+            if (!isTriggered)
+            {
+                isTriggered = true;
+                executionEvent.OnExecute(battler, targets);
+            } else
+            {
+                finished = true;
+            }
         }
-        
-    }
-
-    public override void OnFinish()
-    {
-        timeTriggered = 0;
     }
 
     public override bool IsInCancelTime()
     {
-        
-        return timeTriggered > 0 //  attack has been triggered
-            && Time.unscaledTime - timeTriggered <= cancelDuration //  attakc is within cancel duration
-            && Time.unscaledTime - timeStarted >= timeBeforeCancel; // attack has made contact
+        return cancellable;
     }
 
     public override bool IsFinished()
     {
-        return timeTriggered > 0 && Time.unscaledTime - timeTriggered > cancelDuration;
+        return finished;
+    }
+
+    public override bool IsTriggered()
+    {
+        return isTriggered;
     }
 
     /*
