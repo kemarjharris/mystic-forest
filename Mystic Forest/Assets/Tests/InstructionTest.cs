@@ -3,7 +3,7 @@ using UnityEngine.TestTools;
 using NUnit.Framework;
 using NSubstitute;
 
-namespace Tests
+namespace InstructionTest
 {
 
     public class HoldInstuctionTest
@@ -16,9 +16,12 @@ namespace Tests
 
         // negative time
         [Test]
-        public void NegativeInputTimeNoKeyTest()
+        public void NegativeInputThrowsExceptionTest()
         {
-            Assert.AreEqual(InstructionKeyEvent.NOKEY, HoldInstruction.instance.lookAtTime("return", -1, 2));
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                HoldInstruction.instance.lookAtTime("return", -1, 2);
+            });
         }
 
         // bad string input gives no key
@@ -38,12 +41,27 @@ namespace Tests
             });
         }
 
+        [Test]
+        public void KeyDownTwiceGivesBadKeyTest()
+        {
+            HoldInstruction hold = HoldInstruction.instance;
+            IUnityInputService service = Substitute.For<IUnityInputService>();
+            service.GetKeyDown("return").Returns(true);
+            hold.service = service;
+
+            // key down once
+            HoldInstruction.instance.lookAtTime("return", 0, 2);
+            // key down twice
+            Assert.AreEqual(InstructionKeyEvent.BADKEY, HoldInstruction.instance.lookAtTime("return", 0, 2));
+
+        }
+
         // key down at start gives key down
         [UnityTest]
         public IEnumerator KeyDownAtStartGivesKeyDownTest()
         {
             HoldInstruction hold = HoldInstruction.instance;
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             service.GetKeyDown("return").Returns(true);
             hold.service = service;
 
@@ -58,7 +76,7 @@ namespace Tests
         public IEnumerator KeyDownOutsideOfAcceptedRangeGivesBadKeyTest()
         {
             HoldInstruction hold = HoldInstruction.instance;
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             service.GetKeyDown("return").Returns(true);
             hold.service = service;
 
@@ -79,7 +97,7 @@ namespace Tests
         [Test]
         public void NoKeyDownKeyHeldGivesNoKeyTest()
         {
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             service.GetKeyDown("return").Returns(false);
             service.GetKey("return").Returns(true);
             HoldInstruction.instance.service = service;
@@ -90,7 +108,7 @@ namespace Tests
         [UnityTest]
         public IEnumerator KeyHeldAfterKeyDownGivesKeyHeldTest()
         {
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             HoldInstruction.instance.service = service;
 
             // user presses key
@@ -108,9 +126,9 @@ namespace Tests
 
         // key held outside of accepted range gives bad key
         [UnityTest]
-        public IEnumerator KeyHeldOutsideOfRangegivesBadKey()
+        public IEnumerator KeyHeldOutsideOfRangeGivesBadKey()
         {
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             HoldInstruction.instance.service = service;
 
             // user presses key
@@ -131,7 +149,7 @@ namespace Tests
         public IEnumerator KeyUpInRangeGivesKeyUpTest()
         {
 
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             HoldInstruction.instance.service = service;
 
             // user presses key
@@ -152,7 +170,7 @@ namespace Tests
         [Test]
         public void KeyUpNoKeyDownGivesNoKeyTest()
         {
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             HoldInstruction.instance.service = service;
             service.GetKeyUp("return").Returns(true);
             Assert.AreEqual(InstructionKeyEvent.NOKEY, HoldInstruction.instance.lookAtTime("return", 2, 2));
@@ -162,7 +180,7 @@ namespace Tests
         [UnityTest]
         public IEnumerator KeyUpOutsideOfRangeGivesBadKeyTest()
         {
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             HoldInstruction.instance.service = service;
 
             // user presses key
@@ -176,6 +194,26 @@ namespace Tests
             service.GetKeyUp("return").Returns(true);
 
             Assert.AreEqual(InstructionKeyEvent.BADKEY, HoldInstruction.instance.lookAtTime("return", 2.5f, 2));
+        }
+
+        // key up outside of accepted range gives bad key
+        [UnityTest]
+        public IEnumerator KeyUpBeforeAcceptedRangeGivesBadKeyTest()
+        {
+            IUnityInputService service = Substitute.For<IUnityInputService>();
+            HoldInstruction.instance.service = service;
+
+            // user presses key
+            service.GetKeyDown("return").Returns(true);
+
+            HoldInstruction.instance.lookAtTime("return", 0, 2);
+            yield return null;
+
+            //next frame, key up outside of range
+            service.GetKeyDown("return").Returns(false);
+            service.GetKeyUp("return").Returns(true);
+
+            Assert.AreEqual(InstructionKeyEvent.BADKEY, HoldInstruction.instance.lookAtTime("return", 1f, 2));
         }
 
     }
@@ -226,7 +264,7 @@ namespace Tests
         public IEnumerator AcceptedTimeGivesKeyDownTest()
         {
             MashInstruction mash = MashInstruction.instance;
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             service.GetKeyDown("return").Returns(true);
             mash.service = service;
 
@@ -240,7 +278,7 @@ namespace Tests
         public IEnumerator KeyDownOutsideOfAcceptedTimeGivesBadKeyTest()
         {
             MashInstruction mash = MashInstruction.instance;
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             service.GetKeyDown("return").Returns(true);
             mash.service = service;
 
@@ -255,7 +293,7 @@ namespace Tests
         public IEnumerator AcceptedTimeGivesKeyUpTest()
         {
             MashInstruction mash = MashInstruction.instance;
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             mash.service = service;
             service.GetKeyDown("return").Returns(true);
             mash.lookAtTime("return", 1, 2);
@@ -272,7 +310,7 @@ namespace Tests
         public IEnumerator NoKeyDownButKeyUpGivesNoKeyTest()
         {
             MashInstruction mash = MashInstruction.instance;
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             service.GetKeyUp("return").Returns(true);
             mash.service = service;
 
@@ -286,7 +324,7 @@ namespace Tests
         public IEnumerator KeyUpOutsideOfAcceptedTimeGivesBadKeyTest()
         {
             MashInstruction mash = MashInstruction.instance;
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             service.GetKeyUp("return").Returns(true);
             mash.service = service;
 
@@ -300,7 +338,7 @@ namespace Tests
         public IEnumerator NoButtonPressedGivesBadKeyTest()
         {
             MashInstruction mash = MashInstruction.instance;
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             service.GetKeyDown("return").Returns(false);
             mash.service = service;
 
@@ -326,7 +364,7 @@ namespace Tests
         {
 
             PressInstruction press = PressInstruction.instance;
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             service.GetKeyDown("return").Returns(true);
             press.service = service;
             
@@ -355,7 +393,7 @@ namespace Tests
         public void KeyUpGivesNothingTest()
         {
             PressInstruction press = PressInstruction.instance;
-            IUnityService service = Substitute.For<IUnityService>();
+            IUnityInputService service = Substitute.For<IUnityInputService>();
             service.GetKeyUp("return").Returns(true);
             press.service = service;
 

@@ -7,7 +7,8 @@ public class HoldInstruction : Instruction
 
     public InstructionKeyEvent lookAtTime(string input, float timePressed, float releaseTime)
     {
-        if (releaseTime < 1) throw new System.ArgumentException();
+        if (! (releaseTime > 0)) throw new System.ArgumentException("Release time must be positive");
+        if (timePressed < 0) throw new System.ArgumentException("Time pressed must be non-negative");
         try
         {
             Debug.Log(string.Format("timeSincePress: {0}, releaseTime: {1}", timePressed, releaseTime));
@@ -16,11 +17,18 @@ public class HoldInstruction : Instruction
                 // Key was never pressed
                 return InstructionKeyEvent.BADKEY;
             }
-            if (service.GetKeyDown(input) && !successTimingDown)
+            if (service.GetKeyDown(input))
             {
                 // Keydown successful
-                successTimingDown = true;
-                return InstructionKeyEvent.KEYDOWN;
+                if (!successTimingDown)
+                {
+                    successTimingDown = true;
+                    return InstructionKeyEvent.KEYDOWN;
+                } else // key down pressed twice, bad key
+                {
+                    return InstructionKeyEvent.BADKEY;
+                }
+                
             }
             else if (successTimingDown && service.GetKey(input))
             {

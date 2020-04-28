@@ -6,12 +6,12 @@ public abstract class Instruction
 
     protected bool successTimingDown;
     protected const float acceptedRange = 0.2f;
-    public IUnityService service;
+    public IUnityInputService service;
 
     protected Instruction()
     {
         if (service == null)
-            service = new UnityService();
+            service = new UnityInputService();
     }
 
     public virtual void reset()
