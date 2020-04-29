@@ -9,8 +9,6 @@ public class PressExecutableSO : ExecutableSO {
     public PressInstruction instruction = null;
     public ExecutionEvent executionEvent = null;
     
-
-
     //private static AttackVisual visualPrefab;
     //public ChainExecutionButton button;
 

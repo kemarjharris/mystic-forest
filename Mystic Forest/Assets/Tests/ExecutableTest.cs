@@ -7,6 +7,213 @@ using UnityEngine.TestTools;
 
 namespace ExecutableTest
 {
+    public class KeyDownMashExecutableTest
+    {
+        KeyDownMashExecutableSO mash;
+        
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            mash = ScriptableObject.CreateInstance<KeyDownMashExecutableSO>();
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            mash.Construct(
+               MashInstruction.instance,
+               ScriptableObject.CreateInstance<TestExecutionEvent>(), // key down event
+               ScriptableObject.CreateInstance<TestExecutionEvent>(), //  mash finished event
+               2); // mash duration 
+            IUnityTimeService service = Substitute.For<IUnityTimeService>();
+            service.unscaledTime.Returns(0);
+            mash.service = service;
+            mash.OnStart();
+        }
+
+        // state is false on start
+        [Test]
+        public void IsTriggeredFalseOnStartTest()
+        {
+            mash.OnStart();
+            Assert.False(mash.IsTriggered());
+        }
+
+        [Test]
+        public void IsCancellableFalseOnStartTest()
+        {
+            mash.OnStart();
+            Assert.False(mash.IsInCancelTime());
+        }
+
+        [Test]
+        public void IsFinishedFalseOnStartTest()
+        {
+            mash.OnStart();
+            Assert.False(mash.IsFinished());
+        }
+
+        // mash duration non neg
+        [Test]
+        public void MashDurationNonNegativeOnStartTest()
+        {
+            mash.Construct(
+                MashInstruction.instance,
+                ScriptableObject.CreateInstance<TestExecutionEvent>(), // key down event
+                ScriptableObject.CreateInstance<TestExecutionEvent>(), //  mash finished event
+                -1); // mash duration 
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                mash.OnStart();
+            });
+        }
+
+        // mash duration non zero
+        [Test]
+        public void MashDurationNonZeroTest()
+        {
+            mash.Construct(
+                MashInstruction.instance,
+                ScriptableObject.CreateInstance<TestExecutionEvent>(), // key down event
+                ScriptableObject.CreateInstance<TestExecutionEvent>(), //  mash finished event
+                0); // mash duration 
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                mash.OnStart();
+            });
+        }
+
+        public void SimulateKeyDown()
+        {
+            IUnityInputService inputService = Substitute.For<IUnityInputService>();
+            inputService.GetKeyDown("return").Returns(true);
+            mash.instruction.service = inputService;
+            mash.OnInput("return", null, null);
+        }
+
+        // key down fires key down event
+        [Test]
+        public void KeyDownEventFiresTest()
+        {
+            TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            mash.executionEvent = executionEvent;
+            SimulateKeyDown();
+            Assert.AreEqual(1, executionEvent.timesExecuted);
+        }
+
+        [Test]
+        public void InstructionNotNullAfterOnStartTest()
+        {
+            mash.OnStart();
+            Assert.NotNull(mash.instruction);
+        }
+
+        // key down event not null
+        [Test]
+        public void KeyDownEventNotNullTest()
+        {
+            mash.Construct(
+                MashInstruction.instance,
+                null, // key down event
+                ScriptableObject.CreateInstance<TestExecutionEvent>(), //  mash finished event
+                1); // mash duration 
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                mash.OnStart();
+            });
+        }
+
+        // mash time event not null
+        [Test]
+        public void MashTimeEventNotNullTest()
+        {
+            mash.Construct(
+                MashInstruction.instance,
+                null, // key down event
+                ScriptableObject.CreateInstance<TestExecutionEvent>(), //  mash finished event
+                1); // mash duration 
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                mash.OnStart();
+            });
+        }
+
+        // keydown sets triggered
+        [Test]
+        public void KeyDownSetsTriggeredTest()
+        {
+            SimulateKeyDown();
+            Assert.True(mash.IsTriggered());
+        }
+
+        // cancellable fires when mash finishes
+        [Test]
+        public void MashFinishedFiresCancellableTest()
+        {
+            ExecutionEvent executionEvent = ScriptableObject.CreateInstance<CancelTestExecutionEvent>();
+            mash.mashTimeEndedEvent = executionEvent;
+            mash.OnStart();
+            SimulateKeyDown();
+            mash.service.unscaledTime.Returns(2.5f);
+            mash.OnInput("return", null, null);
+            Assert.True(mash.IsInCancelTime());
+        }
+
+        // finish fires when mash finishes 
+        [Test]
+        public void MashFinishedFiresFinishedTest()
+        {
+            ExecutionEvent executionEvent = ScriptableObject.CreateInstance<FinishTestExecutionEvent>();
+            mash.mashTimeEndedEvent = executionEvent;
+            mash.OnStart();
+            SimulateKeyDown();
+            mash.service.unscaledTime.Returns(2.5f);
+            mash.OnInput("return", null, null);
+            Assert.True(mash.IsFinished());
+        }
+
+        public void SimulateEndMashTimeWithNoKeyDown()
+        {
+            mash.service.unscaledTime.Returns(2.5f);
+            mash.OnInput("return", null, null);
+        }
+
+        // no key down at end time triggered is false
+        [Test]
+        public void NoKeyDownAtEndSetTriggeredToFalseTest()
+        {
+            SimulateEndMashTimeWithNoKeyDown();
+            Assert.False(mash.IsTriggered());
+        }
+
+        // no key down at end time sets cancellable to false
+        [Test]
+        public void NoKeyDownAtEndSetCancelTimeToFalseTest()
+        {
+            SimulateEndMashTimeWithNoKeyDown();
+            Assert.False(mash.IsInCancelTime());
+        }
+
+        // no key down at end time sets finished to true
+        [Test]
+        public void NoKeyDownAtEndSetFinishedToTrueTest()
+        {
+            SimulateEndMashTimeWithNoKeyDown();
+            Assert.True(mash.IsFinished());
+        }
+
+        // no key down at end does not fire mashfinished event
+        [Test]
+        public void NoKeyDownDoesNotFireMashFinishedEvent()
+        {
+            TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            mash.mashTimeEndedEvent = executionEvent;
+            SimulateEndMashTimeWithNoKeyDown();
+            Assert.AreEqual(0, executionEvent.timesExecuted);
+        }
+
+
+    }
 
     public class OnReleaseHoldExecutionTest
     {
