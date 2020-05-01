@@ -14,7 +14,7 @@ public interface IExecutable
 
     bool IsInCancelTime();
 
-    //ChainExecutionButton getButton();
+    ChainExecutionButton button { get; }
 
     //AttackVisual draw(Vector3 postion, Transform parent);
 }

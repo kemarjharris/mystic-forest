@@ -14,6 +14,17 @@ public class ExpandingButtonMashVisual: ExecutionVisual
         startScale = circle.transform.localScale;
     }
 
+    public void Initialize(KeyDownMashExecutableSO executable)
+    {
+        executable.onKeyDown = delegate { 
+            if (timer.fillAmount >= 1)
+            {
+                StartTimer(executable.mashDuration);
+            }
+            ExpandButton();
+        };
+    }
+
     public override void SetColor(Color color)
     {
         base.SetColor(color);

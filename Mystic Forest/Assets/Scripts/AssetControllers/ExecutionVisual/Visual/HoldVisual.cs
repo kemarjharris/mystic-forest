@@ -10,6 +10,19 @@ public class HoldVisual : ExecutionVisual
     public Routine fillRoutine;
     public const float fillScale = 1/ 0.65f;
 
+    public void Initialize(OnReleaseHoldExecutableSO executable)
+    {
+        executable.onStartHolding = delegate
+        {
+            FullSize();
+            Fill(executable.releaseTime);
+        };
+        executable.onRelease = delegate
+        {
+            StopFill();
+        };
+    }
+
     public override void MarkFinished()
     {
         base.MarkFinished();

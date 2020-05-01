@@ -3,8 +3,8 @@ using UnityEditor;
 
 public abstract class ExecutableSO : ScriptableObject, IExecutable
 {
-    //public abstract AttackVisual draw(Vector3 postion, Transform parent);
-    //public abstract ChainExecutionButton getButton();
+
+    public ChainExecutionButton button { get; }
 
     protected ExecutableState state;
 

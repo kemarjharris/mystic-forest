@@ -9,6 +9,7 @@ public class KeyDownMashExecutableSO : ExecutableSO
     public float mashDuration;
     public MashInstruction instruction = MashInstruction.instance;
     public IUnityTimeService service = new UnityTimeService();
+    public System.Action onKeyDown;
     private float firstKeyDownTime;
 
     // public ChainExecutionButton button;
@@ -39,18 +40,6 @@ public class KeyDownMashExecutableSO : ExecutableSO
         // visual.StartTimer(mashDuration + beforeCancelInputLeeway);
     }
 
-    /*
-    public override AttackVisual draw(Vector3 postion, Transform parent)
-    {
-
-        if (visualPrefab == null)
-        {
-            visualPrefab = Resources.Load<ExpandingButtonMashVisual>("Prefabs/ExpandingButtonExecutableMashVisual");
-        }
-        visual = Instantiate(visualPrefab, postion, Quaternion.identity, parent.transform);
-        return visual;
-    }*/
-
     // public override ChainExecutionButton getButton() => button;
 
     public override void OnInput(string input, IBattler battler, ITargetSet targets)
@@ -62,6 +51,7 @@ public class KeyDownMashExecutableSO : ExecutableSO
 
             if (key == InstructionKeyEvent.KEYDOWN)
             {
+               
                 if (!state.triggered)
                 {
                     firstKeyDownTime = service.unscaledTime;
@@ -69,6 +59,7 @@ public class KeyDownMashExecutableSO : ExecutableSO
 
                 }
                 // visual.ExpandButton();
+                onKeyDown?.Invoke();
                 executionEvent.OnExecute(battler, targets);
             }
         } else

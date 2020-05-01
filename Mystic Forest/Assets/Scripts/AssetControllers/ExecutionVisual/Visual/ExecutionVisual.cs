@@ -8,7 +8,12 @@ public class ExecutionVisual : MonoBehaviour
     public SpriteRenderer circle;
     public GameObject connection;
     public Text text;
-    
+
+    public void Initialize(Color color, string text)
+    {
+        SetText(text);
+        SetColor(color);
+    }
 
     public void SetAsLast()
     {

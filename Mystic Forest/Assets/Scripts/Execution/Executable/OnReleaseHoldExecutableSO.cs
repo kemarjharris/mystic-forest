@@ -4,17 +4,14 @@ using UnityEditor;
 [CreateAssetMenu()]
 public class OnReleaseHoldExecutableSO : ExecutableSO
 {
-    // public ChainExecutionButton button;
     public HoldInstruction instruction = HoldInstruction.instance;
     public ExecutionEvent keyDownExecutionEvent;
     public ExecutionEvent releaseExecutionEvent;
     public float releaseTime;
     public IUnityTimeService service;
     float timeStarted;
-
-    // private static HoldVisual visualPrefab;
-    // private HoldVisual visual;
-    // public override ChainExecutionButton getButton() => button;
+    public System.Action onStartHolding;
+    public System.Action onRelease;
 
     public void Construct(HoldInstruction instruction, ExecutionEvent keyDownExecutionEvent, ExecutionEvent releaseExecutionEvent, float releaseTime)
     {
@@ -31,8 +28,8 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
         if (key == InstructionKeyEvent.KEYDOWN)
         {
             timeStarted = service.unscaledTime;
+            onStartHolding?.Invoke();
             keyDownExecutionEvent.OnExecute(battler, targets);
-            //visual.Fill(releaseTime);
             state.triggered = true;
         }
         else if (IsTriggered() && key == InstructionKeyEvent.KEYUP)
@@ -49,8 +46,8 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
 
     void OnRelease(IBattler battler, ITargetSet targets)
     {
+        onRelease?.Invoke();
         releaseExecutionEvent.OnExecute(battler, targets);
-       // visual.StopFill();
     }
 
     public override void OnStart()
@@ -63,7 +60,6 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
         timeStarted = service.unscaledTime;
         releaseExecutionEvent.setOnCancellableEvent(delegate() { state.cancellable = true; });
         releaseExecutionEvent.setOnFinishEvent(delegate () { state.finished = true; });
-        //visual.FullSize();
     }
 
     private void AttributeCheck()
@@ -72,17 +68,5 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
         if (releaseExecutionEvent == null) throw new System.ArgumentException("Release Execution Event is null");
         if (releaseTime <= 0) throw new System.ArgumentException("Release Time must be positive");
     }
-
-    /*
-    public override AttackVisual draw(Vector3 postion, Transform parent)
-    {
-        if (visualPrefab == null)
-        {
-            visualPrefab = Resources.Load<HoldVisual>("Prefabs/ExecutableHoldVisual");
-        }
-        visual = Instantiate(visualPrefab, postion, Quaternion.identity, parent.transform);
-        return visual;
-    }
-    */
 
 }
