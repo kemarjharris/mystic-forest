@@ -8,19 +8,17 @@ public static class ExecutionVisualFactory
     {
         if (executable is PressExecutableSO)
         {
-            ExecutionVisual visualPrefab = Resources.Load<ExecutionVisual>("Prefabs/ExecutableAttackVisual");
+            ExecutionVisual visualPrefab = Resources.Load<ExecutionVisual>("Prefabs/ExecutionVisual/ExecutableVisual");
             ExecutionVisual visual = Object.Instantiate(visualPrefab, position, Quaternion.identity, parent.transform);
-            
-            
             return visual;
         } else if (executable is KeyDownMashExecutableSO)
         {
-            ExpandingButtonMashVisual visualPrefab = Resources.Load<ExpandingButtonMashVisual>("Prefabs/ExpandingButtonExecutableMashVisual");
+            ExpandingButtonMashVisual visualPrefab = Resources.Load<ExpandingButtonMashVisual>("Prefabs/ExecutionVisual/ExecutableMashVisual");
             ExpandingButtonMashVisual visual = Object.Instantiate(visualPrefab, position, Quaternion.identity, parent.transform);
             return visual;
         } else if (executable is HoldVisual)
         {
-            HoldVisual visualPrefab = Resources.Load<HoldVisual>("Prefabs/ExecutableHoldVisual");
+            HoldVisual visualPrefab = Resources.Load<HoldVisual>("Prefabs/ExecutionVisual/ExecutableHoldVisual");
             HoldVisual visual = Object.Instantiate(visualPrefab, position, Quaternion.identity, parent.transform);
             return visual;
         } else

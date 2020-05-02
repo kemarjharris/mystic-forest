@@ -14,11 +14,9 @@ namespace ExecutorTest
         public void ExecuteChainSetsExecutablesTest()
         {
             IExecutable executable = Substitute.For<IExecutable>();
-            IExecutableChain chain = Substitute.For<IExecutableChain>();
             IEnumerator<IExecutable> executables = new List<IExecutable>( new IExecutable[] { executable }).GetEnumerator();
-            chain.GetEnumerator().Returns(executables);
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
-            executor.ExecuteChain(null, null, chain);
+            executor.ExecuteChain(null, null, executables);
             Assert.AreSame(executables, executor.GetExecutables());
         }
 
@@ -27,11 +25,9 @@ namespace ExecutorTest
         public void ExecuteChainSetsCurrTest()
         {
             IExecutable executable = Substitute.For<IExecutable>();
-            IExecutableChain chain = Substitute.For<IExecutableChain>();
             IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { executable }).GetEnumerator();
-            chain.GetEnumerator().Returns(executables);
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
-            executor.ExecuteChain(null, null, chain);
+            executor.ExecuteChain(null, null, executables);
             Assert.AreSame(executable, executor.GetCurr());
         }
 
@@ -41,12 +37,10 @@ namespace ExecutorTest
         {
             IExecutable prev = SetUpExecutableState(true, true, false);
             IExecutable executable = Substitute.For<IExecutable>();
-            IExecutableChain chain = Substitute.For<IExecutableChain>();
             IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { executable }).GetEnumerator();
-            chain.GetEnumerator().Returns(executables);
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
-            executor.Construct(chain, prev, null);
-            executor.ExecuteChain(null, null, chain);
+            executor.Construct(executables, prev, null);
+            executor.ExecuteChain(null, null, executables);
             Assert.AreSame(prev, executor.GetPrev());    
         }
 
@@ -56,12 +50,10 @@ namespace ExecutorTest
         {
             IExecutable prev = SetUpExecutableState(true, true, true);
             IExecutable executable = Substitute.For<IExecutable>();
-            IExecutableChain chain = Substitute.For<IExecutableChain>();
             IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { executable }).GetEnumerator();
-            chain.GetEnumerator().Returns(executables);
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
-            executor.Construct(chain, prev, null);
-            executor.ExecuteChain(null, null, chain);
+            executor.Construct(executables, prev, null);
+            executor.ExecuteChain(null, null, executables);
             Assert.Null(executor.GetPrev());
         }
 
@@ -71,13 +63,11 @@ namespace ExecutorTest
         {
             bool onStartCalled = false;
             IExecutable executable = Substitute.For<IExecutable>();
-            IExecutableChain chain = Substitute.For<IExecutableChain>();
             IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { executable }).GetEnumerator();
-            chain.GetEnumerator().Returns(executables);
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executable.When(x => x.OnStart()).
                 Do(delegate { onStartCalled = true; });
-            executor.ExecuteChain(null, null, chain);
+            executor.ExecuteChain(null, null, executables);
             Assert.True(onStartCalled);
 
         }
@@ -104,7 +94,8 @@ namespace ExecutorTest
         {
             IExecutable prev = SetUpExecutableState(prevIsTriggered, prevIsCancellable, prevIsFinished);
             IExecutable curr = SetUpExecutableState(currIsTriggered, currIsCancellable, currIsFinished);
-            IExecutable[] executables = new IExecutable[] { prev, curr };
+            IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { prev, curr }).GetEnumerator();
+
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executor.Construct(executables, prev, curr);
             return executor;
@@ -149,7 +140,7 @@ namespace ExecutorTest
                 Do(delegate { onInputCalled = true; });
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executor.Construct(
-                new IExecutable[] { curr },
+                new List<IExecutable>(new IExecutable[] { curr }).GetEnumerator(),
                 null,
                 curr);
             executor.Update();
@@ -167,7 +158,7 @@ namespace ExecutorTest
                 Do(delegate { onInputCalled = true; });
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executor.Construct(
-                new IExecutable[] { curr },
+                new List<IExecutable>(new IExecutable[] { curr }).GetEnumerator(),
                 null,
                 curr);
             executor.Update();
@@ -182,7 +173,7 @@ namespace ExecutorTest
             IExecutable curr = SetUpExecutableState(true, true, false);
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executor.Construct(
-                new IExecutable[] { curr },
+                new List<IExecutable>(new IExecutable[] { curr }).GetEnumerator(),
                 null,
                 curr);
             executor.Update();
@@ -300,7 +291,7 @@ namespace ExecutorTest
         {
             IExecutable first = SetUpExecutableState(true, true, false);
             IExecutable next = SetUpExecutableState(true, true, false);
-            IExecutable[] executables = new IExecutable[] { first, next };
+            IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { first, next }).GetEnumerator();
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executor.Construct(executables, first, next);
             executor.GetExecutables().MoveNext();
@@ -317,7 +308,7 @@ namespace ExecutorTest
             IExecutable next = SetUpExecutableState(true, true, false);
             next.When(x => x.OnStart())
                 .Do(delegate { onStartCalled = true; });
-            IExecutable[] executables = new IExecutable[] { first, next };
+            IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { first, next }).GetEnumerator();
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executor.Construct(executables, first, next);
             executor.GetExecutables().MoveNext();
@@ -332,7 +323,7 @@ namespace ExecutorTest
         {
             bool onCancellableFired = false;
             IExecutable curr = SetUpExecutableState(true, true, false);
-            IExecutable[] executables = new IExecutable[] { curr };
+            IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { curr }).GetEnumerator();
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executor.Construct(executables, null, curr);
             executor.GetExecutables().MoveNext();

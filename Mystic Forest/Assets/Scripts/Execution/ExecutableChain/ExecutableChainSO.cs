@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 [CreateAssetMenu()]
 public class ExecutableChainSO : ScriptableObject, IExecutableChain //, ExecutableAttackChain
@@ -13,14 +14,17 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
 
     public IEnumerator<IExecutable> GetEnumerator()
     {
-        for (int i = 0; i < attacks.Length; i ++)
-        {
-            yield return attacks[i];
-        }
+        return new ExecutableChainEnumerator(LoopEnumerator());
     }
+
+    IEnumerator<IExecutable> LoopEnumerator()
+    {
+        for (int i = 0; i < attacks.Length; i++) yield return Instantiate(attacks[i]);
+    }
+
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return attacks.GetEnumerator();
+        return GetEnumerator();
     }
 }

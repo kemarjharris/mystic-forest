@@ -20,7 +20,7 @@ public class ChainExecutorLinkImpl  : IChainExecutor// : Activity, Observable<At
     public System.Action OnChainCancellable;
     public System.Action OnChainFinished;
 
-    public void ExecuteChain(IBattler attacker, ITargetSet targets, IExecutableChain chain)
+    public void ExecuteChain(IBattler attacker, ITargetSet targets, IEnumerator<IExecutable> chain)
     {
         this.attacker = attacker;
         this.targets = targets;
@@ -29,9 +29,9 @@ public class ChainExecutorLinkImpl  : IChainExecutor// : Activity, Observable<At
         // visual.Expand();
     }
 
-    void Load(IEnumerable<IExecutable> seconds)
+    void Load(IEnumerator<IExecutable> seconds)
     {
-        this.seconds = seconds.GetEnumerator();
+        this.seconds = seconds;
         timeCheck = this.seconds.MoveNext();
         // have to keep prev from previous attack chain in case it wasnt done executing yet
         if (prev != null && prev.IsFinished())
@@ -91,14 +91,14 @@ public class ChainExecutorLinkImpl  : IChainExecutor// : Activity, Observable<At
             // notifyObserver(AttackChainExecutionModule.ExecutionStatus.CHAIN_CANCELLABLE);
             // visual.Destroy();
             curr = null;
-            OnChainCancellable();
+            OnChainCancellable?.Invoke();
         }
     }
 
     /* For testing purposes */
-    public void Construct(IEnumerable<IExecutable> chain, IExecutable previous, IExecutable current)
+    public void Construct(IEnumerator<IExecutable> chain, IExecutable previous, IExecutable current)
     {
-        seconds = chain.GetEnumerator();
+        seconds = chain;
         timeCheck = true;
         prev = previous;
         curr = current;
