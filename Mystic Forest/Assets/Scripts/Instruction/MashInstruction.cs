@@ -4,6 +4,7 @@ using UnityEditor;
 public class MashInstruction : Instruction
 {
     public static readonly MashInstruction instance = new MashInstruction();
+    protected const float acceptedRange = 0.5f;
 
     public InstructionKeyEvent lookAtTime(string input, float timePressed, float endTime)
     {

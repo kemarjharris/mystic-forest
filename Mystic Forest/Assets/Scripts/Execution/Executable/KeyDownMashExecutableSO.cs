@@ -11,6 +11,8 @@ public class KeyDownMashExecutableSO : ExecutableSO
     public IUnityTimeService service = new UnityTimeService();
     public System.Action onKeyDown;
     private float firstKeyDownTime;
+    private ExecutionEvent executionEventInstance;
+    private ExecutionEvent mashTimeEndedEventInstance;
 
     // public ChainExecutionButton button;
     // private ExpandingButtonMashVisual visualPrefab;
@@ -35,8 +37,11 @@ public class KeyDownMashExecutableSO : ExecutableSO
         }
         instruction.reset();
         state = new ExecutableState();
-        mashTimeEndedEvent.setOnCancellableEvent(delegate { state.cancellable = true; });
-        mashTimeEndedEvent.setOnFinishEvent(delegate { state.finished = true; });
+        executionEventInstance = Instantiate(executionEvent);
+        mashTimeEndedEventInstance = Instantiate(mashTimeEndedEvent);
+        mashTimeEndedEventInstance.setOnCancellableEvent(delegate { state.cancellable = true; });
+        mashTimeEndedEventInstance.setOnFinishEvent(delegate { state.finished = true; });
+        
         // visual.StartTimer(mashDuration + beforeCancelInputLeeway);
     }
 
@@ -44,7 +49,8 @@ public class KeyDownMashExecutableSO : ExecutableSO
 
     public override void OnInput(string input, IBattler battler, ITargetSet targets)
     {
-        float pressTime = service.unscaledTime - firstKeyDownTime;
+        // Only start timer after first key down
+        float pressTime = state.triggered ? service.unscaledTime - firstKeyDownTime : 0;
         if (pressTime <= mashDuration)
         {
             InstructionKeyEvent key = instruction.lookAtTime(input, pressTime, mashDuration);
@@ -56,26 +62,27 @@ public class KeyDownMashExecutableSO : ExecutableSO
                 {
                     firstKeyDownTime = service.unscaledTime;
                     state.triggered = true;
-
                 }
                 // visual.ExpandButton();
                 onKeyDown?.Invoke();
-                executionEvent.OnExecute(battler, targets);
+                executionEventInstance.OnExecute(battler, targets);
             }
         } else
         {
             if (state.triggered)
             {
-                mashTimeEndedEvent.OnExecute(battler, targets);
+                mashTimeEndedEventInstance.OnExecute(battler, targets);
             } else
             {
                 state.cancellable = false;
                 state.finished = true;
-            }
-            
+            }   
         }
-        
     }
 
-   
+    /* For Testing */
+    public ExecutionEvent GetExecutionEvent() => executionEventInstance;
+    public ExecutionEvent GetMashEndedExecutionEvent() => mashTimeEndedEventInstance;
+
+
 }

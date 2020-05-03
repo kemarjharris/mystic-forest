@@ -12,6 +12,8 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
     float timeStarted;
     public System.Action onStartHolding;
     public System.Action onRelease;
+    private ExecutionEvent keyDownExecutionEventInstance;
+    private ExecutionEvent releaseExecutionEventInstance;
 
     public void Construct(HoldInstruction instruction, ExecutionEvent keyDownExecutionEvent, ExecutionEvent releaseExecutionEvent, float releaseTime)
     {
@@ -23,13 +25,15 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
 
     public override void OnInput(string input, IBattler battler, ITargetSet targets)
     {
-        InstructionKeyEvent key = instruction.lookAtTime(input, service.unscaledTime - timeStarted, releaseTime);
+        // Dont start counting until first key down
+        float timePassed = state.triggered ? service.unscaledTime - timeStarted : 0;
+        InstructionKeyEvent key = instruction.lookAtTime(input, timePassed, releaseTime);
         
         if (key == InstructionKeyEvent.KEYDOWN)
         {
             timeStarted = service.unscaledTime;
             onStartHolding?.Invoke();
-            keyDownExecutionEvent.OnExecute(battler, targets);
+            keyDownExecutionEventInstance.OnExecute(battler, targets);
             state.triggered = true;
         }
         else if (IsTriggered() && key == InstructionKeyEvent.KEYUP)
@@ -38,7 +42,6 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
         }
         if (key == InstructionKeyEvent.BADKEY)
         {
-            // probably change to bad release
             OnRelease(battler, targets);
             state.finished = true;
         }
@@ -47,7 +50,7 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
     void OnRelease(IBattler battler, ITargetSet targets)
     {
         onRelease?.Invoke();
-        releaseExecutionEvent.OnExecute(battler, targets);
+        releaseExecutionEventInstance.OnExecute(battler, targets);
     }
 
     public override void OnStart()
@@ -58,8 +61,10 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
         state = new ExecutableState();
         instruction.reset();
         timeStarted = service.unscaledTime;
-        releaseExecutionEvent.setOnCancellableEvent(delegate() { state.cancellable = true; });
-        releaseExecutionEvent.setOnFinishEvent(delegate () { state.finished = true; });
+        keyDownExecutionEventInstance = Instantiate(keyDownExecutionEvent);
+        releaseExecutionEventInstance = Instantiate(releaseExecutionEvent);
+        releaseExecutionEventInstance.setOnCancellableEvent(delegate() { state.cancellable = true; });
+        releaseExecutionEventInstance.setOnFinishEvent(delegate () { state.finished = true; });
     }
 
     private void AttributeCheck()
@@ -68,5 +73,9 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
         if (releaseExecutionEvent == null) throw new System.ArgumentException("Release Execution Event is null");
         if (releaseTime <= 0) throw new System.ArgumentException("Release Time must be positive");
     }
+
+    /* For testing */
+    public ExecutionEvent GetKeyDownExecutionEvent() => keyDownExecutionEventInstance;
+    public ExecutionEvent GetReleaseExecutionEvent() => releaseExecutionEventInstance;
 
 }

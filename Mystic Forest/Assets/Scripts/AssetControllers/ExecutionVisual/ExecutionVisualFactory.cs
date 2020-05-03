@@ -15,15 +15,17 @@ public static class ExecutionVisualFactory
         {
             ExpandingButtonMashVisual visualPrefab = Resources.Load<ExpandingButtonMashVisual>("Prefabs/ExecutionVisual/ExecutableMashVisual");
             ExpandingButtonMashVisual visual = Object.Instantiate(visualPrefab, position, Quaternion.identity, parent.transform);
+            visual.Initialize((KeyDownMashExecutableSO) executable);
             return visual;
-        } else if (executable is HoldVisual)
+        } else if (executable is OnReleaseHoldExecutableSO)
         {
             HoldVisual visualPrefab = Resources.Load<HoldVisual>("Prefabs/ExecutionVisual/ExecutableHoldVisual");
             HoldVisual visual = Object.Instantiate(visualPrefab, position, Quaternion.identity, parent.transform);
+            visual.Initialize((OnReleaseHoldExecutableSO) executable);
             return visual;
         } else
         {
-            throw new System.ArgumentException("Unhandled Type: " + typeof(IExecutable).DeclaringType.ToString());
+            throw new System.ArgumentException("Unhandled Type: " + executable.GetType());
         }
     }
 }

@@ -40,7 +40,7 @@ public class HoldVisual : ExecutionVisual
     {
         Vector3 outerStartScale = outerCircle.transform.localScale;
         Vector3 fullStartScale = fullCircle.transform.localScale;
-        float routineLength = 0.1f;
+        float routineLength = 0.05f;
         float start = Time.unscaledTime;
         float t = 0;
         start = Time.unscaledTime;

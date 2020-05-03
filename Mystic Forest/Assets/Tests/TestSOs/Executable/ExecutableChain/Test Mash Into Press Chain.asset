@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 236b1e1ecc55fe740bfa1e21d3037f9b, type: 3}
-  m_Name: Single Press Chain
+  m_Name: Test Mash Into Press Chain
   m_EditorClassIdentifier: 
   attacks:
+  - {fileID: 11400000, guid: 3fd57401a568f7b498a3defb52a90d52, type: 2}
   - {fileID: 11400000, guid: a497fc14cd649b04e9e79f04fc0b457e, type: 2}
