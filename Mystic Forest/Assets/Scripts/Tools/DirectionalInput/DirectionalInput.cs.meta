@@ -1,9 +1,7 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: db46cffff5d70194ab60e2c6e6013783
-=======
-guid: daaef8897bbb38a4591b2c3bcfc3843a
->>>>>>> directional-input
+guid: d12969c09fc8d3a4a8d2cdee4429960c
+timeCreated: 1527851334
+licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

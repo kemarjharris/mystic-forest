@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-
 public interface IUnityInputService
 {
     bool GetKeyDown(string input);
