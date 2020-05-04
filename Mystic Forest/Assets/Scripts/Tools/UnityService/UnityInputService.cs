@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public interface IUnityInputService
+public interface IUnityAxisService
 {
     float GetAxisRaw(string axisName);
 }
 
-public class UnityInputService : IUnityInputService
+public class UnityAxisService : IUnityAxisService
 {
     public float GetAxisRaw(string axisName) => Input.GetAxisRaw(axisName);
 }

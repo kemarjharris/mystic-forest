@@ -2,23 +2,26 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class DirectionCommandPicker <T> where T : IDirectionPickable {
+public class DirectionCommandPicker<T> : IDirectionCommandPicker where T : IDirectionPickable
+{
 
-    protected IEnumerable<T> commandables;
-    protected List<Direction> inputtedDirections;
-    protected DirectionCommandButton inputtedButton;
-    protected Coroutine coroutine;
-    protected bool coroutineFinished;
-    protected MonoBehaviour runner;
+    private IEnumerable<T> commandables;
+    private List<Direction> inputtedDirections;
+    private DirectionCommandButton inputtedButton;
+    public IUnityTimeService service = new UnityTimeService(); 
+    float timeOfLastInput;
 
-    protected DirectionCommandPicker(MonoBehaviour runner) {
+    protected DirectionCommandPicker() {
         inputtedDirections = new List<Direction>(); 
         inputtedButton = DirectionCommandButton.NULL;
-        this.runner = runner;
     }
 
     public T inputSelect()
     {
+        if (existingInput() && service.unscaledTime - timeOfLastInput > 0.2f)
+        {
+            clear();
+        }
         Direction dir = DirectionalInput.GetSimpleDirection();
 
         if (inputtedDirections.Count <= 0)
@@ -26,7 +29,6 @@ public abstract class DirectionCommandPicker <T> where T : IDirectionPickable {
             if (dir != Direction.NULL)
             {
                 inputtedDirections.Add(dir);
-                coroutine = runner.StartCoroutine(ClearInputAfter(0.5f));
             }
         }
         else // If you've started inputting directions
@@ -42,11 +44,7 @@ public abstract class DirectionCommandPicker <T> where T : IDirectionPickable {
                 {
                     inputtedDirections.Add(dir);
                 }
-                if (coroutine != null)
-                {
-                    runner.StopCoroutine(coroutine);
-                    coroutine = runner.StartCoroutine(ClearInputAfter(0.2f));
-                }
+                timeOfLastInput = service.unscaledTime;
             }
         }
 
@@ -80,35 +78,17 @@ public abstract class DirectionCommandPicker <T> where T : IDirectionPickable {
                 return t;
             }
         }
-        return default(T);
+        return default;
     }
 
     public void set(IEnumerable<T> commandables) {
         this.commandables = commandables;
     }
 
-    protected IEnumerator ClearInputAfter(float seconds)
-    {
-        coroutineFinished = false;
-        yield return new WaitForSeconds(seconds);
-        coroutineFinished = true;
-        // Wait for the next loop around so that the ooption can get chosen
-        yield return null;
-        inputtedDirections.Clear();
-        inputtedButton = DirectionCommandButton.NULL;
-
-    }
-
     public void clear()
     {
-        if (coroutine != null && !coroutineFinished)
-        {
-            runner.StopCoroutine(coroutine);
-            coroutineFinished = true;
-        }
         inputtedDirections.Clear();
         inputtedButton = DirectionCommandButton.NULL;
-
     }
 
     public bool existingInput()
