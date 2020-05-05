@@ -284,7 +284,7 @@ namespace InstructionTest
 
             yield return null;
 
-            Assert.AreEqual(InstructionKeyEvent.BADKEY, mash.lookAtTime("return", 2.5f, 2));
+            Assert.AreEqual(InstructionKeyEvent.BADKEY, mash.lookAtTime("return", 2.51f, 2));
         }
 
 

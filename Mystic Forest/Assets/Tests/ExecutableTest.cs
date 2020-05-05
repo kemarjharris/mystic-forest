@@ -221,7 +221,7 @@ namespace ExecutableTest
 
         public void SimulateEndMashTimeWithNoKeyDown()
         {
-            mash.service.unscaledTime.Returns(2.5f);
+            mash.service.unscaledTime.Returns(2.51f);
             mash.OnInput("return", null, null);
         }
 
