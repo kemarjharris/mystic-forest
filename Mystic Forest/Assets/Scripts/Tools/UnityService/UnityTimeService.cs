@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEditor;
 
 public interface IUnityTimeService
 {
-    float unscaledTime { get;  }
+    float unscaledTime { get; }
 }
 
 public class UnityTimeService : IUnityTimeService
 {
     public float unscaledTime => Time.unscaledTime;
 }
+
