@@ -18,13 +18,6 @@ public class DirectionCommand : IDirectionCommand {
         overrides = new DirectionCommandObjectOverrides(this);
     }
 
-    public DirectionCommand(DirectionCommandButton option, IDirectionCommand command)
-    {
-        Option = option;
-        Directions = command.directions;
-        overrides = new DirectionCommandObjectOverrides(this);
-    }
-
     public DirectionCommand(DirectionCommandButton option) : this(option, new Direction[0]){}
 
     public override bool Equals(object other) => overrides.Equals(other);
@@ -32,5 +25,7 @@ public class DirectionCommand : IDirectionCommand {
     public override int GetHashCode() => overrides.GetHashCode(Option, Directions);
 
     public override string ToString() => overrides.ToString(Option, Directions);
+
+    public IDirectionCommand GetDirectionCommand() => this;
 
 }

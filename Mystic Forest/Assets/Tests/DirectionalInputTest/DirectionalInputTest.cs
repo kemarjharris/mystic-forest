@@ -11,7 +11,7 @@ namespace DirectionalInputTest
     {
         public void SetDirectionalService(float horizontal, float vertical)
         {
-            IUnityInputService service = Substitute.For<IUnityInputService>();
+            IUnityAxisService service = Substitute.For<IUnityAxisService>();
             service.GetAxisRaw("Horizontal").Returns(horizontal);
             service.GetAxisRaw("Vertical").Returns(vertical);
             DirectionalInput.service = service;

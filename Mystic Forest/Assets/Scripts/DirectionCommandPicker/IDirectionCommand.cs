@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public interface IDirectionCommand
+public interface IDirectionCommand : IDirectionPickable
 {
     DirectionCommandButton option { get; }
 

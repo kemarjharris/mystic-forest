@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public interface IUnityAxisService
+public interface IUnityInputService
 {
-    float GetAxisRaw(string axisName);
+    bool GetKeyDown(string input);
 }
 
-public class UnityAxisService : IUnityAxisService
-{
-    public float GetAxisRaw(string axisName) => Input.GetAxisRaw(axisName);
+public class UnityInputService : IUnityInputService {
+    public bool GetKeyDown(string input) => Input.GetButtonDown(input);
 }

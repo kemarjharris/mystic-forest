@@ -8,17 +8,20 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker where T : IDire
     private IEnumerable<T> commandables;
     private List<Direction> inputtedDirections;
     private DirectionCommandButton inputtedButton;
-    public IUnityTimeService service = new UnityTimeService(); 
+    public IUnityTimeService service = new UnityTimeService();
+    public IUnityInputService inputService = new UnityInputService();
     float timeOfLastInput;
+    readonly float timeBeforeClearingInput;
 
-    protected DirectionCommandPicker() {
+    public DirectionCommandPicker(float timeBeforeClearingInput) {
         inputtedDirections = new List<Direction>(); 
         inputtedButton = DirectionCommandButton.NULL;
+        this.timeBeforeClearingInput = timeBeforeClearingInput;
     }
 
-    public T inputSelect()
+    public T InputSelect()
     {
-        if (existingInput() && service.unscaledTime - timeOfLastInput > 0.2f)
+        if (ExistingInput() && service.unscaledTime - timeOfLastInput > timeBeforeClearingInput)
         {
             clear();
         }
@@ -48,15 +51,15 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker where T : IDire
             }
         }
 
-        if (Input.GetButtonDown("z"))
+        if (inputService.GetKeyDown("z"))
         {
             inputtedButton = DirectionCommandButton.Z;
         }
-        else if (Input.GetButtonDown("x"))
+        else if (inputService.GetKeyDown("x"))
         {
             inputtedButton = DirectionCommandButton.X;
         }
-        else if (Input.GetButtonDown("c"))
+        else if (inputService.GetKeyDown("c"))
         {
             inputtedButton = DirectionCommandButton.C;
         }
@@ -91,7 +94,7 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker where T : IDire
         inputtedButton = DirectionCommandButton.NULL;
     }
 
-    public bool existingInput()
+    public bool ExistingInput()
     {
         return inputtedDirections.Count > 0;
     }

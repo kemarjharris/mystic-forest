@@ -21,4 +21,6 @@ public class DirectionCommandSO : ScriptableObject, IDirectionCommand
     public override int GetHashCode() => overrides.GetHashCode(Option, Directions);
 
     public override string ToString() => overrides.ToString(Option, Directions);
+
+    public IDirectionCommand GetDirectionCommand() => this;
 }

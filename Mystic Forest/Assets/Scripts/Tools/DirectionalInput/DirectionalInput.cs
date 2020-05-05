@@ -5,7 +5,7 @@ using UnityEngine;
 public class DirectionalInput {
 
     static readonly Direction[] dirs = EnumUtil.toArray<Direction>();
-    public static IUnityInputService service = new UnityInputService();
+    public static IUnityAxisService service = new UnityAxisService();
 
     private static float InputOnAxis(string axis, float deadzone) {
         float axisValue = service.GetAxisRaw(axis);
