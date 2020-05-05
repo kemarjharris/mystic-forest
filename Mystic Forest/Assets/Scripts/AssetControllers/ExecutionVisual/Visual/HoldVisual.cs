@@ -10,6 +10,19 @@ public class HoldVisual : ExecutionVisual
     public Routine fillRoutine;
     public const float fillScale = 1/ 0.65f;
 
+    public void Initialize(OnReleaseHoldExecutableSO executable)
+    {
+        executable.onStartHolding = delegate
+        {
+            FullSize();
+            Fill(executable.releaseTime);
+        };
+        executable.onRelease = delegate
+        {
+            StopFill();
+        };
+    }
+
     public override void MarkFinished()
     {
         base.MarkFinished();
@@ -27,7 +40,7 @@ public class HoldVisual : ExecutionVisual
     {
         Vector3 outerStartScale = outerCircle.transform.localScale;
         Vector3 fullStartScale = fullCircle.transform.localScale;
-        float routineLength = 0.1f;
+        float routineLength = 0.05f;
         float start = Time.unscaledTime;
         float t = 0;
         start = Time.unscaledTime;

@@ -93,12 +93,59 @@ namespace ExecutableTest
 
         // key down fires key down event
         [Test]
-        public void KeyDownEventFiresTest()
+        public void KeyDownExecutionEventFiresTest()
         {
             TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
             mash.executionEvent = executionEvent;
             SimulateKeyDown();
-            Assert.AreEqual(1, executionEvent.timesExecuted);
+            Assert.AreEqual(0, executionEvent.timesExecuted); // does not fire
+            Assert.AreEqual(1, ((TestExecutionEvent) mash.GetExecutionEvent()).timesExecuted); // fires
+        }
+
+        [Test]
+        public void KeyDownExecutionEventInstantiatesOnStartTest()
+        {
+            TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            mash.executionEvent = executionEvent;
+            mash.OnStart();
+            // Should be equal instances
+            Assert.IsInstanceOf<TestExecutionEvent>(mash.GetExecutionEvent());
+            // Should be different instances
+            Assert.AreNotSame(executionEvent, mash.GetExecutionEvent());
+        }
+
+        [Test]
+        public void MashEndedExecutionEventInstantiatesOnStartTest()
+        {
+            TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            mash.mashTimeEndedEvent = executionEvent;
+            mash.OnStart();
+            // Should be equal instances
+            Assert.IsInstanceOf<TestExecutionEvent>(mash.GetMashEndedExecutionEvent());
+            // Should be different instances
+            Assert.AreNotSame(executionEvent, mash.GetMashEndedExecutionEvent());
+        }
+
+        [Test]
+        public void MashEndedExecutionEventFiresTest()
+        {
+            TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            mash.mashTimeEndedEvent = executionEvent;
+            mash.OnStart();
+            SimulateKeyDown();
+            mash.service.unscaledTime.Returns(2.5f);
+            mash.OnInput("return", null, null);
+            Assert.AreEqual(0, executionEvent.timesExecuted);
+            Assert.AreEqual(1, ((TestExecutionEvent) mash.GetMashEndedExecutionEvent()).timesExecuted);
+        }
+
+        [Test]
+        public void KeyDownEventFiresTest()
+        {
+            bool fired = false;
+            mash.onKeyDown = () => fired = true;
+            SimulateKeyDown();
+            Assert.True(fired);
         }
 
         [Test]
@@ -194,12 +241,11 @@ namespace ExecutableTest
             Assert.False(mash.IsInCancelTime());
         }
 
-        // no key down at end time sets finished to true
         [Test]
-        public void NoKeyDownAtEndSetFinishedToTrueTest()
+        public void WaitsForKeyDownBeforeStartingTest()
         {
             SimulateEndMashTimeWithNoKeyDown();
-            Assert.True(mash.IsFinished());
+            Assert.False(mash.IsFinished());
         }
 
         // no key down at end does not fire mashfinished event
@@ -211,8 +257,6 @@ namespace ExecutableTest
             SimulateEndMashTimeWithNoKeyDown();
             Assert.AreEqual(0, executionEvent.timesExecuted);
         }
-
-
     }
 
     public class OnReleaseHoldExecutionTest
@@ -311,6 +355,16 @@ namespace ExecutableTest
             Assert.NotNull(hold.service);
         }
 
+        [Test]
+        public void WaitsForInputBeforeFinishingTest()
+        {
+            // test instruction used is 2 seconds long
+            hold.service.unscaledTime.Returns(3);
+            hold.OnInput("return", null, null);
+            // Since there was no key down executable shouldnt be finished even though time has passed
+            Assert.False(hold.IsFinished());
+        }
+
         // Release time negative throws exception
         [Test]
         public void ReleaseTimeNonNegativeThrowsExceptionTest()
@@ -341,6 +395,26 @@ namespace ExecutableTest
             });
         }
 
+        [Test]
+        public void KeyDownEventInstantiateOnStartTest()
+        {
+            TestExecutionEvent @event = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            hold.keyDownExecutionEvent = @event;
+            hold.OnStart();
+            Assert.AreNotSame(@event, hold.GetKeyDownExecutionEvent());
+            Assert.IsInstanceOf<TestExecutionEvent>(hold.GetKeyDownExecutionEvent());
+        }
+
+        [Test]
+        public void ReleaseEventInstantiatedOnStartTest()
+        {
+            TestExecutionEvent @event = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            hold.releaseExecutionEvent = @event;
+            hold.OnStart();
+            Assert.AreNotSame(@event, hold.GetReleaseExecutionEvent());
+            Assert.IsInstanceOf<TestExecutionEvent>(hold.GetReleaseExecutionEvent());
+        }
+
         // keydown fires event
         [Test]
         public void KeyDownFiresKeyDownExecutionEventTest()
@@ -349,7 +423,7 @@ namespace ExecutableTest
             hold.keyDownExecutionEvent = testEvent;
             hold.instruction.service.GetKeyDown("return").Returns(true);
             hold.OnInput("return", null, null);
-            Assert.AreEqual(1, testEvent.timesExecuted);
+            Assert.AreEqual(1, ((TestExecutionEvent)hold.GetKeyDownExecutionEvent()).timesExecuted);
         }
 
         // inst triggers
@@ -372,7 +446,7 @@ namespace ExecutableTest
             hold.instruction.service.GetKeyDown("return").Returns(true);
             hold.OnInput("return", null, null);
             hold.OnInput("return", null, null);
-            Assert.AreEqual(1, testEvent.timesExecuted);
+            Assert.AreEqual(1, ((TestExecutionEvent)hold.GetKeyDownExecutionEvent()).timesExecuted);
         }
 
         // key down while triggered not in cancel time sets finished
@@ -420,7 +494,7 @@ namespace ExecutableTest
             hold.instruction.service.GetKeyUp("return").Returns(true);
 
             hold.OnInput("return", null, null);
-            Assert.AreEqual(1, testEvent.timesExecuted);
+            Assert.AreEqual(1,((TestExecutionEvent) hold.GetReleaseExecutionEvent()).timesExecuted);
         }
 
         // Release event sets cancellable
@@ -484,7 +558,7 @@ namespace ExecutableTest
             TestExecutionEvent testEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
             hold.releaseExecutionEvent = testEvent;
             SimulateBadKey();
-            Assert.AreEqual(1, testEvent.timesExecuted);
+            Assert.AreEqual(1, ((TestExecutionEvent) hold.GetReleaseExecutionEvent()).timesExecuted);
         }
 
         // badkey sets finished

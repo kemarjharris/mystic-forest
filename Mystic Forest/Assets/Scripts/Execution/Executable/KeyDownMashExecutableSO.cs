@@ -9,7 +9,10 @@ public class KeyDownMashExecutableSO : ExecutableSO
     public float mashDuration;
     public MashInstruction instruction = MashInstruction.instance;
     public IUnityTimeService service = new UnityTimeService();
+    public System.Action onKeyDown;
     private float firstKeyDownTime;
+    private ExecutionEvent executionEventInstance;
+    private ExecutionEvent mashTimeEndedEventInstance;
 
     // public ChainExecutionButton button;
     // private ExpandingButtonMashVisual visualPrefab;
@@ -34,57 +37,52 @@ public class KeyDownMashExecutableSO : ExecutableSO
         }
         instruction.reset();
         state = new ExecutableState();
-        mashTimeEndedEvent.setOnCancellableEvent(delegate { state.cancellable = true; });
-        mashTimeEndedEvent.setOnFinishEvent(delegate { state.finished = true; });
+        executionEventInstance = Instantiate(executionEvent);
+        mashTimeEndedEventInstance = Instantiate(mashTimeEndedEvent);
+        mashTimeEndedEventInstance.setOnCancellableEvent(delegate { state.cancellable = true; });
+        mashTimeEndedEventInstance.setOnFinishEvent(delegate { state.finished = true; });
+        
         // visual.StartTimer(mashDuration + beforeCancelInputLeeway);
     }
-
-    /*
-    public override AttackVisual draw(Vector3 postion, Transform parent)
-    {
-
-        if (visualPrefab == null)
-        {
-            visualPrefab = Resources.Load<ExpandingButtonMashVisual>("Prefabs/ExpandingButtonExecutableMashVisual");
-        }
-        visual = Instantiate(visualPrefab, postion, Quaternion.identity, parent.transform);
-        return visual;
-    }*/
 
     // public override ChainExecutionButton getButton() => button;
 
     public override void OnInput(string input, IBattler battler, ITargetSet targets)
     {
-        float pressTime = service.unscaledTime - firstKeyDownTime;
+        // Only start timer after first key down
+        float pressTime = state.triggered ? service.unscaledTime - firstKeyDownTime : 0;
         if (pressTime <= mashDuration)
         {
             InstructionKeyEvent key = instruction.lookAtTime(input, pressTime, mashDuration);
 
             if (key == InstructionKeyEvent.KEYDOWN)
             {
+               
                 if (!state.triggered)
                 {
                     firstKeyDownTime = service.unscaledTime;
                     state.triggered = true;
-
                 }
                 // visual.ExpandButton();
-                executionEvent.OnExecute(battler, targets);
+                onKeyDown?.Invoke();
+                executionEventInstance.OnExecute(battler, targets);
             }
         } else
         {
             if (state.triggered)
             {
-                mashTimeEndedEvent.OnExecute(battler, targets);
+                mashTimeEndedEventInstance.OnExecute(battler, targets);
             } else
             {
                 state.cancellable = false;
                 state.finished = true;
-            }
-            
+            }   
         }
-        
     }
 
-   
+    /* For Testing */
+    public ExecutionEvent GetExecutionEvent() => executionEventInstance;
+    public ExecutionEvent GetMashEndedExecutionEvent() => mashTimeEndedEventInstance;
+
+
 }

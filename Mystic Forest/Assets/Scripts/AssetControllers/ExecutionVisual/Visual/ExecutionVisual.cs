@@ -6,13 +6,12 @@ public class ExecutionVisual : MonoBehaviour
 {
 
     public SpriteRenderer circle;
-    public GameObject connection;
     public Text text;
-    
 
-    public void SetAsLast()
+    public void Initialize(Color color, string text)
     {
-        connection.SetActive(false);
+        SetText(text);
+        SetColor(color);
     }
 
     IEnumerator FadeOut(){
@@ -58,9 +57,7 @@ public class ExecutionVisual : MonoBehaviour
 
     public virtual void MarkFinished()
     {
-        Destroy(connection);
-        Destroy(gameObject);
-        
+        Destroy(gameObject);   
     }
 
     public void SetText(string text)

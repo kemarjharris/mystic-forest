@@ -4,17 +4,16 @@ using UnityEditor;
 [CreateAssetMenu()]
 public class OnReleaseHoldExecutableSO : ExecutableSO
 {
-    // public ChainExecutionButton button;
     public HoldInstruction instruction = HoldInstruction.instance;
     public ExecutionEvent keyDownExecutionEvent;
     public ExecutionEvent releaseExecutionEvent;
     public float releaseTime;
     public IUnityTimeService service;
     float timeStarted;
-
-    // private static HoldVisual visualPrefab;
-    // private HoldVisual visual;
-    // public override ChainExecutionButton getButton() => button;
+    public System.Action onStartHolding;
+    public System.Action onRelease;
+    private ExecutionEvent keyDownExecutionEventInstance;
+    private ExecutionEvent releaseExecutionEventInstance;
 
     public void Construct(HoldInstruction instruction, ExecutionEvent keyDownExecutionEvent, ExecutionEvent releaseExecutionEvent, float releaseTime)
     {
@@ -26,13 +25,15 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
 
     public override void OnInput(string input, IBattler battler, ITargetSet targets)
     {
-        InstructionKeyEvent key = instruction.lookAtTime(input, service.unscaledTime - timeStarted, releaseTime);
+        // Dont start counting until first key down
+        float timePassed = state.triggered ? service.unscaledTime - timeStarted : 0;
+        InstructionKeyEvent key = instruction.lookAtTime(input, timePassed, releaseTime);
         
         if (key == InstructionKeyEvent.KEYDOWN)
         {
             timeStarted = service.unscaledTime;
-            keyDownExecutionEvent.OnExecute(battler, targets);
-            //visual.Fill(releaseTime);
+            onStartHolding?.Invoke();
+            keyDownExecutionEventInstance.OnExecute(battler, targets);
             state.triggered = true;
         }
         else if (IsTriggered() && key == InstructionKeyEvent.KEYUP)
@@ -41,7 +42,6 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
         }
         if (key == InstructionKeyEvent.BADKEY)
         {
-            // probably change to bad release
             OnRelease(battler, targets);
             state.finished = true;
         }
@@ -49,8 +49,8 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
 
     void OnRelease(IBattler battler, ITargetSet targets)
     {
-        releaseExecutionEvent.OnExecute(battler, targets);
-       // visual.StopFill();
+        onRelease?.Invoke();
+        releaseExecutionEventInstance.OnExecute(battler, targets);
     }
 
     public override void OnStart()
@@ -61,9 +61,10 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
         state = new ExecutableState();
         instruction.reset();
         timeStarted = service.unscaledTime;
-        releaseExecutionEvent.setOnCancellableEvent(delegate() { state.cancellable = true; });
-        releaseExecutionEvent.setOnFinishEvent(delegate () { state.finished = true; });
-        //visual.FullSize();
+        keyDownExecutionEventInstance = Instantiate(keyDownExecutionEvent);
+        releaseExecutionEventInstance = Instantiate(releaseExecutionEvent);
+        releaseExecutionEventInstance.setOnCancellableEvent(delegate() { state.cancellable = true; });
+        releaseExecutionEventInstance.setOnFinishEvent(delegate () { state.finished = true; });
     }
 
     private void AttributeCheck()
@@ -73,16 +74,8 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
         if (releaseTime <= 0) throw new System.ArgumentException("Release Time must be positive");
     }
 
-    /*
-    public override AttackVisual draw(Vector3 postion, Transform parent)
-    {
-        if (visualPrefab == null)
-        {
-            visualPrefab = Resources.Load<HoldVisual>("Prefabs/ExecutableHoldVisual");
-        }
-        visual = Instantiate(visualPrefab, postion, Quaternion.identity, parent.transform);
-        return visual;
-    }
-    */
+    /* For testing */
+    public ExecutionEvent GetKeyDownExecutionEvent() => keyDownExecutionEventInstance;
+    public ExecutionEvent GetReleaseExecutionEvent() => releaseExecutionEventInstance;
 
 }

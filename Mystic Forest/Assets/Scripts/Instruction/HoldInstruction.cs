@@ -4,6 +4,7 @@ using UnityEditor;
 public class HoldInstruction : Instruction
 {
     public static readonly HoldInstruction instance = new HoldInstruction();
+    private const float acceptedRange = 0.2f;
 
     public InstructionKeyEvent lookAtTime(string input, float timePressed, float releaseTime)
     {

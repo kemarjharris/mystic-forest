@@ -54,16 +54,4 @@ public class PressExecutableSO : ExecutableSO {
 
     
 
-    /*
-    public override AttackVisual draw(Vector3 postion, Transform parent)
-    {
-        if (visualPrefab == null)
-        {
-            visualPrefab = Resources.Load<AttackVisual>("Prefabs/ExecutableAttackVisual");
-        }
-
-        return Instantiate(visualPrefab, postion , Quaternion.identity, parent.transform);
-    }
-    */
-
 }
