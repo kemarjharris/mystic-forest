@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class DirectionCommandPicker<T> : IDirectionCommandPicker where T : IDirectionPickable
+public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : IDirectionPickable
 {
 
     private IEnumerable<T> commandables;
@@ -21,8 +21,10 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker where T : IDire
 
     public T InputSelect()
     {
+        Debug.Log(inputtedDirections.Count);
         if (ExistingInput() && service.unscaledTime - timeOfLastInput > timeBeforeClearingInput)
         {
+            Debug.Log("clear");
             clear();
         }
         Direction dir = DirectionalInput.GetSimpleDirection();
@@ -32,6 +34,7 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker where T : IDire
             if (dir != Direction.NULL)
             {
                 inputtedDirections.Add(dir);
+                timeOfLastInput = service.unscaledTime;
             }
         }
         else // If you've started inputting directions
@@ -39,6 +42,7 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker where T : IDire
             // When a new button is pressed
             if (dir != inputtedDirections[inputtedDirections.Count - 1])
             {
+                // if last dir is null and a new direction comes in replace the null
                 if (inputtedDirections[inputtedDirections.Count - 1] == Direction.NULL)
                 {
                     inputtedDirections[inputtedDirections.Count - 1] = dir;
@@ -84,7 +88,7 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker where T : IDire
         return default;
     }
 
-    public void set(IEnumerable<T> commandables) {
+    public void Set(IEnumerable<T> commandables) {
         this.commandables = commandables;
     }
 
@@ -96,7 +100,7 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker where T : IDire
 
     public bool ExistingInput()
     {
-        return inputtedDirections.Count > 0;
+        return inputtedDirections.Count > 0 && !inputtedDirections.TrueForAll(x => x == Direction.NULL );
     }
 
     protected T Select(IDirectionCommand command)

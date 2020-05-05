@@ -7,5 +7,5 @@ public interface IUnityInputService
 }
 
 public class UnityInputService : IUnityInputService {
-    public bool GetKeyDown(string input) => Input.GetButtonDown(input);
+    public bool GetKeyDown(string input) => Input.GetKeyDown(input);
 }

@@ -5,7 +5,7 @@ using NSubstitute;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace DirectionCommandPicker
+namespace DirectionCommandPickerTest
 {
 
     public class DirectionCommandPickerTest
@@ -17,7 +17,7 @@ namespace DirectionCommandPicker
         {
             picker = new DirectionCommandPicker<IDirectionPickable>(1f);
             SetTimePassed(0);
-            ResetKeys();
+            ReSetKeys();
         }
 
         public void SetDirectionalService(float horizontal, float vertical)
@@ -48,11 +48,35 @@ namespace DirectionCommandPicker
             picker.inputService = service;
         }
 
-        public void ResetKeys()
+        public void ReSetKeys()
         {
             IUnityInputService service = Substitute.For<IUnityInputService>();
             service.GetKeyDown("").ReturnsForAnyArgs(false);
             picker.inputService = service;
+        }
+
+        [Test]
+        public void WaitsToClearInputTest()
+        {
+            SetAndReadInput(0, -1);
+            SetAndReadInput(0, 0);
+            SetTimePassed(0.5f);
+            picker.InputSelect();
+            // Picker should still have existing input
+            Assert.True(picker.ExistingInput());
+        }
+
+        // WaitsToClearInputAfterGameTimePassedGreaterThanTimeBeforeClearingInput
+        [Test]
+        public void WaitsToClearInputAfterGameTimePassedTest()
+        {
+            SetTimePassed(20);
+            SetAndReadInput(0, -1);
+            SetTimePassed(20.5f);
+            SetAndReadInput(0, 0);
+            picker.InputSelect();
+            // Picker should still have existing input
+            Assert.True(picker.ExistingInput());
         }
 
         // check input clears after no input 
@@ -65,11 +89,8 @@ namespace DirectionCommandPicker
             picker.InputSelect();
             //make sure input got read
             Assert.True(picker.ExistingInput());
-            IUnityTimeService timeService = Substitute.For<IUnityTimeService>();
-            // One second later 
-            timeService.unscaledTime.Returns(1.01f);
-            SetDirectionalService(0, 0);
-            picker.InputSelect();
+            SetTimePassed(1.01f);
+            SetAndReadInput(0, 0);
             // Input should be empty
             Assert.False(picker.ExistingInput());
         }
@@ -92,13 +113,13 @@ namespace DirectionCommandPicker
             Assert.True(picker.ExistingInput());
         }
 
-        // check clear time resets after new input
+        // check clear time reSets after new input
         [Test]
-        public void ClearTimeResetsAfterInputTest()
+        public void ClearTimeReSetsAfterInputTest()
         {
 
             SetAndReadInput(0, -1);
-            // set time passed
+            // Set time passed
             SetTimePassed(0.5f);
             // read input again
             SetAndReadInput(1, 0);
@@ -115,7 +136,7 @@ namespace DirectionCommandPicker
         public void ButtonPlusDirectionTest()
         {
             IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S);
-            picker.set(new IDirectionPickable[] { expected });
+            picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
             SetKeyPress("z");
             IDirectionPickable result = picker.InputSelect();
@@ -127,7 +148,7 @@ namespace DirectionCommandPicker
         public void RollForwardTest()
         {
             IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S, Direction.E);
-            picker.set(new IDirectionPickable[] { expected });
+            picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
             SetAndReadInput(1, 0);
             SetKeyPress("z");
@@ -139,7 +160,7 @@ namespace DirectionCommandPicker
         public void RollBackwardsTest()
         {
             IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S, Direction.W);
-            picker.set(new IDirectionPickable[] { expected });
+            picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
             SetAndReadInput(-1, 0);
             SetKeyPress("z");
@@ -151,7 +172,7 @@ namespace DirectionCommandPicker
         public void SameDirectionTest()
         {
             IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S, Direction.S);
-            picker.set(new IDirectionPickable[] { expected });
+            picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
             SetAndReadInput(0, 0);
             SetAndReadInput(0, -1);
@@ -164,7 +185,7 @@ namespace DirectionCommandPicker
         public void InputClearsAfterSelectingTest()
         {
             IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S);
-            picker.set(new IDirectionPickable[] { expected });
+            picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
             SetKeyPress("z");
             Assert.NotNull(picker.InputSelect());
@@ -175,7 +196,7 @@ namespace DirectionCommandPicker
         public void InputClearsAfterKeyPressTest()
         {
             IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S);
-            picker.set(new IDirectionPickable[] { expected });
+            picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
             SetKeyPress("x");
             // read input
@@ -187,7 +208,7 @@ namespace DirectionCommandPicker
         public void NullOnFailiureTest()
         {
             IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.X, Direction.S);
-            picker.set(new IDirectionPickable[] { expected });
+            picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
             SetKeyPress("z");
             Assert.Null(picker.InputSelect());        }
