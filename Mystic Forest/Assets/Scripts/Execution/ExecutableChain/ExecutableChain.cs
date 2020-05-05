@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public interface IExecutableChain : IEnumerable<IExecutable>// , DirectionPickable 
+public interface IExecutableChain : IEnumerable<IExecutable>, IDirectionPickable 
 {
     // ApproachAnimationData approach { get; }
 

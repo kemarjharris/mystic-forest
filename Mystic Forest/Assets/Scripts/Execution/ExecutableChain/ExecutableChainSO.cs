@@ -8,6 +8,7 @@ using System;
 public class ExecutableChainSO : ScriptableObject, IExecutableChain //, ExecutableAttackChain
 {
     public ExecutableSO[] attacks;
+    public DirectionCommandSO command;
    
 
     public IExecutable head => attacks[0];
@@ -20,7 +21,6 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
     private List<ExecutableSO> instances;
     IEnumerator<IExecutable> LoopEnumerator()
     {
-
         if (instances == null)
         {
             instances = new List<ExecutableSO>();
@@ -33,5 +33,10 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
     IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
+    }
+
+    public IDirectionCommand GetDirectionCommand()
+    {
+        throw new NotImplementedException();
     }
 }
