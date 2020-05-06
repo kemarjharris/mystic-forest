@@ -8,7 +8,8 @@ using System;
 public class ExecutableChainSO : ScriptableObject, IExecutableChain //, ExecutableAttackChain
 {
     public ExecutableSO[] attacks;
-    public DirectionCommandSO command;
+    public DirectionGroup group;
+    public DirectionCommandButton button;
    
 
     public IExecutable head => attacks[0];
@@ -35,8 +36,5 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
         return GetEnumerator();
     }
 
-    public IDirectionCommand GetDirectionCommand()
-    {
-        throw new NotImplementedException();
-    }
+    public IDirectionCommand GetDirectionCommand() => new DirectionCommand(button, group.directions);
 }

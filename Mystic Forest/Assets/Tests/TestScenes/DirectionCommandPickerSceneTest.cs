@@ -20,7 +20,6 @@ public class DirectionCommandPickerSceneTest : MonoBehaviour
                 new DirectionCommand(DirectionCommandButton.C, Direction.S, Direction.S, Direction.S),
             });
         picker.Set(pickables);
-
     }
 
     // Update is called once per frame

@@ -7,6 +7,14 @@ public class ExecutorTestScene : MonoBehaviour
     public ExecutableChainSO testObject;
     public ExecutableChainVisual visual;
     public ChainExecutorLinkImpl chainExecutor;
+    public ExecutableChainSetSOImpl set;
+
+    public void Start()
+    {
+        new ExecutableChainSetVisual(set);
+    }
+
+
     private void Update()
     {
 

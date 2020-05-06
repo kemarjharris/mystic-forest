@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExecutableChainVisual
 {
-    float width;
+    readonly float width;
     static GameObject canvas;
     GameObject parent;
     List<ExecutionVisual> visuals = new List<ExecutionVisual>();
@@ -25,6 +25,12 @@ public class ExecutableChainVisual
             if (i > 0) connections.Add(Object.Instantiate(connection, new Vector3((i - 0.5f) * width, 3), Quaternion.identity, parent.transform));
             i++;
         }
+    }
+
+    public ExecutableChainVisual(IEnumerable<IExecutable> chain, Vector3 position, Transform parent) : this(chain)
+    {
+        this.parent.transform.SetParent(parent);
+        this.parent.transform.position = position;
     }
 
     public void MoveNext()
