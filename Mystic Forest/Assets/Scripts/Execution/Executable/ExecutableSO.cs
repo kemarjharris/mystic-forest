@@ -4,7 +4,7 @@ using UnityEditor;
 public abstract class ExecutableSO : ScriptableObject, IExecutable
 {
 
-    public ChainExecutionButton button { get; }
+    public DirectionCommandButton button;
 
     protected ExecutableState state;
 
@@ -17,7 +17,5 @@ public abstract class ExecutableSO : ScriptableObject, IExecutable
     public abstract void OnInput(string input, IBattler battler, ITargetSet targets);
     public abstract void OnStart();
 
-
-
-    
+    public DirectionCommandButton GetButton() => button;
 }

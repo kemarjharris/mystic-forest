@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 
 [CreateAssetMenu()]
+[UnityEditor.InitializeOnLoad]
 public class ExecutableChainSetSOImpl : ScriptableObject, IExecutableChainSet
 {
     public List<ExecutableChainSO> chainList;
     IExecutableChainSet set;
 
-    public void Awake()
+    public void OnEnable()
     {
         set = new ExecutableChainSetImpl(chainList);
     }

@@ -14,7 +14,7 @@ public class ExecutableChainSetVisual
         parent = new GameObject("Executable Chain Set Visual");
         GameObject canvas = GameObject.Find("Canvas");
         parent.transform.SetParent(canvas.transform);
-        float width = arrowPrefab.GetComponent<RectTransform>().rect.width * arrowPrefab.transform.localScale.x;
+        float width = arrowPrefab.GetComponent<RectTransform>().rect.width * arrowPrefab.transform.localScale.x * 20;
         int j = 1;
         foreach (IExecutableChain chain in chains)
         {
@@ -38,10 +38,11 @@ public class ExecutableChainSetVisual
                 }
                 GameObject arrow = Object.Instantiate(arrowPrefab, parent.transform);
                 arrow.transform.Rotate(new Vector3(0, 0, angle));
-                arrow.transform.position = new Vector3(i * width, 3 * j);
+                arrow.transform.position = new Vector3(i * width, 60 * j);
+                arrow.transform.localScale *= 20;
 
             }
-            new ExecutableChainVisual(chain, new Vector3(i * width * 1.1f, 3 * j), parent.transform);
+            new ExecutableChainVisual(chain, new Vector3(i * width, 60 * (j-1)), parent.transform).parent.transform.localScale *= 20;
             // ExecutionVisualFactory.CreateVisual(chain.head, attacker.transform.position + new Vector3(i * width * 1.1f, 3 * j), parent.transform); 
             //AttackVisual visual = Object.Instantiate(Resources.Load<AttackVisual>("Prefabs/ExecutableAttackVisual"), parent.transform);
             //visual.transform.position = attacker.transform.position + new Vector3(i * width * 1.1f, 3 * j);

@@ -6,7 +6,7 @@ public class ExecutableChainVisual
 {
     readonly float width;
     static GameObject canvas;
-    GameObject parent;
+    public GameObject parent;
     List<ExecutionVisual> visuals = new List<ExecutionVisual>();
     List<GameObject> connections = new List<GameObject>();
     int pos = -1;
@@ -39,7 +39,7 @@ public class ExecutableChainVisual
         if (pos >= 0)
         {
             Vector3 worldPos = visuals[pos].transform.position;
-            visuals[pos].transform.SetParent(canvas.transform);
+            visuals[pos].transform.SetParent(parent.transform);
             visuals[pos].transform.position = worldPos;
             parent.transform.position -= new Vector3(width, 0);
             visuals[pos].MarkFinished();
