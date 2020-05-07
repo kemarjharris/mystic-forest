@@ -25,10 +25,9 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
 
     public T InputSelect()
     {
-        Debug.Log(inputtedDirections.Count);
+        if (commandables == null) throw new System.NullReferenceException("Commandables are null in DirectionCommandPicker. Did you call the Set method?");
         if (ExistingInput() && service.unscaledTime - timeOfLastInput > timeBeforeClearingInput)
         {
-            Debug.Log("clear");
             clear();
         }
         Direction dir = DirectionalInput.GetSimpleDirection();
@@ -94,6 +93,7 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
     }
 
     public void Set(IEnumerable<T> commandables) {
+        if (commandables == null) throw new ArgumentException("Trying to set commandables to null in DirectionCommandPicker");
         this.commandables = commandables;
         clear();
     }

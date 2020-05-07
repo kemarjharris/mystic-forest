@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class ExecutableChainSetVisual
 {
-    GameObject parent;
+    public GameObject parent;
     readonly List<ExecutionVisual> visuals = new List<ExecutionVisual>();
 
     public ExecutableChainSetVisual(IEnumerable<IExecutableChain> chains)

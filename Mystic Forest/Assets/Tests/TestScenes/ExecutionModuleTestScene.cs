@@ -4,13 +4,18 @@ using UnityEditor;
 public class ExecutionModuleTestScene : MonoBehaviour
 {
     public ExecutableChainSetSOImpl set;
-    public ExecutionModule module;
+    private ExecutionModule module;
+
+    private void Start()
+    {
+        module = new GameObject("Execution Module").AddComponent<ExecutionModule>();
+    }
 
     private void Update()
     {
         if (Input.GetKeyDown("space"))
         {
-            ExecutableChainSetVisual visual = new ExecutableChainSetVisual(set);
+            ExecutableChainSetVisual visual = CreateNewSetVisual();
             ExecutableChainVisual chainVisual = null;
             module.onNewChainSelected = delegate (IExecutableChain chain)
             {
@@ -22,15 +27,22 @@ public class ExecutionModuleTestScene : MonoBehaviour
             };
             module.onChainCancellable = delegate
             {
-                visual = new ExecutableChainSetVisual(set);
+                visual = CreateNewSetVisual();
             };
             module.onChainFinished = delegate
             {
                 if (visual != null) visual.Destroy();
                 if (chainVisual != null) chainVisual.Destroy();
             };
-
+            module.StartExecution(set);
         }
+    }
+
+    private ExecutableChainSetVisual CreateNewSetVisual()
+    {
+        ExecutableChainSetVisual visual = new ExecutableChainSetVisual(set);
+        visual.parent.transform.localPosition = new Vector2(-23, -129);
+        return visual;
     }
 
 }

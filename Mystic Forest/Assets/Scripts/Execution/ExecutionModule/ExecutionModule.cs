@@ -15,11 +15,11 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     public void StartExecution(IExecutableChainSet set)
     {
         picker.Set(set);
+        linkerActive = true;
     }
 
     public void Initialize(IDirectionCommandPicker<IExecutableChain> picker, IChainExecutor executor)
     {
-        linkerActive = true;
         picker.OnSelected = delegate (IExecutableChain chain)
         {
             linkerActive = false;
@@ -30,6 +30,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         {
             onChainCancellable();
             linkerActive = true;
+            Debug.Log("cancdksjalkdf");
         };
         executor.OnChainFinished = delegate
         {
@@ -38,7 +39,6 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         };
         this.picker = picker;
         this.executor = executor;
-        
     }
 
     private void Start()

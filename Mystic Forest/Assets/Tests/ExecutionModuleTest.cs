@@ -25,10 +25,10 @@ namespace ExecutionModuleTest
         }
 
         [Test]
-        // linking active starts true
-        public void LinkerActiveOnStartTest()
+        // linking active starts false
+        public void LinkerInActiveOnStartTest()
         {
-            Assert.True(module.LinkerIsActive());
+            Assert.False(module.LinkerIsActive());
         }
 
         [Test]
@@ -65,12 +65,27 @@ namespace ExecutionModuleTest
             Assert.True(module.LinkerIsActive());
         }
 
+        [Test]
+        public void StartExecutionSetsLinkerActiveTest()
+        {
+            module.StartExecution(Substitute.For<IExecutableChainSet>());
+            Assert.True(module.LinkerIsActive());
+        }
+
+        [Test]
+        public void StartExecutionKeepsExecutorInactiveTest()
+        {
+            ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
+            DirectionCommandPicker<IExecutableChain> picker = new DirectionCommandPicker<IExecutableChain>(0);
+            module.Initialize(picker, executor);
+            module.StartExecution(Substitute.For<IExecutableChainSet>());
+            Assert.False(executor.IsExecuting());
+        }
+
         // Chain Finished Sets linker inactive
         [Test]
         public void ChainFinishedSetsLinkerInactiveTest()
         {
-            // precondition linker is active
-            LinkerActiveOnStartTest();
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             IDirectionCommandPicker<IExecutableChain> picker = Substitute.For<IDirectionCommandPicker<IExecutableChain>>();
             module.Initialize(picker, executor);
