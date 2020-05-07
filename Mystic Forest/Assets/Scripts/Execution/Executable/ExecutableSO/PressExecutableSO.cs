@@ -18,40 +18,13 @@ public class PressExecutableSO : ExecutableSO {
         this.executionEvent = executionEvent;
     }
 
-    public override void OnStart()
+    public PressExecutable CreateExecutable()
     {
-        state = new ExecutableState();
-        if (executionEvent == null)
+        PressExecutable press = new PressExecutable
         {
-            throw new ArgumentException();
-        }
-        executionEvent.setOnCancellableEvent(delegate {
-            state.cancellable = true;
-        });
-        executionEvent.setOnFinishEvent(delegate {
-            state.finished = true;
-        });
-        instruction = PressInstruction.instance;
-        instruction.reset();
+            button = button,
+            executionEvent = Instantiate(executionEvent)
+        };
+        return press;
     }
-
-    public override void OnInput(string input, IBattler battler, ITargetSet targets)
-    {
-        InstructionKeyEvent keyEvent = instruction.lookAtTime(input);
-        // only react on keydown
-        if (keyEvent == InstructionKeyEvent.KEYDOWN)
-        {
-            if (!state.triggered)
-            {
-                state.triggered = true;
-                executionEvent.OnExecute(battler, targets);
-            } else
-            {
-                state.finished = true;
-            }
-        }
-    }
-
-    
-
 }
