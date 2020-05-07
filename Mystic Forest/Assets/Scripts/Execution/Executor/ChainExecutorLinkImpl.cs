@@ -24,6 +24,8 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
     Action IChainExecutor.OnChainCancellable { set => onChainCancellable = value; }
     Action IChainExecutor.OnChainFinished { set => onChainFinished = value; }
 
+    IChainInputReader reader = new ChainInputReader();
+
     public void ExecuteChain(IBattler attacker, ITargetSet targets, IEnumerator<IExecutable> chain)
     {
         this.attacker = attacker;
@@ -65,7 +67,8 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
             if (prev == null || prev.IsInCancelTime() || curr.IsTriggered())
             {
                 // Read the input for this frame
-                curr.OnInput("return"/*ChainInputReader.readInput()*/, attacker, targets);
+                string input = reader.ReadInput();
+                curr.OnInput(input, attacker, targets);
 
                 // curr attack finished after input was read, move to next attack.
                 // This block gets executed on the first frame where curr is in cancel time
