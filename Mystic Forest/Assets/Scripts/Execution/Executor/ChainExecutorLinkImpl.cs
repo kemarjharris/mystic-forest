@@ -48,7 +48,6 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
 
     public void Update() {
         if (seconds == null) return;
-        Debug.Log("I fell in love with you. Lie Lie.");
         // Everything that happens in this block means the chain finished executing
         // Prev attack finished, current attack never triggered, unsuccessful chain
         if (prev != null && prev.IsFinished() && curr != null && !curr.IsTriggered())

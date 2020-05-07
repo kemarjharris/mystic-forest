@@ -16,10 +16,6 @@ namespace ExecutionModuleTest
         {
             GameObject go = new GameObject();
             module = go.AddComponent<ExecutionModule>();
-            module.onNewChainSelected = delegate (IExecutableChain chain)
-            {
-                return Substitute.For<IEnumerator<IExecutable>>();
-            };
         }
 
         [TearDown]

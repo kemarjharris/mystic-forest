@@ -23,21 +23,18 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         picker.OnSelected = delegate (IExecutableChain chain)
         {
             linkerActive = false;
-            
-            IEnumerator<IExecutable> enumerator = onNewChainSelected?.Invoke(chain);
-            Debug.Log("enumerator is " + enumerator);
+            IEnumerator<IExecutable> enumerator = onNewChainSelected(chain);
             executor.ExecuteChain(null, null, enumerator);
         };
         executor.OnChainCancellable = delegate
         {
-            onChainCancellable?.Invoke();
+            onChainCancellable();
             linkerActive = true;
             Debug.Log("cancdksjalkdf");
         };
         executor.OnChainFinished = delegate
         {
-            onChainFinished?.Invoke();
-            Debug.Log("Finished");
+            onChainFinished();
             linkerActive = false;
         };
         this.picker = picker;
