@@ -3,7 +3,6 @@ using UnityEditor;
 
 public interface IExecutable
 {
-
     void OnInput(string input, IBattler battler, ITargetSet targets);
 
     void OnStart();

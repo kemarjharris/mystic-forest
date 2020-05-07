@@ -340,5 +340,23 @@ namespace ExecutorTest
             executor.NextExecutable();
             Assert.True(onCancellableFired);
         }
+
+        // Should be reference to the same object, state needs to be handled so that
+        // If the same executable appears twice, it doesnt break
+        [Test]
+        public void SameChainTwiceContinuesExecutionTest()
+        {
+            ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
+            PressExecutableSO prev = ScriptableObject.CreateInstance<PressExecutableSO>();
+            prev.executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            prev.OnStart();
+            prev.state.triggered = true;
+            prev.state.cancellable = true;
+            IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { prev }).GetEnumerator();
+            executor.Construct(executables, prev, null);
+            executor.ExecuteChain(null, null, executables);
+            bool result = executor.GetPrev().IsInCancelTime();
+            Assert.True(result);
+        }
     }
 }
