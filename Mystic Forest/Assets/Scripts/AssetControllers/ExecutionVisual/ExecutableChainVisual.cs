@@ -11,7 +11,7 @@ public class ExecutableChainVisual
     List<GameObject> connections = new List<GameObject>();
     int pos = -1;
 
-    public ExecutableChainVisual(IEnumerable<IExecutable> chain)
+    public ExecutableChainVisual(IEnumerator<IExecutable> chain)
     {
         GameObject connection = Resources.Load<GameObject>("Prefabs/ExecutionVisual/ExecutableConnector");
         width = connection.GetComponent<RectTransform>().rect.width * connection.transform.localScale.x;
@@ -19,15 +19,16 @@ public class ExecutableChainVisual
         parent = new GameObject("Attack Chain Execution Visual");
         parent.transform.SetParent(canvas.transform);
         int i = 0;
-        foreach(IExecutable executable in chain)
+        while (chain.MoveNext())
         {
-            visuals.Add(ExecutionVisualFactory.CreateVisual(executable, new Vector3(i * width, 3), parent.transform));
+            visuals.Add(ExecutionVisualFactory.CreateVisual(chain.Current, new Vector3(i * width, 3), parent.transform));
             if (i > 0) connections.Add(Object.Instantiate(connection, new Vector3((i - 0.5f) * width, 3), Quaternion.identity, parent.transform));
             i++;
         }
+        chain.Reset();
     }
 
-    public ExecutableChainVisual(IEnumerable<IExecutable> chain, Vector3 position, Transform parent) : this(chain)
+    public ExecutableChainVisual(IEnumerator<IExecutable> chain, Vector3 position, Transform parent) : this(chain)
     {
         this.parent.transform.SetParent(parent);
         this.parent.transform.position = position;

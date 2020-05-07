@@ -41,7 +41,7 @@ public class ExecutableChainSetVisual
                 arrow.transform.localScale *= 20;
 
             }
-            new ExecutableChainVisual(chain, new Vector3(i * width, 60 * (j-1)), parent.transform).parent.transform.localScale *= 20;
+            new ExecutableChainVisual(chain.GetEnumerator(), new Vector3(i * width, 60 * (j-1)), parent.transform).parent.transform.localScale *= 20;
             // ExecutionVisualFactory.CreateVisual(chain.head, attacker.transform.position + new Vector3(i * width * 1.1f, 3 * j), parent.transform); 
             //AttackVisual visual = Object.Instantiate(Resources.Load<AttackVisual>("Prefabs/ExecutableAttackVisual"), parent.transform);
             //visual.transform.position = attacker.transform.position + new Vector3(i * width * 1.1f, 3 * j);

@@ -17,13 +17,11 @@ public class ExecutionModuleTestScene : MonoBehaviour
         {
             ExecutableChainSetVisual visual = CreateNewSetVisual();
             ExecutableChainVisual chainVisual = null;
-            module.onNewChainSelected = delegate (IExecutableChain chain)
+            module.onNewChainSelected = delegate (ICustomizableEnumerator<IExecutable> chain)
             {
                 if (visual != null) visual.Destroy();
                 chainVisual = new ExecutableChainVisual(chain);
-                ICustomizableEnumerator<IExecutable> enumerator = chain.GetCustomizableEnumerator();
-                enumerator.SetOnMoveNext(chainVisual.MoveNext);
-                return enumerator;
+                chain.SetOnMoveNext(chainVisual.MoveNext);
             };
             module.onChainCancellable = delegate
             {

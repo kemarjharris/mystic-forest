@@ -18,14 +18,13 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
         return GetCustomizableEnumerator();
     }
 
-    private void OnEnable()
+    private List<ExecutableSO> instances;
+    IEnumerator<IExecutable> LoopEnumerator()
     {
         instances = new List<ExecutableSO>();
         for (int i = 0; i < attacks.Length; i++) instances.Add(Instantiate(attacks[i]));
+        return instances.GetEnumerator();
     }
-
-    private List<ExecutableSO> instances;
-    IEnumerator<IExecutable> LoopEnumerator() => instances.GetEnumerator();
     
 
 

@@ -8,7 +8,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     IDirectionCommandPicker<IExecutableChain> picker;
     IChainExecutor executor;
     bool linkerActive;
-    public System.Func<IExecutableChain, IEnumerator<IExecutable>> onNewChainSelected;
+    public System.Action<ICustomizableEnumerator<IExecutable>> onNewChainSelected;
     public System.Action onChainCancellable;
     public System.Action onChainFinished;
 
@@ -23,7 +23,8 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         picker.OnSelected = delegate (IExecutableChain chain)
         {
             linkerActive = false;
-            IEnumerator<IExecutable> enumerator = onNewChainSelected(chain);
+            ICustomizableEnumerator<IExecutable> enumerator = chain.GetCustomizableEnumerator();
+            onNewChainSelected(enumerator);
             executor.ExecuteChain(null, null, enumerator);
         };
         executor.OnChainCancellable = delegate

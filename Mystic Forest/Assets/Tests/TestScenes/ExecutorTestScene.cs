@@ -22,8 +22,8 @@ public class ExecutorTestScene : MonoBehaviour
             {
                 ExecutableChainSO executable = Instantiate(testObject);
                 if (visual != null) visual.Destroy();
-                visual = new ExecutableChainVisual(executable);
                 ICustomizableEnumerator<IExecutable> enumerator = executable.GetCustomizableEnumerator();
+                visual = new ExecutableChainVisual(enumerator);
                 enumerator.SetOnMoveNext(visual.MoveNext);
                 chainExecutor = new ChainExecutorLinkImpl();
                 chainExecutor.onChainCancellable = delegate {
