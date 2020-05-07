@@ -7,13 +7,6 @@ public class ExecutorTestScene : MonoBehaviour
     public ExecutableChainSO testObject;
     public ExecutableChainVisual visual;
     public ChainExecutorLinkImpl chainExecutor;
-    public ExecutableChainSetSOImpl set;
-
-    public void Start()
-    {
-        new ExecutableChainSetVisual(set);
-    }
-
 
     private void Update()
     {
@@ -30,10 +23,10 @@ public class ExecutorTestScene : MonoBehaviour
                 ExecutableChainSO executable = Instantiate(testObject);
                 if (visual != null) visual.Destroy();
                 visual = new ExecutableChainVisual(executable);
-                ExecutableChainEnumerator enumerator = (ExecutableChainEnumerator) executable.GetEnumerator();
+                ICustomizableEnumerator<IExecutable> enumerator = executable.GetCustomizableEnumerator();
                 enumerator.SetOnMoveNext(visual.MoveNext);
                 chainExecutor = new ChainExecutorLinkImpl();
-                chainExecutor.OnChainCancellable = delegate {
+                chainExecutor.onChainCancellable = delegate {
                     visual.Destroy();
                     visual = null;
                     chainExecutor = null;

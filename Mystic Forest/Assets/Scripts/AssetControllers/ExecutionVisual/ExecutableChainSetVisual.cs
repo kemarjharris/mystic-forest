@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class ExecutableChainSetVisual
 {
-
     GameObject parent;
     readonly List<ExecutionVisual> visuals = new List<ExecutionVisual>();
 
@@ -49,5 +48,10 @@ public class ExecutableChainSetVisual
             j++;
         }
         parent.transform.localScale = new Vector2(0.7f, 0.7f);
+    }
+
+    public void Destroy()
+    {
+        Object.Destroy(parent);
     }
 }

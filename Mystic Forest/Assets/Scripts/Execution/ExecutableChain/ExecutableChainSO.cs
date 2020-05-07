@@ -15,7 +15,7 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
 
     public IEnumerator<IExecutable> GetEnumerator()
     {
-        return new ExecutableChainEnumerator(LoopEnumerator());
+        return GetCustomizableEnumerator();
     }
 
     private void OnEnable()
@@ -35,4 +35,9 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
     }
 
     public IDirectionCommand GetDirectionCommand() => new DirectionCommand(attacks.Length > 0 ? head.GetButton() : DirectionCommandButton.NULL, group.directions);
+
+    public ICustomizableEnumerator<IExecutable> GetCustomizableEnumerator()
+    {
+        return new CustomizableEnumerator<IExecutable>(LoopEnumerator());
+    }
 }

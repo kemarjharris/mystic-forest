@@ -219,5 +219,20 @@ namespace DirectionCommandPickerTest
         {
             Assert.False(picker.ExistingInput());
         }
+
+        [Test]
+        public void OnSelectedEventFiresTest()
+        {
+            bool fired = false;
+            // true if fired
+            picker.onSelected = (x) => fired = true;
+            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S);
+            picker.Set(new IDirectionPickable[] { expected });
+            SetAndReadInput(0, -1);
+            SetKeyPress("z");
+            // event should fire
+            picker.InputSelect();
+            Assert.True(fired);
+        }
     }
 }

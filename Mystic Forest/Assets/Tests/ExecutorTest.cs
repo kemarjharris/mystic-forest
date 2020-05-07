@@ -9,6 +9,15 @@ namespace ExecutorTest
 {
     public class ChainExecutorLinkImplTest
     {
+        [Test]
+        public void NoChainDoesNotThrowExceptionTest()
+        {
+            ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
+            Assert.DoesNotThrow(delegate {
+                executor.Update();
+            });
+        }
+
         // ContinueExecution sets executables
         [Test]
         public void ExecuteChainSetsExecutablesTest()
@@ -234,7 +243,7 @@ namespace ExecutorTest
         {
             bool eventFires = false;
             ChainExecutorLinkImpl executor = SetUpExecutorState(true, true, true, false, false, false);
-            executor.OnChainFinished = delegate { eventFires = true; };
+            executor.onChainFinished = delegate { eventFires = true; };
             executor.Update();
             Assert.True(eventFires);
         }
@@ -327,7 +336,7 @@ namespace ExecutorTest
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executor.Construct(executables, null, curr);
             executor.GetExecutables().MoveNext();
-            executor.OnChainCancellable = delegate { onCancellableFired = true; };
+            executor.onChainCancellable = delegate { onCancellableFired = true; };
             executor.NextExecutable();
             Assert.True(onCancellableFired);
         }

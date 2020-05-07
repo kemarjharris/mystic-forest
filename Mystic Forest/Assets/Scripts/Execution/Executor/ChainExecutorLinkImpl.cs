@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
-public class ChainExecutorLinkImpl  : IChainExecutor// : Activity, Observable<AttackChainExecutionModule.ExecutionStatus>
+public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<AttackChainExecutionModule.ExecutionStatus>
 {
     //public ExecutableAttackChain executableAttackChainSO; 
     IEnumerator<IExecutable> seconds;
@@ -17,8 +18,11 @@ public class ChainExecutorLinkImpl  : IChainExecutor// : Activity, Observable<At
     IExecutable prev = null;
     IExecutable curr;
 
-    public System.Action OnChainCancellable;
-    public System.Action OnChainFinished;
+    public Action onChainCancellable;
+    public Action onChainFinished;
+
+    Action IChainExecutor.OnChainCancellable { set => onChainCancellable = value; }
+    Action IChainExecutor.OnChainFinished { set => onChainFinished = value; }
 
     public void ExecuteChain(IBattler attacker, ITargetSet targets, IEnumerator<IExecutable> chain)
     {
@@ -43,7 +47,7 @@ public class ChainExecutorLinkImpl  : IChainExecutor// : Activity, Observable<At
     }
 
     public void Update() {
-
+        if (seconds == null) return;
         // Everything that happens in this block means the chain finished executing
         // Prev attack finished, current attack never triggered, unsuccessful chain
         if (prev != null && prev.IsFinished() && curr != null && !curr.IsTriggered())
@@ -51,7 +55,7 @@ public class ChainExecutorLinkImpl  : IChainExecutor// : Activity, Observable<At
             // Runs when chain finishes running
             // tell observer that the attack chain is done
             seconds = null;
-            OnChainFinished?.Invoke();
+            onChainFinished?.Invoke();
             // notifyObserver(AttackChainExecutionModule.ExecutionStatus.CHAIN_FINISHED);
             // visual.Destroy();
         } else if (timeCheck) // Only try to execute if there are attacks in the chain
@@ -91,7 +95,7 @@ public class ChainExecutorLinkImpl  : IChainExecutor// : Activity, Observable<At
             // notifyObserver(AttackChainExecutionModule.ExecutionStatus.CHAIN_CANCELLABLE);
             // visual.Destroy();
             curr = null;
-            OnChainCancellable?.Invoke();
+            onChainCancellable?.Invoke();
         }
     }
 

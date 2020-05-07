@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e939b116a319e4096f91e37aa80c4b, type: 3}
   m_Name: Test Executable
   m_EditorClassIdentifier: 
-  executionEvent: {fileID: 11400000, guid: 7a8e5c84f10a0d54bbb4debc965d685e, type: 2}
+  button: 0
+  executionEvent: {fileID: 11400000, guid: 89b1e515989c7c041b4010ded3756922, type: 2}

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : IDirectionPickable
 {
@@ -10,8 +11,11 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
     private DirectionCommandButton inputtedButton;
     public IUnityTimeService service = new UnityTimeService();
     public IUnityInputService inputService = new UnityInputService();
+    public Action<T> onSelected;
     float timeOfLastInput;
     readonly float timeBeforeClearingInput;
+
+    Action<T> IDirectionCommandPicker<T>.OnSelected { set => onSelected = value; }
 
     public DirectionCommandPicker(float timeBeforeClearingInput) {
         inputtedDirections = new List<Direction>(); 
@@ -82,6 +86,7 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
             clear();
             if (t != null)
             {
+                onSelected?.Invoke(t);
                 return t;
             }
         }
@@ -90,6 +95,7 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
 
     public void Set(IEnumerable<T> commandables) {
         this.commandables = commandables;
+        clear();
     }
 
     public void clear()

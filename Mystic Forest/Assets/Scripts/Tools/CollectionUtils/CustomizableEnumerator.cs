@@ -1,19 +1,19 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using UnityEditor;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Collections;
 
-public class ExecutableChainEnumerator : IEnumerator<IExecutable>
+public class CustomizableEnumerator<T> : ICustomizableEnumerator<T>
 {
-
-    IEnumerator<IExecutable> enumerator;
+    IEnumerator<T> enumerator;
     System.Action onMoveNext;
 
-    public ExecutableChainEnumerator(IEnumerator<IExecutable> enumerator)
+    public CustomizableEnumerator(IEnumerator<T> enumerator)
     {
         this.enumerator = enumerator;
     }
 
-    public IExecutable Current => enumerator.Current;
+    public T Current => enumerator.Current;
 
     object IEnumerator.Current => Current;
 

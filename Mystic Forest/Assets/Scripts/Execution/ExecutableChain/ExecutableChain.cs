@@ -10,6 +10,8 @@ public interface IExecutableChain : IEnumerable<IExecutable>, IDirectionPickable
 
     IExecutable head { get; }
 
+    ICustomizableEnumerator<IExecutable> GetCustomizableEnumerator();
+
     //AttackChainExecutionVisual getVisual(Battler attacker);
 
 }

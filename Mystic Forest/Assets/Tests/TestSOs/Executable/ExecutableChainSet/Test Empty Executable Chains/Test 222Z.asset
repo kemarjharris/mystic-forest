@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236b1e1ecc55fe740bfa1e21d3037f9b, type: 3}
   m_Name: Test 222Z
   m_EditorClassIdentifier: 
-  attacks: []
+  attacks:
+  - {fileID: 11400000, guid: bb2fefa97f2675c46b4817530ac75280, type: 2}
   group: {fileID: 11400000, guid: 169cc558b8046b54e9aeeac9e0167b16, type: 2}
-  button: 0
