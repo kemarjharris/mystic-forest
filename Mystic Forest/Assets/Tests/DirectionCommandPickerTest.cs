@@ -18,6 +18,7 @@ namespace DirectionCommandPickerTest
             picker = new DirectionCommandPicker<IDirectionPickable>(1f);
             SetTimePassed(0);
             ReSetKeys();
+            picker.Set(Substitute.For<IEnumerable<IDirectionPickable>>());
         }
 
         public void SetDirectionalService(float horizontal, float vertical)

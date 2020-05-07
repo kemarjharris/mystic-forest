@@ -25,8 +25,6 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
         for (int i = 0; i < attacks.Length; i++) instances.Add(Instantiate(attacks[i]));
         return instances.GetEnumerator();
     }
-    
-
 
     IEnumerator IEnumerable.GetEnumerator()
     {
@@ -35,8 +33,5 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
 
     public IDirectionCommand GetDirectionCommand() => new DirectionCommand(attacks.Length > 0 ? head.GetButton() : DirectionCommandButton.NULL, group.directions);
 
-    public ICustomizableEnumerator<IExecutable> GetCustomizableEnumerator()
-    {
-        return new CustomizableEnumerator<IExecutable>(LoopEnumerator());
-    }
+    public ICustomizableEnumerator<IExecutable> GetCustomizableEnumerator() => new CustomizableEnumerator<IExecutable>(LoopEnumerator());
 }
