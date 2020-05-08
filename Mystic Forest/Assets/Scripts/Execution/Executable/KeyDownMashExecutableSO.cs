@@ -14,6 +14,10 @@ public class KeyDownMashExecutableSO : ExecutableSO
     private ExecutionEvent executionEventInstance;
     private ExecutionEvent mashTimeEndedEventInstance;
 
+    // public ChainExecutionButton button;
+    // private ExpandingButtonMashVisual visualPrefab;
+    // private ExpandingButtonMashVisual visual;
+
     public void Construct(MashInstruction instruction, ExecutionEvent executionEvent, ExecutionEvent mashTimeEndedEvent, float mashDuration)
     {
         this.instruction = instruction; 
@@ -37,10 +41,15 @@ public class KeyDownMashExecutableSO : ExecutableSO
         mashTimeEndedEventInstance = Instantiate(mashTimeEndedEvent);
         mashTimeEndedEventInstance.setOnCancellableEvent(delegate { state.cancellable = true; });
         mashTimeEndedEventInstance.setOnFinishEvent(delegate { state.finished = true; });
+        
+        // visual.StartTimer(mashDuration + beforeCancelInputLeeway);
     }
+
+    // public override ChainExecutionButton getButton() => button;
 
     public override void OnInput(string input, IBattler battler, ITargetSet targets)
     {
+        if (!CorrectButton(input)) return;
         // Only start timer after first key down
         float pressTime = state.triggered ? service.unscaledTime - firstKeyDownTime : 0;
         if (pressTime <= mashDuration)
@@ -49,11 +58,13 @@ public class KeyDownMashExecutableSO : ExecutableSO
 
             if (key == InstructionKeyEvent.KEYDOWN)
             {
+               
                 if (!state.triggered)
                 {
                     firstKeyDownTime = service.unscaledTime;
                     state.triggered = true;
                 }
+                // visual.ExpandButton();
                 onKeyDown?.Invoke();
                 executionEventInstance.OnExecute(battler, targets);
             }

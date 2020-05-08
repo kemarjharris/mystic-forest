@@ -37,6 +37,7 @@ public class PressExecutableSO : ExecutableSO {
 
     public override void OnInput(string input, IBattler battler, ITargetSet targets)
     {
+        if (!CorrectButton(input)) return;
         InstructionKeyEvent keyEvent = instruction.lookAtTime(input);
         // only react on keydown
         if (keyEvent == InstructionKeyEvent.KEYDOWN)

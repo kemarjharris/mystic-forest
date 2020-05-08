@@ -18,4 +18,7 @@ public abstract class ExecutableSO : ScriptableObject, IExecutable
     public abstract void OnStart();
 
     public DirectionCommandButton GetButton() => button;
+
+    protected  bool CorrectButton(string input) => button.ToString().ToLower().Equals(input.ToLower());
+
 }

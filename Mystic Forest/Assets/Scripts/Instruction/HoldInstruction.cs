@@ -12,7 +12,6 @@ public class HoldInstruction : Instruction
         if (timePressed < 0) throw new System.ArgumentException("Time pressed must be non-negative");
         try
         {
-            Debug.Log(string.Format("timeSincePress: {0}, releaseTime: {1}", timePressed, releaseTime));
             if (!successTimingDown && timePressed > releaseTime + acceptedRange)
             {
                 // Key was never pressed

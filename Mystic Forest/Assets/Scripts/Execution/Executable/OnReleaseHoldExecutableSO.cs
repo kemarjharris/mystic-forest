@@ -25,8 +25,9 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
 
     public override void OnInput(string input, IBattler battler, ITargetSet targets)
     {
+        if (!CorrectButton(input)) return;
         // Dont start counting until first key down
-        float timePassed = state.triggered ? service.unscaledTime - timeStarted : 0;
+        float timePassed = state.triggered ? service.unscaledTime - timeStarted : 0; 
         InstructionKeyEvent key = instruction.lookAtTime(input, timePassed, releaseTime);
         
         if (key == InstructionKeyEvent.KEYDOWN)

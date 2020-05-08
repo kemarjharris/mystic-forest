@@ -66,7 +66,7 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
             // This block also executes if the current attack has been successfully triggered
             if (prev == null || prev.IsInCancelTime() || curr.IsTriggered())
             {
-                // Read the input for this frame
+
                 string input = reader.ReadInput();
                 curr.OnInput(input, attacker, targets);
 
