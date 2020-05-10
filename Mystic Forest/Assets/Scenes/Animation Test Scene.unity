@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 1830174496}
   - component: {fileID: 1830174495}
   - component: {fileID: 1830174494}
+  - component: {fileID: 1830174497}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Untagged
@@ -268,7 +269,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300030, guid: cad4b22f446e0884e99803495aeef1cf, type: 3}
+  m_Sprite: {fileID: 21300040, guid: cad4b22f446e0884e99803495aeef1cf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -293,3 +294,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1830174497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830174493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b21d23dac0db12f449d23a4e181188bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 7400000, guid: 3017bccfc141bec4982272827eb646fb, type: 2}
+  - {fileID: 7400000, guid: 26e11b19b02b0b546a2ef70c7330c446, type: 2}
+  - {fileID: 7400000, guid: 29ba18be28a14074a828fcdc1e4d0624, type: 2}
+  weight: 0
