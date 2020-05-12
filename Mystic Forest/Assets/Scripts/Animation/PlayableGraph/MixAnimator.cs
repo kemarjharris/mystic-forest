@@ -9,9 +9,12 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
 {
 
     IDictionary<string, PlayableAnimData> animMap;
+    public IUnityTimeService service = new UnityTimeService();
     PlayableGraph playableGraph;
     AnimationMixerPlayable mixerPlayable;
     Coroutine coroutine;
+    
+
     private struct PlayableAnimData
     {
         public readonly int pos;
@@ -49,6 +52,11 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
 
     public void Play(string clipName)
     {
+        if (!animMap.ContainsKey(clipName))
+        {
+            Debug.LogWarning(clipName);
+            return;
+        }
         foreach (KeyValuePair<string, PlayableAnimData> pair in animMap)
         {
             if (pair.Key == clipName)
@@ -75,16 +83,18 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
         float timePassed = 0;
         while (true)
         {
+            yield return null;
             transform.position = start + data.func(timePassed);
             timePassed += Time.unscaledDeltaTime;
-            yield return null;
         }
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
         // Destroys all Playables and Outputs created by the graph.
         playableGraph.Destroy();
     }
+
+    /* For Testing */
 
 }

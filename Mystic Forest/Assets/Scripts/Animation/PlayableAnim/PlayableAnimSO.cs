@@ -13,7 +13,7 @@ public class PlayableAnimSO : ScriptableObject, IPlayableAnim
 
     public AnimationClip GetAnimationClip() => clip;
 
-    public string GetName() => clip.name;
+    public string GetName() => name;
 
     public float GetSpeed() => speed;
 

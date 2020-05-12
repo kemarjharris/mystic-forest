@@ -1,10 +1,11 @@
 {
     "name": "Tests",
     "references": [
-        "Main",
-        "Unity.PlayableGraphVisualizer"
+        "Main"
     ],
-    "optionalUnityReferences": [],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

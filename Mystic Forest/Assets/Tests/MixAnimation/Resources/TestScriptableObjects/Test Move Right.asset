@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9677b33069a5df743b9248eb86b4893d, type: 3}
-  m_Name: Warrior Dash
+  m_Name: Test Move Right
   m_EditorClassIdentifier: 
-  clip: {fileID: 7400000, guid: 29ba18be28a14074a828fcdc1e4d0624, type: 2}
+  clip: {fileID: 7400000, guid: 8322902a167b8784898d93a90426dfa1, type: 2}
   speed: 1
   xCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: 14.052675
-      outSlope: 14.052675
+      value: -0.09162521
+      inSlope: 5.091625
+      outSlope: 5.091625
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.49906245
-      value: 8.013163
-      inSlope: 14.052675
-      outSlope: 14.052675
+      time: 1
+      value: 5
+      inSlope: 5.091625
+      outSlope: 5.091625
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
