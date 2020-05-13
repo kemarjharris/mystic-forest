@@ -1,0 +1,2241 @@
+fileFormatVersion: 2
+guid: cad4b22f446e0884e99803495aeef1cf
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_0
+    21300002: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_1
+    21300004: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_2
+    21300006: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_3
+    21300008: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_4
+    21300010: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_5
+    21300012: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_6
+    21300014: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_7
+    21300016: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_8
+    21300018: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_9
+    21300020: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_10
+    21300022: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_11
+    21300024: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_12
+    21300026: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_13
+    21300028: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_14
+    21300030: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_15
+    21300032: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_16
+    21300034: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_17
+    21300036: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_18
+    21300038: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_19
+    21300040: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_20
+    21300042: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_21
+    21300044: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_22
+    21300046: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_23
+    21300048: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_24
+    21300050: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_25
+    21300052: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_26
+    21300054: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_27
+    21300056: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_28
+    21300058: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_29
+    21300060: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_30
+    21300062: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_31
+    21300064: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_32
+    21300066: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_33
+    21300068: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_34
+    21300070: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_35
+    21300072: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_36
+    21300074: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_37
+    21300076: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_38
+    21300078: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_39
+    21300080: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_40
+    21300082: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_41
+    21300084: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_42
+    21300086: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_43
+    21300088: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_44
+    21300090: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_45
+    21300092: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_46
+    21300094: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_47
+    21300096: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_48
+    21300098: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_49
+    21300100: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_50
+    21300102: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_51
+    21300104: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_52
+    21300106: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_53
+    21300108: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_54
+    21300110: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_55
+    21300112: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_56
+    21300114: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_57
+    21300116: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_58
+    21300118: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_59
+    21300120: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_60
+    21300122: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_61
+    21300124: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_62
+    21300126: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_63
+    21300128: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_64
+    21300130: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_65
+    21300132: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_66
+    21300134: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_67
+    21300136: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_68
+    21300138: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_69
+    21300140: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_70
+    21300142: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_71
+    21300144: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_72
+    21300146: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_73
+    21300148: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_74
+    21300150: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_75
+    21300152: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_76
+    21300154: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_77
+    21300156: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_78
+    21300158: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_79
+    21300160: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_80
+    21300162: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_81
+    21300164: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_82
+    21300166: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_83
+    21300168: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_84
+    21300170: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_85
+    21300172: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_86
+    21300174: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_87
+    21300176: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_88
+    21300178: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_89
+    21300180: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_90
+    21300182: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_91
+    21300184: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_92
+    21300186: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_93
+    21300188: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_94
+    21300190: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_95
+    21300192: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_96
+    21300194: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_97
+    21300196: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_98
+    21300198: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_99
+    21300200: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_100
+    21300202: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_101
+  externalObjects: {}
+  serializedVersion: 9
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_0
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 473
+        width: 46
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb55ad12bc31ada449d4d80f5890e950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_1
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 473
+        width: 45
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19889d528b2642441bf36f53a8261f53
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_2
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 473
+        width: 48
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00802a1f1b4f8794a96311e60d813572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_3
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 473
+        width: 39
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d327fd01f82eb847abeefc427b0071e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_4
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 473
+        width: 47
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1679ac0b9dfb8ec41b140e5ee6b4cdef
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_5
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 473
+        width: 60
+        height: 39
+      alignment: 9
+      pivot: {x: 0.72562766, y: 0.62397337}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80e0e5bae40859b42868b6707b56a485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_6
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 473
+        width: 60
+        height: 36
+      alignment: 9
+      pivot: {x: 0.72562814, y: 0.624}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 187f6407a97566340b0f4e9d32781e7c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_7
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 473
+        width: 60
+        height: 38
+      alignment: 9
+      pivot: {x: 0.72562766, y: 0.624}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d05dd45a2886ef41a60a36d3e9ee23c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_8
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 473
+        width: 60
+        height: 37
+      alignment: 9
+      pivot: {x: 0.72562766, y: 0.624}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 445bdcc2e9d6d2f4dae613a141f12594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_9
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 473
+        width: 48
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2677fa4edf011114498b6f101922b1d9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_10
+      rect:
+        serializedVersion: 2
+        x: 555
+        y: 473
+        width: 48
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e777331018b8f3a4f9630ad1f9079284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_11
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 473
+        width: 48
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9268d9ae02aaaa468fa5fc9231b78b1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_12
+      rect:
+        serializedVersion: 2
+        x: 655
+        y: 473
+        width: 50
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 428356db934ea144f8af6d32f4ce6e11
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_13
+      rect:
+        serializedVersion: 2
+        x: 707
+        y: 473
+        width: 53
+        height: 45
+      alignment: 9
+      pivot: {x: 0.6642041, y: 0.6289307}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fc8cdf928a0b2841a285e505a9c815c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_14
+      rect:
+        serializedVersion: 2
+        x: 762
+        y: 473
+        width: 47
+        height: 46
+      alignment: 9
+      pivot: {x: 0.664591, y: 0.5630659}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a884ea6ce367954c9a59797b7a04bc7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_15
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 473
+        width: 41
+        height: 52
+      alignment: 9
+      pivot: {x: 0.594338, y: 0.5371921}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bc1d4743a812e94fa1187757de72fd9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_16
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 396
+        width: 73
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 827da489c4a37ea4babaa3cb8f314c27
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_17
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 396
+        width: 69
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcb4f62969c1da145bcc59b605ea1277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_18
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 396
+        width: 62
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ee9501868857bd449b979310aec9dc8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_19
+      rect:
+        serializedVersion: 2
+        x: 213
+        y: 396
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56b7b5a38d89b8649a18625f70ae4285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_20
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 396
+        width: 54
+        height: 43
+      alignment: 9
+      pivot: {x: 0.33333334, y: 0.6280007}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c01f9581866b50740b2405a69228ce14
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_21
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 396
+        width: 53
+        height: 43
+      alignment: 9
+      pivot: {x: 0.34, y: 0.628}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2e62af51c6c3ec49879fceb0196c315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_22
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 396
+        width: 54
+        height: 47
+      alignment: 9
+      pivot: {x: 0.33333334, y: 0.57}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd24184c88f45634cbf971c902d68268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_23
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 396
+        width: 43
+        height: 58
+      alignment: 9
+      pivot: {x: 0.641285, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed4b5adac22b8494ea760fa16ef3d8f0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_24
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 396
+        width: 61
+        height: 45
+      alignment: 9
+      pivot: {x: 0.70323354, y: 0.6000007}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90cd0a42e47eb3b47a27166922b3be8b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_25
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 396
+        width: 30
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f28edc56bfcf519448602093d114de53
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_26
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 396
+        width: 36
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2af0c913dc71c8f479d21e67e4aa4765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_27
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 396
+        width: 58
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b24a7dc9199ed7945a2cfddda4d71eac
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_28
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 396
+        width: 55
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ede3fb33eaa61ed4ba08403b37780cfd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_29
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 396
+        width: 55
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24924683d64c6d044a60d0d1d5e70fd3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_30
+      rect:
+        serializedVersion: 2
+        x: 775
+        y: 396
+        width: 40
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40e35cfda57be3e4cbd680eda090e6f9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_31
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 396
+        width: 35
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88ee7669a180145429833269eb840c13
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_32
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 329
+        width: 57
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b60e38f4091416a459ea7040597122e1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_33
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 329
+        width: 36
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5db51f57da995543bb6d3b222b88b65
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_34
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 329
+        width: 59
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b16d33c2c20c76448bf4e8a754ed9345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_35
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 329
+        width: 63
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbd6ab1efabda3742ac32d9c91f6f973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_36
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 329
+        width: 60
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e2083ce732f96b4b879ebd0d3f59001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_37
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 329
+        width: 44
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d379ababb61907d47804f230cf450a24
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_38
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 329
+        width: 42
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f332adb7719ff68499179e7003535ef3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_39
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 329
+        width: 51
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 259498edb6d1dcc47b906d6edb6eebd8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_40
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 329
+        width: 34
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0950ee486bc5a344d92e0ee7a8784ebc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_41
+      rect:
+        serializedVersion: 2
+        x: 509
+        y: 329
+        width: 54
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8fe7cd180fc7df42ae1a56fd2ae9ac1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_42
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 329
+        width: 54
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acf1a3aa5a58d93448cdf91d62e5d33d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_43
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 329
+        width: 55
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9529adbce55488468f259f519651932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_44
+      rect:
+        serializedVersion: 2
+        x: 678
+        y: 329
+        width: 50
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bb75634f834d1c42ad009a7175a4e6b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_45
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 329
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0518b4c0dc086a741842faf31169ae28
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_46
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 329
+        width: 75
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2731084c86ff6b94091617b66945a7c6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_47
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 258
+        width: 48
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5590147c6c8f8814bb96a0324698a548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_48
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 258
+        width: 49
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eede4b73eb6f0314e8c732e25d2e7acc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_49
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 258
+        width: 58
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bb31111b73e749438907dc0decf629f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_50
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 258
+        width: 69
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 385283f6093c5d046b9e7433611da05e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_51
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 258
+        width: 75
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6fa7873db32c4d44a6ed41739018f02
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_52
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 258
+        width: 75
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dc6b0512f1db2240b574c4288de5272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_53
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 256
+        width: 73
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c10d71705984a354382820ecf25c088e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_54
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 256
+        width: 61
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ae71acb0c4c31749bdb5506755176ee
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_55
+      rect:
+        serializedVersion: 2
+        x: 538
+        y: 256
+        width: 73
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da083159a372a5c41b10ccdcc9485733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_56
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 256
+        width: 61
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c7c8c04c01351e4cb988a65e2801f05
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_57
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 256
+        width: 39
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f64f672f17a7b64e8f05b534f2ad4c0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_58
+      rect:
+        serializedVersion: 2
+        x: 717
+        y: 256
+        width: 38
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7a08bd9810e25b4195cfd7c90a567e6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_59
+      rect:
+        serializedVersion: 2
+        x: 757
+        y: 256
+        width: 45
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09ed3835c4d24ca4c9a799c5f93a289a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_60
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 256
+        width: 48
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7eadc80b21f89e249a6b94b96f85ee01
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_61
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 185
+        width: 31
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 702ca6aa6b4826446b0ad11bc1751c9e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_62
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 185
+        width: 40
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f9e9ef3181fb7342bd4b5ec08502ff0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_63
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 185
+        width: 34
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f90dd6490a7a3d948ade8eeab4daac1f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_64
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 185
+        width: 63
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05479a40016c8ba4f8eb577a461ebe37
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_65
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 185
+        width: 63
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4054ea36a3586af46a67f795e5c7a466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_66
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 185
+        width: 62
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83bba52547897474b91a70bad130798a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_67
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 185
+        width: 54
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9463664c4607a454c898ff6f2dd11bd5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_68
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 185
+        width: 53
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a79f82b9f7946824c9e41d4e94cceba2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_69
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 185
+        width: 43
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 106b02f3549675448a0dedb810496062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_70
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 185
+        width: 30
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5ae7ba97b7fa204194024d7f634bb07
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_71
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 185
+        width: 62
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fad082445590c044c9cd412f1b9d133b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_72
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 185
+        width: 46
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58d81d5cea1416443bef4b8ecccc21e7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_73
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 185
+        width: 46
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2148dd62890450747b999685aae13e3c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_74
+      rect:
+        serializedVersion: 2
+        x: 673
+        y: 185
+        width: 44
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f8e10c4d317a5242a8dc856c847827e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_75
+      rect:
+        serializedVersion: 2
+        x: 719
+        y: 185
+        width: 49
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b13e4b21ce2acd45a73c8e51104ce7f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_76
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 185
+        width: 32
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29b237ae37cc23041974131f34b4c082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_77
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 185
+        width: 48
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d30b160e12f67864084ab1c78cc87db1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_78
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 112
+        width: 53
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ec9785d9b6571e49b02873bc6e22675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_79
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 112
+        width: 42
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66f0f104bbdfc314490cf9e103035308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_80
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 112
+        width: 41
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30dc7be49464f8f48ae01b713b71f10a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_81
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 112
+        width: 38
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f26f3b30e191654c861d35c1690c502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_82
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 112
+        width: 26
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 918b73b9bcec3b74baf6fd3941866df0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_83
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 112
+        width: 31
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7157a9220a011b940a189b979b838b4d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_84
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 112
+        width: 67
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e4fae3cb9dd98d40aedf2d4f85433d3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_85
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 112
+        width: 66
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a840856ff320d44ebf3e5696c8e4ff3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_86
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 112
+        width: 66
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5acd601579317a54284f915477745fd9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_87
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 112
+        width: 61
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 299b2eb3a7ab7734bba13ce854e5c130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_88
+      rect:
+        serializedVersion: 2
+        x: 525
+        y: 112
+        width: 56
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 884cce8adf30eb74baa6e7390474880b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_89
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 112
+        width: 66
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 636d24f3ef1404543bc9471c4fc0e74b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_90
+      rect:
+        serializedVersion: 2
+        x: 651
+        y: 112
+        width: 61
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3035af8bb85b9e48b696f08b1884091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_91
+      rect:
+        serializedVersion: 2
+        x: 714
+        y: 112
+        width: 39
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 839a10bcfaa033d49b4ca314221357c8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_92
+      rect:
+        serializedVersion: 2
+        x: 755
+        y: 112
+        width: 50
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce449becf759f1c48b4c31eea80a048b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_93
+      rect:
+        serializedVersion: 2
+        x: 807
+        y: 112
+        width: 45
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8899a992d9ea1845bb44bc6157cd03e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_94
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 5
+        width: 98
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 505b114df2f8d6543bfbf9e03867e2d4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_95
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 43
+        width: 46
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebb93cc74f0e73f449d61797efe6d6ea
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_96
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 43
+        width: 50
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81f42fb68a72f5b4e9079a6308868c8d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_97
+      rect:
+        serializedVersion: 2
+        x: 628
+        y: 43
+        width: 54
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef7a26f2ed1825e43b0b3a0b5a551247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_98
+      rect:
+        serializedVersion: 2
+        x: 684
+        y: 43
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eedca3b3489df4941ab7d2dc54f3c441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_99
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 43
+        width: 39
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1dd398de220e2543a215ba83519c0b9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_100
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 43
+        width: 37
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 568ac23360aa509449a427b0e8fe5b4a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Tales of the World Narikiri Dungeon 3 - Cress Albane_101
+      rect:
+        serializedVersion: 2
+        x: 819
+        y: 43
+        width: 33
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4cabf6b17ad9d6438022966bc56b60f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 28976320a05895642b60f27262fcc6f5
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
