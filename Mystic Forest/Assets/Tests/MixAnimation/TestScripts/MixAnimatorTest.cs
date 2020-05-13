@@ -51,7 +51,7 @@ namespace Tests
             animator.Play("Test White To Black");
             yield return new WaitForSeconds(0.5f);
             animator.Play("Nonexistant string");
-            yield return new WaitForSeconds(0.52f);
+            yield return new WaitForSeconds(0.6f);
             Assert.AreEqual(Color.black, obj.GetComponent<SpriteRenderer>().color);
         }
 
