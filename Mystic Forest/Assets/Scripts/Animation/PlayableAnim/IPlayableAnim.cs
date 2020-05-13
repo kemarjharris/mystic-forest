@@ -7,4 +7,5 @@ public interface IPlayableAnim
     AnimationClip GetAnimationClip();
     Vector2 Evaluate(float time);
     string GetName();
+    float GetLength();
 }

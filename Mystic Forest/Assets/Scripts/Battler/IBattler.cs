@@ -4,4 +4,7 @@ using UnityEngine;
 
 public interface IBattler
 {
+    void SetExecutables(IExecutableChainSet executables);
+
+    //void Play(string animation);
 }

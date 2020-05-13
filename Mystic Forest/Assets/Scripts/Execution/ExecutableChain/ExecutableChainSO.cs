@@ -25,8 +25,6 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
         for (int i = 0; i < attacks.Length; i++) instances.Add(Instantiate(attacks[i]));
         return instances.GetEnumerator();
     }
-    
-
 
     IEnumerator IEnumerable.GetEnumerator()
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CreateAssetMenu(menuName = "Animation/Playable Animation SO")]
+[CreateAssetMenu(menuName = "AnimationSO/Playable Animation SO")]
 public class PlayableAnimSO : ScriptableObject, IPlayableAnim
 {
     public AnimationClip clip;
@@ -20,4 +20,6 @@ public class PlayableAnimSO : ScriptableObject, IPlayableAnim
     public AnimationCurve GetXCurve() => xCurve;
 
     public AnimationCurve GetYCurve() => yCurve;
+
+    public float GetLength() => clip.length;
 }
