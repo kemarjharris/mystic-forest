@@ -3,5 +3,5 @@ using UnityEditor;
 
 public interface IMixAnimator
 {
-    void Play(string clipName);
+    void Play(IPlayableAnim anim);
 }

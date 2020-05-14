@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class MeleeEvent : ExecutionEvent, IMixAnimatable
+public class MeleeEvent : ExecutionEvent
 {
     float timeOfContact;
     PlayableAnimSO animSO;

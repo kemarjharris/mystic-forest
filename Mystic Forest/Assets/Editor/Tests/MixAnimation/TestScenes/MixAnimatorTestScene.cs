@@ -13,9 +13,8 @@ public class MixAnimatorTestScene : MonoBehaviour
     void Start()
     {
         MixAnimator animator = @object.GetComponent<MixAnimator>();
-        animator.Initialize(clips);
         this.animator = animator;
-        IHitBox hitBox = @object.GetComponent<IHitBox>();
+        IHitBox hitBox = @object.GetComponent<HitBox>();
         hitBox.SetOnCollide(delegate(Collider2D collider)
         {
             Debug.Log(collider.gameObject.name);
@@ -30,8 +29,7 @@ public class MixAnimatorTestScene : MonoBehaviour
         try
         {
             int numPressed = int.Parse(key);
-            name = clips[numPressed].name;
-            animator.Play(name);
+            animator.Play(clips[numPressed]);
         }
         catch
         {

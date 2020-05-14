@@ -30,32 +30,32 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
         }
     }
 
-    public void Initialize(IPlayableAnim[] anims)
+    public void AddAnimation(IPlayableAnim anim)
+    {
+        mixerPlayable.SetInputCount(animMap.Count + 1);
+        AnimationClipPlayable playable = AnimationClipPlayable.Create(playableGraph, anim.GetAnimationClip());
+        playable.SetSpeed(anim.GetSpeed());
+        animMap.Add(anim.GetName(),
+           new PlayableAnimData(animMap.Count, anim.GetSpeed(), anim.Evaluate, playable));
+        playableGraph.Connect(playable, 0, mixerPlayable, animMap.Count - 1);
+    }
+
+    public void Awake()
     {
         animMap = new Dictionary<string, PlayableAnimData>();
         playableGraph = PlayableGraph.Create();
         AnimationPlayableOutput output = AnimationPlayableOutput.Create(playableGraph, "Animation", GetComponent<Animator>());
-        mixerPlayable = AnimationMixerPlayable.Create(playableGraph, anims.Length, true);
+        mixerPlayable = AnimationMixerPlayable.Create(playableGraph, 0, true);
         output.SetSourcePlayable(mixerPlayable);
-        for (int i = 0; i < anims.Length; i++)
-        {
-            IPlayableAnim anim = anims[i];
-            AnimationClipPlayable playable = AnimationClipPlayable.Create(playableGraph, anim.GetAnimationClip());
-            playable.SetSpeed(anim.GetSpeed());
-            animMap.Add(anim.GetName(),
-               new PlayableAnimData(i, anim.GetSpeed(), anim.Evaluate, playable));
-            playableGraph.Connect(playable, 0, mixerPlayable, i);
-        }
         playableGraph.Play();
-        GraphVisualizerClient.Show(playableGraph);
     }
 
-    public void Play(string clipName)
+    public void Play(IPlayableAnim anim)
     {
+        string clipName = anim.GetName();
         if (!animMap.ContainsKey(clipName))
         {
-            Debug.LogWarning(clipName);
-            return;
+            AddAnimation(anim);
         }
         foreach (KeyValuePair<string, PlayableAnimData> pair in animMap)
         {
