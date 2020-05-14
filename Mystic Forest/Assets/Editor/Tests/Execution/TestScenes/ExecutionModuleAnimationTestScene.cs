@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using NSubstitute;
 
-public class ExecutionModuleTestScene : MonoBehaviour
+public class ExecutionModuleAnimationTestScene : MonoBehaviour
 {
     public ExecutableChainSetSOImpl set;
     private ExecutionModule module;
+    public Battler battler;
 
     private void Start()
     {
@@ -33,7 +33,7 @@ public class ExecutionModuleTestScene : MonoBehaviour
                 if (visual != null) visual.Destroy();
                 if (chainVisual != null) chainVisual.Destroy();
             };
-            module.StartExecution(set, Substitute.For<IBattler>());
+            module.StartExecution(set, battler);
         }
     }
 
@@ -43,5 +43,4 @@ public class ExecutionModuleTestScene : MonoBehaviour
         visual.parent.transform.localPosition = new Vector2(-23, -129);
         return visual;
     }
-
 }

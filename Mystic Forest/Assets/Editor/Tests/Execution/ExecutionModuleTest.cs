@@ -68,7 +68,7 @@ namespace ExecutionModuleTest
         [Test]
         public void StartExecutionSetsLinkerActiveTest()
         {
-            module.StartExecution(Substitute.For<IExecutableChainSet>());
+            module.StartExecution(Substitute.For<IExecutableChainSet>(), Substitute.For<IBattler>());
             Assert.True(module.LinkerIsActive());
         }
 
@@ -78,7 +78,7 @@ namespace ExecutionModuleTest
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             DirectionCommandPicker<IExecutableChain> picker = new DirectionCommandPicker<IExecutableChain>(0);
             module.Initialize(picker, executor);
-            module.StartExecution(Substitute.For<IExecutableChainSet>());
+            module.StartExecution(Substitute.For<IExecutableChainSet>(), Substitute.For<IBattler>());
             Assert.False(executor.IsExecuting());
         }
 

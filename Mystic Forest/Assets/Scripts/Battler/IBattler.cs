@@ -4,7 +4,11 @@ using UnityEngine;
 
 public interface IBattler
 {
-    void SetExecutables(IExecutableChainSet executables);
+    GameObject gameObject { get; }
 
-    //void Play(string animation);
+    void Play(IPlayableAnim animation);
+
+    void CheckCollision();
+
+    void SetOnCollide(System.Action<Collider2D> onCollide);
 }

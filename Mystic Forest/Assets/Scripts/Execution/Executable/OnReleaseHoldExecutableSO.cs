@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CreateAssetMenu(menuName = "ExecutableSO/On Release Hold Executable")]
+[CreateAssetMenu(menuName = "Executable/ExecutableSO/On Release Hold Executable")]
 public class OnReleaseHoldExecutableSO : ExecutableSO
 {
     public HoldInstruction instruction = HoldInstruction.instance;

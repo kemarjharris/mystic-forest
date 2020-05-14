@@ -7,14 +7,16 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
 {
     IDirectionCommandPicker<IExecutableChain> picker;
     IChainExecutor executor;
+    IBattler battler;
     bool linkerActive;
     public System.Action<ICustomizableEnumerator<IExecutable>> onNewChainSelected;
     public System.Action onChainCancellable;
     public System.Action onChainFinished;
 
-    public void StartExecution(IExecutableChainSet set)
+    public void StartExecution(IExecutableChainSet set, IBattler battler)
     {
         picker.Set(set);
+        this.battler = battler;
         linkerActive = true;
     }
 
@@ -25,13 +27,12 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
             linkerActive = false;
             ICustomizableEnumerator<IExecutable> enumerator = chain.GetCustomizableEnumerator();
             onNewChainSelected?.Invoke(enumerator);
-            executor.ExecuteChain(null, null, enumerator);
+            executor.ExecuteChain(battler, null, enumerator);
         };
         executor.OnChainCancellable = delegate
         {
             onChainCancellable?.Invoke();
             linkerActive = true;
-            Debug.Log("cancdksjalkdf");
         };
         executor.OnChainFinished = delegate
         {
@@ -49,7 +50,6 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
 
     private void Update()
     {
-        Debug.Log(linkerActive);
         if (linkerActive)
         {
             IExecutableChain chain = picker.InputSelect();

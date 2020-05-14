@@ -3,5 +3,5 @@ using UnityEditor;
 
 public interface IExecutionModule 
 {
-    void StartExecution(IExecutableChainSet set);
+    void StartExecution(IExecutableChainSet set, IBattler battler);
 }

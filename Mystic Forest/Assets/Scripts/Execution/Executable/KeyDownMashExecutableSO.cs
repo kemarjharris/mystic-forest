@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CreateAssetMenu(menuName = "ExecutableSO/Key Down Mash Executable")]
+[CreateAssetMenu(menuName = "Executable/ExecutableSO/Key Down Mash Executable")]
 public class KeyDownMashExecutableSO : ExecutableSO
 {
     public ExecutionEvent executionEvent;

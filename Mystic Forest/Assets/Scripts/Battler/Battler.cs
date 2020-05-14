@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Battler : IBattler
+public class Battler : MonoBehaviour, IBattler
 {
-    IExecutableChainSet executables;
+    MixAnimator animator = null;
+    public HitBox hitBox;
 
-    public void SetExecutables(IExecutableChainSet executables)
+    private void Start()
     {
-        this.executables = executables;
+        animator = GetComponent<MixAnimator>();
     }
+
+    public void SetOnCollide(System.Action<Collider2D> onCollide) => hitBox.SetOnCollide(onCollide);
+    public void CheckCollision() => hitBox.CheckCollision();
+    public void Play(IPlayableAnim animation) => animator.Play(animation);
 }
