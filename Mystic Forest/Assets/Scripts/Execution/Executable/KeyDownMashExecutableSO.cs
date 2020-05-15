@@ -73,6 +73,7 @@ public class KeyDownMashExecutableSO : ExecutableSO
             if (state.triggered)
             {
                 mashTimeEndedEventInstance.OnExecute(battler, targets);
+                state.fired = true;
             } else
             {
                 state.cancellable = false;

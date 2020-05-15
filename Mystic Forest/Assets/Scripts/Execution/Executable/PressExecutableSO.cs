@@ -45,6 +45,7 @@ public class PressExecutableSO : ExecutableSO {
             if (!state.triggered)
             {
                 state.triggered = true;
+                state.fired = true;
                 executionEvent.OnExecute(battler, targets);
             } else
             {

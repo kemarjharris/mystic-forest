@@ -40,10 +40,13 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
         else if (IsTriggered() && key == InstructionKeyEvent.KEYUP)
         {
             OnRelease(battler, targets);
+            state.fired = true;
         }
         if (key == InstructionKeyEvent.BADKEY)
         {
             OnRelease(battler, targets);
+            state.fired = true;
+            //Debug.Log("BAD KEY");
             state.finished = true;
         }
     }

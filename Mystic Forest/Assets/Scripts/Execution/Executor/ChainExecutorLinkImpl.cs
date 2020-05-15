@@ -50,17 +50,10 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
 
     public void Update() {
         if (seconds == null) return;
-        // Everything that happens in this block means the chain finished executing
-        // Prev attack finished, current attack never triggered, unsuccessful chain
-        if (prev != null && prev.IsFinished() && curr != null && !curr.IsTriggered())
-        {
-            // Runs when chain finishes running
-            // tell observer that the attack chain is done
-            seconds = null;
-            onChainFinished?.Invoke();
-            // notifyObserver(AttackChainExecutionModule.ExecutionStatus.CHAIN_FINISHED);
-            // visual.Destroy();
-        } else if (timeCheck) // Only try to execute if there are attacks in the chain
+        bool executionFinished = (prev != null && prev.IsFinished() // prev has finished 
+            && (curr == null || (curr != null && !curr.IsTriggered()))); // end of chain OR middle of chain and hasnt been triggered
+
+        if (timeCheck && !executionFinished) // Only try to execute if there are attacks in the chain
         { // Chain currently executing in the else block
             // Chain is waiting to be cancelled into next attack in this block
             // This block also executes if the current attack has been successfully triggered
@@ -72,11 +65,20 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
 
                 // curr attack finished after input was read, move to next attack.
                 // This block gets executed on the first frame where curr is in cancel time
-                if (curr.IsInCancelTime())
+                if (curr.HasFired() || curr.IsInCancelTime())
                 {
                     NextExecutable();
                 }
             }
+        }
+        // Everything that happens in this block means the chain finished executing
+        // Prev attack finished, current attack never triggered, unsuccessful chain
+        if (executionFinished) 
+        {
+            // Runs when chain finishes running
+            // tell observer that the attack chain is done
+            seconds = null;
+            onChainFinished?.Invoke();
         }
     }
 
@@ -90,13 +92,10 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
         {
             curr = seconds.Current;
             curr.OnStart();
-            // visual.MoveNext();
         }
         else
         {
             // Notify observer that the attack chain can now be cancelled
-            // notifyObserver(AttackChainExecutionModule.ExecutionStatus.CHAIN_CANCELLABLE);
-            // visual.Destroy();
             curr = null;
             onChainCancellable?.Invoke();
         }
