@@ -55,6 +55,13 @@ namespace ExecutableTest
             Assert.False(mash.IsFinished());
         }
 
+        [Test]
+        public void HasFiredFalseOnStart()
+        {
+            mash.OnStart();
+            Assert.False(mash.HasFired());
+        }
+
         // mash duration non neg
         [Test]
         public void MashDurationNonNegativeOnStartTest()
@@ -139,6 +146,31 @@ namespace ExecutableTest
             mash.OnInput("z", null, null);
             Assert.AreEqual(0, executionEvent.timesExecuted);
             Assert.AreEqual(1, ((TestExecutionEvent) mash.GetMashEndedExecutionEvent()).timesExecuted);
+        }
+
+        [Test]
+        public void MashEndedExecutionEventFiresWithNoInputTest()
+        {
+            TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            mash.mashTimeEndedEvent = executionEvent;
+            mash.OnStart();
+            SimulateKeyDown();
+            mash.service.unscaledTime.Returns(2.5f);
+            mash.OnInput("", null, null);
+            Assert.AreEqual(0, executionEvent.timesExecuted);
+            Assert.AreEqual(1, ((TestExecutionEvent)mash.GetMashEndedExecutionEvent()).timesExecuted);
+        }
+
+        [Test]
+        public void MashEndedSetsFiredTest()
+        {
+            TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            mash.mashTimeEndedEvent = executionEvent;
+            mash.OnStart();
+            SimulateKeyDown();
+            mash.service.unscaledTime.Returns(2.5f);
+            mash.OnInput("", null, null);
+            Assert.True(mash.HasFired());
         }
 
         [Test]
@@ -322,6 +354,12 @@ namespace ExecutableTest
         public void IsTriggeredFalseOnStartTest()
         {
             Assert.False(hold.IsTriggered());
+        }
+
+        [Test]
+        public void HasFiredFalseOnStart()
+        {
+            Assert.False(hold.HasFired());
         }
 
         // Instruction not null
@@ -523,6 +561,23 @@ namespace ExecutableTest
             Assert.AreEqual(1,((TestExecutionEvent) hold.GetReleaseExecutionEvent()).timesExecuted);
         }
 
+        // Key Up while triggered fires OnRelease Event
+        [Test]
+        public void KeyUpTriggeredSetsFiredTest()
+        {
+            TestExecutionEvent testEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            hold.releaseExecutionEvent = testEvent;
+            hold.instruction.service.GetKeyDown("z").Returns(true);
+            hold.OnInput("z", null, null);
+            //pre condition
+            Assert.True(hold.IsTriggered());
+            hold.instruction.service.GetKeyDown("z").Returns(false);
+            hold.instruction.service.GetKeyUp("z").Returns(true);
+
+            hold.OnInput("z", null, null);
+            Assert.True(hold.HasFired());
+        }
+
         // Release event sets cancellable
         [Test]
         public void TriggeredReleaseEventSetsCancellableTest()
@@ -595,13 +650,19 @@ namespace ExecutableTest
             Assert.True(hold.IsFinished());
         }
 
+        [Test]
+        public void BadKeyWhileTriggeredSetsFiredTest()
+        {
+            SimulateBadKey();
+            Assert.True(hold.HasFired());
+        }
+
         // bad key sets cancellable false
         [Test]
         public void BadKeyWhileTriggeredSetsCancellableFalseTest()
         {
             SimulateBadKey();
             Assert.False(hold.IsInCancelTime());
-
         }
     }
 
@@ -677,6 +738,13 @@ namespace ExecutableTest
             Assert.False(press.IsFinished());
         }
 
+        [Test]
+        public void HasFiredFalseOnStart()
+        {
+            press.OnStart();
+            Assert.False(press.HasFired());
+        }
+
         //public abstract void OnInput(string input, IBattler battler, ITargetSet targets);
         // test key up does nothing
         [Test]
@@ -742,9 +810,23 @@ namespace ExecutableTest
 
             press.Construct(instruction, executionEvent);
             press.button = DirectionCommandButton.Z;
+            press.OnStart();
             press.OnInput("x", battler, targets);
 
             Assert.False(press.IsTriggered());
+        }
+
+        [Test]
+        public void DifferentExecutionInstancesOnStartTest()
+        {
+            PressInstruction instruction = PressInstruction.instance;
+            ExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            IBattler battler = Substitute.For<IBattler>();
+            ITargetSet targets = Substitute.For<ITargetSet>();
+            press.Construct(instruction, executionEvent);
+            press.OnStart();
+            Assert.AreNotSame(executionEvent, press.GetExecutionEvent());
+            Assert.IsInstanceOf<TestExecutionEvent>(press.GetExecutionEvent());
         }
 
         // test keydown executes event
@@ -757,9 +839,25 @@ namespace ExecutableTest
             ITargetSet targets = Substitute.For<ITargetSet>();
             // triggers event
             press.Construct(instruction, executionEvent);
+            press.OnStart();
             press.OnInput("z", battler, targets);
 
-            Assert.IsTrue(executionEvent.timesExecuted == 1);
+            Assert.IsTrue(((TestExecutionEvent) press.GetExecutionEvent()).timesExecuted == 1);
+        }
+
+        [Test]
+        public void HasFiredTrueOnFireTest()
+        {
+            PressInstruction instruction = PressInstruction.instance;
+            TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            IBattler battler = Substitute.For<IBattler>();
+            ITargetSet targets = Substitute.For<ITargetSet>();
+            // triggers event
+            press.Construct(instruction, executionEvent);
+            press.OnStart();
+            press.OnInput("z", battler, targets);
+
+            Assert.IsTrue(press.HasFired());
         }
 
         // test cancellable when event cancellable fires
@@ -804,7 +902,7 @@ namespace ExecutableTest
             ITargetSet targets = Substitute.For<ITargetSet>();
 
             press.Construct(instruction, executionEvent);
-
+            press.OnStart();
             // triggers event
             // this should keep cancel time false and set istriggered to true with the given execution event
             press.OnInput("z", battler, targets);
@@ -813,7 +911,8 @@ namespace ExecutableTest
 
             // calling it again with keydown should not trigger event again
             press.OnInput("z", battler, targets);
-            Assert.AreEqual(1, executionEvent.timesExecuted);
+            TestExecutionEvent test = (TestExecutionEvent)press.GetExecutionEvent();
+            Assert.AreEqual(1, test.timesExecuted);
         }
 
 

@@ -56,6 +56,6 @@ public class PressExecutableSO : ExecutableSO {
         }
     }
 
-    
-
+    /* For testing*/
+    public ExecutionEvent GetExecutionEvent() => executionEventInstance;
 }

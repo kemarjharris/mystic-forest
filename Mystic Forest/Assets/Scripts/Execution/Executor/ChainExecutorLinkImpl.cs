@@ -68,17 +68,21 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
                 }
             }
         }
-        bool executionFinished = (prev != null && prev.IsFinished() // prev has finished 
-           && (curr == null || (curr != null && !curr.IsTriggered()))); // end of chain OR middle of chain and hasnt been triggered
         // Everything that happens in this block means the chain finished executing
         // Prev attack finished, current attack never triggered, unsuccessful chain
-        if (executionFinished) 
+        if (ExecutionFinished())
         {
             // Runs when chain finishes running
             // tell observer that the attack chain is done
             seconds = null;
             onChainFinished?.Invoke();
         }
+    }
+
+    private bool ExecutionFinished()
+    {
+        return prev != null && prev.IsFinished() // prev has finished 
+           && (curr == null || (curr != null && !curr.IsTriggered()));  // end of chain OR middle of chain and hasnt been triggered
     }
 
     public void NextExecutable()
@@ -107,6 +111,10 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
         timeCheck = true;
         prev = previous;
         curr = current;
+        if (ExecutionFinished())
+        {
+            timeCheck = false;
+        }
     }
 
     public bool IsExecuting() => seconds != null;

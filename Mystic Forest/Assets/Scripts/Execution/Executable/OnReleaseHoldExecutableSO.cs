@@ -39,20 +39,18 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
         }
         else if (IsTriggered() && key == InstructionKeyEvent.KEYUP)
         {
-            OnRelease(battler, targets);
-            state.fired = true;
+            OnRelease(battler, targets);   
         }
         if (key == InstructionKeyEvent.BADKEY)
         {
             OnRelease(battler, targets);
-            state.fired = true;
-            //Debug.Log("BAD KEY");
             state.finished = true;
         }
     }
 
     void OnRelease(IBattler battler, ITargetSet targets)
     {
+        state.fired = true;
         onRelease?.Invoke();
         releaseExecutionEventInstance.OnExecute(battler, targets);
     }

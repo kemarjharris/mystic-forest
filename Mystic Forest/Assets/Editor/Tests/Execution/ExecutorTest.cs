@@ -249,6 +249,19 @@ namespace ExecutorTest
         }
 
         [Test]
+        public void PrevFinishedCurrNullFiresOnFinishTest()
+        {
+            bool eventFires = false;
+            ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
+            IExecutable prev = SetUpExecutableState(true, true, true);
+            IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { prev }).GetEnumerator();
+            executor.Construct(executables, prev, null);
+            executor.onChainFinished = delegate { eventFires = true; };
+            executor.Update();
+            Assert.True(eventFires);
+        }
+
+        [Test]
         public void PrevFinishedCurrNotTriggeredDoesNotReadInputTest()
         {
             bool onInputCalled = false;
