@@ -49,13 +49,13 @@ public class KeyDownMashExecutableSO : ExecutableSO
 
     public override void OnInput(string input, IBattler battler, ITargetSet targets)
     {
-        if (!CorrectButton(input)) return;
+        
         // Only start timer after first key down
         float pressTime = state.triggered ? service.unscaledTime - firstKeyDownTime : 0;
         if (pressTime <= mashDuration)
         {
+            if (!CorrectButton(input)) return;
             InstructionKeyEvent key = instruction.lookAtTime(input, pressTime, mashDuration);
-
             if (key == InstructionKeyEvent.KEYDOWN)
             {
                

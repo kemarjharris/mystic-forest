@@ -20,7 +20,8 @@ public class MeleeEvent : ExecutionEvent
         yield return new WaitForSeconds(timeOfContact);
         performer.SetOnCollide(delegate(Collider2D collider) { Debug.Log("Collided with " + collider); });
         performer.CheckCollision();
-        onCancellableEvent();
-        
+        onCancellableEvent?.Invoke();
+        yield return new WaitForSeconds(animSO.GetLength() - timeOfContact);
+        onFinishEvent?.Invoke();
     }
 }

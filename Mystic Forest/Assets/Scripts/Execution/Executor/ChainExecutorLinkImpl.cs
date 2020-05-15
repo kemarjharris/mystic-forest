@@ -50,10 +50,7 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
 
     public void Update() {
         if (seconds == null) return;
-        bool executionFinished = (prev != null && prev.IsFinished() // prev has finished 
-            && (curr == null || (curr != null && !curr.IsTriggered()))); // end of chain OR middle of chain and hasnt been triggered
-
-        if (timeCheck && !executionFinished) // Only try to execute if there are attacks in the chain
+        if (timeCheck) // Only try to execute if there are attacks in the chain
         { // Chain currently executing in the else block
             // Chain is waiting to be cancelled into next attack in this block
             // This block also executes if the current attack has been successfully triggered
@@ -71,6 +68,8 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
                 }
             }
         }
+        bool executionFinished = (prev != null && prev.IsFinished() // prev has finished 
+           && (curr == null || (curr != null && !curr.IsTriggered()))); // end of chain OR middle of chain and hasnt been triggered
         // Everything that happens in this block means the chain finished executing
         // Prev attack finished, current attack never triggered, unsuccessful chain
         if (executionFinished) 

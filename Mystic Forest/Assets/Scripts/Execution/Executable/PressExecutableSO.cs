@@ -8,6 +8,7 @@ public class PressExecutableSO : ExecutableSO {
 
     public PressInstruction instruction = null;
     public ExecutionEvent executionEvent = null;
+    private ExecutionEvent executionEventInstance = null;
     
     //private static AttackVisual visualPrefab;
     //public ChainExecutionButton button;
@@ -21,14 +22,15 @@ public class PressExecutableSO : ExecutableSO {
     public override void OnStart()
     {
         state = new ExecutableState();
-        if (executionEvent == null)
+        executionEventInstance = Instantiate(executionEvent);
+        if (executionEventInstance == null)
         {
             throw new ArgumentException();
         }
-        executionEvent.setOnCancellableEvent(delegate {
+        executionEventInstance.setOnCancellableEvent(delegate {
             state.cancellable = true;
         });
-        executionEvent.setOnFinishEvent(delegate {
+        executionEventInstance.setOnFinishEvent(delegate {
             state.finished = true;
         });
         instruction = PressInstruction.instance;
@@ -46,7 +48,7 @@ public class PressExecutableSO : ExecutableSO {
             {
                 state.triggered = true;
                 state.fired = true;
-                executionEvent.OnExecute(battler, targets);
+                executionEventInstance.OnExecute(battler, targets);
             } else
             {
                 state.finished = true;
