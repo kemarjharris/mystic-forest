@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbabf0139dbf0e64c9baf7a818c895de, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d29595bb5956f645b538fb430804bcc, type: 3}
   m_Name: Power Slash
   m_EditorClassIdentifier: 
   button: 0
-  keyDownExecutionEvent: {fileID: 11400000, guid: f3c01621b83f88b47b84475de0864fe6,
-    type: 2}
-  releaseExecutionEvent: {fileID: 11400000, guid: 79ecc5f2f0f7fdd40b8642b5dbc7722f,
-    type: 2}
-  releaseTime: 1
+  keyDownExecutionEvent: {fileID: 0}
+  releaseExecutionEvent: {fileID: 0}
+  releaseTime: 0

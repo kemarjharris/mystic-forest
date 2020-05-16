@@ -18,7 +18,6 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
     {
         return GetCustomizableEnumerator();
     }
-
     
     IEnumerator<IExecutable> LoopEnumerator()
     {

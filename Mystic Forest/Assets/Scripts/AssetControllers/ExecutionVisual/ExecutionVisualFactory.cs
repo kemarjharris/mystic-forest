@@ -6,7 +6,7 @@ public static class ExecutionVisualFactory
 {
     public static ExecutionVisual CreateVisual(IExecutable executable, Vector3 position, Transform parent)
     {
-        if (executable is PressExecutableSO)
+        if (executable is PressExecutable)
         {
             ExecutionVisual visualPrefab = Resources.Load<ExecutionVisual>("Prefabs/ExecutionVisual/ExecutableVisual");
             ExecutionVisual visual = Object.Instantiate(visualPrefab, position, Quaternion.identity, parent.transform);
