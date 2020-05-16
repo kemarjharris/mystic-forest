@@ -18,6 +18,7 @@ namespace DirectionCommandPickerTest
             picker = new DirectionCommandPicker<IDirectionPickable>(1f);
             SetTimePassed(0);
             ReSetKeys();
+            SetDirectionalService(0, 0);
             picker.Set(Substitute.For<IEnumerable<IDirectionCommand>>());
         }
 
@@ -234,6 +235,52 @@ namespace DirectionCommandPickerTest
             // event should fire
             picker.InputSelect();
             Assert.True(fired);
+        }
+
+        [Test]
+        public void IteratesThroughInputTest()
+        {
+            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S, Direction.E);
+            picker.Set(new IDirectionPickable[] { expected });
+            SetAndReadInput(-1, 0);
+            SetAndReadInput(0, -1);
+            SetAndReadInput(1, 0);
+            SetKeyPress("z");
+            Assert.AreEqual(expected, picker.InputSelect());
+        }
+
+        [Test]
+        public void AcceptsLongerInputFirstTest()
+        {
+            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.W, Direction.S, Direction.E);
+            picker.Set(new IDirectionPickable[] { expected,
+                new DirectionCommand(DirectionCommandButton.Z, Direction.S, Direction.E)});
+            SetAndReadInput(-1, 0);
+            SetAndReadInput(0, -1);
+            SetAndReadInput(1, 0);
+            SetKeyPress("z");
+            Assert.AreEqual(expected, picker.InputSelect());
+        }
+
+        [Test]
+        public void SingleInputTest()
+        {
+            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z);
+            picker.Set(new IDirectionPickable[] { expected });
+            SetKeyPress("z");
+            IDirectionPickable result = picker.InputSelect();
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void SingleInputIteratesThroughInputTest()
+        {
+            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z);
+            picker.Set(new IDirectionPickable[] { expected });
+            SetAndReadInput(0, -1);
+            SetKeyPress("z");
+            IDirectionPickable result = picker.InputSelect();
+            Assert.AreEqual(expected, result);
         }
     }
 }

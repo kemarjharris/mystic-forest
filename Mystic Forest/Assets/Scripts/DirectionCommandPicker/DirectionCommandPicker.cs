@@ -25,7 +25,8 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
 
     public T InputSelect()
     {
-        if (commandables == null) throw new System.NullReferenceException("Commandables are null in DirectionCommandPicker. Did you call the Set method?");
+        CollectionUtils.Print(inputtedDirections);
+        if (commandables == null) throw new NullReferenceException("Commandables are null in DirectionCommandPicker. Did you call the Set method?");
         if (ExistingInput() && service.unscaledTime - timeOfLastInput > timeBeforeClearingInput)
         {
             clear();
@@ -80,21 +81,31 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
             {
                 inputtedDirections.RemoveAt(inputtedDirections.Count - 1);
             }
-            t = Select(new DirectionCommand(inputtedButton, inputtedDirections.ToArray()));
-
-            clear();
-            if (t != null)
+            int count = inputtedDirections.Count;
+            for (int i = 0; i <= count; i ++)
             {
-                onSelected?.Invoke(t);
-                return t;
+                t = Select(new DirectionCommand(inputtedButton, inputtedDirections.ToArray()));
+                Debug.Log(i);
+                if (t != null)
+                {
+                    Debug.Log(t);
+                    clear();
+                    onSelected?.Invoke(t);
+                    return t;
+                }
+                if (inputtedDirections.Count > 0)
+                {
+                    inputtedDirections.RemoveAt(0);
+                }
             }
+           
+            clear();
         }
         return default;
     }
 
     public void Set(IEnumerable<T> commandables) {
-        if (commandables == null) throw new ArgumentException("Trying to set commandables to null in DirectionCommandPicker");
-        this.commandables = commandables;
+        this.commandables = commandables ?? throw new ArgumentException("Trying to set commandables to null in DirectionCommandPicker");
         clear();
     }
 

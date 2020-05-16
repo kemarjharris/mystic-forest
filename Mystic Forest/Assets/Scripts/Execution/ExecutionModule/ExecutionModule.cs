@@ -45,7 +45,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
 
     private void Start()
     {
-        Initialize(new DirectionCommandPicker<IExecutableChain>(0.2f), new ChainExecutorLinkImpl());
+        Initialize(new DirectionCommandPicker<IExecutableChain>(0.4f), new ChainExecutorLinkImpl());
     }
 
     private void Update()
