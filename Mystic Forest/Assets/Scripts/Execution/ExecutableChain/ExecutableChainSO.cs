@@ -10,19 +10,20 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
 {
     public ExecutableSO[] attacks;
     public DirectionGroup group;
-   
-    public IExecutable head => attacks[0];
+    private List<IExecutable> instances;
+
+    public IExecutable head => attacks[0].CreateExecutable();
 
     public IEnumerator<IExecutable> GetEnumerator()
     {
         return GetCustomizableEnumerator();
     }
 
-    private List<ExecutableSO> instances;
+    
     IEnumerator<IExecutable> LoopEnumerator()
     {
-        instances = new List<ExecutableSO>();
-        for (int i = 0; i < attacks.Length; i++) instances.Add(Instantiate(attacks[i]));
+        instances = new List<IExecutable>();
+        for (int i = 0; i < attacks.Length; i++) instances.Add(attacks[i].CreateExecutable());
         return instances.GetEnumerator();
     }
 

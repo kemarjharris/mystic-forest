@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CreateAssetMenu(menuName = "Executable/ExecutableSO/Key Down Mash Executable")]
-public class KeyDownMashExecutableSO : ExecutableSO
+public class KeyDownMashExecutable : Executable
 {
+
     public ExecutionEvent executionEvent;
     public ExecutionEvent mashTimeEndedEvent;
     public float mashDuration;
@@ -11,20 +11,6 @@ public class KeyDownMashExecutableSO : ExecutableSO
     public IUnityTimeService service = new UnityTimeService();
     public System.Action onKeyDown;
     private float firstKeyDownTime;
-    private ExecutionEvent executionEventInstance;
-    private ExecutionEvent mashTimeEndedEventInstance;
-
-    // public ChainExecutionButton button;
-    // private ExpandingButtonMashVisual visualPrefab;
-    // private ExpandingButtonMashVisual visual;
-
-    public void Construct(MashInstruction instruction, ExecutionEvent executionEvent, ExecutionEvent mashTimeEndedEvent, float mashDuration)
-    {
-        this.instruction = instruction; 
-        this.executionEvent = executionEvent;
-        this.mashTimeEndedEvent = mashTimeEndedEvent;
-        this.mashDuration = mashDuration;
-    }
 
     public override void OnStart()
     {
@@ -37,28 +23,22 @@ public class KeyDownMashExecutableSO : ExecutableSO
         }
         instruction.reset();
         state = new ExecutableState();
-        executionEventInstance = Instantiate(executionEvent);
-        mashTimeEndedEventInstance = Instantiate(mashTimeEndedEvent);
-        mashTimeEndedEventInstance.setOnCancellableEvent(delegate { state.cancellable = true; });
-        mashTimeEndedEventInstance.setOnFinishEvent(delegate { state.finished = true; });
-        
-        // visual.StartTimer(mashDuration + beforeCancelInputLeeway);
+        mashTimeEndedEvent.setOnCancellableEvent(delegate { state.cancellable = true; });
+        mashTimeEndedEvent.setOnFinishEvent(delegate { state.finished = true; });
     }
-
-    // public override ChainExecutionButton getButton() => button;
 
     public override void OnInput(string input, IBattler battler, ITargetSet targets)
     {
-        
         // Only start timer after first key down
         float pressTime = state.triggered ? service.unscaledTime - firstKeyDownTime : 0;
         if (pressTime <= mashDuration)
         {
             if (!CorrectButton(input)) return;
             InstructionKeyEvent key = instruction.lookAtTime(input, pressTime, mashDuration);
+
             if (key == InstructionKeyEvent.KEYDOWN)
             {
-               
+
                 if (!state.triggered)
                 {
                     firstKeyDownTime = service.unscaledTime;
@@ -66,25 +46,24 @@ public class KeyDownMashExecutableSO : ExecutableSO
                 }
                 // visual.ExpandButton();
                 onKeyDown?.Invoke();
-                executionEventInstance.OnExecute(battler, targets);
+                executionEvent.OnExecute(battler, targets);
             }
-        } else
+        }
+        else
         {
             if (state.triggered)
             {
-                mashTimeEndedEventInstance.OnExecute(battler, targets);
+                mashTimeEndedEvent.OnExecute(battler, targets);
                 state.fired = true;
-            } else
+            }
+            else
             {
                 state.cancellable = false;
                 state.finished = true;
-            }   
+            }
         }
     }
 
-    /* For Testing */
-    public ExecutionEvent GetExecutionEvent() => executionEventInstance;
-    public ExecutionEvent GetMashEndedExecutionEvent() => mashTimeEndedEventInstance;
-
-
+    public ExecutionEvent GetExecutionEvent() => executionEvent;
+    public ExecutionEvent GetMashEndedExecutionEvent() => mashTimeEndedEvent;
 }

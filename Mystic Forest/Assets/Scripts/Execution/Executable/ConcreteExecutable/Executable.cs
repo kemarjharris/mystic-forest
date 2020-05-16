@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public abstract class ExecutableSO : ScriptableObject, IExecutable
+public abstract class Executable : IExecutable
 {
+    public ExecutableState state;
 
     public DirectionCommandButton button;
 
-    protected ExecutableState state;
+    public DirectionCommandButton GetButton() => button;
 
     public bool IsInCancelTime() => state.cancellable;
 
@@ -17,10 +18,9 @@ public abstract class ExecutableSO : ScriptableObject, IExecutable
     public bool HasFired() => state.fired;
 
     public abstract void OnInput(string input, IBattler battler, ITargetSet targets);
+
     public abstract void OnStart();
 
-    public DirectionCommandButton GetButton() => button;
-
-    protected  bool CorrectButton(string input) => button.ToString().ToLower().Equals(input.ToLower());
+    protected bool CorrectButton(string input) => button.ToString().ToLower().Equals(input.ToLower());
 
 }

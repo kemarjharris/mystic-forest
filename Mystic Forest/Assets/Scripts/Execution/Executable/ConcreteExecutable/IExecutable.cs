@@ -3,7 +3,6 @@ using UnityEditor;
 
 public interface IExecutable
 {
-
     void OnInput(string input, IBattler battler, ITargetSet targets);
 
     void OnStart();
@@ -17,6 +16,4 @@ public interface IExecutable
     bool HasFired();
 
     DirectionCommandButton GetButton();
-
-    //AttackVisual draw(Vector3 postion, Transform parent);
 }

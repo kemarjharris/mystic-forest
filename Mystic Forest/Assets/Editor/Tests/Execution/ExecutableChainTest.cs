@@ -14,6 +14,7 @@ namespace ExecutableChainTest
         {
             PressExecutableSO press = ScriptableObject.CreateInstance<PressExecutableSO>();
             ExecutableChainSO chain = ScriptableObject.CreateInstance<ExecutableChainSO>();
+            press.executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
             chain.attacks = new ExecutableSO[] { press };
             IEnumerator enumOne = chain.GetEnumerator();
             IEnumerator enumTwo = chain.GetEnumerator();

@@ -10,7 +10,7 @@ public class HoldVisual : ExecutionVisual
     public Routine fillRoutine;
     public const float fillScale = 1/ 0.65f;
 
-    public void Initialize(OnReleaseHoldExecutableSO executable)
+    public void Initialize(OnReleaseHoldExecutable executable)
     {
         executable.onStartHolding = delegate
         {

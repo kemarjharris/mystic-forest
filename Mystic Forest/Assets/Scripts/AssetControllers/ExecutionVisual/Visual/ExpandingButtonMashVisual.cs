@@ -14,7 +14,7 @@ public class ExpandingButtonMashVisual: ExecutionVisual
         startScale = circle.transform.localScale;
     }
 
-    public void Initialize(KeyDownMashExecutableSO executable)
+    public void Initialize(KeyDownMashExecutable executable)
     {
         executable.onKeyDown = delegate { 
             if (timer.fillAmount >= 1)

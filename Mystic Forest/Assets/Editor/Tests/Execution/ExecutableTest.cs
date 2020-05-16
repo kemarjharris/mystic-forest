@@ -9,21 +9,25 @@ namespace ExecutableTest
 {
     public class KeyDownMashExecutableTest
     {
-        KeyDownMashExecutableSO mash;
+        KeyDownMashExecutable mash;
+        ExecutionEvent keyDownEvent;
+        ExecutionEvent mashFinishedEvent;
         
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            mash = ScriptableObject.CreateInstance<KeyDownMashExecutableSO>();
+            mash = new KeyDownMashExecutable();
         }
 
         [SetUp]
         public void SetUp()
         {
-            mash.Construct(
+            keyDownEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            mashFinishedEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            mash = Construct(
                MashInstruction.instance,
-               ScriptableObject.CreateInstance<TestExecutionEvent>(), // key down event
-               ScriptableObject.CreateInstance<TestExecutionEvent>(), //  mash finished event
+               keyDownEvent, // key down event
+               mashFinishedEvent, //  mash finished event
                2); // mash duration 
             mash.button = DirectionCommandButton.Z;
             IUnityTimeService service = Substitute.For<IUnityTimeService>();
@@ -31,6 +35,15 @@ namespace ExecutableTest
             mash.service = service;
             MashInstruction.instance.service = Substitute.For<IUnityInputService>();
             mash.OnStart();
+        }
+
+        public KeyDownMashExecutable Construct(MashInstruction instruction, ExecutionEvent keyDownEvent, ExecutionEvent mashFinishedEvent, float duration)
+        {
+            KeyDownMashExecutableSO so = ScriptableObject.CreateInstance<KeyDownMashExecutableSO>();
+            so.executionEvent = keyDownEvent;
+            so.mashTimeEndedEvent = mashFinishedEvent;
+            so.mashDuration = duration;
+            return (KeyDownMashExecutable)so.CreateExecutable();
         }
 
         // state is false on start
@@ -66,7 +79,7 @@ namespace ExecutableTest
         [Test]
         public void MashDurationNonNegativeOnStartTest()
         {
-            mash.Construct(
+            mash = Construct(
                 MashInstruction.instance,
                 ScriptableObject.CreateInstance<TestExecutionEvent>(), // key down event
                 ScriptableObject.CreateInstance<TestExecutionEvent>(), //  mash finished event
@@ -81,7 +94,7 @@ namespace ExecutableTest
         [Test]
         public void MashDurationNonZeroTest()
         {
-            mash.Construct(
+            mash = Construct(
                 MashInstruction.instance,
                 ScriptableObject.CreateInstance<TestExecutionEvent>(), // key down event
                 ScriptableObject.CreateInstance<TestExecutionEvent>(), //  mash finished event
@@ -104,60 +117,46 @@ namespace ExecutableTest
         [Test]
         public void KeyDownExecutionEventFiresTest()
         {
-            TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
-            mash.executionEvent = executionEvent;
             SimulateKeyDown();
-            Assert.AreEqual(0, executionEvent.timesExecuted); // does not fire
+            Assert.AreEqual(0, ((TestExecutionEvent) keyDownEvent).timesExecuted); // does not fire
             Assert.AreEqual(1, ((TestExecutionEvent) mash.GetExecutionEvent()).timesExecuted); // fires
         }
 
         [Test]
         public void KeyDownExecutionEventInstantiatesOnStartTest()
         {
-            TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
-            mash.executionEvent = executionEvent;
-            mash.OnStart();
             // Should be equal instances
             Assert.IsInstanceOf<TestExecutionEvent>(mash.GetExecutionEvent());
             // Should be different instances
-            Assert.AreNotSame(executionEvent, mash.GetExecutionEvent());
+            Assert.AreNotSame(keyDownEvent, mash.GetExecutionEvent());
         }
 
         [Test]
         public void MashEndedExecutionEventInstantiatesOnStartTest()
         {
-            TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
-            mash.mashTimeEndedEvent = executionEvent;
-            mash.OnStart();
             // Should be equal instances
             Assert.IsInstanceOf<TestExecutionEvent>(mash.GetMashEndedExecutionEvent());
             // Should be different instances
-            Assert.AreNotSame(executionEvent, mash.GetMashEndedExecutionEvent());
+            Assert.AreNotSame(mashFinishedEvent, mash.GetMashEndedExecutionEvent());
         }
 
         [Test]
         public void MashEndedExecutionEventFiresTest()
         {
-            TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
-            mash.mashTimeEndedEvent = executionEvent;
-            mash.OnStart();
             SimulateKeyDown();
             mash.service.unscaledTime.Returns(2.5f);
             mash.OnInput("z", null, null);
-            Assert.AreEqual(0, executionEvent.timesExecuted);
+            Assert.AreEqual(0, ((TestExecutionEvent) mashFinishedEvent).timesExecuted);
             Assert.AreEqual(1, ((TestExecutionEvent) mash.GetMashEndedExecutionEvent()).timesExecuted);
         }
 
         [Test]
         public void MashEndedExecutionEventFiresWithNoInputTest()
         {
-            TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
-            mash.mashTimeEndedEvent = executionEvent;
-            mash.OnStart();
             SimulateKeyDown();
             mash.service.unscaledTime.Returns(2.5f);
             mash.OnInput("", null, null);
-            Assert.AreEqual(0, executionEvent.timesExecuted);
+            Assert.AreEqual(0, ((TestExecutionEvent)mashFinishedEvent).timesExecuted);
             Assert.AreEqual(1, ((TestExecutionEvent)mash.GetMashEndedExecutionEvent()).timesExecuted);
         }
 
@@ -193,13 +192,13 @@ namespace ExecutableTest
         [Test]
         public void KeyDownEventNotNullTest()
         {
-            mash.Construct(
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                mash = Construct(
                 MashInstruction.instance,
                 null, // key down event
                 ScriptableObject.CreateInstance<TestExecutionEvent>(), //  mash finished event
                 1); // mash duration 
-            Assert.Throws<System.ArgumentException>(delegate
-            {
                 mash.OnStart();
             });
         }
@@ -208,13 +207,13 @@ namespace ExecutableTest
         [Test]
         public void MashTimeEventNotNullTest()
         {
-            mash.Construct(
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                mash = Construct(
                 MashInstruction.instance,
                 null, // key down event
                 ScriptableObject.CreateInstance<TestExecutionEvent>(), //  mash finished event
                 1); // mash duration 
-            Assert.Throws<System.ArgumentException>(delegate
-            {
                 mash.OnStart();
             });
         }
@@ -308,22 +307,25 @@ namespace ExecutableTest
     public class OnReleaseHoldExecutionTest
     {
 
-        OnReleaseHoldExecutableSO hold;
+        OnReleaseHoldExecutable hold;
+        ExecutionEvent keyDownEvent;
+        ExecutionEvent releaseEvent;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            hold = ScriptableObject.CreateInstance<OnReleaseHoldExecutableSO>();
+            hold = new OnReleaseHoldExecutable();
         }
         
         [SetUp]
         public void SetUp()
         {
-
-            hold.Construct(
+            keyDownEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            releaseEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            hold = Construct(
                 HoldInstruction.instance,
-                ScriptableObject.CreateInstance<TestExecutionEvent>(), // key down event
-                ScriptableObject.CreateInstance<TestExecutionEvent>(), //  release event
+                keyDownEvent, // key down event
+                releaseEvent, //  release event
                 2); // release time
             hold.button = DirectionCommandButton.Z;
             IUnityInputService service = Substitute.For<IUnityInputService>();
@@ -333,6 +335,15 @@ namespace ExecutableTest
             timeService.unscaledTime.Returns(0);
             hold.service = timeService;
             hold.OnStart();
+        }
+
+        public OnReleaseHoldExecutable Construct(HoldInstruction instruction, ExecutionEvent keyDownEvent, ExecutionEvent releaseEvent, float duration)
+        {
+            OnReleaseHoldExecutableSO so = ScriptableObject.CreateInstance<OnReleaseHoldExecutableSO>();
+            so.keyDownExecutionEvent = keyDownEvent;
+            so.releaseExecutionEvent = releaseEvent;
+            so.releaseTime = duration;
+            return (OnReleaseHoldExecutable)so.CreateExecutable();
         }
 
         // Is finished is false
@@ -374,13 +385,14 @@ namespace ExecutableTest
         [Test]
         public void KeyDownExecutionNullThrowsExceptionOnStartTest()
         {
-            hold.Construct(
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                hold = Construct(
                 HoldInstruction.instance,
                 null, // key down event
                 ScriptableObject.CreateInstance<TestExecutionEvent>(), //  release event
                 2); // release time
-            Assert.Throws<System.ArgumentException>(delegate
-            {
+            
                 hold.OnStart();
             }); 
         } 
@@ -389,13 +401,14 @@ namespace ExecutableTest
         [Test]
         public void ReleaseExecutionNullthrowsExceptionStartTest()
         {
-            hold.Construct(
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                hold = Construct(
                 HoldInstruction.instance,
                 ScriptableObject.CreateInstance<TestExecutionEvent>(), // key down event
                 null, //  release event
                 2); // release time
-            Assert.Throws<System.ArgumentException>(delegate
-            {
+            
                 hold.OnStart();
             });
         }
@@ -422,7 +435,7 @@ namespace ExecutableTest
         [Test]
         public void ReleaseTimeNonNegativeThrowsExceptionTest()
         {
-            hold.Construct(
+            hold = Construct(
                 HoldInstruction.instance,
                 ScriptableObject.CreateInstance<TestExecutionEvent>(), // key down event
                 ScriptableObject.CreateInstance<TestExecutionEvent>(), //  release event
@@ -437,7 +450,7 @@ namespace ExecutableTest
         [Test]
         public void ReleaseTimeNonZeroThrowsExceptionTest()
         {
-            hold.Construct(
+            hold = Construct(
                HoldInstruction.instance,
                ScriptableObject.CreateInstance<TestExecutionEvent>(), // key down event
                ScriptableObject.CreateInstance<TestExecutionEvent>(), //  release event
@@ -451,20 +464,15 @@ namespace ExecutableTest
         [Test]
         public void KeyDownEventInstantiateOnStartTest()
         {
-            TestExecutionEvent @event = ScriptableObject.CreateInstance<TestExecutionEvent>();
-            hold.keyDownExecutionEvent = @event;
-            hold.OnStart();
-            Assert.AreNotSame(@event, hold.GetKeyDownExecutionEvent());
+            Assert.AreNotSame(keyDownEvent, hold.GetKeyDownExecutionEvent());
             Assert.IsInstanceOf<TestExecutionEvent>(hold.GetKeyDownExecutionEvent());
         }
 
         [Test]
         public void ReleaseEventInstantiatedOnStartTest()
         {
-            TestExecutionEvent @event = ScriptableObject.CreateInstance<TestExecutionEvent>();
-            hold.releaseExecutionEvent = @event;
             hold.OnStart();
-            Assert.AreNotSame(@event, hold.GetReleaseExecutionEvent());
+            Assert.AreNotSame(releaseEvent, hold.GetReleaseExecutionEvent());
             Assert.IsInstanceOf<TestExecutionEvent>(hold.GetReleaseExecutionEvent());
         }
 
@@ -668,12 +676,13 @@ namespace ExecutableTest
 
     public class PressExecutionTest
     {
-        PressExecutableSO press;
+        PressExecutable press;
+        ExecutionEvent executionEvent;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            press = ScriptableObject.CreateInstance<PressExecutableSO>();
+            press = new PressExecutable();
         }
 
         [SetUp]
@@ -683,11 +692,22 @@ namespace ExecutableTest
             IUnityInputService service = Substitute.For<IUnityInputService>();
             service.GetKeyDown("z").Returns(true);
             PressInstruction.instance.service = service;
-            ExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
             PressInstruction instruction = PressInstruction.instance;
-            press.Construct(instruction, executionEvent);
+            press = Construct(instruction, executionEvent);
             press.button = DirectionCommandButton.Z;
             press.OnStart();
+        }
+
+        public PressExecutable Construct(PressInstruction instruction, ExecutionEvent executionEvent)
+        {
+            PressExecutableSO so = ScriptableObject.CreateInstance<PressExecutableSO>();
+            so.instruction = instruction;
+            so.executionEvent = executionEvent;
+            PressExecutable p = (PressExecutable) so.CreateExecutable();
+            p.instruction = instruction;
+            p.OnStart();
+            return p;
         }
 
         // public abstract void OnStart();
@@ -696,7 +716,7 @@ namespace ExecutableTest
         public void InstructionNotNullTest()
         {
             ExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
-            press.Construct(null, executionEvent);
+            press = Construct(null, executionEvent);
             press.OnStart();
             Assert.NotNull(press.instruction);
 
@@ -706,10 +726,10 @@ namespace ExecutableTest
         [Test]
         public void ExecutionEventNotNullTest()
         {
-            PressInstruction instruction = PressInstruction.instance;
-            press.Construct(instruction, null);
             Assert.Throws<System.ArgumentException>(delegate
             {
+                PressInstruction instruction = PressInstruction.instance;
+                press = Construct(instruction, null);
                 press.OnStart();
             });
         }
@@ -757,7 +777,7 @@ namespace ExecutableTest
             IBattler battler = Substitute.For<IBattler>();
             ITargetSet targets = Substitute.For<ITargetSet>();
 
-            press.Construct(instruction, executionEvent);
+            press = Construct(instruction, executionEvent);
 
             press.OnInput("z", battler, targets);
 
@@ -776,7 +796,7 @@ namespace ExecutableTest
             IBattler battler = Substitute.For<IBattler>();
             ITargetSet targets = Substitute.For<ITargetSet>();
 
-            press.Construct(instruction, executionEvent);
+            press = Construct(instruction, executionEvent);
 
             press.OnInput("z", battler, targets);
 
@@ -792,7 +812,7 @@ namespace ExecutableTest
             IBattler battler = Substitute.For<IBattler>();
             ITargetSet targets = Substitute.For<ITargetSet>();
 
-            press.Construct(instruction, executionEvent);
+            press = Construct(instruction, executionEvent);
 
             press.OnInput("z", battler, targets);
 
@@ -808,7 +828,7 @@ namespace ExecutableTest
             IBattler battler = Substitute.For<IBattler>();
             ITargetSet targets = Substitute.For<ITargetSet>();
 
-            press.Construct(instruction, executionEvent);
+            press = Construct(instruction, executionEvent);
             press.button = DirectionCommandButton.Z;
             press.OnStart();
             press.OnInput("x", battler, targets);
@@ -823,7 +843,7 @@ namespace ExecutableTest
             ExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
             IBattler battler = Substitute.For<IBattler>();
             ITargetSet targets = Substitute.For<ITargetSet>();
-            press.Construct(instruction, executionEvent);
+            press = Construct(instruction, executionEvent);
             press.OnStart();
             Assert.AreNotSame(executionEvent, press.GetExecutionEvent());
             Assert.IsInstanceOf<TestExecutionEvent>(press.GetExecutionEvent());
@@ -838,7 +858,7 @@ namespace ExecutableTest
             IBattler battler = Substitute.For<IBattler>();
             ITargetSet targets = Substitute.For<ITargetSet>();
             // triggers event
-            press.Construct(instruction, executionEvent);
+            press = Construct(instruction, executionEvent);
             press.OnStart();
             press.OnInput("z", battler, targets);
 
@@ -853,7 +873,7 @@ namespace ExecutableTest
             IBattler battler = Substitute.For<IBattler>();
             ITargetSet targets = Substitute.For<ITargetSet>();
             // triggers event
-            press.Construct(instruction, executionEvent);
+            press = Construct(instruction, executionEvent);
             press.OnStart();
             press.OnInput("z", battler, targets);
 
@@ -868,7 +888,7 @@ namespace ExecutableTest
             CancelTestExecutionEvent executionEvent = ScriptableObject.CreateInstance<CancelTestExecutionEvent>();
             IBattler battler = Substitute.For<IBattler>();
             ITargetSet targets = Substitute.For<ITargetSet>();
-            press.Construct(instruction, executionEvent);
+            press = Construct(instruction, executionEvent);
             press.OnStart();
             // cancel event fires immediately with this event
             press.OnInput("z", battler, targets);
@@ -885,7 +905,7 @@ namespace ExecutableTest
             IBattler battler = Substitute.For<IBattler>();
             ITargetSet targets = Substitute.For<ITargetSet>();
 
-            press.Construct(instruction, executionEvent);
+            press = Construct(instruction, executionEvent);
             press.OnStart();
             press.OnInput("z", battler, targets);
 
@@ -901,7 +921,7 @@ namespace ExecutableTest
             IBattler battler = Substitute.For<IBattler>();
             ITargetSet targets = Substitute.For<ITargetSet>();
 
-            press.Construct(instruction, executionEvent);
+            press = Construct(instruction, executionEvent);
             press.OnStart();
             // triggers event
             // this should keep cancel time false and set istriggered to true with the given execution event
@@ -925,7 +945,7 @@ namespace ExecutableTest
             IBattler battler = Substitute.For<IBattler>();
             ITargetSet targets = Substitute.For<ITargetSet>();
 
-            press.Construct(instruction, executionEvent);
+            press = Construct(instruction, executionEvent);
             // set to triggered
             press.OnInput("z", battler, targets);
             Assert.IsTrue(press.IsTriggered());
