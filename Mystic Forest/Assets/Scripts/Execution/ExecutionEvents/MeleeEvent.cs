@@ -21,7 +21,7 @@ public class MeleeEvent : ExecutionEvent
         performer.SetOnCollide(delegate(Collider2D collider) { Debug.Log("Collided with " + collider); });
         performer.CheckCollision();
         onCancellableEvent?.Invoke();
-        //yield return new WaitForSeconds(animSO.GetLength() - timeOfContact);
-        //onFinishEvent?.Invoke();
+        yield return new WaitForSeconds(animSO.GetLength() - timeOfContact);
+        onFinishEvent?.Invoke();
     }
 }
