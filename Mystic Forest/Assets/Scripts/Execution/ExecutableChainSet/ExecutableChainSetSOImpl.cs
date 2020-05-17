@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[CreateAssetMenu(menuName = "Executable/ Executable Chain Set SO")]
+[CreateAssetMenu(menuName = "Executable/Executable Chain Set SO")]
 [UnityEditor.InitializeOnLoad]
 public class ExecutableChainSetSOImpl : ScriptableObject, IExecutableChainSet
 {

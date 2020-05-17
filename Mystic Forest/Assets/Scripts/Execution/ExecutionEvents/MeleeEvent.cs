@@ -12,16 +12,27 @@ public class MeleeEvent : ExecutionEvent
     public override void OnExecute(IBattler attacker, ITargetSet targets)
     {
         attacker.Play(animSO);
-        attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(AttackDelay(attacker, targets));
+        MeleeEventPOCO poco = new MeleeEventPOCO
+        {
+            onCancellableEvent = onCancellableEvent,
+            onFinishEvent = onFinishEvent
+        };
+        attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(poco.AttackDelay(attacker, targets, animSO, timeOfContact));
     }
 
-    private IEnumerator AttackDelay(IBattler performer, ITargetSet targets)
+    private class MeleeEventPOCO
     {
-        yield return new WaitForSeconds(timeOfContact);
-        performer.SetOnCollide(delegate(Collider2D collider) { Debug.Log("Collided with " + collider); });
-        performer.CheckCollision();
-        onCancellableEvent?.Invoke();
-        yield return new WaitForSeconds(animSO.GetLength() - timeOfContact);
-        onFinishEvent?.Invoke();
+        public System.Action onFinishEvent;
+        public System.Action onCancellableEvent;
+
+        public IEnumerator AttackDelay(IBattler performer, ITargetSet targets, IPlayableAnim anim, float timeOfContact)
+        {
+            performer.SetOnCollide(delegate (Collider2D collider) { Debug.Log("Collided with " + collider); });
+            yield return new WaitForSeconds(timeOfContact);
+            performer.CheckCollision();
+            onCancellableEvent?.Invoke();
+            yield return new WaitForSeconds(anim.GetLength() - timeOfContact);
+            onFinishEvent?.Invoke();
+        }
     }
 }

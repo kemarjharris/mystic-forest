@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Power Slash
   m_EditorClassIdentifier: 
   attacks:
-  - {fileID: 11400000, guid: f4e253017f8e899488aa995f74b1fe02, type: 2}
+  - {fileID: 11400000, guid: 036f7d6efd36cb6498f418575a85aeea, type: 2}
   group: {fileID: 11400000, guid: 94291b925edd1ed4b8c191b1670117e4, type: 2}

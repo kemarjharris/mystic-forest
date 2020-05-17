@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Warrior Slash 2
   m_EditorClassIdentifier: 
   button: 0
-  executionEvent: {fileID: 0}
+  executionEvent: {fileID: 11400000, guid: 7a25ac0cc08fbe94bbe9e19b10ad0863, type: 2}

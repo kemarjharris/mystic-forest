@@ -8,6 +8,8 @@ public interface IBattler
 
     void Play(IPlayableAnim animation);
 
+    void FinishCombat();
+
     void CheckCollision();
 
     void SetOnCollide(System.Action<Collider2D> onCollide);

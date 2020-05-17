@@ -47,12 +47,17 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
         AnimationPlayableOutput output = AnimationPlayableOutput.Create(playableGraph, "Animation", GetComponent<Animator>());
         mixerPlayable = AnimationMixerPlayable.Create(playableGraph, 0, true);
         output.SetSourcePlayable(mixerPlayable);
-        playableGraph.Play();
+    }
+
+    public void Stop()
+    {
+        playableGraph.Stop();
     }
 
     public void Play(IPlayableAnim anim)
     {
         string clipName = anim.GetName();
+        if (!playableGraph.IsPlaying()) playableGraph.Play();
         if (!animMap.ContainsKey(clipName))
         {
             AddAnimation(anim);

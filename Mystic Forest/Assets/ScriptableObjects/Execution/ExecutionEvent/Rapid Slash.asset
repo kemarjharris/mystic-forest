@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eca6d92af4fc41e4da69d6f78fe33eda, type: 3}
+  m_Script: {fileID: 11500000, guid: 1109b36c462dfe644a5798ab98a3b143, type: 3}
   m_Name: Rapid Slash
   m_EditorClassIdentifier: 
-  button: 0
-  executionEvent: {fileID: 11400000, guid: f54065a8e56363847aec2235b4716ff4, type: 2}
-  mashTimeEndedEvent: {fileID: 11400000, guid: 3bb3d92dfd05bfa41a14e517414b8c76, type: 2}
-  mashDuration: 4
+  events:
+  - {fileID: 11400000, guid: 79ecc5f2f0f7fdd40b8642b5dbc7722f, type: 2}

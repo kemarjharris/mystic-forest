@@ -32,6 +32,7 @@ public class ExecutionModuleAnimationTestScene : MonoBehaviour
             {
                 if (visual != null) visual.Destroy();
                 if (chainVisual != null) chainVisual.Destroy();
+                battler.animator.Stop();
             };
             module.StartExecution(set, battler);
         }
