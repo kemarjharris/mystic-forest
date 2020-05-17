@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Battler : MonoBehaviour, IBattler
 {
-    public MixAnimator animator = null;
+    public IMixAnimator animator = null;
     public HitBox hitBox;
 
     private void Start()

@@ -53,6 +53,7 @@ public class KeyDownMashExecutable : Executable
         {
             if (state.triggered)
             {
+                executionEvent.Interrupt();
                 mashTimeEndedEvent.OnExecute(battler, targets);
                 state.fired = true;
             }

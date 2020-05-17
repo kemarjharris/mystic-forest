@@ -137,5 +137,25 @@ namespace Tests
             yield return null;
         } 
 
+        [UnityTest]
+        public IEnumerator StopStopsAnimationTest()
+        {
+            animator.Play(animMap["Test White To Black"]);
+            yield return new WaitForSeconds(0.5f);
+            animator.Stop();
+            yield return new WaitForSeconds(0.6f);
+            // animation should have returned to plain white
+            Assert.AreEqual(Color.white, obj.GetComponent<SpriteRenderer>().color);
+        }
+
+        [UnityTest]
+        public IEnumerator PlayPlaysIfStoppedTest()
+        {
+            animator.Stop();
+            animator.Play(animMap["Test White To Black"]);
+            yield return new WaitForSeconds(1.1f);
+            Assert.AreEqual(Color.black, obj.GetComponent<SpriteRenderer>().color);
+        }
+
     }
 }

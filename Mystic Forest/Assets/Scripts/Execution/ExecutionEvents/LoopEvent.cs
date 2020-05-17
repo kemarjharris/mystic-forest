@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 
 [CreateAssetMenu(menuName = "Executable/Execution Event/Loop Event" )]
 public class LoopEvent : ExecutionEvent
@@ -16,6 +15,7 @@ public class LoopEvent : ExecutionEvent
         }
         else // if no event is currently firing
         {
+           
             void fireNextEvent()
             {
                 // when the current event finishes, signal that its finished
@@ -39,6 +39,11 @@ public class LoopEvent : ExecutionEvent
             // Fire the current event
             events[pos].OnExecute(attacker, targets);
         }
+    }
+
+    public override void Interrupt()
+    {
+        FireNext = false;
     }
 
     /* For testing */

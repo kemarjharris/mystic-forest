@@ -32,7 +32,6 @@ public class CollectionUtils
         {
             str = str.Substring(0, str.Length - 1) + "]";
         }
-        Debug.Log(str);
         return str;
     }
 

@@ -18,4 +18,6 @@ public abstract class ExecutionEvent : ScriptableObject
         this.onFinishEvent = onFinishEvent;
     }
 
+    public virtual void Interrupt() { }
+
 }

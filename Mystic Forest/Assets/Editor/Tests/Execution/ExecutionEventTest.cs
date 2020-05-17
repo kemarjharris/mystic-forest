@@ -143,6 +143,36 @@ namespace Tests
             manualEvent.FireOnCancelEvent();
             Assert.True(loop.IsExecuting);
         }
+
+        [Test]
+        public void FiresNextNextTest()
+        {
+            ManualCancelExecutionEvent @event = ScriptableObject.CreateInstance<ManualCancelExecutionEvent>();
+            loop.events = new ExecutionEvent[] { manualEvent, @event, testEvent };
+            // set first event to fire
+            loop.OnExecute(battler, targets);
+            // set next event to fire
+            loop.OnExecute(battler, targets);
+            // fire first event, next event will fire
+            manualEvent.FireOnCancelEvent();
+            // next event isnt finished, set to fire again
+            loop.OnExecute(battler, targets);
+            // fire next event, test event should fire too
+            manualEvent.FireOnCancelEvent();
+            Assert.AreEqual(1, testEvent.timesExecuted);
+        }
+
+        [Test]
+        public void DoesNotFireAgainIfInterruptedTest()
+        {
+            loop.events = new ExecutionEvent[] { manualEvent, testEvent };
+            loop.OnExecute(battler, targets);
+            loop.OnExecute(battler, targets);
+            loop.Interrupt();
+            manualEvent.FireOnCancelEvent();
+            Assert.AreEqual(1, testEvent.timesExecuted);
+            
+        }
     }
     
 }
