@@ -8,4 +8,5 @@ public interface IChainExecutor
     void Update();
     System.Action OnChainCancellable { set; }
     System.Action OnChainFinished { set; }
+    System.Action OnChainFired { set; }
 }

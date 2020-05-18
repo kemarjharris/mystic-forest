@@ -350,8 +350,24 @@ namespace ExecutorTest
             executor.Construct(executables, null, curr);
             executor.GetExecutables().MoveNext();
             executor.onChainCancellable = delegate { onCancellableFired = true; };
-            executor.NextExecutable();
+            executor.Update();
             Assert.True(onCancellableFired);
+        }
+
+        [Test]
+        public void CurrFiredNotCancellableDoesNotFireOnCancelTest()
+        {
+            bool onCancellableFired = false;
+            IExecutable curr = SetUpExecutableState(true, false, false);
+            curr.HasFired().Returns(true);
+            IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { curr }).GetEnumerator();
+            ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
+            executor.Construct(executables, null, curr);
+            executor.GetExecutables().MoveNext();
+            executor.onChainCancellable = delegate { onCancellableFired = true; };
+            executor.Update();
+            Assert.False(onCancellableFired);
+
         }
     }
 }

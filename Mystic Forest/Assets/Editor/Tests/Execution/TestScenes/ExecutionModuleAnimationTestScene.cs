@@ -24,7 +24,7 @@ public class ExecutionModuleAnimationTestScene : MonoBehaviour
                 chainVisual = new ExecutableChainVisual(chain);
                 chain.SetOnMoveNext(chainVisual.MoveNext);
             };
-            module.onChainCancellable = delegate
+            module.onChainFired = delegate
             {
                 visual = CreateNewSetVisual();
             };

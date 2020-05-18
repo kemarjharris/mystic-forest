@@ -16,13 +16,15 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
     IBattler attacker;
 
     IExecutable prev = null;
-    IExecutable curr;
+    IExecutable curr = null;
 
     public Action onChainCancellable;
     public Action onChainFinished;
+    public Action onChainFired;
 
     Action IChainExecutor.OnChainCancellable { set => onChainCancellable = value; }
     Action IChainExecutor.OnChainFinished { set => onChainFinished = value; }
+    Action IChainExecutor.OnChainFired { set => onChainFired = value; }
 
     IChainInputReader reader = new ChainInputReader();
 
@@ -54,19 +56,32 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
         { // Chain currently executing in the else block
             // Chain is waiting to be cancelled into next attack in this block
             // This block also executes if the current attack has been successfully triggered
-            if (prev == null || prev.IsInCancelTime() || curr.IsTriggered())
+            if (prev == null || prev.HasFired() || curr.IsTriggered())
             {
 
                 string input = reader.ReadInput();
-                curr.OnInput(input, attacker, targets);
-
+                if (prev == null || prev.IsInCancelTime())
+                {
+                    curr.OnInput(input, attacker, targets);
+                } else if (prev != null)
+                {
+                    // prev isnt cancellable yet, keep reading input for it
+                    prev.OnInput(input, attacker, targets);
+                }
                 // curr attack finished after input was read, move to next attack.
                 // This block gets executed on the first frame where curr is in cancel time
-                if (curr.HasFired() || curr.IsInCancelTime())
+                if (curr.HasFired())
                 {
                     NextExecutable();
                 }
             }
+        }
+        // polling for onCancellableEvent
+        if (!timeCheck && curr != null && prev.IsInCancelTime())
+        {
+            Debug.Log("FIRE");
+            onChainCancellable?.Invoke();
+            curr = null;
         }
         // Everything that happens in this block means the chain finished executing
         // Prev attack finished, current attack never triggered, unsuccessful chain
@@ -99,8 +114,8 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
         else
         {
             // Notify observer that the attack chain can now be cancelled
-            curr = null;
-            onChainCancellable?.Invoke();
+            onChainFired?.Invoke();
+            //onChainCancellable?.Invoke();
         }
     }
 
