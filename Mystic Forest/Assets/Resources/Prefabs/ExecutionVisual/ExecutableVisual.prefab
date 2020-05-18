@@ -258,6 +258,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HoverText
       objectReference: {fileID: 0}
+    - target: {fileID: 3163981115639591713, guid: 6b301ae7a168d22438e2dc2cb4f1d657,
+        type: 3}
+      propertyPath: text
+      value: 
+      objectReference: {fileID: 8623415699026640796}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b301ae7a168d22438e2dc2cb4f1d657, type: 3}
 --- !u!224 &8441053596609869048 stripped

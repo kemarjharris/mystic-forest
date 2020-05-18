@@ -12,7 +12,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     public System.Action<ICustomizableEnumerator<IExecutable>> onNewChainSelected;
     public System.Action onChainCancellable;
     public System.Action onChainFinished;
-    public System.Action onChainFired { set { executor.OnChainFired = value; } }
+    public System.Action onChainFired;
 
     public void StartExecution(IExecutableChainSet set, IBattler battler)
     {
@@ -34,6 +34,10 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         {
             onChainCancellable?.Invoke();
             linkerActive = true;
+        };
+        executor.OnChainFired = delegate
+        {
+            onChainFired.Invoke();
         };
         executor.OnChainFinished = delegate
         {

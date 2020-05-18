@@ -35,10 +35,6 @@ public class PressExecutable : Executable {
                 state.fired = true;
                 executionEvent.OnExecute(battler, targets);
             }
-            else
-            {
-                state.finished = true;
-            }
         }
     }
 

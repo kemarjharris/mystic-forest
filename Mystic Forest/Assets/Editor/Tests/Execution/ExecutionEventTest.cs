@@ -170,8 +170,7 @@ namespace Tests
             loop.OnExecute(battler, targets);
             loop.Interrupt();
             manualEvent.FireOnCancelEvent();
-            Assert.AreEqual(1, testEvent.timesExecuted);
-            
+            Assert.AreEqual(0, testEvent.timesExecuted);   
         }
     }
     

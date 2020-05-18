@@ -32,7 +32,7 @@ public class MeleeEvent : ExecutionEvent
             performer.CheckCollision();
             onCancellableEvent?.Invoke();
             yield return new WaitForSeconds(anim.GetLength() - timeOfContact);
-            //onFinishEvent?.Invoke();
+            onFinishEvent?.Invoke();
         }
     }
 }

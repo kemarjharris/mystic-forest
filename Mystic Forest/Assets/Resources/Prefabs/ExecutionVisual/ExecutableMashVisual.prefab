@@ -27,7 +27,7 @@ RectTransform:
   m_GameObject: {fileID: 1649008626189375225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3980939, y: 0.3980939, z: 1}
+  m_LocalScale: {x: 0.42293495, y: 0.42293495, z: 1.0624}
   m_Children: []
   m_Father: {fileID: 1689176516843926121}
   m_RootOrder: 2
@@ -322,6 +322,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HoverText
       objectReference: {fileID: 0}
+    - target: {fileID: 3163981115639591713, guid: 6b301ae7a168d22438e2dc2cb4f1d657,
+        type: 3}
+      propertyPath: text
+      value: 
+      objectReference: {fileID: 8376146294327159378}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b301ae7a168d22438e2dc2cb4f1d657, type: 3}
 --- !u!224 &8554077081446097206 stripped
