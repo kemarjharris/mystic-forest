@@ -54,14 +54,14 @@ namespace ExecutionModuleTest
         
         // Chain cancellable sets linker active
         [Test]
-        public void ChainCancellableSetsLinkerTrueTest()
+        public void ChainFiredSetsLinkerTrueTest()
         {
             // precondition is linker is inactive
             ChainSelectedSetsLinkerInactiveTest();
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             IDirectionCommandPicker<IExecutableChain> picker = Substitute.For<IDirectionCommandPicker<IExecutableChain>>();
             module.Initialize(picker, executor);
-            executor.onChainCancellable.Invoke();
+            executor.onChainFired.Invoke();
             Assert.True(module.LinkerIsActive());
         }
 

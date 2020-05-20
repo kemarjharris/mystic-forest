@@ -29,17 +29,17 @@ public class OnReleaseHoldExecutable : Executable
         else if (IsTriggered() && key == InstructionKeyEvent.KEYUP)
         {
             OnRelease(battler, targets);
+            state.fired = true;
         }
         if (key == InstructionKeyEvent.BADKEY)
         {
-            OnRelease(battler, targets);
+            onRelease?.Invoke();
             state.finished = true;
         }
     }
 
     void OnRelease(IBattler battler, ITargetSet targets)
     {
-        state.fired = true;
         onRelease?.Invoke();
         releaseExecutionEvent.OnExecute(battler, targets);
     }

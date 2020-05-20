@@ -9,7 +9,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     IChainExecutor executor;
     IBattler battler;
     bool linkerActive;
-    public System.Action<ICustomizableEnumerator<IExecutable>> onNewChainSelected;
+    public System.Action<ICustomizableEnumerator<IExecutable>> onNewChainLoaded;
     public System.Action onChainCancellable;
     public System.Action onChainFinished;
     public System.Action onChainFired;
@@ -27,17 +27,13 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         {
             linkerActive = false;
             ICustomizableEnumerator<IExecutable> enumerator = chain.GetCustomizableEnumerator();
-            onNewChainSelected?.Invoke(enumerator);
-            executor.ExecuteChain(battler, null, enumerator);
+            executor.ExecuteChain(battler, null, enumerator, () => onNewChainLoaded?.Invoke(enumerator));
         };
-        executor.OnChainCancellable = delegate
-        {
-            onChainCancellable?.Invoke();
-            linkerActive = true;
-        };
+        executor.OnChainCancellable = onChainCancellable;
         executor.OnChainFired = delegate
         {
-            onChainFired.Invoke();
+            linkerActive = true;
+            onChainFired?.Invoke();
         };
         executor.OnChainFinished = delegate
         {

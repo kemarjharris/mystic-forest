@@ -363,6 +363,18 @@ namespace ExecutorTest
         }
 
         [Test]
+        public void CurrFinishedEndsExecution()
+        {
+            IExecutable curr = SetUpExecutableState(false, false, true);
+            IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { curr }).GetEnumerator();
+            ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
+            executor.ExecuteChain(null, null, executables);
+            Assert.True(executor.IsExecuting());
+            executor.Update();
+            Assert.False(executor.IsExecuting());
+        }
+
+        [Test]
         public void LastFiredFiresOnFireEventTest()
         {
             int timesFired = 0;

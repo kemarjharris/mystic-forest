@@ -18,7 +18,7 @@ public class ExecutionModuleTestScene : MonoBehaviour
         {
             ExecutableChainSetVisual visual = CreateNewSetVisual();
             ExecutableChainVisual chainVisual = null;
-            module.onNewChainSelected = delegate (ICustomizableEnumerator<IExecutable> chain)
+            module.onNewChainLoaded = delegate (ICustomizableEnumerator<IExecutable> chain)
             {
                 if (visual != null) visual.Destroy();
                 chainVisual = new ExecutableChainVisual(chain);

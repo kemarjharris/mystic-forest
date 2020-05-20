@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 
-[InitializeOnLoad]
 [CreateAssetMenu(menuName = "Executable/Executable Chain SO")]
 public class ExecutableChainSO : ScriptableObject, IExecutableChain //, ExecutableAttackChain
 {

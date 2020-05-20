@@ -6,11 +6,8 @@ using System;
 
 public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<AttackChainExecutionModule.ExecutionStatus>
 {
-    //public ExecutableAttackChain executableAttackChainSO; 
     IEnumerator<IExecutable> seconds;
     bool timeCheck;
-    //AttackChainExecutionVisual visual;
-    //Observer<AttackChainExecutionModule.ExecutionStatus> observer;
 
     ITargetSet targets;
     IBattler attacker;
@@ -28,17 +25,17 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
 
     IChainInputReader reader = new ChainInputReader();
 
-    public void ExecuteChain(IBattler attacker, ITargetSet targets, IEnumerator<IExecutable> chain)
+    public void ExecuteChain(IBattler attacker, ITargetSet targets, IEnumerator<IExecutable> chain, Action onSuccessfulLoad = null)
     {
         this.attacker = attacker;
         this.targets = targets;
-        Load(chain);
-        // visual = chain.getVisual(attacker);
-        // visual.Expand();
+        Load(chain, onSuccessfulLoad);
     }
 
-    void Load(IEnumerator<IExecutable> seconds)
+    void Load(IEnumerator<IExecutable> seconds, Action onSuccesfulLoad)
     {
+        if (!(prev == null || prev.IsInCancelTime())) return;
+        onSuccesfulLoad?.Invoke();
         this.seconds = seconds;
         timeCheck = this.seconds.MoveNext();
         // have to keep prev from previous attack chain in case it wasnt done executing yet
@@ -56,18 +53,11 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
         { // Chain currently executing in the else block
             // Chain is waiting to be cancelled into next attack in this block
             // This block also executes if the current attack has been successfully triggered
-            if (prev == null || prev.HasFired() || curr.IsTriggered())
+            if (prev == null || prev.IsInCancelTime() || curr.IsTriggered())
             {
 
                 string input = reader.ReadInput();
-                if (prev == null || prev.IsInCancelTime())
-                {
-                    curr.OnInput(input, attacker, targets);
-                } else if (prev != null)
-                {
-                    // prev isnt cancellable yet, keep reading input for it
-                    prev.OnInput(input, attacker, targets);
-                }
+                curr.OnInput(input, attacker, targets);
                 // curr attack finished after input was read, move to next attack.
                 // This block gets executed on the first frame where curr is in cancel time
                 if (curr.HasFired())
@@ -96,7 +86,8 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
     private bool ExecutionFinished()
     {
         return prev != null && prev.IsFinished() // prev has finished 
-           && (curr == null || (curr != null && !curr.IsTriggered()));  // end of chain OR middle of chain and hasnt been triggered
+           && (curr == null || (curr != null && !curr.IsTriggered())) // end of chain OR middle of chain and hasnt been triggered
+           || (curr != null && curr.IsFinished()); // curr failed
     }
 
     public void NextExecutable()
@@ -114,7 +105,6 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
         {
             // Notify observer that the attack chain can now be cancelled
             onChainFired?.Invoke();
-            //onChainCancellable?.Invoke();
         }
     }
 
@@ -138,7 +128,5 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
     public IExecutable GetCurr() => curr;
 
     public IExecutable GetPrev() => prev;
-
-
 
 }
