@@ -4,7 +4,5 @@ using UnityEngine;
 
 public interface IHitBox
 {
-    void SetOnCollide(System.Action<Collider2D> onCollide);
-
-    void CheckCollision();
+    void CheckCollision(System.Action<Collider2D> onCollide);
 }

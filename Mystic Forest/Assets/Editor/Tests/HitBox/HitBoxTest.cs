@@ -23,11 +23,10 @@ namespace Tests
         public IEnumerator ObjectsNotOverlappingTest()
         {
             bool fired = false;
-            a.SetOnCollide(delegate { fired = true; });
             a.transform.position = Vector3.zero;
             b.transform.position = new Vector3(10, 10);
             yield return null;
-            a.CheckCollision();
+            a.CheckCollision(delegate { fired = true; });
             Assert.False(fired);
         }
 
@@ -35,11 +34,10 @@ namespace Tests
         public IEnumerator ObjectsOverlappingTest()
         {
             bool fired = false;
-            a.SetOnCollide(delegate { fired = true; });
             a.transform.position = Vector3.zero;
             b.transform.position = Vector3.zero;
             yield return null;
-            a.CheckCollision();
+            a.CheckCollision(delegate { fired = true; });
             Assert.True(fired);
         }
 

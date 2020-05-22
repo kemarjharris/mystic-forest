@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
-using System.Collections.Generic;
 using System.Collections;
 
 [CreateAssetMenu(menuName = "Executable/Execution Event/Melee Event")]
@@ -8,6 +6,7 @@ public class MeleeEvent : ExecutionEvent
 {
     public float timeOfContact;
     public PlayableAnimSO animSO;
+    public Attack attack;
 
     public override void OnExecute(IBattler attacker, ITargetSet targets)
     {
@@ -17,7 +16,7 @@ public class MeleeEvent : ExecutionEvent
             onCancellableEvent = onCancellableEvent,
             onFinishEvent = onFinishEvent
         };
-        attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(poco.AttackDelay(attacker, targets, animSO, timeOfContact));
+        attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(poco.AttackDelay(attacker, targets, animSO, attack, timeOfContact));
     }
 
     private class MeleeEventPOCO
@@ -25,11 +24,14 @@ public class MeleeEvent : ExecutionEvent
         public System.Action onFinishEvent;
         public System.Action onCancellableEvent;
 
-        public IEnumerator AttackDelay(IBattler performer, ITargetSet targets, IPlayableAnim anim, float timeOfContact)
+        public IEnumerator AttackDelay(IBattler performer, ITargetSet targets, IPlayableAnim anim, IAttack attack, float timeOfContact)
         {
-            performer.SetOnCollide(delegate (Collider2D collider) { Debug.Log("Collided with " + collider); });
             yield return new WaitForSeconds(timeOfContact);
-            performer.CheckCollision();
+            performer.CheckCollision(delegate (Collider2D collider) {
+                IBattler battler = collider.gameObject.GetComponent<Battler>();
+                if (battler == null) return;
+                battler.GetAttacked();
+            });
             onCancellableEvent?.Invoke();
             yield return new WaitForSeconds(anim.GetLength() - timeOfContact);
             onFinishEvent?.Invoke();

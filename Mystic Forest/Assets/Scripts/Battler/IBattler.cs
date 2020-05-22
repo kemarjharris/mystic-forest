@@ -5,12 +5,13 @@ using UnityEngine;
 public interface IBattler
 {
     GameObject gameObject { get; }
+    Transform hitPoint { get; }
 
     void Play(IPlayableAnim animation);
 
     void FinishCombat();
 
-    void CheckCollision();
+    void CheckCollision(System.Action<Collider2D> onCollide);
 
-    void SetOnCollide(System.Action<Collider2D> onCollide);
+    void GetAttacked();
 }

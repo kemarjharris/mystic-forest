@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8620a3fc245d04e858420f65d2e956, type: 3}
+  m_Name: Wide Slash
+  m_EditorClassIdentifier: 
+  effectSpawnTime: 0.2
+  timeOfContact: 0.15
+  playerAnim: {fileID: 11400000, guid: 124f1d3c687801d43ab80b55dd0d64e5, type: 2}
+  effectAnim: {fileID: 11400000, guid: cf63832d171096e479d3c2264e5856a2, type: 2}
+  effectPrefab: {fileID: 7122550320921593315, guid: 6746b17a13e97de44ac23d8a4e5d1ede,
+    type: 3}

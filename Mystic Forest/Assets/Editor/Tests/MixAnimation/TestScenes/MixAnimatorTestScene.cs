@@ -15,10 +15,6 @@ public class MixAnimatorTestScene : MonoBehaviour
         MixAnimator animator = @object.GetComponent<MixAnimator>();
         this.animator = animator;
         IHitBox hitBox = @object.GetComponent<HitBox>();
-        hitBox.SetOnCollide(delegate(Collider2D collider)
-        {
-            Debug.Log(collider.gameObject.name);
-        });
     }
 
     // Update is called once per frame

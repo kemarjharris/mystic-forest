@@ -3,21 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class HitBox : MonoBehaviour, IHitBox
 {
-    CircleCollider2D hitCollider;
-    Action<Collider2D> onCollide;
-
+    BoxCollider2D hitCollider;
+    
     private void Awake()
     {
-        hitCollider = GetComponent<CircleCollider2D>();
+        hitCollider = GetComponent<BoxCollider2D>();
     }
 
-    public void CheckCollision()
+    public void CheckCollision(Action<Collider2D> onCollide)
     {
         if (onCollide == null) return;
-        Collider2D[] overlapColliders = Physics2D.OverlapCircleAll(hitCollider.transform.position, hitCollider.radius);
+        Collider2D[] overlapColliders = Physics2D.OverlapBoxAll(((Vector2) gameObject.transform.position) + hitCollider.offset, hitCollider.bounds.size, 0);
         for (int i = 0; i < overlapColliders.Length; i ++)
         {
             if (hitCollider != overlapColliders[i])
@@ -26,6 +25,4 @@ public class HitBox : MonoBehaviour, IHitBox
             }
         }
     }
-
-    public void SetOnCollide(Action<Collider2D> onCollide) => this.onCollide = onCollide;
 }
