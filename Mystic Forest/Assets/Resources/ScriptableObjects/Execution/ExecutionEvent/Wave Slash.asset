@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a104c8942ab3049ac76d3790cbd7bc, type: 3}
+  m_Name: Wave Slash
+  m_EditorClassIdentifier: 
+  projectileSpawnTime: 0.1
+  projectileSpeed: 14
+  playerAnimation: {fileID: 11400000, guid: c4fc2b2f35b490c488669929a2fd345e, type: 2}
+  projectileAnimation: {fileID: 11400000, guid: 5aec87bd45f838443b77edd78edbde46,
+    type: 2}
+  projectilePrefab: {fileID: 5944937633033093760, guid: 5a83fcebff1ebd747896f27cc1dfd11f,
+    type: 3}

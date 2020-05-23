@@ -21,5 +21,5 @@ public class PlayableAnimSO : ScriptableObject, IPlayableAnim
 
     public AnimationCurve GetYCurve() => yCurve;
 
-    public float GetLength() => clip.length;
+    public float GetLength() => clip.length * speed;
 }

@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections;
 
-[CreateAssetMenu(menuName = "Executable/Execution Event/MidRange Event")]
+[CreateAssetMenu(menuName = "Executable/Execution Event/Effect Melee Event")]
 public class EffectMeleeEvent : ExecutionEvent
 {
     public float effectSpawnTime;
