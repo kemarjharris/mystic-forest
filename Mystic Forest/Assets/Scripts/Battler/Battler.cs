@@ -24,6 +24,7 @@ public class Battler : MonoBehaviour, IBattler
 
     public void GetAttacked()
     {
+        Debug.Log(name + "was hit");
         IEnumerator FlashRed()
         {
             float frames = 5;

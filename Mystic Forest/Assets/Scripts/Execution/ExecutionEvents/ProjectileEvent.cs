@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [CreateAssetMenu(menuName = "Executable/Execution Event/Projectile Event")]
 public class ProjectileEvent : ExecutionEvent
@@ -34,11 +35,13 @@ public class ProjectileEvent : ExecutionEvent
 
     IEnumerator Travel(IProjectile projectile)
     {
+        ISet<IBattler> hitBattlers = new HashSet<IBattler>();
         void onCollide (Collider2D collider)
         {
             IBattler battler = collider.gameObject.GetComponent<Battler>();
-            if (battler == null) return;
+            if (battler == null || hitBattlers.Contains(battler)) return;
             battler.GetAttacked();
+            hitBattlers.Add(battler);
         }
         do
         {
