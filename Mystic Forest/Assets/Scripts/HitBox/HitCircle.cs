@@ -15,6 +15,7 @@ public class HitCircle : MonoBehaviour, IHitBox
     public void CheckCollision(Action<Collider2D> onCollide)
     {
         if (onCollide == null) return;
+        
         Vector2 pos = hitCollider.transform.position;
         Collider2D[] overlapColliders = Physics2D.OverlapCircleAll(pos + hitCollider.offset,
             hitCollider.radius * hitCollider.transform.localScale.magnitude);
