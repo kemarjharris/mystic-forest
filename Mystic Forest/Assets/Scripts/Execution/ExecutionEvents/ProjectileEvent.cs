@@ -9,6 +9,7 @@ public class ProjectileEvent : ExecutionEvent
     public float projectileSpeed = 1;
     public PlayableAnimSO playerAnimation = null;
     public GameObject projectilePrefab = null;
+    public TravelSO travelMethod = null;
 
     public override void OnExecute(IBattler attacker, ITargetSet targets)
     {
@@ -20,20 +21,21 @@ public class ProjectileEvent : ExecutionEvent
             yield return wait(seconds);
             onFinishEvent?.Invoke();
         }
-
         // play firing animation
         attacker.Play(playerAnimation);
         // wait until time to fire projectile
         attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(wait(projectileSpawnTime));
         // Fire projectile and send it to its destination
         IProjectile projectile = Instantiate(projectilePrefab, attacker.gameObject.transform.position, Quaternion.identity).GetComponent<IProjectile>();
-        projectile.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(Travel(projectile));
+        projectile.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(travelMethod.Travel(projectile.gameObject.transform, targets.GetTarget(), projectileSpeed));
+        // Check battlers that get hit along the way
+        projectile.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(HitBattlers(projectile));
         onCancellableEvent?.Invoke();
         // Wait until end of animation, and then finish
         attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(finishDelay(playerAnimation.GetLength() - projectileSpawnTime));
     }
 
-    IEnumerator Travel(IProjectile projectile)
+    IEnumerator HitBattlers(IProjectile projectile)
     {
         ISet<IBattler> hitBattlers = new HashSet<IBattler>();
         void onCollide (Collider2D collider)
@@ -45,9 +47,6 @@ public class ProjectileEvent : ExecutionEvent
         }
         do
         {
-            float secondsPassed = Time.deltaTime;
-            float distanceTravelled = projectileSpeed * secondsPassed;
-            projectile.gameObject.transform.position += new Vector3(distanceTravelled, 0);
             projectile.CheckCollision(onCollide);
             yield return null;
         } while (projectile != null);
