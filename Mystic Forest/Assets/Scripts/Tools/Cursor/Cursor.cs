@@ -1,55 +1,56 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Cursor : MonoBehaviour
+public class Cursor : MonoBehaviour, ICursor
 {
     public float smoothTime = 0.3f;
     public float speed = 5;
     private Vector3 velocity = new Vector3();
 
-    Vector3 targetPosition = new Vector3(10, 0, 0);
+    Vector3 targetPosition;
+    Vector3 newOffset = Vector3.zero;
+
+    public void Up()
+    {
+        newOffset += Vector3.up;
+        if (velocity.y < 0)
+        {
+            velocity = new Vector3(velocity.x, 0, velocity.z);
+        }
+    }
+
+    public void Down()
+    {
+        newOffset += Vector3.down;
+        if (velocity.y > 0)
+        {
+            velocity = new Vector3(velocity.x, 0, velocity.z);
+        }
+    }
+
+    public void Right()
+    {
+        newOffset += Vector3.right;
+        if (velocity.x < 0)
+        {
+            velocity = new Vector3(0, velocity.y, velocity.z);
+        }
+    }
+
+    public void Left()
+    {
+        newOffset += Vector3.left;
+        if (velocity.x > 0)
+        {
+            velocity = new Vector3(0, velocity.y, velocity.z);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
-
-        Vector3 newOffset = Vector3.zero;
-        if (Input.GetKey("w"))
-        {
-            newOffset += Vector3.up;
-        } else if (Input.GetKey("s"))
-        {
-            newOffset += Vector3.down;
-        }
-
-        if (Input.GetKey("d"))
-        {
-            newOffset += Vector3.right;
-        }
-        else if (Input.GetKey("a"))
-        {
-            newOffset += Vector3.left;
-        }
-
         Debug.Log(velocity);
         Vector3 targetPosition = transform.position + (newOffset * speed);
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
-        /*
-        if (newOffset != Vector3.zero)
-        {
-            Vector3 newPos = transform.position + newOffset;
-            Vector3 screenPoint = Camera.main.WorldToViewportPoint(newPos);
-            if (IsOnCamera(screenPoint))
-            {
-                
-            }
-        }
-        */
+        newOffset = Vector3.zero;
     }
-
-    /*
-    bool IsOnCamera(Vector3 screenPoint)
-    {
-        return screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
-    }
-    */
 }
