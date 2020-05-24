@@ -4,13 +4,8 @@ using System.Collections.Generic;
 
 public class TargetSet : ITargetSet
 {
-    ISet<Transform> set;
+    Transform target;
 
-    public TargetSet()
-    {
-        set = new HashSet<Transform>();
-    }
-
-    public void AddTarget(Transform target) => set.Add(target);
+    public void SetTarget(Transform target) => this.target = target;
     
 }

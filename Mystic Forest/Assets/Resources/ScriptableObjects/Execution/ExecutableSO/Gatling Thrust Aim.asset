@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50157883326958a49989b4c938e4cef7, type: 3}
+  m_Name: Gatling Thrust Aim
+  m_EditorClassIdentifier: 
+  button: 1
+  cursorPrefab: {fileID: 8179147261844964283, guid: c4bf4faf680a5a5489ed76487aec7e99,
+    type: 3}
+  aimDuration: 5
+  onStartAiming: {fileID: 11400000, guid: f3c01621b83f88b47b84475de0864fe6, type: 2}
+  onTargetSelected: {fileID: 11400000, guid: 79ecc5f2f0f7fdd40b8642b5dbc7722f, type: 2}

@@ -1,16 +1,24 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
+[CreateAssetMenu()]
 public class AimExecutableSO : ExecutableSO
 {
-    public GameObject cursorPrefab = Resources.Load<GameObject>("Prefabs/Cursor/EnemyCrossHair");
-    public float aimDuration = 0;
+    private void OnEnable()
+    {
+        cursorPrefab = Resources.Load<GameObject>("Prefabs/Cursor/EnemyCrossHair");
+        aimDuration = 5;
+    }
+
+    public GameObject cursorPrefab = null;
+    public float aimDuration;
     public ExecutionEvent onStartAiming = null;
     public ExecutionEvent onTargetSelected = null;
 
     public override IExecutable CreateExecutable() =>
         new AimExecutable
         {
+            button = button,
             aimDuration = aimDuration,
             cursorPrefab = cursorPrefab,
             onStartAiming = Instantiate(onStartAiming),

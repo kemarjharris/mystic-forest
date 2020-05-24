@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ITargetSet 
 {
-    void AddTarget(Transform target);
+    void SetTarget(Transform target);
 }

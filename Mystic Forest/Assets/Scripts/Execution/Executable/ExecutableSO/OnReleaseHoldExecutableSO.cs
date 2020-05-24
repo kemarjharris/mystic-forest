@@ -12,6 +12,7 @@ public class OnReleaseHoldExecutableSO : ExecutableSO
     {
         return new OnReleaseHoldExecutable
         {
+            button = button,
             keyDownExecutionEvent = Instantiate(keyDownExecutionEvent),
             releaseExecutionEvent = Instantiate(releaseExecutionEvent),
             releaseTime = releaseTime

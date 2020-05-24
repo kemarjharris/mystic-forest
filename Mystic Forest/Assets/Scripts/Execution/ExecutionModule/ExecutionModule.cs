@@ -27,7 +27,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         {
             linkerActive = false;
             ICustomizableEnumerator<IExecutable> enumerator = chain.GetCustomizableEnumerator();
-            executor.ExecuteChain(battler, null, enumerator, () => onNewChainLoaded?.Invoke(enumerator));
+            executor.ExecuteChain(battler, new TargetSet(), enumerator, () => onNewChainLoaded?.Invoke(enumerator));
         };
         executor.OnChainCancellable = onChainCancellable;
         executor.OnChainFired = delegate

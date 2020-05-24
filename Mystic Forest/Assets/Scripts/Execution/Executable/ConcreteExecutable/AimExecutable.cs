@@ -19,6 +19,7 @@ public class AimExecutable : Executable
     public override void OnStart()
     {
         aiming = false;
+        state = new ExecutableState();
         onTargetSelected.setOnCancellableEvent(() => state.cancellable = true);
         onTargetSelected.setOnFinishEvent(() => state.finished = true);
     }
@@ -33,6 +34,7 @@ public class AimExecutable : Executable
             Aim(input, battler, targets);
         } else
         {
+            DespawnCursor();
             state.finished = true;
         }
     }
@@ -54,9 +56,14 @@ public class AimExecutable : Executable
 
     public void SpawnCursor(IBattler battler)
     {
-        GameObject cursorGameObject = Object.Instantiate(cursorPrefab, battler.gameObject.transform.position, Quaternion.identity);
+        cursorGameObject = Object.Instantiate(cursorPrefab, battler.gameObject.transform.position, Quaternion.identity);
         cursor = cursorGameObject.GetComponent<ICursor>();
         cursorHitBox = cursorGameObject.GetComponent<IHitBox>();
+    }
+
+    public void DespawnCursor()
+    {
+        Object.Destroy(cursorGameObject);
     }
 
     public void Aim(string input, IBattler battler, ITargetSet targets)
@@ -80,9 +87,19 @@ public class AimExecutable : Executable
         if (CorrectButton(input) && inputService.GetKeyUp(input))
         {
             // set target to place aimed
-            targets.AddTarget(cursorGameObject.transform);
+            bool specificTargetSelected = false;
+            cursorHitBox.CheckCollision(delegate (Collider2D collider) {
+                IBattler targeted = collider.gameObject.GetComponent<IBattler>();
+                if (battler == null) return;
+                targets.SetTarget(battler.gameObject.transform);
+                specificTargetSelected = true;
+            });
+            if (!specificTargetSelected)
+            {
+                targets.SetTarget(cursorGameObject.transform);
+            }
             // despawn cursor
-            Object.Destroy(cursorGameObject);
+            DespawnCursor();
             // handle event
             onTargetSelected.OnExecute(battler, targets);
             state.fired = true;
