@@ -2,7 +2,8 @@
 using UnityEditor;
 using System.Collections;
 
-public class TravelPastPoint : TravelSO
+[CreateAssetMenu()]
+public class TravelThroughPoint : TravelMethodSO
 {
     public override IEnumerator Travel(Transform toMove, Transform dest, float speed)
     {

@@ -9,7 +9,7 @@ public class ProjectileEvent : ExecutionEvent
     public float projectileSpeed = 1;
     public PlayableAnimSO playerAnimation = null;
     public GameObject projectilePrefab = null;
-    public TravelSO travelMethod = null;
+    public TravelMethodSO travelMethod = null;
 
     public override void OnExecute(IBattler attacker, ITargetSet targets)
     {
