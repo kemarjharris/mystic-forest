@@ -5,4 +5,6 @@ using UnityEngine;
 public interface ITargetSet 
 {
     void SetTarget(Transform target);
+
+    Transform GetTarget();
 }

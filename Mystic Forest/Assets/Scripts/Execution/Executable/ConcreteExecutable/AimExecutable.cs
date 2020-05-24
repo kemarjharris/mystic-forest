@@ -90,8 +90,8 @@ public class AimExecutable : Executable
             bool specificTargetSelected = false;
             cursorHitBox.CheckCollision(delegate (Collider2D collider) {
                 IBattler targeted = collider.gameObject.GetComponent<IBattler>();
-                if (battler == null) return;
-                targets.SetTarget(battler.gameObject.transform);
+                if (targeted == null) return;
+                targets.SetTarget(targeted.gameObject.transform);
                 specificTargetSelected = true;
             });
             if (!specificTargetSelected)
