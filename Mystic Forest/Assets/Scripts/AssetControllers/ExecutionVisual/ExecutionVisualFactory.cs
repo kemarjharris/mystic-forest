@@ -6,29 +6,27 @@ public static class ExecutionVisualFactory
 {
     public static ExecutionVisual CreateVisual(IExecutable executable, Vector3 position, Transform parent)
     {
-        if (executable is PressExecutable)
+        if (executable is OnReleaseHoldExecutable)
         {
-            ExecutionVisual visualPrefab = Resources.Load<ExecutionVisual>("Prefabs/ExecutionVisual/ExecutableVisual");
-            ExecutionVisual visual = Object.Instantiate(visualPrefab, position, Quaternion.identity, parent.transform);
+            HoldVisual visualPrefab = Resources.Load<HoldVisual>("Prefabs/ExecutionVisual/ExecutableHoldVisual");
+            HoldVisual visual = Object.Instantiate(visualPrefab, position, Quaternion.identity, parent.transform);
+            visual.Initialize((OnReleaseHoldExecutable)executable);
             visual.SetText(executable.GetButton().ToString());
             return visual;
-        } else if (executable is KeyDownMashExecutable)
+        }
+        else if (executable is KeyDownMashExecutable)
         {
             ExpandingButtonMashVisual visualPrefab = Resources.Load<ExpandingButtonMashVisual>("Prefabs/ExecutionVisual/ExecutableMashVisual");
             ExpandingButtonMashVisual visual = Object.Instantiate(visualPrefab, position, Quaternion.identity, parent.transform);
             visual.Initialize((KeyDownMashExecutable) executable);
             visual.SetText(executable.GetButton().ToString());
             return visual;
-        } else if (executable is OnReleaseHoldExecutable)
-        {
-            HoldVisual visualPrefab = Resources.Load<HoldVisual>("Prefabs/ExecutionVisual/ExecutableHoldVisual");
-            HoldVisual visual = Object.Instantiate(visualPrefab, position, Quaternion.identity, parent.transform);
-            visual.Initialize((OnReleaseHoldExecutable) executable);
-            visual.SetText(executable.GetButton().ToString());
-            return visual;
         } else
         {
-            throw new System.ArgumentException("Unhandled Type: " + executable.GetType());
+            ExecutionVisual visualPrefab = Resources.Load<ExecutionVisual>("Prefabs/ExecutionVisual/ExecutableVisual");
+            ExecutionVisual visual = Object.Instantiate(visualPrefab, position, Quaternion.identity, parent.transform);
+            visual.SetText(executable.GetButton().ToString());
+            return visual;
         }
     }
 }
