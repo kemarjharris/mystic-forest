@@ -2,23 +2,24 @@
 using System.Collections;
 using System;
 
-[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(CapsuleCollider))]
 public class HitCircle : MonoBehaviour, IHitBox
 { 
-    CircleCollider2D hitCollider;
+    CapsuleCollider hitCollider;
 
     private void Awake()
     {
-        hitCollider = GetComponent<CircleCollider2D>();
+        hitCollider = GetComponent<CapsuleCollider>();
     }
 
-    public void CheckCollision(Action<Collider2D> onCollide)
+    public void CheckCollision(Action<Collider> onCollide)
     {
         if (onCollide == null) return;
         
-        Vector2 pos = hitCollider.transform.position;
-        Collider2D[] overlapColliders = Physics2D.OverlapCircleAll(pos + hitCollider.offset,
-            hitCollider.radius * hitCollider.transform.localScale.magnitude);
+        Vector3 pos = hitCollider.transform.position;
+        float height = hitCollider.height / 2;
+        Collider[] overlapColliders = Physics.OverlapCapsule(pos - new Vector3(0, 0, height), pos + new Vector3(0, 0, height), 
+            hitCollider.radius);
         for (int i = 0; i < overlapColliders.Length; i++)
         {
             if (hitCollider != overlapColliders[i])

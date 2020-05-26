@@ -38,7 +38,7 @@ public class ProjectileEvent : ExecutionEvent
     IEnumerator HitBattlers(IProjectile projectile)
     {
         ISet<IBattler> hitBattlers = new HashSet<IBattler>();
-        void onCollide (Collider2D collider)
+        void onCollide (Collider collider)
         {
             IBattler battler = collider.gameObject.GetComponent<Battler>();
             if (battler == null || hitBattlers.Contains(battler)) return;

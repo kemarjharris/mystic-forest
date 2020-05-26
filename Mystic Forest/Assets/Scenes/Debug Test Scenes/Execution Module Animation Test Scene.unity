@@ -125,6 +125,8 @@ GameObject:
   - component: {fileID: 65078868}
   - component: {fileID: 65078867}
   - component: {fileID: 65078866}
+  - component: {fileID: 65078872}
+  - component: {fileID: 65078871}
   - component: {fileID: 65078865}
   m_Layer: 5
   m_Name: Warrior (2)
@@ -133,32 +135,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &65078865
-BoxCollider2D:
+--- !u!114 &65078865
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65078864}
   m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.077357784, y: -0.02901031}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.664591, y: 0.5630659}
-    oldSize: {x: 0.47, y: 0.46}
-    newSize: {x: 0.46, y: 0.26}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.47, y: 0.46}
-  m_EdgeRadius: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e66049260da6949905ffcbb1e21ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.3
+  dragFactor: 0.3
+  airForcePercentage: 0.3
+  speed: 10
+  jumpForce: 10
 --- !u!114 &65078866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,9 +261,38 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.2, y: 0.22999991}
+  m_AnchoredPosition: {x: 7.31, y: 0.28}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.9664014, y: 0.5}
+--- !u!54 &65078871
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65078864}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &65078872
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65078864}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.47, y: 0.46, z: 0.2}
+  m_Center: {x: -0.077357784, y: -0.02901031, z: 0}
 --- !u!1 &127418848
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +419,8 @@ GameObject:
   - component: {fileID: 577479418}
   - component: {fileID: 577479417}
   - component: {fileID: 577479416}
+  - component: {fileID: 577479423}
+  - component: {fileID: 577479422}
   - component: {fileID: 577479421}
   m_Layer: 5
   m_Name: Warrior (1)
@@ -517,32 +541,52 @@ RectTransform:
   m_AnchoredPosition: {x: 7.2, y: -1.44}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.9664014, y: 0.5}
---- !u!61 &577479421
-BoxCollider2D:
+--- !u!114 &577479421
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 577479415}
   m_Enabled: 1
-  m_Density: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e66049260da6949905ffcbb1e21ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.3
+  dragFactor: 0.3
+  airForcePercentage: 0.3
+  speed: 10
+  jumpForce: 10
+--- !u!54 &577479422
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577479415}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &577479423
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577479415}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.077357784, y: -0.02901031}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.664591, y: 0.5630659}
-    oldSize: {x: 0.47, y: 0.46}
-    newSize: {x: 0.46, y: 0.26}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.47, y: 0.46}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.47, y: 0.46, z: 0.2}
+  m_Center: {x: -0.077357784, y: -0.02901031, z: 0}
 --- !u!1 &587096662
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,6 +696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d70d38fd6ce324183b5bab2f2c6958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  radius: 0.1
 --- !u!1 &1488295900
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,6 +711,8 @@ GameObject:
   - component: {fileID: 1488295903}
   - component: {fileID: 1488295902}
   - component: {fileID: 1488295901}
+  - component: {fileID: 1488295908}
+  - component: {fileID: 1488295907}
   m_Layer: 5
   m_Name: Warrior (3)
   m_TagString: Untagged
@@ -673,32 +720,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &1488295901
-BoxCollider2D:
+--- !u!65 &1488295901
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1488295900}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.011418976, y: -0.02901031}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.664591, y: 0.5630659}
-    oldSize: {x: 0.47, y: 0.46}
-    newSize: {x: 0.46, y: 0.26}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.33114177, y: 0.46}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.47, y: 0.46, z: 0.2}
+  m_Center: {x: -0.077357784, y: -0.02901031, z: 0}
 --- !u!114 &1488295902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,6 +845,39 @@ RectTransform:
   m_AnchoredPosition: {x: 7.2699995, y: 1.7599999}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.9664014, y: 0.5}
+--- !u!114 &1488295907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488295900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e66049260da6949905ffcbb1e21ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.3
+  dragFactor: 0.3
+  airForcePercentage: 0.3
+  speed: 10
+  jumpForce: 10
+--- !u!54 &1488295908
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488295900}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1521170799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1056,6 +1123,8 @@ GameObject:
   - component: {fileID: 1960735449}
   - component: {fileID: 1960735450}
   - component: {fileID: 1960735451}
+  - component: {fileID: 1960735453}
+  - component: {fileID: 1960735452}
   m_Layer: 5
   m_Name: Warrior
   m_TagString: Untagged
@@ -1071,7 +1140,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960735446}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalPosition: {x: 0, y: 0, z: -0.3}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children:
   - {fileID: 667632570}
@@ -1080,7 +1149,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -9.93, y: 0.2}
+  m_AnchoredPosition: {x: -7, y: -0.3}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &1960735448
@@ -1175,6 +1244,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b21d23dac0db12f449d23a4e181188bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1960735452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960735446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e66049260da6949905ffcbb1e21ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.3
+  dragFactor: 0.3
+  airForcePercentage: 0.3
+  speed: 10
+  jumpForce: 10
+--- !u!54 &1960735453
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960735446}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2116970164
 GameObject:
   m_ObjectHideFlags: 0

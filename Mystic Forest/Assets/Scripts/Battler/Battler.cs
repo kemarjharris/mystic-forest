@@ -19,7 +19,7 @@ public class Battler : MonoBehaviour, IBattler
 
     public void Play(IPlayableAnim animation) => animator.Play(animation);
     public void FinishCombat() => animator.Stop(); // stops playing combat animations
-    public void CheckCollision(Action<Collider2D> onCollide) => hitBox.CheckCollision(onCollide);
+    public void CheckCollision(Action<Collider> onCollide) => hitBox.CheckCollision(onCollide);
     Transform IBattler.hitPoint => hitPoint;
 
     public void GetAttacked()

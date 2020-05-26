@@ -7,7 +7,6 @@ public class AimExecutableSO : ExecutableSO
     private void OnEnable()
     {
         cursorPrefab = Resources.Load<GameObject>("Prefabs/Cursor/EnemyCrossHair");
-        aimDuration = 5;
     }
 
     public GameObject cursorPrefab = null;

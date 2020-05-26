@@ -3,7 +3,7 @@ using System.Collections;
 
 public interface IProjectile
 {
-    void CheckCollision(System.Action<Collider2D> onCollide);
+    void CheckCollision(System.Action<Collider> onCollide);
 
     GameObject gameObject { get; }
 }

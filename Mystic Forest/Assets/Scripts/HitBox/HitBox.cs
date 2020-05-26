@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(BoxCollider))]
 public class HitBox : MonoBehaviour, IHitBox
 {
-    BoxCollider2D hitCollider;
+    BoxCollider hitCollider;
     
     private void Awake()
     {
-        hitCollider = GetComponent<BoxCollider2D>();
+        hitCollider = GetComponent<BoxCollider>();
     }
 
-    public void CheckCollision(Action<Collider2D> onCollide)
+    public void CheckCollision(Action<Collider> onCollide)
     {
         if (onCollide == null) return;
-        Collider2D[] overlapColliders = Physics2D.OverlapBoxAll(((Vector2) gameObject.transform.position) + hitCollider.offset, hitCollider.bounds.size, 0);
+        Collider[] overlapColliders = Physics.OverlapBox(gameObject.transform.position + hitCollider.center, hitCollider.bounds.size);
         for (int i = 0; i < overlapColliders.Length; i ++)
         {
             if (hitCollider != overlapColliders[i])

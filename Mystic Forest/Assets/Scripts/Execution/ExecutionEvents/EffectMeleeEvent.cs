@@ -40,7 +40,7 @@ public class EffectMeleeEvent : ExecutionEvent
             // Get hitbox to use
             HitBox hitBox = gameObject.GetComponent<HitBox>();
             // check hitbox of effect
-            hitBox.CheckCollision(delegate (Collider2D collider) {
+            hitBox.CheckCollision(delegate (Collider collider) {
                 IBattler battler = collider.gameObject.GetComponent<Battler>();
                 if (battler == null) return;
                 battler.GetAttacked();

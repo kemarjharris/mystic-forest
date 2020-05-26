@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5944937633033093887}
   - component: {fileID: 5944937633033093886}
   - component: {fileID: 5944937633033093761}
-  - component: {fileID: 5944937633033093885}
   - component: {fileID: 2247737995180040988}
   - component: {fileID: 114716747945242448}
+  - component: {fileID: 7494978583904236915}
   m_Layer: 0
   m_Name: Wave Slash
   m_TagString: Untagged
@@ -102,32 +102,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &5944937633033093885
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5944937633033093760}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.7824414, y: 0.23368539}
-    oldSize: {x: 1.37, y: 1.71}
-    newSize: {x: 1.37, y: 1.71}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.37, y: 1.71}
-  m_EdgeRadius: 0
 --- !u!114 &2247737995180040988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,3 +126,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44cffccdcfea9b2469e2ae9007a6573a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &7494978583904236915
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5944937633033093760}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.46587196, y: 1.4035903, z: 0.09294371}
+  m_Center: {x: -0.23557034, y: 0.3718107, z: 0.028396692}

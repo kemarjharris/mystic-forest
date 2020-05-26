@@ -19,9 +19,9 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
     {
         public readonly int pos;
         public readonly float speed;
-        public readonly System.Func<float, Vector2> func;
+        public readonly System.Func<float, Vector3> func;
         public readonly AnimationClipPlayable playable;
-        public PlayableAnimData(int pos, float speed, System.Func<float, Vector2> func, AnimationClipPlayable playable)
+        public PlayableAnimData(int pos, float speed, System.Func<float, Vector3> func, AnimationClipPlayable playable)
         {
             this.pos = pos;
             this.speed = speed;
@@ -84,7 +84,7 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
 
     IEnumerator PlayMovement(PlayableAnimData data)
     {
-        Vector2 start = transform.position;
+        Vector3 start = transform.position;
         float timePassed = 0;
         while (true)
         {

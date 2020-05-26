@@ -11,7 +11,7 @@ public interface IBattler
 
     void FinishCombat();
 
-    void CheckCollision(System.Action<Collider2D> onCollide);
+    void CheckCollision(System.Action<Collider> onCollide);
 
     void GetAttacked();
 }

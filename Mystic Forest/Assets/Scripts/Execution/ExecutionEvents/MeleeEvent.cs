@@ -27,7 +27,7 @@ public class MeleeEvent : ExecutionEvent
         public IEnumerator AttackDelay(IBattler performer, ITargetSet targets, IPlayableAnim anim, IAttack attack, float timeOfContact)
         {
             yield return new WaitForSeconds(timeOfContact);
-            performer.CheckCollision(delegate (Collider2D collider) {
+            performer.CheckCollision(delegate (Collider collider) {
                 IBattler battler = collider.gameObject.GetComponent<Battler>();
                 if (battler == null) return;
                 battler.GetAttacked();

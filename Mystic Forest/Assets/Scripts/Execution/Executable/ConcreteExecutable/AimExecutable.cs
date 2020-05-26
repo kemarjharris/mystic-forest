@@ -88,7 +88,7 @@ public class AimExecutable : Executable
         {
             // set target to place aimed
             bool specificTargetSelected = false;
-            cursorHitBox.CheckCollision(delegate (Collider2D collider) {
+            cursorHitBox.CheckCollision(delegate (Collider collider) {
                 IBattler targeted = collider.gameObject.GetComponent<IBattler>();
                 if (targeted == null) return;
                 targets.SetTarget(targeted.gameObject.transform);

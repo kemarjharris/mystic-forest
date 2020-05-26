@@ -11,7 +11,7 @@ public class TravelForward : TravelMethodSO
         {
             float secondsPassed = Time.deltaTime;
             float distanceTravelled = speed * secondsPassed;
-            toMove.gameObject.transform.position += new Vector3(distanceTravelled, 0);
+            toMove.gameObject.transform.position += new VectorZ(distanceTravelled, 0);
             yield return null;
         } while (toMove != null);
     }

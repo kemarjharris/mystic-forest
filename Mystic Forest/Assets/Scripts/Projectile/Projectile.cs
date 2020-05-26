@@ -12,14 +12,14 @@ public class Projectile : MonoBehaviour, IProjectile
         hitBox = GetComponent<IHitBox>();
     }
 
-    public void CheckCollision(Action<Collider2D> onCollide)
+    public void CheckCollision(Action<Collider> onCollide)
     {
         onCollide += OnCollide;
         hitBox.CheckCollision(onCollide);
         onCollide -= OnCollide;
     }
 
-    void OnCollide(Collider2D obj)
+    void OnCollide(Collider obj)
     {
         Destroy(gameObject);
     }

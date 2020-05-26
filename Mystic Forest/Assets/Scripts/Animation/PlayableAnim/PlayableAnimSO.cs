@@ -9,7 +9,7 @@ public class PlayableAnimSO : ScriptableObject, IPlayableAnim
     public AnimationCurve xCurve;
     public AnimationCurve yCurve;
 
-    public Vector2 Evaluate(float time) => new Vector2(xCurve.Evaluate(time), yCurve.Evaluate(time));
+    public Vector3 Evaluate(float time) => new Vector3(xCurve.Evaluate(time), yCurve.Evaluate(time));
 
     public AnimationClip GetAnimationClip() => clip;
 

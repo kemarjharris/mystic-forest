@@ -15,6 +15,6 @@ MonoBehaviour:
   button: 0
   cursorPrefab: {fileID: 8179147261844964283, guid: c4bf4faf680a5a5489ed76487aec7e99,
     type: 3}
-  aimDuration: 5
+  aimDuration: 99
   onStartAiming: {fileID: 11400000, guid: f3c01621b83f88b47b84475de0864fe6, type: 2}
-  onTargetSelected: {fileID: 11400000, guid: 2fc11fe757db03748a6f3aae4ef26cb4, type: 2}
+  onTargetSelected: {fileID: 11400000, guid: 07f723685151d2545a03d54e257dea07, type: 2}

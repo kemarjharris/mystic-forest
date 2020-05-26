@@ -4,10 +4,12 @@ using System;
 
 public class HitPoint : MonoBehaviour, IHitBox
 {
-    public void CheckCollision(Action<Collider2D> onCollide)
+    public float radius = 0.1f;
+
+    public void CheckCollision(Action<Collider> onCollide)
     {
         if (onCollide == null) return;
-        Collider2D[] overlapColliders = Physics2D.OverlapPointAll(transform.position);
+        Collider[] overlapColliders = Physics.OverlapSphere(transform.position, radius);
         for (int i = 0; i < overlapColliders.Length; i++)
         {
              onCollide?.Invoke(overlapColliders[i]);

@@ -9,6 +9,7 @@ public class CursorTestScene : MonoBehaviour
     private void Awake()
     {
         cursorHitBox = cursor.GetComponent<IHitBox>();
+
     }
 
     
@@ -45,7 +46,7 @@ public class CursorTestScene : MonoBehaviour
                     yield return null;
                 }
             }
-            void OnCollide(Collider2D collider)
+            void OnCollide(Collider collider)
             {
                 SpriteRenderer renderer = collider.gameObject.GetComponent<SpriteRenderer>();
                 StopAllCoroutines();

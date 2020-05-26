@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8179147261844964280}
   - component: {fileID: 8179147261844964281}
   - component: {fileID: 8179147261844964282}
-  - component: {fileID: 8179147261844964294}
-  - component: {fileID: 8179147261844964295}
+  - component: {fileID: 288322013}
+  - component: {fileID: 5955082511710683583}
   m_Layer: 0
   m_Name: EnemyCrossHair
   m_TagString: Untagged
@@ -96,23 +96,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTime: 0.3
   speed: 5
---- !u!58 &8179147261844964294
-CircleCollider2D:
+--- !u!136 &288322013
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8179147261844964283}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.03547609, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.3711878
---- !u!114 &8179147261844964295
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.44
+  m_Height: 0.2
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5955082511710683583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

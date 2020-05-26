@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4725b09669682f40a6cab2a09736908, type: 3}
-  m_Name: New Travel Forward
+  m_Name: Travel Forward
   m_EditorClassIdentifier: 

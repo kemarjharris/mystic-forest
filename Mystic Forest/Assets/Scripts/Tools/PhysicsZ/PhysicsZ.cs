@@ -16,8 +16,9 @@ public class PhysicsZ : MonoBehaviour
 
     private void Awake()
     {
-        transform.position = new VectorZ(transform.position.x, transform.position.z);
+        transform.position = new VectorZ(transform.position.x, transform.position.y);
         rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
         rb.useGravity = false;
     }
 

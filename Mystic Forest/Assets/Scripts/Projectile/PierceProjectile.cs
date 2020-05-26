@@ -11,7 +11,7 @@ public class PierceProjectile : MonoBehaviour, IProjectile
         hitBox = GetComponent<IHitBox>();
     }
 
-    public void CheckCollision(Action<Collider2D> onCollide)
+    public void CheckCollision(Action<Collider> onCollide)
     {
         hitBox.CheckCollision(onCollide);
     }

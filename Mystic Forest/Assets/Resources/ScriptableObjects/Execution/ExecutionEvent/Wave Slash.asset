@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Wave Slash
   m_EditorClassIdentifier: 
   projectileSpawnTime: 0.1
-  projectileSpeed: 14
+  projectileSpeed: 2
   playerAnimation: {fileID: 11400000, guid: c4fc2b2f35b490c488669929a2fd345e, type: 2}
-  projectileAnimation: {fileID: 11400000, guid: 5aec87bd45f838443b77edd78edbde46,
-    type: 2}
   projectilePrefab: {fileID: 5944937633033093760, guid: 5a83fcebff1ebd747896f27cc1dfd11f,
     type: 3}
+  travelMethod: {fileID: 11400000, guid: 10592bfdcc4bfc74589b3c02c06dcdd8, type: 2}

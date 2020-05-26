@@ -13,25 +13,25 @@ public class Cursor : MonoBehaviour, ICursor
 
     public void Up()
     {
-        newOffset += Vector3.up;
+        newOffset += new VectorZ(0, 1);
         if (velocity.y < 0)
         {
-            velocity = new Vector3(velocity.x, 0, velocity.z);
+            velocity = new Vector3(velocity.x, 0, 0);
         }
     }
 
     public void Down()
     {
-        newOffset += Vector3.down;
+        newOffset += new VectorZ(0, -1);
         if (velocity.y > 0)
         {
-            velocity = new Vector3(velocity.x, 0, velocity.z);
+            velocity = new Vector3(velocity.x, 0, 0);
         }
     }
 
     public void Right()
     {
-        newOffset += Vector3.right;
+        newOffset += new VectorZ(1, 0);
         if (velocity.x < 0)
         {
             velocity = new Vector3(0, velocity.y, velocity.z);
@@ -40,7 +40,7 @@ public class Cursor : MonoBehaviour, ICursor
 
     public void Left()
     {
-        newOffset += Vector3.left;
+        newOffset += new VectorZ(-1, 0);
         if (velocity.x > 0)
         {
             velocity = new Vector3(0, velocity.y, velocity.z);
@@ -54,7 +54,7 @@ public class Cursor : MonoBehaviour, ICursor
         newOffset = Vector3.zero;
     }
 
-    public void CheckCollision(Action<Collider2D> onCollide)
+    public void CheckCollision(Action<Collider> onCollide)
     {
         throw new NotImplementedException();
     }
