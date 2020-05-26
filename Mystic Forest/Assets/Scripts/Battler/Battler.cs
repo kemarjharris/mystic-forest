@@ -15,6 +15,7 @@ public class Battler : MonoBehaviour, IBattler
         animator = GetComponent<MixAnimator>();
         sprite = GetComponent<SpriteRenderer>();
         hitBox = GetComponentInChildren<HitPoint>();
+        hitPoint.transform.position = new VectorZ(transform.position.x, transform.position.y);
     }
 
     public void Play(IPlayableAnim animation) => animator.Play(animation);
