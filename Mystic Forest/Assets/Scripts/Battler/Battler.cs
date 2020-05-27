@@ -7,6 +7,7 @@ public class Battler : MonoBehaviour, IBattler
     public IMixAnimator animator = null;
     public Transform hitPoint = null;
     IHitBox hitBox;
+    PhysicsZ physics = null;
     SpriteRenderer sprite;
     
 
@@ -15,6 +16,7 @@ public class Battler : MonoBehaviour, IBattler
         animator = GetComponent<MixAnimator>();
         sprite = GetComponent<SpriteRenderer>();
         hitBox = GetComponentInChildren<HitPoint>();
+        physics = GetComponent<PhysicsZ>();
         hitPoint.transform.position = new VectorZ(transform.position.x, transform.position.y);
     }
 
@@ -23,7 +25,7 @@ public class Battler : MonoBehaviour, IBattler
     public void CheckCollision(Action<Collider> onCollide) => hitBox.CheckCollision(onCollide);
     Transform IBattler.hitPoint => hitPoint;
 
-    public void GetAttacked()
+    public void GetAttacked(IAttack attack)
     {
         Debug.Log(name + "was hit");
         IEnumerator FlashRed()
@@ -42,6 +44,7 @@ public class Battler : MonoBehaviour, IBattler
                 }
             }
         }
+        physics.SetVelocity(attack.force, attack.verticalForce);
         StartCoroutine(FlashRed());
     }
 }

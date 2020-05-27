@@ -13,5 +13,5 @@ public interface IBattler
 
     void CheckCollision(System.Action<Collider> onCollide);
 
-    void GetAttacked();
+    void GetAttacked(IAttack attack);
 }

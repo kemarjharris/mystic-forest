@@ -42,6 +42,7 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
         }
         else // If you've started inputting directions
         {
+            Debug.Log(CollectionUtils.Print(inputtedDirections));
             // When a new button is pressed
             if (dir != inputtedDirections[inputtedDirections.Count - 1])
             {
@@ -84,7 +85,6 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
             for (int i = 0; i <= count; i ++)
             {
                 t = Select(new DirectionCommand(inputtedButton, inputtedDirections.ToArray()));
-                Debug.Log(i);
                 if (t != null)
                 {
                     Debug.Log(t);

@@ -38,12 +38,12 @@ public class EffectMeleeEvent : ExecutionEvent
             animator.Play(@event.effectAnim);
             yield return new WaitForSeconds(@event.timeOfContact);
             // Get hitbox to use
-            HitBox hitBox = gameObject.GetComponent<HitBox>();
+            HitBox hitBox = gameObject.GetComponentInChildren<HitBox>();
             // check hitbox of effect
             hitBox.CheckCollision(delegate (Collider collider) {
                 IBattler battler = collider.gameObject.GetComponent<Battler>();
                 if (battler == null) return;
-                battler.GetAttacked();
+                battler.GetAttacked(@event.attack);
             });
             // invoke cancellable event
             onCancellableEvent?.Invoke();

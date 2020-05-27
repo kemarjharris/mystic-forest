@@ -8,4 +8,5 @@ public interface IPlayableAnim
     Vector3 Evaluate(float time);
     string GetName();
     float GetLength();
+    bool Moves();
 }

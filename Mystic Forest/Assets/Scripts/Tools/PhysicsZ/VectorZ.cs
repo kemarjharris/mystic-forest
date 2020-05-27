@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public struct VectorZ 
 {
 
@@ -15,6 +16,8 @@ public struct VectorZ
         this.x = x;
         z = yz;
     }
+
+    public static VectorZ zero { get => new VectorZ(0, 0); }
 
     public static Vector3 operator +(VectorZ a, Vector3 b) => a + b;
     public static Vector3 operator +(Vector3 a, VectorZ b) => a + new Vector3(b.x, b.y, b.z);

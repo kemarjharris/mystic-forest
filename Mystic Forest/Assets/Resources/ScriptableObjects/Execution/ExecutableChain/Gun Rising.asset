@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 236b1e1ecc55fe740bfa1e21d3037f9b, type: 3}
-  m_Name: Gatling Thrust
+  m_Name: Gun Rising
   m_EditorClassIdentifier: 
   attacks:
-  - {fileID: 11400000, guid: 972da9ed260dc3b46bb93e0bb832f2cb, type: 2}
-  group: {fileID: 11400000, guid: 782419e24e04ac0469d572bc2fe14700, type: 2}
+  - {fileID: 0}
+  group: {fileID: 0}

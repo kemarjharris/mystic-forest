@@ -30,7 +30,7 @@ public class MeleeEvent : ExecutionEvent
             performer.CheckCollision(delegate (Collider collider) {
                 IBattler battler = collider.gameObject.GetComponent<Battler>();
                 if (battler == null) return;
-                battler.GetAttacked();
+                battler.GetAttacked(attack);
             });
             onCancellableEvent?.Invoke();
             yield return new WaitForSeconds(anim.GetLength() - timeOfContact);

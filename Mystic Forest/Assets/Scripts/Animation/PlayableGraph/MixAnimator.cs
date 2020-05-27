@@ -21,12 +21,14 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
         public readonly float speed;
         public readonly System.Func<float, Vector3> func;
         public readonly AnimationClipPlayable playable;
-        public PlayableAnimData(int pos, float speed, System.Func<float, Vector3> func, AnimationClipPlayable playable)
+        public readonly bool moves;
+        public PlayableAnimData(int pos, float speed, System.Func<float, Vector3> func, AnimationClipPlayable playable, bool moves)
         {
             this.pos = pos;
             this.speed = speed;
             this.func = func;
-            this.playable = playable; 
+            this.playable = playable;
+            this.moves = moves;
         }
     }
 
@@ -36,7 +38,7 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
         AnimationClipPlayable playable = AnimationClipPlayable.Create(playableGraph, anim.GetAnimationClip());
         playable.SetSpeed(anim.GetSpeed());
         animMap.Add(anim.GetName(),
-           new PlayableAnimData(animMap.Count, anim.GetSpeed(), anim.Evaluate, playable));
+           new PlayableAnimData(animMap.Count, anim.GetSpeed(), anim.Evaluate, playable, anim.Moves()));
         playableGraph.Connect(playable, 0, mixerPlayable, animMap.Count - 1);
     }
 
@@ -68,13 +70,15 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
             {
                 pair.Value.playable.SetTime(0);
                 mixerPlayable.SetInputWeight(pair.Value.pos, 1);
-                
-                if (coroutine != null)
+
+                if (pair.Value.moves)
                 {
-                    StopCoroutine(coroutine);
+                    if (coroutine != null)
+                    {
+                        StopCoroutine(coroutine);
+                    }
+                    coroutine = StartCoroutine(PlayMovement(pair.Value));
                 }
-                coroutine = StartCoroutine(PlayMovement(pair.Value));
-                
             } else
             {
                 mixerPlayable.SetInputWeight(pair.Value.pos, 0);

@@ -8,6 +8,7 @@ public class PlayableAnimSO : ScriptableObject, IPlayableAnim
     public float speed = 1;
     public AnimationCurve xCurve;
     public AnimationCurve yCurve;
+    public bool moves = false;
 
     public Vector3 Evaluate(float time) => new Vector3(xCurve.Evaluate(time), yCurve.Evaluate(time));
 
@@ -22,4 +23,6 @@ public class PlayableAnimSO : ScriptableObject, IPlayableAnim
     public AnimationCurve GetYCurve() => yCurve;
 
     public float GetLength() => clip.length * speed;
+
+    public bool Moves() => moves;
 }

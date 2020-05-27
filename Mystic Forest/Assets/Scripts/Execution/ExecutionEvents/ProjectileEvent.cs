@@ -10,6 +10,7 @@ public class ProjectileEvent : ExecutionEvent
     public PlayableAnimSO playerAnimation = null;
     public GameObject projectilePrefab = null;
     public TravelMethodSO travelMethod = null;
+    public Attack attack;
 
     public override void OnExecute(IBattler attacker, ITargetSet targets)
     {
@@ -42,7 +43,7 @@ public class ProjectileEvent : ExecutionEvent
         {
             IBattler battler = collider.gameObject.GetComponent<Battler>();
             if (battler == null || hitBattlers.Contains(battler)) return;
-            battler.GetAttacked();
+            battler.GetAttacked(attack);
             hitBattlers.Add(battler);
         }
         do
