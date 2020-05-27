@@ -18,7 +18,7 @@ public class CombatController : MonoBehaviour
         if (physics.IsGrounded && Input.GetAxis("Vertical") > 0)
         {
             // jump
-            physics.SetVelocity(VectorZ.zero, jumpPower);
+            physics.AddForce(VectorZ.zero, jumpPower);
 
             // move horizontally
             float horizontal = Input.GetAxis("Horizontal");

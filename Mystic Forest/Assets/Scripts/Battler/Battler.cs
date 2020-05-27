@@ -25,6 +25,8 @@ public class Battler : MonoBehaviour, IBattler
     public void CheckCollision(Action<Collider> onCollide) => hitBox.CheckCollision(onCollide);
     Transform IBattler.hitPoint => hitPoint;
 
+    public bool IsGrounded => physics.IsGrounded;
+
     public void GetAttacked(IAttack attack)
     {
         Debug.Log(name + "was hit");
@@ -44,7 +46,25 @@ public class Battler : MonoBehaviour, IBattler
                 }
             }
         }
-        physics.AddForce(attack.force, attack.verticalForce);
+        float freezeTime = 0.1f;
+        FreezeFrame(freezeTime, () => physics.AddForce(attack.force, attack.verticalForce));
         StartCoroutine(FlashRed());
+    }
+
+    public void FreezeFrame(float duration, Action onUnfreeze = null)
+    {
+        // suspend in air and pause animation
+        animator.Pause();
+        physics.enabled = false;
+        // wait for duration
+        IEnumerator waitToUnfreeze()
+        {
+            yield return new WaitForSeconds(duration);
+            animator.Unpause();
+            physics.enabled = true;
+            onUnfreeze?.Invoke();
+        }
+        // add gravity and play animation
+        StartCoroutine(waitToUnfreeze());
     }
 }

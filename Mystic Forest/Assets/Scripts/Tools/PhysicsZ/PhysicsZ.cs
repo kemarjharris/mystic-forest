@@ -7,14 +7,15 @@ public class PhysicsZ : MonoBehaviour
 
     public bool IsGrounded { get => transform.position.y <= transform.position.z; }
     private Vector3 movementVelocity = Vector3.zero;
-    public float smoothness =  0.3f;
+    public float smoothness = 0.3f;
     [Range(0, 1)] public float dragFactor = 0.3f;
     [Range(0, 1)] public float airForcePercentage = 0.3f;
     public float speed = 10;
     public float jumpForce = 10;
     Rigidbody rb;
+    Vector3 resumeVelocity = Vector3.zero;
 
-    public Vector3 Velocity() => rb.velocity;
+    public Vector3 GroundVelocity() => rb.velocity;
 
     private void Awake()
     {
@@ -34,6 +35,11 @@ public class PhysicsZ : MonoBehaviour
 
         rb.velocity = groundVelocity + 
             (Vector3.up * (IsGrounded && verticalVelocity < 0 ? 0 : verticalVelocity)); // no decreasing vertical velocity if grounded
+    }
+
+    public void SetVelocity(Vector3 velocity)
+    {
+        rb.velocity = velocity;
     }
 
     public void AddForce(VectorZ groundForce, float verticalForce)
@@ -61,7 +67,6 @@ public class PhysicsZ : MonoBehaviour
             rb.AddForce(Vector3.up * force, ForceMode.VelocityChange);
             rb.useGravity = true;
         } 
-        
     }
 
     public void FixedUpdate()
@@ -71,7 +76,7 @@ public class PhysicsZ : MonoBehaviour
             if (rb.useGravity) rb.useGravity = false;
             rb.velocity *= 1 - dragFactor;
         }
-        else // if is not grounded
+        else // if is not grounded and using gravity
         {
             // if airborne && falling
             if (rb.useGravity)
@@ -89,5 +94,18 @@ public class PhysicsZ : MonoBehaviour
                 rb.useGravity = true;
             }
         } 
+    }
+
+    private void OnEnable()
+    {
+        rb.constraints = RigidbodyConstraints.None;
+        rb.velocity = resumeVelocity;
+    }
+
+    private void OnDisable()
+    {
+        resumeVelocity = rb.velocity;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        
     }
 }

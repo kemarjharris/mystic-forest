@@ -27,13 +27,18 @@ public class MeleeEvent : ExecutionEvent
         public IEnumerator AttackDelay(IBattler performer, ITargetSet targets, IPlayableAnim anim, IAttack attack, float timeOfContact)
         {
             yield return new WaitForSeconds(timeOfContact);
+            bool madeContact = false;
+            float freezeTime = 0.1f;
             performer.CheckCollision(delegate (Collider collider) {
                 IBattler battler = collider.gameObject.GetComponent<Battler>();
                 if (battler == null) return;
+                madeContact = true;
+                // aerial attack
                 battler.GetAttacked(attack);
             });
+            if (madeContact) performer.FreezeFrame(freezeTime);
             onCancellableEvent?.Invoke();
-            yield return new WaitForSeconds(anim.GetLength() - timeOfContact);
+            yield return new WaitForSecondsRealtime(anim.GetLength() + freezeTime - timeOfContact);
             onFinishEvent?.Invoke();
         }
     }
