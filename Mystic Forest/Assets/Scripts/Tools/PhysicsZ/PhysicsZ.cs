@@ -6,13 +6,15 @@ public class PhysicsZ : MonoBehaviour
 {
 
     public bool IsGrounded { get => transform.position.y <= transform.position.z; }
-    private Vector3 velocity = Vector3.zero;
+    private Vector3 movementVelocity = Vector3.zero;
     public float smoothness =  0.3f;
     [Range(0, 1)] public float dragFactor = 0.3f;
     [Range(0, 1)] public float airForcePercentage = 0.3f;
     public float speed = 10;
     public float jumpForce = 10;
     Rigidbody rb;
+
+    public Vector3 Velocity() => rb.velocity;
 
     private void Awake()
     {
@@ -24,17 +26,23 @@ public class PhysicsZ : MonoBehaviour
 
     public void Move(float horizontal, float vertical)
     {
-        rb.position = Vector3.SmoothDamp(rb.position, rb.position + new VectorZ(horizontal * speed, vertical * speed), ref velocity, smoothness);
+        rb.position = Vector3.SmoothDamp(rb.position, rb.position + new VectorZ(horizontal * speed, vertical * speed), ref movementVelocity, smoothness);
     }
 
     public void SetVelocity(VectorZ groundVelocity, float verticalVelocity)
     {
-        rb.velocity = Vector3.zero;
-        AddVerticalForce(verticalVelocity);
-        AddForce(groundVelocity);
+
+        rb.velocity = groundVelocity + 
+            (Vector3.up * (IsGrounded && verticalVelocity < 0 ? 0 : verticalVelocity)); // no decreasing vertical velocity if grounded
     }
 
-    private void AddForce(VectorZ force)
+    public void AddForce(VectorZ groundForce, float verticalForce)
+    {
+        AddVerticalForce(verticalForce);
+        AddGroundForce(groundForce);
+    }
+
+    private void AddGroundForce(VectorZ force)
     {
         if (!IsGrounded) force *= airForcePercentage;
         rb.AddForce(force, ForceMode.VelocityChange);
@@ -60,6 +68,7 @@ public class PhysicsZ : MonoBehaviour
     {
         if (IsGrounded) // apply drag
         {
+            if (rb.useGravity) rb.useGravity = false;
             rb.velocity *= 1 - dragFactor;
         }
         else // if is not grounded
@@ -81,20 +90,4 @@ public class PhysicsZ : MonoBehaviour
             }
         } 
     }
-
-    /*
-    IEnumerator WhenGrounded()
-    {
-        while (!IsGrounded)
-        {
-            yield return null;
-            // snap to ground on next frame
-            if (rb.position.y + (rb.velocity.y * Time.deltaTime) <= rb.position.z)
-            {
-               
-            }
-
-        }
-    }
-    */
 }

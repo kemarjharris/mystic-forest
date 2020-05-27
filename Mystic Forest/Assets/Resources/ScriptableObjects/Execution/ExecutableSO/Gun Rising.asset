@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Gun Rising
   m_EditorClassIdentifier: 
   button: 0
-  executionEvent: {fileID: 0}
+  executionEvent: {fileID: 11400000, guid: 806a0934b46149d4da78c718c6e72baa, type: 2}

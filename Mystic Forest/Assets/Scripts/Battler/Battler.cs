@@ -44,7 +44,7 @@ public class Battler : MonoBehaviour, IBattler
                 }
             }
         }
-        physics.SetVelocity(attack.force, attack.verticalForce);
+        physics.AddForce(attack.force, attack.verticalForce);
         StartCoroutine(FlashRed());
     }
 }
