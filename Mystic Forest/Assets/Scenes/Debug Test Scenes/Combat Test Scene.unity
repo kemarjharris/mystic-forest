@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 65078865}
   m_Layer: 5
   m_Name: Warrior (2)
-  m_TagString: Untagged
+  m_TagString: Battler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   airForcePercentage: 0.3
   speed: 10
   jumpForce: 10
-  collider: {fileID: 0}
+  overlapForce: 0
 --- !u!114 &65078866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,6 +178,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoint: {fileID: 2116970165}
+  jumpForce: 8
+  jumpHorizontalForce: 0
 --- !u!95 &65078868
 Animator:
   serializedVersion: 3
@@ -254,7 +256,7 @@ RectTransform:
   m_GameObject: {fileID: 65078864}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -3, y: 3, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children:
   - {fileID: 2116970165}
   m_Father: {fileID: 0}
@@ -288,12 +290,12 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65078864}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 406f8b7d91f96e142beb3415d3d9632e, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.47, y: 0.46, z: 0.2}
-  m_Center: {x: -0.077357784, y: -0.02901031, z: 0}
+  m_Size: {x: 0.32196125, y: 0.12401414, z: 0.2}
+  m_Center: {x: -0.007889509, y: -0.19700329, z: 0}
 --- !u!1 &127418848
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,7 +620,7 @@ GameObject:
   - component: {fileID: 1960735452}
   m_Layer: 5
   m_Name: Warrior
-  m_TagString: Untagged
+  m_TagString: Battler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -723,6 +725,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoint: {fileID: 667632570}
+  jumpForce: 10
+  jumpHorizontalForce: 8
 --- !u!114 &1960735451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,9 +754,9 @@ MonoBehaviour:
   smoothness: 0.3
   dragFactor: 0.3
   airForcePercentage: 0.3
-  speed: 10
+  speed: 15
   jumpForce: 10
-  collider: {fileID: 1960735454}
+  overlapForce: 20
 --- !u!54 &1960735453
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -776,12 +780,12 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960735446}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 406f8b7d91f96e142beb3415d3d9632e, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.54, y: 0.43, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.27939853, y: 0.11346372, z: 0.2}
+  m_Center: {x: -0.027917942, y: -0.21330842, z: 0}
 --- !u!1 &2116970164
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ public class Battler : MonoBehaviour, IBattler
     SpriteRenderer sprite;
 
     public float jumpForce = 8;
+    public float jumpHorizontalForce;
     
 
     private void Start()
@@ -24,13 +25,21 @@ public class Battler : MonoBehaviour, IBattler
 
     public void FixedUpdate()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        
-        physics.Move(horizontal, 0);
-        if (physics.IsGrounded && Input.GetAxis("Vertical") > 0)
+        if (physics.IsGrounded)
         {
-            // Jump
-            physics.AddForce(VectorZ.zero, jumpForce);
+            float horizontal = Input.GetAxis("Horizontal");
+            if (Input.GetAxis("Vertical") > 0)
+            {
+                // Jump
+                physics.SetVelocity(VectorZ.zero, 0);
+                if (horizontal > 0) horizontal = 1;
+                else if (horizontal < 0) horizontal = -1;
+                physics.AddForce(new VectorZ(jumpHorizontalForce * horizontal, 0), jumpForce);
+
+            } else
+            {
+                physics.Move(horizontal, 0);
+            }
         }
     }
 

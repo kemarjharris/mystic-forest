@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MeshPhysicsZ : MonoBehaviour
 {
@@ -20,15 +21,88 @@ public class MeshPhysicsZ : MonoBehaviour
         {
             ground = Instantiate(Resources.Load<GameObject>("Prefabs/Miscellaneous/Ground")).GetComponent<Collider>();
         }
-        //transform.position = new VectorZ(transform.position.x, transform.position.y);
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        //rb.useGravity = false;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider == ground) rb.useGravity = false;
+        // Case for landing on the ground
+        if (collision.collider == ground)
+        {
+            HandleGroundCollision();
+        }
+        // Case for landing on a battler
+        else if (!IsGrounded && collision.gameObject.tag == "Battler")
+        {
+            HandleLandOnBattlerCollision(collision);
+        }
+        
+    }
+
+    private void HandleGroundCollision()
+    {
+        rb.useGravity = false;
+    }
+
+    private void HandleLandOnBattlerCollision(Collision collision)
+    {
+        float contactCount = collision.contactCount;
+        if (contactCount != 4)
+        {
+            return;
+        }
+        // Get first cotnact point to store point
+        float xDistance = 0.2f;
+        // Battlers have box colliders, so collision point will be a rectangle.
+
+        // assuming unity doesnt gives me diagonal points
+
+
+        Vector3 pointA = collision.GetContact(0).point;
+        Vector3 pointB = collision.GetContact(1).point;
+        int i = 2;
+        while (i < contactCount && pointA.x == pointB.x)
+        {
+            pointB = collision.GetContact(i).point;
+            i += 1;
+        }
+        
+
+        if (pointA.y != pointB.y)
+        {
+            Debug.LogWarning("Running code to push two battlers apart when landing, but given points do not form a rectangle");
+            Debug.Log(pointA + " " + pointB);
+            return;
+            
+        }
+
+        xDistance += Mathf.Abs(pointB.x - pointA.x);
+
+        Vector3 seperation = new Vector3(xDistance, 0, 0);
+        Debug.Log(pointA + " " + pointB);
+        Debug.Log(seperation);
+        // Push objects apart depending on which object is on the left and the right of the collision
+        if (gameObject.transform.position.x <= collision.transform.position.x)
+        {
+            collision.transform.position += seperation;
+        } else
+        {
+            collision.transform.position -= seperation;
+        }
+    }
+
+    private void ThrowIncorrectContactException(Collision collision)
+    {
+        IList<Vector3> list = new List<Vector3>();
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            list.Add(collision.GetContact(i).point);
+        }
+        throw new System.Exception(
+            "Collision with battler occured on a battler's head, but the resulting collision was not a rectangle. The collision points in question: "
+            + CollectionUtils.Print<Vector3>(list)
+            );
     }
 
     private void OnCollisionExit(Collision collision)
