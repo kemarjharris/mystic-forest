@@ -7,17 +7,31 @@ public class Battler : MonoBehaviour, IBattler
     public IMixAnimator animator = null;
     public Transform hitPoint = null;
     IHitBox hitBox;
-    PhysicsZ physics = null;
+    MeshPhysicsZ physics = null;
     SpriteRenderer sprite;
+
+    public float jumpForce = 8;
     
 
     private void Start()
     {
         animator = GetComponent<MixAnimator>();
         sprite = GetComponent<SpriteRenderer>();
-        hitBox = GetComponentInChildren<HitPoint>();
-        physics = GetComponent<PhysicsZ>();
+        hitBox = GetComponentInChildren<IHitBox>();
+        physics = GetComponent<MeshPhysicsZ>();
         hitPoint.transform.position = new VectorZ(transform.position.x, transform.position.y);
+    }
+
+    public void FixedUpdate()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        
+        physics.Move(horizontal, 0);
+        if (physics.IsGrounded && Input.GetAxis("Vertical") > 0)
+        {
+            // Jump
+            physics.AddForce(VectorZ.zero, jumpForce);
+        }
     }
 
     public void Play(IPlayableAnim animation) => animator.Play(animation);
