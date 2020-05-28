@@ -14,6 +14,7 @@ public class MeshPhysicsZ : MonoBehaviour
     public float speed = 10;
     public float jumpForce = 10;
     Rigidbody rb;
+    public new BoxCollider collider;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class MeshPhysicsZ : MonoBehaviour
         }
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        collider = GetComponent<BoxCollider>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -32,13 +34,17 @@ public class MeshPhysicsZ : MonoBehaviour
         {
             HandleGroundCollision();
         }
+
         // Case for landing on a battler
         else if (!IsGrounded && collision.gameObject.tag == "Battler")
         {
-            HandleLandOnBattlerCollision(collision);
+            float temp = transform.position.x;
+            //transform.position = new Vector3(collision.transform.position.x, transform.position.y, transform.position.z);
+            //collision.transform.position = new Vector3(temp, collision.transform.position.y, collision.transform.position.z);
+            //HandleLandOnBattlerCollision(collision);
         }
-        
     }
+
 
     private void HandleGroundCollision()
     {
@@ -107,7 +113,19 @@ public class MeshPhysicsZ : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.collider == ground) rb.useGravity = true;
+        if (collision.collider == ground)
+        {
+            rb.useGravity = true;
+        }
+        // Case for landing on a battler
+        else if (!IsGrounded && collision.gameObject.tag == "Battler")
+        {
+            float temp = transform.position.x;
+            //collider.enabled = false;
+            //transform.position = new Vector3(collision.transform.position.x, transform.position.y, transform.position.z);
+            //collision.transform.position = new Vector3(temp, collision.transform.position.y, collision.transform.position.z);
+            //HandleLandOnBattlerCollision(collision);
+        }
     }
 
     public void Move(float horizontal, float vertical)
@@ -144,21 +162,50 @@ public class MeshPhysicsZ : MonoBehaviour
         {
             //rb.position = new Vector3(rb.position.x, rb.position.z + 0.01f, rb.position.z);
             rb.AddForce(Vector3.up * force, ForceMode.VelocityChange);
-            rb.useGravity = true;
         }
 
     }
-
-
-
 
     public void FixedUpdate()
     {
         if (IsGrounded) // apply drag
         {
             rb.velocity *= 1 - dragFactor;
+        } else
+        {
+            bool collided = CheckUnderBattler(out RaycastHit hitInfo);
+            if (collided && rb.velocity.y < 0 && hitInfo.collider.gameObject.tag == "Battler" )
+            {
+                Debug.Log("landed on battler");
+                //hitInfo.collider.transform.position += new Vector3(-rb.velocity.x/ 2, 0, 0);
+                //hitInfo.collider.enabled = false;
+                collider.enabled = false;
+            } else if (hitInfo.collider == ground)
+            {
+                collider.enabled = true;
+            }
+            
         }
     }
 
-    
+    private void OnDrawGizmos()
+    {
+        BoxColliderDrawer.DrawBoxCollider(transform, Color.magenta, collider.center, collider.size);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Vector3 scaled = Vector3.Scale(collider.size, gameObject.transform.localScale);
+        BoxCastVisualizer.DrawBoxCastBox(transform.position + collider.center + Vector3.down * 0.5f, new Vector3(scaled.x + 0.2f, 1, scaled.z) / 2, transform.rotation, Vector3.down, 0, Color.cyan);
+    }
+
+    private bool CheckUnderBattler(out RaycastHit hit)
+    {
+        Vector3 scaled = Vector3.Scale(collider.size, gameObject.transform.localScale);
+        bool collided = Physics.BoxCast(transform.position + collider.center * 0.5f, new Vector3(scaled.x + 0.2f, 1, scaled.z) / 2, Vector3.down, out RaycastHit hitInfo, gameObject.transform.rotation, 0.5f);
+        hit = hitInfo;
+        return collided;
+    }
+
+
 }
