@@ -7,50 +7,75 @@ public class Battler : MonoBehaviour, IBattler
     public IMixAnimator animator = null;
     public Transform hitPoint = null;
     IHitBox hitBox;
-    MeshPhysicsZ physics = null;
+    BattlePhysicsZ physics = null;
     SpriteRenderer sprite;
-
     public float jumpForce = 8;
     public float jumpHorizontalForce;
-
-
-
-
-    public Battler w2;
-    
+    public float speed = 10;
+    public bool inCombat;
 
     private void Awake()
     {
         animator = GetComponent<MixAnimator>();
         sprite = GetComponent<SpriteRenderer>();
         hitBox = GetComponentInChildren<IHitBox>();
-        physics = GetComponent<MeshPhysicsZ>();
+        physics = GetComponent<BattlePhysicsZ>();
         hitPoint.transform.position = new VectorZ(transform.position.x, transform.position.y);
     }
 
     public void FixedUpdate()
     {
+
+        if (Input.GetKeyDown("j"))
+        {
+            inCombat = !inCombat;
+        }
+
+        if (!physics.IsGrounded) // fall
+        {
+            Vector3 currentVelocity = physics.GetVelocity();
+            physics.SetVelocity(new VectorZ(currentVelocity.x, 0), currentVelocity.y + (Physics.gravity.y * Time.fixedDeltaTime));
+        }
+
+        if (inCombat)
+        {
+            CombatFixedUpdate();
+        } else
+        {
+            NeutralFixedUpdate();
+        }
+    }
+
+    public void NeutralFixedUpdate()
+    {
         if (physics.IsGrounded)
         {
             float horizontal = Input.GetAxis("Horizontal");
-            if (Input.GetAxis("Vertical") > 0)
-            {
-                // Jump
-                physics.SetVelocity(VectorZ.zero, 0);
-                if (horizontal > 0) horizontal = 1;
-                else if (horizontal < 0) horizontal = -1;
-
-                StartCoroutine(Jump(new VectorZ(jumpHorizontalForce * horizontal, 0), jumpForce));
-
-                //physics.AddForce(new VectorZ(jumpHorizontalForce * horizontal, 0), jumpForce);
-
-            } else
-            {
-                physics.Move(horizontal, 0);
-            }
+            float vertical = Input.GetAxis("Vertical");
+            physics.SetVelocity(new VectorZ(horizontal, vertical) * speed, 0);
         }
     }
-    
+
+    public void CombatFixedUpdate()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        if (physics.IsGrounded)
+        {
+            if (Input.GetAxis("Vertical") > 0)
+            {
+                // jump
+                if (horizontal > 0) horizontal = 1;
+                else if (horizontal < 0) horizontal = -1;
+                physics.SetVelocity(new VectorZ(jumpHorizontalForce * horizontal, 0), jumpForce);
+            } else
+            {
+                // move
+                physics.SetVelocity(new VectorZ(horizontal * speed, 0), 0);
+            }
+        } 
+
+    }
+
     public IEnumerator Jump(VectorZ hVel, float vVel)
     {
         do

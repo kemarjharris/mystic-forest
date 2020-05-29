@@ -7,7 +7,7 @@ public class Tbattler : MonoBehaviour, IBattler
     public IMixAnimator animator = null;
     public Transform hitPoint = null;
     IHitBox hitBox;
-    MeshPhysicsZ physics = null;
+    CombatPhysicsZ physics = null;
     SpriteRenderer sprite;
 
     public float jumpForce = 8;
@@ -18,11 +18,12 @@ public class Tbattler : MonoBehaviour, IBattler
         animator = GetComponent<MixAnimator>();
         sprite = GetComponent<SpriteRenderer>();
         hitBox = GetComponentInChildren<IHitBox>();
-        physics = GetComponent<MeshPhysicsZ>();
+        physics = GetComponent<CombatPhysicsZ>();
     }
 
     public void FixedUpdate()
     {
+        /*
         if (physics.IsGrounded)
         {
             float horizontal = Input.GetAxis("Horizontal");
@@ -43,6 +44,7 @@ public class Tbattler : MonoBehaviour, IBattler
                 physics.Move(horizontal, 0);
             }
         }
+        */
     }
 
     public IEnumerator Jump(VectorZ hVel, float vVel)

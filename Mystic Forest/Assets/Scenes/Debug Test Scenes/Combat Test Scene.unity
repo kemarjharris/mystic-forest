@@ -416,11 +416,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2cb2abe8aace9344aa9db9ab4d7efbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothness: 0.3
   dragFactor: 0.3
   airForcePercentage: 0.3
-  speed: 35
-  jumpForce: 40
   collider: {fileID: 877076432}
 --- !u!65 &877076432
 BoxCollider:
@@ -562,7 +559,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -10.15, y: -3.79}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1693859385
@@ -772,7 +769,8 @@ MonoBehaviour:
   hitPoint: {fileID: 667632570}
   jumpForce: 8.63
   jumpHorizontalForce: 2.93
-  w2: {fileID: 0}
+  speed: 10
+  inCombat: 0
 --- !u!114 &1960735451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -797,11 +795,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2cb2abe8aace9344aa9db9ab4d7efbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothness: 0.3
   dragFactor: 0.3
   airForcePercentage: 0.3
-  speed: 35
-  jumpForce: 40
   collider: {fileID: 1960735454}
 --- !u!54 &1960735453
 Rigidbody:
@@ -817,7 +812,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 120
+  m_Constraints: 48
   m_CollisionDetection: 0
 --- !u!65 &1960735454
 BoxCollider:

@@ -2,18 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MeshPhysicsZ : MonoBehaviour
+public class BattlePhysicsZ : MonoBehaviour
 {
     static Collider ground;
     // only use gravity if airborne
     //public bool IsGrounded => !rb.useGravity;
     public bool IsGrounded { private set; get; }
-    private Vector3 velocity = Vector3.zero;
-    public float smoothness = 0.3f;
     [Range(0, 1)] public float dragFactor = 0.3f;
     [Range(0, 1)] public float airForcePercentage = 0.3f;
-    public float speed = 10;
-    public float jumpForce = 10;
     Rigidbody rb;
     public new BoxCollider collider;
 
@@ -22,8 +18,10 @@ public class MeshPhysicsZ : MonoBehaviour
         if (ground == null)
         {
             ground = Instantiate(Resources.Load<GameObject>("Prefabs/Miscellaneous/Ground")).GetComponent<Collider>();
+            ground.GetComponent<MeshRenderer>().enabled = false;
         }
         rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;
         rb.freezeRotation = true;
         collider = GetComponent<BoxCollider>();
     }
@@ -46,7 +44,6 @@ public class MeshPhysicsZ : MonoBehaviour
 
     private void HandleGroundCollision()
     {
-        rb.useGravity = false;
         IsGrounded = true;
     }
 
@@ -56,13 +53,8 @@ public class MeshPhysicsZ : MonoBehaviour
         {
 
             IsGrounded = false;
-            rb.useGravity = true;
+            //rb.useGravity = true;
         }
-    }
-
-    public void Move(float horizontal, float vertical)
-    {
-        rb.velocity = Vector3.SmoothDamp(rb.velocity, new VectorZ(horizontal * speed, vertical * speed), ref velocity, smoothness);
     }
 
     public void SetVelocity(VectorZ groundVelocity, float verticalVelocity)
@@ -70,6 +62,8 @@ public class MeshPhysicsZ : MonoBehaviour
         //rb.velocity = Vector3.zero;
         rb.velocity = groundVelocity + (verticalVelocity * Vector3.up);
     }
+
+    public Vector3 GetVelocity() => rb.velocity;
 
     public void AddForce(VectorZ groundForce, float verticalForce)
     {
@@ -107,7 +101,7 @@ public class MeshPhysicsZ : MonoBehaviour
         {
 
             // if approaching ground turn on collsion
-            bool collided = CheckUnderBattler(out RaycastHit hitInfo);
+            bool collided = CheckUnderCollider(out RaycastHit hitInfo);
             // if approaching battler turn off collision
             if (collided && hitInfo.collider.gameObject.tag == "Battler")
             {
@@ -137,13 +131,13 @@ public class MeshPhysicsZ : MonoBehaviour
         Vector3 scaled = Vector3.Scale(collider.size, gameObject.transform.localScale);
         Gizmos.DrawRay(new Ray(transform.position + collider.center, Vector3.down));
         BoxColliderDrawer.DrawBoxCollider(transform, collider.enabled? Color.magenta: Color.yellow, collider.center, collider.size);
-        BoxCastVisualizer.DrawBoxCastBox(transform.position + collider.center + Vector3.down * 0.5f, new Vector3(scaled.x, 1, scaled.z) / 2, transform.rotation, Vector3.down, 0, Color.cyan);
+        BoxCastVisualizer.DrawBoxCastBox(transform.position + collider.center + Vector3.down * 0.5f, new Vector3(scaled.x, 1, scaled.z) / 2, Quaternion.identity, Vector3.down, 0, Color.cyan);
     }
 
-    private bool CheckUnderBattler(out RaycastHit hit)
+    private bool CheckUnderCollider(out RaycastHit hit)
     {
         Vector3 scaled = Vector3.Scale(collider.size, gameObject.transform.localScale);
-        bool collided = Physics.BoxCast(transform.position + collider.center * 0.5f, new Vector3(scaled.x, 1, scaled.z) / 2, Vector3.down, out RaycastHit hitInfo, gameObject.transform.rotation, 0.5f);
+        bool collided = Physics.BoxCast(transform.position + collider.center * 0.5f, new Vector3(scaled.x, 1, scaled.z) / 2, Vector3.down, out RaycastHit hitInfo, Quaternion.identity, 0.5f);
         hit = hitInfo;
         return collided;
     }
