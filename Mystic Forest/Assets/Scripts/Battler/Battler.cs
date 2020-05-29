@@ -20,17 +20,23 @@ public class Battler : MonoBehaviour, IBattler
         sprite = GetComponent<SpriteRenderer>();
         hitBox = GetComponentInChildren<IHitBox>();
         physics = GetComponent<BattlePhysicsZ>();
+        if (physics == null)
+        {
+            physics = gameObject.AddComponent<BattlePhysicsZ>();
+        }
         hitPoint.transform.position = new VectorZ(transform.position.x, transform.position.y);
     }
 
-    public void FixedUpdate()
+    public void Update()
     {
-
         if (Input.GetKeyDown("j"))
         {
             inCombat = !inCombat;
         }
+    }
 
+    public void FixedUpdate()
+    {
         if (!physics.IsGrounded) // fall
         {
             Vector3 currentVelocity = physics.GetVelocity();
@@ -74,16 +80,6 @@ public class Battler : MonoBehaviour, IBattler
             }
         } 
 
-    }
-
-    public IEnumerator Jump(VectorZ hVel, float vVel)
-    {
-        do
-        {
-            physics.SetVelocity(hVel, vVel);
-            vVel += Time.fixedDeltaTime * Physics.gravity.y;
-            yield return new WaitForFixedUpdate();
-        } while (!IsGrounded);
     }
 
     public void Play(IPlayableAnim animation) => animator.Play(animation);
