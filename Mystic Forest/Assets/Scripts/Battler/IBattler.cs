@@ -14,4 +14,6 @@ public interface IBattler
     void CheckCollision(System.Action<Collider> onCollide);
 
     void GetAttacked(IAttack attack);
+
+    bool IsGrounded { get; }
 }

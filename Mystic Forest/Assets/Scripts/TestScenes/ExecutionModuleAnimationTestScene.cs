@@ -13,7 +13,7 @@ public class ExecutionModuleAnimationTestScene : MonoBehaviour
     {
         module = new GameObject("Execution Module").AddComponent<ExecutionModule>();
         Battler[] battlers = FindObjectsOfType<Battler>();
-        for (int i = 0; i < battlers.Length; i ++)
+        for (int i = 0; i < 1; i ++)
         {
             start.Add(battlers[i].transform.position, battlers[i]);
         }
