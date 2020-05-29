@@ -152,7 +152,7 @@ MonoBehaviour:
   airForcePercentage: 0.3
   speed: 10
   jumpForce: 10
-  overlapForce: 0
+  collider: {fileID: 65078872}
 --- !u!114 &65078866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,7 +264,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0.99}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.9664014, y: 0.5}
 --- !u!54 &65078871
@@ -294,8 +294,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.32196125, y: 0.12401414, z: 0.2}
-  m_Center: {x: -0.007889509, y: -0.19700329, z: 0}
+  m_Size: {x: 0.12544969, y: 0.25750738, z: 0.2}
+  m_Center: {x: 0.006900718, y: -0.108975075, z: 0}
 --- !u!1 &127418848
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,7 +491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &667632570
 Transform:
   m_ObjectHideFlags: 0
@@ -725,8 +725,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoint: {fileID: 667632570}
-  jumpForce: 10
-  jumpHorizontalForce: 8
+  jumpForce: 8.63
+  jumpHorizontalForce: 2.93
 --- !u!114 &1960735451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -754,9 +754,9 @@ MonoBehaviour:
   smoothness: 0.3
   dragFactor: 0.3
   airForcePercentage: 0.3
-  speed: 15
-  jumpForce: 10
-  overlapForce: 20
+  speed: 35
+  jumpForce: 40
+  collider: {fileID: 1960735454}
 --- !u!54 &1960735453
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -784,8 +784,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.27939853, y: 0.11346372, z: 0.2}
-  m_Center: {x: -0.027917942, y: -0.21330842, z: 0}
+  m_Size: {x: 0.15343946, y: 0.22332478, z: 0.2}
+  m_Center: {x: -0.007166207, y: -0.13496074, z: 0}
 --- !u!1 &2116970164
 GameObject:
   m_ObjectHideFlags: 0
