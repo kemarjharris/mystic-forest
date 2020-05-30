@@ -751,9 +751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoint: {fileID: 667632570}
-  jumpForce: 10.96
-  jumpHorizontalForce: 4.1
-  speed: 10
+  speeds: {fileID: 11400000, guid: 6b34d1eae332d1a4cb7805b950053896, type: 2}
   inCombat: 0
 --- !u!114 &1960735451
 MonoBehaviour:

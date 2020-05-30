@@ -10,15 +10,16 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     IBattler battler;
     bool linkerActive;
     public System.Action<ICustomizableEnumerator<IExecutable>> onNewChainLoaded;
-    public System.Action onChainCancellable;
+    public System.Action onChainCancellable { set => executor.OnChainCancellable = value; }
     public System.Action onChainFinished;
     public System.Action onChainFired;
 
-    public void StartExecution(IExecutableChainSet set, IBattler battler)
+    public void StartExecution(IExecutableChainSet set, IBattler battler, System.Action onStart = null)
     {
         picker.Set(set);
         this.battler = battler;
         linkerActive = true;
+        onStart?.Invoke();
     }
 
     public void Initialize(IDirectionCommandPicker<IExecutableChain> picker, IChainExecutor executor)
@@ -29,7 +30,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
             ICustomizableEnumerator<IExecutable> enumerator = chain.GetCustomizableEnumerator();
             executor.ExecuteChain(battler, new TargetSet(), enumerator, () => onNewChainLoaded?.Invoke(enumerator));
         };
-        executor.OnChainCancellable = onChainCancellable;
+        //executor.OnChainCancellable = onChainCancellable;
         executor.OnChainFired = delegate
         {
             linkerActive = true;

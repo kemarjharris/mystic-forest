@@ -12,6 +12,19 @@ public class BattlePhysicsZ : MonoBehaviour
     [Range(0, 1)] public float airForcePercentage = 0.3f;
     Rigidbody rb;
     public new BoxCollider collider;
+    public bool lockZ {
+        set {
+            if (value)
+            {
+                rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+            }
+            else
+            {
+                rb.constraints = RigidbodyConstraints.FreezeRotation;
+            }
+
+        } }
+
 
     private void Awake()
     {
@@ -63,8 +76,6 @@ public class BattlePhysicsZ : MonoBehaviour
         rb.velocity = groundVelocity + (verticalVelocity * Vector3.up);
     }
 
-    public Vector3 GetVelocity() => rb.velocity;
-
     public void AddForce(VectorZ groundForce, float verticalForce)
     {
         AddVerticalForce(verticalForce);
@@ -99,7 +110,10 @@ public class BattlePhysicsZ : MonoBehaviour
         }
         else
         {
+            // fall
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y + (Physics.gravity.y * Time.fixedDeltaTime), rb.velocity.z);
 
+            
             // if approaching ground turn on collsion
             bool collided = CheckUnderCollider(out RaycastHit hitInfo);
             // if approaching battler turn off collision

@@ -6,12 +6,13 @@ public class Battler : MonoBehaviour, IBattler
 {
     public IMixAnimator animator = null;
     public Transform hitPoint = null;
+    public BattlerSpeed speeds;
     IHitBox hitBox;
     BattlePhysicsZ physics = null;
     SpriteRenderer sprite;
-    public float jumpForce = 8;
-    public float jumpHorizontalForce;
-    public float speed = 10;
+    public CombatState state { get; set; }
+    
+
     public bool inCombat;
 
     private void Awake()
@@ -29,20 +30,22 @@ public class Battler : MonoBehaviour, IBattler
 
     public void Update()
     {
+
+        Debug.Log(state);
+
         if (Input.GetKeyDown("j"))
         {
-            inCombat = !inCombat;
+            if (inCombat)
+            {
+                FinishCombat();
+            } else {
+                StartCombat();
+            }
         }
     }
 
     public void FixedUpdate()
     {
-        if (!physics.IsGrounded) // fall
-        {
-            Vector3 currentVelocity = physics.GetVelocity();
-            physics.SetVelocity(new VectorZ(currentVelocity.x, 0), currentVelocity.y + (Physics.gravity.y * Time.fixedDeltaTime));
-        }
-
         if (inCombat)
         {
             CombatFixedUpdate();
@@ -58,34 +61,57 @@ public class Battler : MonoBehaviour, IBattler
         {
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
-            physics.SetVelocity(new VectorZ(horizontal, vertical) * speed, 0);
+            physics.SetVelocity(new VectorZ(horizontal, vertical) * speeds.speed, 0);
         }
     }
 
     public void CombatFixedUpdate()
     {
-        float horizontal = Input.GetAxis("Horizontal");
+        // no input during combat
+        if (state == CombatState.ATTACKING) return;
+
         if (physics.IsGrounded)
         {
-            if (Input.GetAxis("Vertical") > 0)
+            float horizontal = Input.GetAxis("Horizontal");
+            // jump when attack is cancellable, jump cancel
+            if (state != CombatState.ATTACKING && Input.GetAxis("Vertical") > 0)
             {
                 // jump
                 if (horizontal > 0) horizontal = 1;
                 else if (horizontal < 0) horizontal = -1;
-                physics.SetVelocity(new VectorZ(jumpHorizontalForce * horizontal, 0), jumpForce);
-            } else
+                physics.SetVelocity(new VectorZ(speeds.jumpHorizontalForce * horizontal, 0), speeds.jumpForce);
+            } else if (state == CombatState.NOT_ATTACKING)
             {
                 // move
-                physics.SetVelocity(new VectorZ(horizontal * speed, 0), 0);
+                physics.SetVelocity(new VectorZ(horizontal * speeds.speed, 0), 0);
             }
         } 
 
     }
 
     public void Play(IPlayableAnim animation) => animator.Play(animation);
-    public void FinishCombat() => animator.Stop(); // stops playing combat animations
+    
     public void CheckCollision(Action<Collider> onCollide) => hitBox.CheckCollision(onCollide);
     Transform IBattler.hitPoint => hitPoint;
+
+
+    public void FinishCombat()
+    {
+        
+        physics.lockZ = false;
+        inCombat = false;
+    }
+
+    public void FinishAttacking()
+    {
+        animator.Stop(); // stops playing combat animations
+    }
+
+    public void StartCombat()
+    {
+        physics.lockZ = true;
+        inCombat = true;
+    }
 
     public bool IsGrounded => physics.IsGrounded;
 

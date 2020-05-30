@@ -31,18 +31,25 @@ public class ExecutionModuleAnimationTestScene : MonoBehaviour
                 if (visual != null) visual.Destroy();
                 chainVisual = new ExecutableChainVisual(chain);
                 chain.SetOnMoveNext(chainVisual.MoveNext);
+
+                battler.state = CombatState.ATTACKING;
+
             };
             module.onChainFired = delegate
             {
                 visual = CreateNewSetVisual();
             };
+            module.onChainCancellable = () => battler.state = CombatState.ABLE_TO_CANCEL_ATTACK;
             module.onChainFinished = delegate
             {
+
+                battler.FinishAttacking();
                 if (visual != null) visual.Destroy();
                 if (chainVisual != null) chainVisual.Destroy();
-                battler.animator.Stop();
+
+                battler.state = CombatState.NOT_ATTACKING;
             };
-            module.StartExecution(set, battler);
+            module.StartExecution(set, battler, () => battler.StartCombat());
         }
         if (Input.GetKeyDown("r"))
         {
