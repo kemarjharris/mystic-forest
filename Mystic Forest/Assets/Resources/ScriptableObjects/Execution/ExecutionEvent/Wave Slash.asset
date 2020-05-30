@@ -20,6 +20,6 @@ MonoBehaviour:
   travelMethod: {fileID: 11400000, guid: 10592bfdcc4bfc74589b3c02c06dcdd8, type: 2}
   attack:
     force:
-      x: 20
+      x: 50
       z: 0
     verticalForce: 0

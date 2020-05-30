@@ -15,7 +15,8 @@ public interface IBattler
 
     void GetAttacked(IAttack attack);
 
-    bool IsGrounded { get; }
-
     IExecutableChainSet ChainSet { get; }
+    void FreezeFrame(float duration, System.Action onUnfreeze = null);
+
+    bool IsGrounded { get; }
 }

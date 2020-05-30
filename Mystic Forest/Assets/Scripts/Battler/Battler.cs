@@ -55,7 +55,25 @@ public class Battler : MonoBehaviour, IBattler
                 }
             }
         }
-        physics.SetVelocity(attack.force, attack.verticalForce);
+        float freezeTime = 0.1f;
+        FreezeFrame(freezeTime, () => physics.AddForce(attack.force, attack.verticalForce));
         StartCoroutine(FlashRed());
+    }
+
+    public void FreezeFrame(float duration, Action onUnfreeze = null)
+    {
+        // suspend in air and pause animation
+        animator.Pause();
+        physics.enabled = false;
+        // wait for duration
+        IEnumerator waitToUnfreeze()
+        {
+            yield return new WaitForSeconds(duration);
+            animator.Unpause();
+            physics.enabled = true;
+            onUnfreeze?.Invoke();
+        }
+        // add gravity and play animation
+        StartCoroutine(waitToUnfreeze());
     }
 }

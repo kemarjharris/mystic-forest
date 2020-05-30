@@ -13,6 +13,7 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
     PlayableGraph playableGraph;
     AnimationMixerPlayable mixerPlayable;
     Coroutine coroutine;
+    Animator animator;
     
 
     private struct PlayableAnimData
@@ -46,7 +47,8 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
     {
         animMap = new Dictionary<string, PlayableAnimData>();
         playableGraph = PlayableGraph.Create();
-        AnimationPlayableOutput output = AnimationPlayableOutput.Create(playableGraph, "Animation", GetComponent<Animator>());
+        animator = GetComponent<Animator>();
+        AnimationPlayableOutput output = AnimationPlayableOutput.Create(playableGraph, "Animation", animator);
         mixerPlayable = AnimationMixerPlayable.Create(playableGraph, 0, true);
         output.SetSourcePlayable(mixerPlayable);
     }
@@ -68,6 +70,7 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
         {
             if (pair.Key == clipName)
             {
+                animator.enabled = true;
                 pair.Value.playable.SetTime(0);
                 mixerPlayable.SetInputWeight(pair.Value.pos, 1);
 
@@ -102,6 +105,16 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
     {
         // Destroys all Playables and Outputs created by the graph.
         playableGraph.Destroy();
+    }
+
+    public void Pause()
+    {
+        animator.enabled = false;
+    }
+
+    public void Unpause()
+    {
+        animator.enabled = true;
     }
 
     /* For Testing */
