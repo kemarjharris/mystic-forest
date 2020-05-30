@@ -9,11 +9,7 @@ public interface IBattler
 
     void Play(IPlayableAnim animation);
 
-    void StartCombat();
-
-    void FinishCombat();
-
-    void FinishAttacking();
+    void StopCombatAnimation();
 
     void CheckCollision(System.Action<Collider> onCollide);
 
@@ -21,5 +17,5 @@ public interface IBattler
 
     bool IsGrounded { get; }
 
-    CombatState state { get; set; }
+    IExecutableChainSet ChainSet { get; }
 }

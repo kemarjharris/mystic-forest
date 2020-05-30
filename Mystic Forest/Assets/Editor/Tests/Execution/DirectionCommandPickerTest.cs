@@ -227,7 +227,7 @@ namespace DirectionCommandPickerTest
         {
             bool fired = false;
             // true if fired
-            picker.onSelected = (x) => fired = true;
+            picker.OnSelected.AddAction((x) => fired = true);
             IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S);
             picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);

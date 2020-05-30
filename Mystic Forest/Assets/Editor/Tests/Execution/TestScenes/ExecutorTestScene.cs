@@ -26,11 +26,11 @@ public class ExecutorTestScene : MonoBehaviour
                 visual = new ExecutableChainVisual(enumerator);
                 enumerator.SetOnMoveNext(visual.MoveNext);
                 chainExecutor = new ChainExecutorLinkImpl();
-                chainExecutor.onChainCancellable = delegate {
+                chainExecutor.OnChainCancellable.AddAction (delegate {
                     visual.Destroy();
                     visual = null;
                     chainExecutor = null;
-                };
+                });
                 chainExecutor.ExecuteChain(null, null, enumerator);
             }
         }

@@ -6,7 +6,7 @@ public interface IChainExecutor
 {
     void ExecuteChain(IBattler attacker, ITargetSet targets, IEnumerator<IExecutable> chain, System.Action onSuccessfulLoad = null);
     void Update();
-    System.Action OnChainCancellable { set; }
-    System.Action OnChainFinished { set; }
-    System.Action OnChainFired { set; }
+    IActionWrapper OnChainCancellable { get; }
+    IActionWrapper OnChainFired { get; }
+    IActionWrapper OnChainFinished { get; }
 }

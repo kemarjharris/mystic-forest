@@ -11,16 +11,18 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
     private DirectionCommandButton inputtedButton;
     public IUnityTimeService service = new UnityTimeService();
     public IUnityInputService inputService = new UnityInputService();
-    public Action<T> onSelected;
+    public IActionWrapper<T> OnSelected { get; private set; }
+
     float timeOfLastInput;
     readonly float timeBeforeClearingInput;
 
-    Action<T> IDirectionCommandPicker<T>.OnSelected { set => onSelected = value; }
+    
 
     public DirectionCommandPicker(float timeBeforeClearingInput) {
         inputtedDirections = new List<Direction>(); 
         inputtedButton = DirectionCommandButton.NULL;
         this.timeBeforeClearingInput = timeBeforeClearingInput;
+        OnSelected = new ActionWrapper<T>();
     }
 
     public T InputSelect()
@@ -88,7 +90,7 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
                 {
                     Debug.Log(t);
                     clear();
-                    onSelected?.Invoke(t);
+                    OnSelected.Invoke(t);
                     return t;
                 }
                 if (inputtedDirections.Count > 0)
@@ -130,5 +132,4 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
         }
         return default;
     }
-
 }

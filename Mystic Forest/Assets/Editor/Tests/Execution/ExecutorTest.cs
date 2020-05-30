@@ -250,7 +250,7 @@ namespace ExecutorTest
         {
             bool eventFires = false;
             ChainExecutorLinkImpl executor = SetUpExecutorState(true, true, true, false, false, false);
-            executor.onChainFinished = delegate { eventFires = true; };
+            executor.OnChainFinished.AddAction(delegate { eventFires = true; });
             executor.Update();
             Assert.True(eventFires);
         }
@@ -263,7 +263,7 @@ namespace ExecutorTest
             IExecutable prev = SetUpExecutableState(true, true, true);
             IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { prev }).GetEnumerator();
             executor.Construct(executables, prev, null);
-            executor.onChainFinished = delegate { eventFires = true; };
+            executor.OnChainFinished.AddAction(delegate { eventFires = true; });
             executor.Update();
             Assert.True(eventFires);
         }
@@ -357,7 +357,7 @@ namespace ExecutorTest
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executor.Construct(executables, null, curr);
             executor.GetExecutables().MoveNext();
-            executor.onChainCancellable = delegate { onCancellableFired = true; };
+            executor.OnChainCancellable.AddAction(delegate { onCancellableFired = true; });
             executor.Update();
             Assert.True(onCancellableFired);
         }
@@ -379,7 +379,7 @@ namespace ExecutorTest
         {
             int timesFired = 0;
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
-            executor.onChainFired = () => timesFired++;
+            executor.OnChainFired.AddAction(() => timesFired++);
             IExecutable executable = SetUpExecutableState(true, false, false);
             executable.HasFired().Returns(true);
             IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { executable }).GetEnumerator();
@@ -393,7 +393,7 @@ namespace ExecutorTest
         {
             int timesFired = 0;
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
-            executor.onChainCancellable = () => timesFired++;
+            executor.OnChainCancellable.AddAction(() => timesFired++);
             IExecutable executable = SetUpExecutableState(true, false, false);
             executable.HasFired().Returns(true);
             IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { executable }).GetEnumerator();

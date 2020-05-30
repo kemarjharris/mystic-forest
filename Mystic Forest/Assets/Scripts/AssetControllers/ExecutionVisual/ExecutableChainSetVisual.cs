@@ -2,12 +2,61 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class ExecutableChainSetVisual
+public class ExecutableChainSetVisual : MonoBehaviour
 {
-    public GameObject parent;
+
+    IExecutionModule module;
+    ExecutableChainVisual chainVisual;
+    private GameObject parent;
     readonly List<ExecutionVisual> visuals = new List<ExecutionVisual>();
 
-    public ExecutableChainSetVisual(IEnumerable<IExecutableChain> chains)
+    private void Awake()
+    {
+        module = GameObject.FindWithTag("Execution Module").GetComponent<IExecutionModule>();
+        if (module == null) module = new GameObject("Execution Module").AddComponent<ExecutionModule>(); 
+    }
+
+    private void OnEnable()
+    {
+        module.OnStart.AddAction(OnStart);
+        module.OnNewChainLoaded.AddAction(OnNewChainLoaded);
+        module.OnChainFired.AddAction(OnStart);
+        module.OnChainFinished.AddAction(OnChainFinished);
+    }
+
+    private void OnDisable()
+    {
+        module.OnStart.RemoveAction(OnStart);
+        module.OnNewChainLoaded.RemoveAction(OnNewChainLoaded);
+        module.OnChainFired.RemoveAction(OnStart);
+        module.OnChainFinished.RemoveAction(OnChainFinished);
+    }
+
+    void OnNewChainLoaded(ICustomizableEnumerator<IExecutable> chain)
+    {
+        if (parent != null) Destroy(parent);
+        chainVisual = new ExecutableChainVisual(chain);
+        chain.SetOnMoveNext(chainVisual.MoveNext);
+
+    }
+
+    void OnChainFinished()
+    {
+        if (parent != null) Destroy(parent);
+
+        if (chainVisual != null)
+            chainVisual.Destroy();
+    }
+
+    void OnStart()
+    {
+        CreateNewSetVisual(module.set);
+        parent.transform.localPosition = new Vector2(-23, -129);
+    }
+
+    
+
+    private void CreateNewSetVisual(IEnumerable<IExecutableChain> chains)
     {
         GameObject arrowPrefab = Resources.Load<GameObject>("Prefabs/ExecutionVisual/Arrow");
         parent = new GameObject("Executable Chain Set Visual");
@@ -45,10 +94,5 @@ public class ExecutableChainSetVisual
             j++;
         }
         parent.transform.localScale = new Vector2(0.7f, 0.7f);
-    }
-
-    public void Destroy()
-    {
-        Object.Destroy(parent);
     }
 }

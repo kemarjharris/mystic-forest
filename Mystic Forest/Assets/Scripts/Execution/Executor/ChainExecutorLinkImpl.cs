@@ -15,15 +15,18 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
     IExecutable prev = null;
     IExecutable curr = null;
 
-    public Action onChainCancellable;
-    public Action onChainFinished;
-    public Action onChainFired;
-
-    Action IChainExecutor.OnChainCancellable { set => onChainCancellable = value; }
-    Action IChainExecutor.OnChainFinished { set => onChainFinished = value; }
-    Action IChainExecutor.OnChainFired { set => onChainFired = value; }
+    public IActionWrapper OnChainCancellable { get; }
+    public IActionWrapper OnChainFired { get; }
+    public IActionWrapper OnChainFinished { get; }
 
     IChainInputReader reader = new ChainInputReader();
+
+    public ChainExecutorLinkImpl()
+    {
+        OnChainCancellable = new ActionWrapper();
+        OnChainFired = new ActionWrapper();
+        OnChainFinished = new ActionWrapper();
+    }
 
     public void ExecuteChain(IBattler attacker, ITargetSet targets, IEnumerator<IExecutable> chain, Action onSuccessfulLoad = null)
     {
@@ -35,7 +38,7 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
     void Load(IEnumerator<IExecutable> seconds, Action onSuccesfulLoad)
     {
         if (!(prev == null || prev.IsInCancelTime())) return;
-        onSuccesfulLoad?.Invoke();
+        onSuccesfulLoad.Invoke();
         this.seconds = seconds;
         timeCheck = this.seconds.MoveNext();
         // have to keep prev from previous attack chain in case it wasnt done executing yet
@@ -70,7 +73,7 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
         if (!timeCheck && curr != null && prev.IsInCancelTime())
         {
             Debug.Log("Ready...... FIRE!");
-            onChainCancellable?.Invoke();
+            OnChainCancellable.Invoke();
             curr = null;
         }
         // Everything that happens in this block means the chain finished executing
@@ -80,7 +83,7 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
             // Runs when chain finishes running
             // tell observer that the attack chain is done
             seconds = null;
-            onChainFinished?.Invoke();
+            OnChainFinished.Invoke();
         }
     }
 
@@ -105,7 +108,7 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
         else
         {
             // Notify observer that the attack chain can now be cancelled
-            onChainFired?.Invoke();
+            OnChainFired.Invoke();
         }
     }
 
@@ -129,5 +132,4 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
     public IExecutable GetCurr() => curr;
 
     public IExecutable GetPrev() => prev;
-
 }

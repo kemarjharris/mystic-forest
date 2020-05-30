@@ -6,5 +6,5 @@ public interface IDirectionCommandPicker<T>
 {
     T InputSelect();
     void Set(IEnumerable<T> enumerable);
-    System.Action<T> OnSelected { set; }
+    IActionWrapper<T> OnSelected { get; }
 }
