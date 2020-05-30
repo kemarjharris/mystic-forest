@@ -42,7 +42,7 @@ public class EffectMeleeEvent : ExecutionEvent
             // check hitbox of effect
             hitBox.CheckCollision(delegate (Collider collider) {
                 IBattler battler = collider.gameObject.GetComponent<Battler>();
-                if (battler == null) return;
+                if (battler == null || battler == performer) return;
                 battler.GetAttacked(@event.attack);
             });
             // invoke cancellable event

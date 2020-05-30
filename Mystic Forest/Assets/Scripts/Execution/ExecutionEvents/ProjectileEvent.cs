@@ -30,19 +30,19 @@ public class ProjectileEvent : ExecutionEvent
         IProjectile projectile = Instantiate(projectilePrefab, attacker.gameObject.transform.position, Quaternion.identity).GetComponent<IProjectile>();
         projectile.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(travelMethod.Travel(projectile.gameObject.transform, targets.GetTarget(), projectileSpeed));
         // Check battlers that get hit along the way
-        projectile.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(HitBattlers(projectile));
+        projectile.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(HitBattlers(projectile, attacker));
         onCancellableEvent?.Invoke();
         // Wait until end of animation, and then finish
         attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(finishDelay(playerAnimation.GetLength() - projectileSpawnTime));
     }
 
-    IEnumerator HitBattlers(IProjectile projectile)
+    IEnumerator HitBattlers(IProjectile projectile, IBattler attacker)
     {
         ISet<IBattler> hitBattlers = new HashSet<IBattler>();
         void onCollide (Collider collider)
         {
             IBattler battler = collider.gameObject.GetComponent<Battler>();
-            if (battler == null || hitBattlers.Contains(battler)) return;
+            if (battler == null || battler == attacker || hitBattlers.Contains(battler)) return;
             battler.GetAttacked(attack);
             hitBattlers.Add(battler);
         }
