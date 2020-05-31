@@ -12,16 +12,17 @@ namespace Tests
         Cursor cursor = null;
         Vector3 start;
 
-        [OneTimeSetUp]
-        public void OneTimeSetUp()
-        {
-            cursor = new GameObject().AddComponent<Cursor>();
-        }
-
         [SetUp]
         public void SetUp()
         {
+            cursor = new GameObject().AddComponent<Cursor>();
             start = cursor.transform.position;
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            Object.Destroy(cursor.gameObject);
         }
 
         public IEnumerator WaitHalfASecond()

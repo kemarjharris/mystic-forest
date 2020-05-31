@@ -5,7 +5,7 @@ using System.Collections;
 public class PhysicsZ : MonoBehaviour
 {
     
-    public bool IsGrounded { get => transform.position.y <= transform.position.z; }
+    public bool IsGrounded { get => transform.position.y <= transform.position.z && rb.position.y <= rb.position.z; }
     private Vector3 movementVelocity = Vector3.zero;
     public float smoothness = 0.3f;
     [Range(0, 1)] public float dragFactor = 0.3f;
@@ -32,7 +32,7 @@ public class PhysicsZ : MonoBehaviour
     public void SetVelocity(VectorZ groundVelocity, float verticalVelocity)
     {
         rb.velocity = Vector3.zero;
-        rb.velocity = groundVelocity + (verticalVelocity * Vector3.up);
+        rb.velocity = groundVelocity + Vector3.up * (verticalVelocity < 0 && IsGrounded ? 0 : verticalVelocity );
     }
 
     public void AddForce(VectorZ groundForce, float verticalForce)
@@ -87,7 +87,7 @@ public class PhysicsZ : MonoBehaviour
             } else //  start falling
             {
                 Debug.Log(transform.position.y + " " + transform.position.z);
-                //rb.useGravity = true;
+                rb.useGravity = true;
             }
         }
         

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25f586246667e684cbe3cbfcaed89ae0, type: 3}
   m_Name: Warrior Air Slash
   m_EditorClassIdentifier: 
-  timeOfContact: 0.2
+  timeOfContact: 0
   animSO: {fileID: 11400000, guid: 702f46b67d0e93542b2802251263d1d7, type: 2}
   attack:
     force:

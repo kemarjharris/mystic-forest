@@ -558,14 +558,7 @@ namespace ExecutableTest
         {
             TestExecutionEvent testEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
             hold.releaseExecutionEvent = testEvent;
-            hold.instruction.service.GetKeyDown("z").Returns(true);
-            hold.OnInput("z", null, null);
-            //pre condition
-            Assert.True(hold.IsTriggered());
-            hold.instruction.service.GetKeyDown("z").Returns(false);
-            hold.instruction.service.GetKeyUp("z").Returns(true);
-
-            hold.OnInput("z", null, null);
+            SimulateKeyUp();
             Assert.AreEqual(1,((TestExecutionEvent) hold.GetReleaseExecutionEvent()).timesExecuted);
         }
 
@@ -575,14 +568,7 @@ namespace ExecutableTest
         {
             TestExecutionEvent testEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
             hold.releaseExecutionEvent = testEvent;
-            hold.instruction.service.GetKeyDown("z").Returns(true);
-            hold.OnInput("z", null, null);
-            //pre condition
-            Assert.True(hold.IsTriggered());
-            hold.instruction.service.GetKeyDown("z").Returns(false);
-            hold.instruction.service.GetKeyUp("z").Returns(true);
-
-            hold.OnInput("z", null, null);
+            SimulateKeyUp();
             Assert.True(hold.HasFired());
         }
 
@@ -593,14 +579,7 @@ namespace ExecutableTest
             ExecutionEvent testEvent = ScriptableObject.CreateInstance<CancelTestExecutionEvent>();
             hold.releaseExecutionEvent = testEvent;
             hold.OnStart();
-            hold.instruction.service.GetKeyDown("z").Returns(true);
-            hold.OnInput("z", null, null);
-            //pre condition
-            Assert.True(hold.IsTriggered());
-            hold.instruction.service.GetKeyDown("z").Returns(false);
-            hold.instruction.service.GetKeyUp("z").Returns(true);
-
-            hold.OnInput("z", null, null);
+            SimulateKeyUp();
             Assert.True(hold.IsInCancelTime());
         }
 
@@ -640,7 +619,27 @@ namespace ExecutableTest
             hold.OnInput("z", null, null);
         }
 
+        public void SimulateKeyUp()
+        {
+            hold.instruction.service.GetKeyDown("z").Returns(true);
+            hold.OnInput("z", null, null);
+
+            //pre condition is that hold is triggered
+            Assert.True(hold.IsTriggered());
+            // key up simulation
+            hold.instruction.service.GetKeyDown("z").Returns(false);
+            hold.instruction.service.GetKeyUp("z").Returns(true);
+            // set current time to 1 second passed, event needs to be there for 2 seconds
+            IUnityTimeService service = Substitute.For<IUnityTimeService>();
+            service.unscaledTime.Returns(2);
+            hold.service = service;
+            // Fire event again
+            hold.OnInput("z", null, null);
+        }
+
         // BadKey triggeres on release event
+        // Needs to be set to on misfire event
+        /*
         [Test]
         public void BadKeyWhileTriggeredFiresOnReleaseEventTest()
         {
@@ -649,6 +648,7 @@ namespace ExecutableTest
             SimulateBadKey();
             Assert.AreEqual(1, ((TestExecutionEvent) hold.GetReleaseExecutionEvent()).timesExecuted);
         }
+        */
 
         // badkey sets finished
         [Test]
@@ -933,26 +933,6 @@ namespace ExecutableTest
             press.OnInput("z", battler, targets);
             TestExecutionEvent test = (TestExecutionEvent)press.GetExecutionEvent();
             Assert.AreEqual(1, test.timesExecuted);
-        }
-
-
-        // test keydown while triggered not in cancel time sets finished
-        [Test]
-        public void KeyDownWhileNotInCancelTimeSetsFinishedTest()
-        {
-            PressInstruction instruction = PressInstruction.instance;
-            TestExecutionEvent executionEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
-            IBattler battler = Substitute.For<IBattler>();
-            ITargetSet targets = Substitute.For<ITargetSet>();
-
-            press = Construct(instruction, executionEvent);
-            // set to triggered
-            press.OnInput("z", battler, targets);
-            Assert.IsTrue(press.IsTriggered());
-            Assert.IsFalse(press.IsInCancelTime());
-            // should set to finished
-            press.OnInput("z", battler, targets);
-            Assert.IsTrue(press.IsFinished());
         }
     }
 }

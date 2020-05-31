@@ -40,11 +40,7 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
 
         // Do not load new chain if chain is not null or chain is in cancel time
         if (!(prev == null || prev.IsInCancelTime())) return;
-
-
-
-
-        onSuccesfulLoad.Invoke();
+        onSuccesfulLoad?.Invoke();
         this.seconds = seconds;
         timeCheck = this.seconds.MoveNext();
         // have to keep prev from previous attack chain in case it wasnt done executing yet

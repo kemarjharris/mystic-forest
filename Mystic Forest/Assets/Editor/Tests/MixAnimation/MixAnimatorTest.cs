@@ -12,8 +12,8 @@ namespace Tests
         MixAnimator animator;
         IDictionary<string, IPlayableAnim> animMap;
 
-        [OneTimeSetUp]
-        public void OneTimeSetUp()
+        [SetUp]
+        public void SetUp()
         {
             obj = Object.Instantiate(Resources.Load<GameObject>("TestPrefabs/Test MixAnimator Game Object"));
             animMap = new Dictionary<string, IPlayableAnim>();
@@ -25,13 +25,19 @@ namespace Tests
                 Resources.Load<PlayableAnimSO>("TestScriptableObjects/Test Move Up"),
                 Resources.Load<PlayableAnimSO>("TestScriptableObjects/Test Zero Speed")
             };
+
             animator = obj.GetComponent<MixAnimator>(); 
             for (int i = 0; i < anims.Length; i ++)
             {
                 animator.AddAnimation(anims[i]);
                 animMap.Add(anims[i].GetName(), anims[i]);
             }
+        }
 
+        [TearDown]
+        public void TearDown()
+        {
+            Object.Destroy(obj);
         }
 
         // test animation plays

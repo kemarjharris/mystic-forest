@@ -34,6 +34,7 @@ public class OnReleaseHoldExecutable : Executable
         if (key == InstructionKeyEvent.BADKEY)
         {
             onRelease?.Invoke();
+            state.fired = true;
             state.finished = true;
         }
     }

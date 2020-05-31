@@ -7,7 +7,7 @@ public class Battler : MonoBehaviour, IBattler
     public IMixAnimator animator = null;
     public Transform hitPoint = null;
     IHitBox hitBox;
-    protected BattlePhysicsZ physics = null;
+    protected BattlerPhysicsZ physics = null;
     SpriteRenderer sprite;
     public ExecutableChainSetSOImpl chainSet;
 
@@ -16,10 +16,10 @@ public class Battler : MonoBehaviour, IBattler
         animator = GetComponent<MixAnimator>();
         sprite = GetComponent<SpriteRenderer>();
         hitBox = GetComponentInChildren<IHitBox>();
-        physics = GetComponent<BattlePhysicsZ>();
+        physics = GetComponent<BattlerPhysicsZ>();
         if (physics == null)
         {
-            physics = gameObject.AddComponent<BattlePhysicsZ>();
+            physics = gameObject.AddComponent<BattlerPhysicsZ>();
         }
         hitPoint.transform.position = new VectorZ(transform.position.x, transform.position.y);
     }

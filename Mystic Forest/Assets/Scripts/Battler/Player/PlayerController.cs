@@ -5,7 +5,7 @@ using System;
 public class PlayerController : MonoBehaviour, IPlayerController
 {
 
-    BattlePhysicsZ physics;
+    BattlerPhysicsZ physics;
     bool inCombat;
     CombatState state { get; set; }
     public BattlerSpeed speeds;
@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void Awake()
     {
-        physics = GetComponent<BattlePhysicsZ>();
+        physics = GetComponent<BattlerPhysicsZ>();
         battler = GetComponent<IBattler>();
         module = FindObjectOfType<ExecutionModule>();
         if (module == null) module = new GameObject("Execution Module").AddComponent<ExecutionModule>();
@@ -103,11 +103,6 @@ public class PlayerController : MonoBehaviour, IPlayerController
             module.ChangeSet(NonAerials());
         }
 
-        if (Input.GetAxis("Vertical") > 0)
-        {
-            Debug.Log("jump");
-        }
-
         // no input during combat
         if (state != CombatState.ATTACKING)
         {
@@ -119,9 +114,6 @@ public class PlayerController : MonoBehaviour, IPlayerController
                 // jump when attack is cancellable, jump cancel
                 if (state != CombatState.ATTACKING && Input.GetAxis("Vertical") > 0)
                 {
-
-                    
-
                     // jump
                     if (horizontal > 0) horizontal = 1;
                     else if (horizontal < 0) horizontal = -1;

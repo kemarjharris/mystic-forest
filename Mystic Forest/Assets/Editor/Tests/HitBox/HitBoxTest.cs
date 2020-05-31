@@ -14,8 +14,8 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            a = Object.Instantiate(Resources.Load<GameObject>("TestPrefabs/Test Hit Collider GameObject")).GetComponent<HitBox>();
-            b = Object.Instantiate(Resources.Load<GameObject>("TestPrefabs/Test Hit Collider GameObject"));
+            a = Object.Instantiate(Resources.Load<GameObject>("TestPrefabs/Test Box Collider Game Object")).GetComponent<HitBox>();
+            b = Object.Instantiate(Resources.Load<GameObject>("TestPrefabs/Test Box Collider Game Object"));
         }
 
         // A Test behaves as an ordinary method

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BattlePhysicsZ : MonoBehaviour
+public class BattlerPhysicsZ : MonoBehaviour
 {
     static Collider ground;
     // only use gravity if airborne
