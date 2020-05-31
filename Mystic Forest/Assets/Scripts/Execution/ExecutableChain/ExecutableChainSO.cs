@@ -9,9 +9,14 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
 {
     public ExecutableSO[] attacks;
     public DirectionGroup group;
+    public bool aerial;
+
+
     private List<IExecutable> instances;
 
     public IExecutable head => attacks[0].CreateExecutable();
+
+    public bool IsAerial => aerial;
 
     public IEnumerator<IExecutable> GetEnumerator()
     {

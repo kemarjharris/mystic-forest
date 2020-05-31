@@ -18,4 +18,4 @@ MonoBehaviour:
     force:
       x: 1
       z: 0
-    verticalForce: 10
+    verticalForce: 13.54

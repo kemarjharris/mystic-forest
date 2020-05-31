@@ -40,13 +40,18 @@ public class EffectMeleeEvent : ExecutionEvent
             // Get hitbox to use
             HitBox hitBox = gameObject.GetComponentInChildren<HitBox>();
             // check hitbox of effect
+            bool madeContact = false;
             hitBox.CheckCollision(delegate (Collider collider) {
                 IBattler battler = collider.gameObject.GetComponent<Battler>();
                 if (battler == null || battler == performer) return;
                 battler.GetAttacked(@event.attack);
+                madeContact = true;
             });
-            // invoke cancellable event
-            onCancellableEvent?.Invoke();
+            if (madeContact)
+            {
+                // invoke cancellable event
+                onCancellableEvent?.Invoke();
+            }
             yield return new WaitForSeconds(@event.effectAnim.GetLength() - @event.timeOfContact);
             Destroy(gameObject);
             onFinishEvent?.Invoke();

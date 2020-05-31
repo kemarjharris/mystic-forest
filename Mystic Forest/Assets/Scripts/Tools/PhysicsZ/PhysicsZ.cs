@@ -13,7 +13,8 @@ public class PhysicsZ : MonoBehaviour
     public float speed = 10;
     public float jumpForce = 10;
     Rigidbody rb;
-   
+    Vector3 velocity;
+    Vector3 resumeVelocity;
 
     private void Awake()
     {

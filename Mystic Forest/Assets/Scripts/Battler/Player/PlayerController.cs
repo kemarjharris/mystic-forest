@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     public BattlerSpeed speeds;
     IBattler battler;
     IExecutionModule module;
+    bool groundedLastFrame;
 
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         battler = GetComponent<IBattler>();
         module = FindObjectOfType<ExecutionModule>();
         if (module == null) module = new GameObject("Execution Module").AddComponent<ExecutionModule>();
+        groundedLastFrame = physics.IsGrounded;
     }
 
     private void OnEnable()
@@ -39,12 +41,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
     void OnChainFinished() {
         battler.StopCombatAnimation();
         state = CombatState.NOT_ATTACKING;
+        StartModuleExecution();
     }
 
     public void Update()
     {
-
-        Debug.Log(state);
         if (state != CombatState.NOT_ATTACKING) return;
         if (Input.GetKeyDown("space"))
         {
@@ -68,9 +69,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     public void StartCombat()
     {
-        module.StartExecution(battler.ChainSet, battler);
         physics.lockZ = true;
         inCombat = true;
+        StartModuleExecution();
     }
 
     public void FixedUpdate()
@@ -97,30 +98,64 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     public void CombatFixedUpdate()
     {
-        // no input during combat
-        if (state == CombatState.ATTACKING) return;
-
-        if (physics.IsGrounded)
+        if (!groundedLastFrame && physics.CloseToGround)
         {
-            float horizontal = Input.GetAxis("Horizontal");
-            // jump when attack is cancellable, jump cancel
-            if (state != CombatState.ATTACKING && Input.GetAxis("Vertical") > 0)
+            module.ChangeSet(NonAerials());
+        }
+
+        if (Input.GetAxis("Vertical") > 0)
+        {
+            Debug.Log("jump");
+        }
+
+        // no input during combat
+        if (state != CombatState.ATTACKING)
+        {
+
+
+            if (physics.IsGrounded)
             {
-                // jump
-                if (horizontal > 0) horizontal = 1;
-                else if (horizontal < 0) horizontal = -1;
-                physics.SetVelocity(new VectorZ(speeds.jumpHorizontalForce * horizontal, 0), speeds.jumpForce);
-            }
-            else if (state == CombatState.NOT_ATTACKING)
-            {
-                // move
-                physics.SetVelocity(new VectorZ(horizontal * speeds.speed, 0), 0);
+                float horizontal = Input.GetAxis("Horizontal");
+                // jump when attack is cancellable, jump cancel
+                if (state != CombatState.ATTACKING && Input.GetAxis("Vertical") > 0)
+                {
+
+                    
+
+                    // jump
+                    if (horizontal > 0) horizontal = 1;
+                    else if (horizontal < 0) horizontal = -1;
+                    physics.SetVelocity(new VectorZ(speeds.jumpHorizontalForce * horizontal, 0), speeds.jumpForce);
+
+                    module.ChangeSet(Aerials());
+
+                }
+                else if (state == CombatState.NOT_ATTACKING)
+                {
+                    // move
+                    physics.SetVelocity(new VectorZ(horizontal * speeds.speed, 0), 0);
+                }
             }
         }
 
+        groundedLastFrame = physics.CloseToGround;
+        Debug.Log("grounded last frame" + groundedLastFrame);
+
+        
     }
 
+    void StartModuleExecution() => module.StartExecution(physics.IsGrounded ? NonAerials() : Aerials(), battler);
 
+    IExecutableChainSet Aerials()
+    {
+        // Aerial sets
+        bool IsAerial(IExecutableChain chain) => chain.IsAerial;
+        return battler.ChainSet.Where(IsAerial);
+    }
 
-
+    IExecutableChainSet NonAerials()
+    {
+        bool IsNotAerial(IExecutableChain chain) => !chain.IsAerial;
+        return battler.ChainSet.Where(IsNotAerial);
+    }
 }

@@ -241,7 +241,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &253851674
 Transform:
   m_ObjectHideFlags: 0
@@ -396,6 +396,7 @@ GameObject:
   - component: {fileID: 877076433}
   - component: {fileID: 877076432}
   - component: {fileID: 877076431}
+  - component: {fileID: 877076435}
   m_Layer: 5
   m_Name: Warrior (1)
   m_TagString: Battler
@@ -459,6 +460,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b21d23dac0db12f449d23a4e181188bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &877076435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877076430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7d6adfa4f88d64580b247b150588e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPoint: {fileID: 253851674}
+  chainSet: {fileID: 0}
 --- !u!95 &877076436
 Animator:
   serializedVersion: 3

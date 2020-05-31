@@ -23,6 +23,15 @@ public class ExecutableChainSetImpl : IExecutableChainSet
 
     public IEnumerator<IExecutableChain> GetEnumerator() => chains.GetEnumerator();
 
+    public IExecutableChainSet Where(System.Predicate<IExecutableChain> predicate)
+    {
+        HashSet<IExecutableChain> copy = new HashSet<IExecutableChain>(chains);
+        bool notPredicate(IExecutableChain chain) => !predicate(chain);
+        copy.RemoveWhere(notPredicate);
+        return new ExecutableChainSetImpl(copy);
+    }
+
+
     public IExecutableChainSet Union(IExecutableChainSet other)
     {
         HashSet<IExecutableChain> union = new HashSet<IExecutableChain>(chains);

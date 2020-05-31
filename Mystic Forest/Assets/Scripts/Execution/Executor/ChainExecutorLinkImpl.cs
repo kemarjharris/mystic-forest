@@ -37,7 +37,13 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
 
     void Load(IEnumerator<IExecutable> seconds, Action onSuccesfulLoad)
     {
+
+        // Do not load new chain if chain is not null or chain is in cancel time
         if (!(prev == null || prev.IsInCancelTime())) return;
+
+
+
+
         onSuccesfulLoad.Invoke();
         this.seconds = seconds;
         timeCheck = this.seconds.MoveNext();
@@ -72,7 +78,6 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
         // polling for onCancellableEvent
         if (!timeCheck && curr != null && prev.IsInCancelTime())
         {
-            Debug.Log("Ready...... FIRE!");
             OnChainCancellable.Invoke();
             curr = null;
         }
@@ -83,6 +88,8 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
             // Runs when chain finishes running
             // tell observer that the attack chain is done
             seconds = null;
+            prev = null;
+            curr = null;
             OnChainFinished.Invoke();
         }
     }

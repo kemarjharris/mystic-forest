@@ -9,4 +9,6 @@ public interface IExecutableChain : IEnumerable<IExecutable>, IDirectionPickable
 
     ICustomizableEnumerator<IExecutable> GetCustomizableEnumerator();
 
+    bool IsAerial { get; }
+
 }

@@ -22,24 +22,6 @@ public class ExecutionModuleAnimationTestScene : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown("space"))
-        {
-            /*
-            ExecutableChainVisual chainVisual = null;
-            module.onNewChainLoaded = delegate (ICustomizableEnumerator<IExecutable> chain)
-            {
-                battler.state = CombatState.ATTACKING;
-
-            };
-            module.onChainCancellable = () => battler.state = CombatState.ABLE_TO_CANCEL_ATTACK;
-            module.onChainFinished = delegate
-            {
-                battler.FinishAttacking();
-                battler.state = CombatState.NOT_ATTACKING;
-            };
-            */
-           // module.StartExecution(set, battler, () => battler.StartCombat());
-        }
         if (Input.GetKeyDown("r"))
         {
             foreach (KeyValuePair<Vector3, Battler> pair in start)

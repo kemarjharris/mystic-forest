@@ -12,6 +12,25 @@ public class BattlePhysicsZ : MonoBehaviour
     [Range(0, 1)] public float airForcePercentage = 0.3f;
     Rigidbody rb;
     public new BoxCollider collider;
+
+    public bool freeze { set {
+            if (value)
+            {
+                frozenVelocity = rb.velocity;
+                rb.isKinematic = true;
+            } else
+            {
+                rb.isKinematic = false;
+                if (frozenVelocity != Vector3.zero)
+                {
+                    rb.velocity = frozenVelocity;
+                }
+            }
+        }
+    }
+    private Vector3 frozenVelocity;
+
+
     public bool lockZ {
         set {
             if (value)
@@ -24,7 +43,6 @@ public class BattlePhysicsZ : MonoBehaviour
             }
 
         } }
-
 
     private void Awake()
     {
@@ -104,6 +122,9 @@ public class BattlePhysicsZ : MonoBehaviour
 
     public void FixedUpdate()
     {
+
+
+
         if (IsGrounded) // apply drag
         {
             rb.velocity *= 1 - dragFactor;
@@ -112,7 +133,6 @@ public class BattlePhysicsZ : MonoBehaviour
         {
             // fall
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y + (Physics.gravity.y * Time.fixedDeltaTime), rb.velocity.z);
-
             
             // if approaching ground turn on collsion
             bool collided = CheckUnderCollider(out RaycastHit hitInfo);
@@ -130,7 +150,6 @@ public class BattlePhysicsZ : MonoBehaviour
             {
                 
                 bool virtualCollision = Physics.Raycast(new Ray(transform.position + collider.center, Vector3.down), out RaycastHit virtualHitInfo, collider.size.y * transform.localScale.y / 2);
-                Debug.Log("checking virtual Collision did collide:" + virtualCollision);
                 if (virtualCollision && virtualHitInfo.collider.gameObject.tag == "Battler")
                 {
                     PushAwayCollider(virtualHitInfo.collider);
@@ -139,6 +158,8 @@ public class BattlePhysicsZ : MonoBehaviour
             }
         }
     }
+
+    public bool CloseToGround => CheckUnderCollider(out RaycastHit hit);
 
     private void OnDrawGizmos()
     {

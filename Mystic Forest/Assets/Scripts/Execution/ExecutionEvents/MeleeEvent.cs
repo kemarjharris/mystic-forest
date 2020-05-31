@@ -28,7 +28,7 @@ public class MeleeEvent : ExecutionEvent
         {
             yield return new WaitForSeconds(timeOfContact);
             bool madeContact = false;
-            float freezeTime = 0.1f;
+            float freezeTime = 0.15f;
             performer.CheckCollision(delegate (Collider collider) {
                 IBattler battler = collider.gameObject.GetComponent<Battler>();
                 if (battler == null || battler == performer) return;
@@ -36,9 +36,13 @@ public class MeleeEvent : ExecutionEvent
                 // aerial attack
                 battler.GetAttacked(attack);
             });
-            if (madeContact) performer.FreezeFrame(freezeTime);
-            onCancellableEvent?.Invoke();
-            yield return new WaitForSecondsRealtime(anim.GetLength() + freezeTime - timeOfContact);
+            if (madeContact)
+            {
+                performer.FreezeFrame(freezeTime);
+                onCancellableEvent?.Invoke();
+            }
+            float waitTime = anim.GetLength() - timeOfContact + (madeContact ? freezeTime : 0);
+            yield return new WaitForSecondsRealtime(waitTime);
             onFinishEvent?.Invoke();
         }
     }

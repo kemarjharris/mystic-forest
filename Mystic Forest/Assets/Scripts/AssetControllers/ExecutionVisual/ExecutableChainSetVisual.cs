@@ -18,7 +18,7 @@ public class ExecutableChainSetVisual : MonoBehaviour
 
     private void OnEnable()
     {
-        module.OnStart.AddAction(OnStart);
+        module.OnNewSetLoaded.AddAction(OnStart);
         module.OnNewChainLoaded.AddAction(OnNewChainLoaded);
         module.OnChainFired.AddAction(OnStart);
         module.OnChainFinished.AddAction(OnChainFinished);
@@ -26,7 +26,7 @@ public class ExecutableChainSetVisual : MonoBehaviour
 
     private void OnDisable()
     {
-        module.OnStart.RemoveAction(OnStart);
+        module.OnNewSetLoaded.RemoveAction(OnStart);
         module.OnNewChainLoaded.RemoveAction(OnNewChainLoaded);
         module.OnChainFired.RemoveAction(OnStart);
         module.OnChainFinished.RemoveAction(OnChainFinished);
@@ -50,6 +50,7 @@ public class ExecutableChainSetVisual : MonoBehaviour
 
     void OnStart()
     {
+        if (parent != null) Destroy(parent);
         CreateNewSetVisual(module.set);
         parent.transform.localPosition = new Vector2(-23, -129);
     }

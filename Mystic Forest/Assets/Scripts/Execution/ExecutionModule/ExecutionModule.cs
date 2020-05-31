@@ -17,7 +17,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     public IActionWrapper OnChainFinished => executor.OnChainFinished;
     IActionWrapper<IExecutableChain> IExecutionModule.OnChainSelected => picker.OnSelected;
     public IActionWrapper<ICustomizableEnumerator<IExecutable>> OnNewChainLoaded { get; private set; }
-    public IActionWrapper OnStart { get; private set; }
+    public IActionWrapper OnNewSetLoaded { get; private set; }
 
     public void StartExecution(IExecutableChainSet set, IBattler battler)
     {
@@ -25,7 +25,14 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         this.set = set;
         this.battler = battler;
         linkerActive = true;
-        OnStart.Invoke();
+        OnNewSetLoaded.Invoke();
+    }
+
+    public void ChangeSet(IExecutableChainSet set)
+    {
+        picker.Set(set);
+        this.set = set;
+        OnNewSetLoaded.Invoke();
     }
 
     public void Initialize(IDirectionCommandPicker<IExecutableChain> picker, IChainExecutor executor)
@@ -37,7 +44,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         this.picker = picker;
         this.executor = executor;
         OnNewChainLoaded = new ActionWrapper<ICustomizableEnumerator<IExecutable>>();
-        OnStart = new ActionWrapper();
+        OnNewSetLoaded = new ActionWrapper();
     }
 
     private void Awake()

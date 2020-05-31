@@ -19,5 +19,7 @@ public class ExecutableChainSetSOImpl : ScriptableObject, IExecutableChainSet
 
     public IExecutableChainSet Union(IExecutableChainSet other) => set.Union(other);
 
+    public IExecutableChainSet Where(System.Predicate<IExecutableChain> predicate) => set.Where(predicate);
+
     IEnumerator IEnumerable.GetEnumerator() => set.GetEnumerator();
 }

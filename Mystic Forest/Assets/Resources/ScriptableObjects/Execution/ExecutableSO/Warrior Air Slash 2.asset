@@ -9,13 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25f586246667e684cbe3cbfcaed89ae0, type: 3}
-  m_Name: Warrior Slash 3
+  m_Script: {fileID: 11500000, guid: 9ec7c6fa24a61e7439594bd4ed2799a8, type: 3}
+  m_Name: Warrior Air Slash 2
   m_EditorClassIdentifier: 
-  timeOfContact: 0.2
-  animSO: {fileID: 11400000, guid: 124f1d3c687801d43ab80b55dd0d64e5, type: 2}
-  attack:
-    force:
-      x: 0
-      z: 0
-    verticalForce: 0
+  button: 0
+  executionEvent: {fileID: 11400000, guid: ffbc9f84f3c205c4d97dc64a3f2263dc, type: 2}

@@ -55,7 +55,7 @@ public class Battler : MonoBehaviour, IBattler
                 }
             }
         }
-        float freezeTime = 0.1f;
+        float freezeTime = 0.15f;
         FreezeFrame(freezeTime, () => physics.AddForce(attack.force, attack.verticalForce));
         StartCoroutine(FlashRed());
     }
@@ -64,13 +64,19 @@ public class Battler : MonoBehaviour, IBattler
     {
         // suspend in air and pause animation
         animator.Pause();
-        physics.enabled = false;
+        physics.freeze = true;
         // wait for duration
         IEnumerator waitToUnfreeze()
         {
-            yield return new WaitForSeconds(duration);
+            
+            while (duration > 0)
+            {
+                duration -= Time.fixedDeltaTime;
+                yield return null;
+            }
+
             animator.Unpause();
-            physics.enabled = true;
+            physics.freeze = false;
             onUnfreeze?.Invoke();
         }
         // add gravity and play animation
