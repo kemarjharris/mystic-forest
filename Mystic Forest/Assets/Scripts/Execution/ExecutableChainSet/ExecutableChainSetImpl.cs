@@ -35,6 +35,7 @@ public class ExecutableChainSetImpl : IExecutableChainSet
     public IExecutableChainSet Union(IExecutableChainSet other)
     {
         HashSet<IExecutableChain> union = new HashSet<IExecutableChain>(chains);
+        if (other == null) return this;
         union.UnionWith(other);
         return new ExecutableChainSetImpl(union);
     }

@@ -11,7 +11,7 @@ public class PhysicsZTestScene : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        body.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        body.SetVelocity(new VectorZ(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")), 0);
         if (Input.GetKeyDown("j")) body.SetVelocity(new VectorZ(force, 0), 0);
         if (Input.GetKeyDown("k")) body.SetVelocity(new VectorZ(0, 0), yForce);
         if (Input.GetKeyDown("l")) body.SetVelocity(new VectorZ(force, 0), yForce);

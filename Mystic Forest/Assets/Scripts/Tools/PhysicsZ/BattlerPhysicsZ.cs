@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BattlerPhysicsZ : MonoBehaviour
+public class BattlerPhysicsZ : MonoBehaviour, IBattlerPhysicsZ
 {
-    static Collider ground;
+    static Ground ground;
     // only use gravity if airborne
     //public bool IsGrounded => !rb.useGravity;
     public bool IsGrounded { private set; get; }
@@ -13,7 +13,10 @@ public class BattlerPhysicsZ : MonoBehaviour
     Rigidbody rb;
     public new BoxCollider collider;
 
-    public bool freeze { set {
+
+    public bool freeze {
+        get => rb.isKinematic;
+        set {
             if (value)
             {
                 frozenVelocity = rb.velocity;
@@ -48,8 +51,14 @@ public class BattlerPhysicsZ : MonoBehaviour
     {
         if (ground == null)
         {
-            ground = Instantiate(Resources.Load<GameObject>("Prefabs/Miscellaneous/Ground")).GetComponent<Collider>();
-            ground.GetComponent<MeshRenderer>().enabled = false;
+            GameObject groundGO = GameObject.FindGameObjectWithTag("Ground");
+            // ground was not found
+            if (groundGO == null)
+            {
+                groundGO = Instantiate(Resources.Load<GameObject>("Prefabs/Miscellaneous/Ground"));
+            }
+            
+            ground = groundGO.GetComponent<Ground>();
         }
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
@@ -60,7 +69,7 @@ public class BattlerPhysicsZ : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Case for landing on the ground
-        if (collision.collider == ground)
+        if (collision.collider == ground.collider)
         {
             HandleGroundCollision();
         }
@@ -80,7 +89,7 @@ public class BattlerPhysicsZ : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.collider == ground)
+        if (collision.collider == ground.collider)
         {
 
             IsGrounded = false;
@@ -91,40 +100,13 @@ public class BattlerPhysicsZ : MonoBehaviour
     public void SetVelocity(VectorZ groundVelocity, float verticalVelocity)
     {
         //rb.velocity = Vector3.zero;
-        rb.velocity = groundVelocity + (verticalVelocity * Vector3.up);
+        if (verticalVelocity > 0 && IsGrounded) transform.position += Vector3.up * 0.1f;
+        rb.velocity = groundVelocity + Vector3.up * (verticalVelocity < 0 && IsGrounded ? 0 : verticalVelocity);
     }
 
-    public void AddForce(VectorZ groundForce, float verticalForce)
-    {
-        AddVerticalForce(verticalForce);
-        AddGroundForce(groundForce);
-    }
-
-    private void AddGroundForce(VectorZ force)
-    {
-        if (!IsGrounded) force *= airForcePercentage;
-        rb.AddForce(force, ForceMode.VelocityChange);
-
-    }
-
-    private void AddVerticalForce(float force)
-    {
-        if (!IsGrounded)
-        {
-            rb.AddForce(Vector3.up * force, ForceMode.VelocityChange);
-        }
-        else if (force > 0) // and grounded
-        {
-            rb.AddForce(Vector3.up * force, ForceMode.VelocityChange);
-        }
-
-    }
 
     public void FixedUpdate()
     {
-
-
-
         if (IsGrounded) // apply drag
         {
             rb.velocity *= 1 - dragFactor;
@@ -141,7 +123,7 @@ public class BattlerPhysicsZ : MonoBehaviour
             {
                 collider.enabled = false;
             }
-            if (hitInfo.collider == ground)
+            if (hitInfo.collider == ground.collider)
             {
                 collider.enabled = true;
             } 
@@ -159,9 +141,7 @@ public class BattlerPhysicsZ : MonoBehaviour
         }
     }
 
-    public bool CloseToGround => CheckUnderCollider(out RaycastHit hit);
-
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Vector3 scaled = Vector3.Scale(collider.size, gameObject.transform.localScale);
         Gizmos.DrawRay(new Ray(transform.position + collider.center, Vector3.down));

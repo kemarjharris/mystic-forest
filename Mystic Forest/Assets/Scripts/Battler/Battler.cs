@@ -7,7 +7,7 @@ public class Battler : MonoBehaviour, IBattler
     public IMixAnimator animator = null;
     public Transform hitPoint = null;
     IHitBox hitBox;
-    protected BattlerPhysicsZ physics = null;
+    protected IBattlerPhysicsZ physics = null;
     SpriteRenderer sprite;
     public ExecutableChainSetSOImpl chainSet;
 
@@ -55,8 +55,7 @@ public class Battler : MonoBehaviour, IBattler
                 }
             }
         }
-        float freezeTime = 0.15f;
-        FreezeFrame(freezeTime, () => physics.AddForce(attack.force, attack.verticalForce));
+        FreezeFrame(attack.freezeTime, () => physics.SetVelocity(attack.force, attack.verticalForce));
         StartCoroutine(FlashRed());
     }
 
@@ -71,7 +70,7 @@ public class Battler : MonoBehaviour, IBattler
             
             while (duration > 0)
             {
-                duration -= Time.fixedDeltaTime;
+                duration -= Time.deltaTime;
                 yield return null;
             }
 
@@ -82,4 +81,6 @@ public class Battler : MonoBehaviour, IBattler
         // add gravity and play animation
         StartCoroutine(waitToUnfreeze());
     }
+
+    public bool IsFrozen => physics.freeze;
 }

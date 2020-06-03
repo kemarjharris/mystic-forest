@@ -19,3 +19,4 @@ MonoBehaviour:
       x: 0
       z: 0
     verticalForce: 0
+  aerial: 0

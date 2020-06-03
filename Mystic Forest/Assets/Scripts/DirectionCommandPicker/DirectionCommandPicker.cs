@@ -83,10 +83,13 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
                 inputtedDirections.RemoveAt(inputtedDirections.Count - 1);
             }
             int count = inputtedDirections.Count;
+
             for (int i = 0; i <= count; i ++)
             {
                 t = Select(new DirectionCommand(inputtedButton, inputtedDirections.ToArray()));
-                if (t != null)
+                if (t != null // valid chain picked
+                    && (inputtedDirections.Count != 1 // chain was not a single direction chain
+                    || inputtedDirections.Count == 1 && dir == inputtedDirections[0])) // chain was a dingle button chain and dir was held this frame
                 {
                     Debug.Log(t);
                     clear();

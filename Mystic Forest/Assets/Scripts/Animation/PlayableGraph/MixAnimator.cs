@@ -96,8 +96,11 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
         while (true)
         {
             yield return null;
-            transform.position = start + data.func(timePassed);
-            timePassed += Time.unscaledDeltaTime;
+            if (animator.enabled)
+            {
+                transform.position = start + data.func(timePassed);
+                timePassed += Time.unscaledDeltaTime;
+            }
         }
     }
 

@@ -19,4 +19,5 @@ public interface IBattler
     void FreezeFrame(float duration, System.Action onUnfreeze = null);
 
     bool IsGrounded { get; }
+    bool IsFrozen { get; }
 }

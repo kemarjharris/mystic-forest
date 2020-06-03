@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Battler
   - Execution Module
+  - Ground
   layers:
   - Default
   - TransparentFX

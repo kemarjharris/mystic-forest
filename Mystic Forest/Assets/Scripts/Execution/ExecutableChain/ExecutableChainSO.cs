@@ -26,7 +26,11 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
     IEnumerator<IExecutable> LoopEnumerator()
     {
         instances = new List<IExecutable>();
-        for (int i = 0; i < attacks.Length; i++) instances.Add(attacks[i].CreateExecutable());
+        for (int i = 0; i < attacks.Length; i++)
+        {
+            if (aerial) attacks[i].isAerial = true;
+            instances.Add(attacks[i].CreateExecutable());
+        }
         return instances.GetEnumerator();
     }
 

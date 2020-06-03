@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25f586246667e684cbe3cbfcaed89ae0, type: 3}
-  m_Name: Gun Rising
+  m_Name: Warrior Slash 3
   m_EditorClassIdentifier: 
   timeOfContact: 0.2
-  animSO: {fileID: 11400000, guid: 1744f1e42f66abc4db6049f84c78afe6, type: 2}
+  animSO: {fileID: 11400000, guid: 124f1d3c687801d43ab80b55dd0d64e5, type: 2}
   attack:
     force:
-      x: 1
+      x: 0
       z: 0
-    verticalForce: 13.54
+    verticalForce: 0
+  aerial: 0

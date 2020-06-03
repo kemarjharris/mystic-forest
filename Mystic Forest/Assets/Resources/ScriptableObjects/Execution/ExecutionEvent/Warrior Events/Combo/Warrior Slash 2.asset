@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25f586246667e684cbe3cbfcaed89ae0, type: 3}
-  m_Name: Warrior Air Slash
+  m_Name: Warrior Slash 2
   m_EditorClassIdentifier: 
-  timeOfContact: 0
-  animSO: {fileID: 11400000, guid: 702f46b67d0e93542b2802251263d1d7, type: 2}
+  timeOfContact: 0.15
+  animSO: {fileID: 11400000, guid: c4fc2b2f35b490c488669929a2fd345e, type: 2}
   attack:
     force:
       x: 0
       z: 0
     verticalForce: 0
+  aerial: 0
+  interrupted: 0

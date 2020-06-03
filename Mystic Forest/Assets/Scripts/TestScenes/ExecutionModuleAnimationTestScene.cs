@@ -11,9 +11,9 @@ public class ExecutionModuleAnimationTestScene : MonoBehaviour
 
     private void Start()
     {
-        module = new GameObject("Execution Module").AddComponent<ExecutionModule>();
+        module = GameObject.Find("Execution Module").GetComponent<ExecutionModule>();
         Battler[] battlers = FindObjectsOfType<Battler>();
-        for (int i = 0; i < 1; i ++)
+        for (int i = 0; i < battlers.Length; i ++)
         {
             start.Add(battlers[i].transform.position, battlers[i]);
         }

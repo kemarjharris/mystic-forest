@@ -2,7 +2,7 @@
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PhysicsZ : MonoBehaviour
+public class PhysicsZ : MonoBehaviour, IPhysicsZ
 {
     
     public bool IsGrounded { get => transform.position.y <= transform.position.z && rb.position.y <= rb.position.z; }
@@ -24,45 +24,11 @@ public class PhysicsZ : MonoBehaviour
         rb.useGravity = false;
     }
 
-    public void Move(float horizontal, float vertical)
-    {
-        rb.velocity = Vector3.SmoothDamp(rb.velocity, new VectorZ(horizontal * speed, vertical * speed), ref velocity, smoothness);
-    }
-
     public void SetVelocity(VectorZ groundVelocity, float verticalVelocity)
     {
         rb.velocity = Vector3.zero;
         rb.velocity = groundVelocity + Vector3.up * (verticalVelocity < 0 && IsGrounded ? 0 : verticalVelocity );
     }
-
-    public void AddForce(VectorZ groundForce, float verticalForce)
-    {
-        AddVerticalForce(verticalForce);
-        AddGroundForce(groundForce);
-    }
-
-    private void AddGroundForce(VectorZ force)
-    {
-        if (!IsGrounded) force *= airForcePercentage;
-        rb.AddForce(force, ForceMode.VelocityChange);
-
-    }
-
-    private void AddVerticalForce(float force)
-    {
-        if (!IsGrounded)
-        {
-            rb.AddForce(Vector3.up * force, ForceMode.VelocityChange);
-        }
-        else if (force > 0) // and grounded
-        {
-            rb.position = new Vector3(rb.position.x, rb.position.z + 0.01f, rb.position.z);
-            rb.AddForce(Vector3.up * force, ForceMode.VelocityChange);
-            rb.useGravity = true;
-        } 
-    }
-
-
 
     public void FixedUpdate()
     {

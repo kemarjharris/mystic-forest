@@ -7,43 +7,43 @@ public class MeleeEvent : ExecutionEvent
     public float timeOfContact;
     public PlayableAnimSO animSO;
     public Attack attack;
+    public bool aerial;
+    public bool interrupted;
 
     public override void OnExecute(IBattler attacker, ITargetSet targets)
     {
-        attacker.Play(animSO);
-        MeleeEventPOCO poco = new MeleeEventPOCO
-        {
-            onCancellableEvent = onCancellableEvent,
-            onFinishEvent = onFinishEvent
-        };
-        attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(poco.AttackDelay(attacker, targets, animSO, attack, timeOfContact));
+        interrupted = false;
+        attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(AttackDelay(attacker, targets, onCancellableEvent, onFinishEvent));
     }
 
-    private class MeleeEventPOCO
+    public override void Interrupt()
     {
-        public System.Action onFinishEvent;
-        public System.Action onCancellableEvent;
+        interrupted = true;
+    }
 
-        public IEnumerator AttackDelay(IBattler performer, ITargetSet targets, IPlayableAnim anim, IAttack attack, float timeOfContact)
+    protected virtual IEnumerator AttackDelay(IBattler performer, ITargetSet targets, System.Action onCancellableEvent, System.Action onFinishEvent)
+    {
+        yield return new WaitWhile(() => performer.IsFrozen);
+        performer.Play(animSO);
+        yield return new WaitForSeconds(timeOfContact);
+        if (!interrupted)
         {
-            yield return new WaitForSeconds(timeOfContact);
             bool madeContact = false;
-            float freezeTime = 0.15f;
+            float freezeTime = 0.1f;
             performer.CheckCollision(delegate (Collider collider) {
                 IBattler battler = collider.gameObject.GetComponent<Battler>();
                 if (battler == null || battler == performer) return;
                 madeContact = true;
-                // aerial attack
                 battler.GetAttacked(attack);
             });
             if (madeContact)
             {
-                performer.FreezeFrame(freezeTime);
+                performer.FreezeFrame(attack.freezeTime);
                 onCancellableEvent?.Invoke();
             }
-            float waitTime = anim.GetLength() - timeOfContact + (madeContact ? freezeTime : 0);
+            float waitTime = animSO.GetLength() - timeOfContact + (madeContact ? freezeTime : 0);
             yield return new WaitForSecondsRealtime(waitTime);
-            onFinishEvent?.Invoke();
         }
+        onFinishEvent?.Invoke();
     }
 }

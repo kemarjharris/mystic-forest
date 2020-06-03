@@ -23,7 +23,8 @@ namespace Tests
                 Resources.Load<PlayableAnimSO>("TestScriptableObjects/Test White To Red"),
                 Resources.Load<PlayableAnimSO>("TestScriptableObjects/Test Move Right"),
                 Resources.Load<PlayableAnimSO>("TestScriptableObjects/Test Move Up"),
-                Resources.Load<PlayableAnimSO>("TestScriptableObjects/Test Zero Speed")
+                Resources.Load<PlayableAnimSO>("TestScriptableObjects/Test Zero Speed"),
+                Resources.Load<PlayableAnimSO>("TestScriptableObjects/Test False Movement")
             };
 
             animator = obj.GetComponent<MixAnimator>(); 
@@ -161,6 +162,111 @@ namespace Tests
             animator.Play(animMap["Test White To Black"]);
             yield return new WaitForSeconds(1.1f);
             Assert.AreEqual(Color.black, obj.GetComponent<SpriteRenderer>().color);
+        }
+
+        // no movement should not move
+        [UnityTest]
+        public IEnumerator Play_MovesIsFalse_DoesNotMoveObject()
+        {
+            Vector3 start = obj.transform.position;
+            animator.Play(animMap["Test False Movement"]);
+            yield return new WaitForSecondsRealtime(1.1f);
+            Assert.AreEqual(start, animator.transform.position);
+        }
+
+        // playing paused animation plays animation
+        [UnityTest]
+        public IEnumerator Play_PausedAnimation_PlaysAnimation()
+        {
+            animator.Play(animMap["Test White To Black"]);
+            yield return new WaitForSeconds(0.5f);
+            animator.Pause();
+            yield return new WaitForSeconds(0.6f);
+            // is not still white
+            Assert.AreNotEqual(Color.white, obj.GetComponent<SpriteRenderer>().color);
+            // didnt become black
+            Assert.AreNotEqual(Color.black, obj.GetComponent<SpriteRenderer>().color);
+
+            animator.Play(animMap["Test White To Red"]);
+            yield return new WaitForSeconds(1.1f);
+            Assert.AreEqual(Color.red, obj.GetComponent<SpriteRenderer>().color);
+        }
+
+        [UnityTest]
+        public IEnumerator Play_PausedMovement_PlaysMovement()
+        {
+            animator.Play(animMap["Test Move Right"]);
+            yield return new WaitForSeconds(0.5f);
+            animator.Pause();
+            Vector3 start = obj.transform.position;
+            animator.Play(animMap["Test Move Up"]);
+            yield return new WaitForSeconds(1.1f);
+            Assert.AreEqual(start + Vector3.up * 5, obj.transform.position);
+        }
+
+        // Pausing animation stops animation
+        [UnityTest]
+        public IEnumerator Pause_PlayingAnimation_PausesAnimation()
+        {
+            animator.Play(animMap["Test White To Black"]);
+            yield return new WaitForSeconds(0.5f);
+            animator.Pause();
+            yield return new WaitForSeconds(0.6f);
+            // is not still white
+            Assert.AreNotEqual(Color.white, obj.GetComponent<SpriteRenderer>().color);
+            // didnt become black
+            Assert.AreNotEqual(Color.black, obj.GetComponent<SpriteRenderer>().color);
+        }
+
+        // pause pauses animation movement
+        [UnityTest]
+        public IEnumerator Pause_MovingAnimation_PausesMovement()
+        {
+            Vector3 start = obj.transform.position;
+            animator.Play(animMap["Test Move Right"]);
+            yield return new WaitForSeconds(0.5f);
+            animator.Pause();
+            yield return new WaitForSeconds(0.6f);
+            // not stationary
+            Assert.AreNotEqual(start.x, obj.transform.position.x);
+            // didnt finish
+            Assert.AreNotEqual((start + (Vector3.right * 5)).x, obj.transform.position.x);
+        }
+
+        // unpausing paused animation continues animation
+        [UnityTest]
+        public IEnumerator Unpause_PausedAnimation_ContinuesAnimation()
+        {
+            animator.Play(animMap["Test White To Black"]);
+            yield return new WaitForSeconds(0.5f);
+            animator.Pause();
+            yield return new WaitForSeconds(0.6f);
+            // is not still white
+            Assert.AreNotEqual(Color.white, obj.GetComponent<SpriteRenderer>().color);
+            // didnt become black
+            Assert.AreNotEqual(Color.black, obj.GetComponent<SpriteRenderer>().color);
+            animator.Unpause();
+            yield return new WaitForSeconds(0.6f);
+            // animation finished
+            Assert.AreEqual(Color.black, obj.GetComponent<SpriteRenderer>().color);
+        }
+
+        // unpause continues animation movement
+        [UnityTest]
+        public IEnumerator Unpause_PausedMovingAnimation_ContinuesMovement()
+        {
+            Vector3 start = obj.transform.position;
+            animator.Play(animMap["Test Move Right"]);
+            yield return new WaitForSeconds(0.5f);
+            // not stationary
+            Assert.AreNotEqual(start.x, obj.transform.position.x);
+            // didnt finish
+            Assert.AreNotEqual((start + (Vector3.right * 5)).x, obj.transform.position.x);
+
+            // unpause and continue
+            animator.Unpause();
+            yield return new WaitForSeconds(0.6f);
+            Assert.AreEqual((start + (Vector3.right * 5)).x, obj.transform.position.x);
         }
 
     }

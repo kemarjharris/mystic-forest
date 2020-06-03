@@ -12,8 +12,8 @@ public class ExecutableChainSetVisual : MonoBehaviour
 
     private void Awake()
     {
-        module = GameObject.FindWithTag("Execution Module").GetComponent<IExecutionModule>();
-        if (module == null) module = new GameObject("Execution Module").AddComponent<ExecutionModule>(); 
+        module = GameObject.Find("Execution Module").GetComponent<IExecutionModule>();
+       // if (module == null) module = new GameObject("Execution Module").AddComponent<ExecutionModule>(); 
     }
 
     private void OnEnable()
@@ -52,7 +52,7 @@ public class ExecutableChainSetVisual : MonoBehaviour
     {
         if (parent != null) Destroy(parent);
         CreateNewSetVisual(module.set);
-        parent.transform.localPosition = new Vector2(-23, -129);
+        parent.transform.localPosition = new Vector2(180, -129);
     }
 
     

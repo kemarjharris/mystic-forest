@@ -140,6 +140,18 @@ namespace DirectionCommandPickerTest
             IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S);
             picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
+            SetAndReadInput(0,0);
+            SetKeyPress("z");
+            IDirectionPickable result = picker.InputSelect();
+            Assert.IsNull(picker.InputSelect());
+        }
+
+        [Test]
+        public void SingleKeyAndDriectionInputOnDifferentFramesTest()
+        {
+            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S);
+            picker.Set(new IDirectionPickable[] { expected });
+            SetDirectionalService(0, -1);
             SetKeyPress("z");
             IDirectionPickable result = picker.InputSelect();
             Assert.AreEqual(expected, result);

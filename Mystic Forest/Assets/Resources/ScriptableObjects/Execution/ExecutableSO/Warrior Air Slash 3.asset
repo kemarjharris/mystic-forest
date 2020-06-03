@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Warrior Air Slash 3
   m_EditorClassIdentifier: 
   button: 0
+  isAerial: 1
   executionEvent: {fileID: 11400000, guid: eecb379bfd782d14f8348285ddafa4c2, type: 2}

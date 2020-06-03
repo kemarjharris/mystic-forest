@@ -14,26 +14,24 @@ public class ProjectileEvent : ExecutionEvent
 
     public override void OnExecute(IBattler attacker, ITargetSet targets)
     {
-        IEnumerator wait(float seconds)
-        { yield return new WaitForSeconds(seconds); }
+        attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(FireProjectile(attacker, targets));
+    }
 
-        IEnumerator finishDelay(float seconds)
-        {
-            yield return wait(seconds);
-            onFinishEvent?.Invoke();
-        }
+    IEnumerator FireProjectile(IBattler attacker, ITargetSet targets)
+    {
+        yield return new WaitWhile(() => attacker.IsFrozen);
         // play firing animation
         attacker.Play(playerAnimation);
         // wait until time to fire projectile
-        attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(wait(projectileSpawnTime));
+        yield return new WaitForSeconds(projectileSpawnTime);
         // Fire projectile and send it to its destination
         IProjectile projectile = Instantiate(projectilePrefab, attacker.gameObject.transform.position, Quaternion.identity).GetComponent<IProjectile>();
         projectile.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(travelMethod.Travel(projectile.gameObject.transform, targets.GetTarget(), projectileSpeed));
         // Check battlers that get hit along the way
         projectile.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(HitBattlers(projectile, attacker));
         onCancellableEvent?.Invoke();
-        // Wait until end of animation, and then finish
-        attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(finishDelay(playerAnimation.GetLength() - projectileSpawnTime));
+        yield return new WaitForSeconds(playerAnimation.GetLength() - projectileSpawnTime);
+        onFinishEvent?.Invoke();
     }
 
     IEnumerator HitBattlers(IProjectile projectile, IBattler attacker)

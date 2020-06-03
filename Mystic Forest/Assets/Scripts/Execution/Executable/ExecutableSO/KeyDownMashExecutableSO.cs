@@ -7,6 +7,7 @@ public class KeyDownMashExecutableSO : ExecutableSO
     public ExecutionEvent executionEvent;
     public ExecutionEvent mashTimeEndedEvent;
     public float mashDuration;
+    public bool aerial;
 
     public override IExecutable CreateExecutable() =>
         new KeyDownMashExecutable

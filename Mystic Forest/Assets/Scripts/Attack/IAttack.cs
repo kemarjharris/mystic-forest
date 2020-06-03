@@ -5,4 +5,5 @@ public interface IAttack
 {
     VectorZ force { get; }
     float verticalForce { get; }
+    float freezeTime { get; }
 }
