@@ -2,7 +2,7 @@
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PhysicsZ : MonoBehaviour, IPhysicsZ
+public class PhysicsZ : MonoBehaviour, IPhysics
 {
     
     public bool IsGrounded { get => transform.position.y <= transform.position.z && rb.position.y <= rb.position.z; }

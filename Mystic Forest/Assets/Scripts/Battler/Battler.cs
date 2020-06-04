@@ -24,6 +24,11 @@ public class Battler : MonoBehaviour, IBattler
         hitPoint.transform.position = new VectorZ(transform.position.x, transform.position.y);
     }
 
+    private void Update()
+    {
+        transform.LookAt(Camera.main.transform);
+    }
+
     public void StopCombatAnimation() => animator.Stop();
 
     public void Play(IPlayableAnim animation) => animator.Play(animation);
@@ -55,7 +60,8 @@ public class Battler : MonoBehaviour, IBattler
                 }
             }
         }
-        FreezeFrame(attack.freezeTime, () => physics.SetVelocity(attack.force, attack.verticalForce));
+        if (attack.hasKnockBack) physics.SetVelocity(attack.force, attack.verticalForce);
+        FreezeFrame(attack.freezeTime);
         StartCoroutine(FlashRed());
     }
 

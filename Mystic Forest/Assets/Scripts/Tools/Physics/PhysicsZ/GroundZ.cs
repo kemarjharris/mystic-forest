@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class Ground : MonoBehaviour
+public class GroundZ : MonoBehaviour
 {
     public new BoxCollider collider;
 

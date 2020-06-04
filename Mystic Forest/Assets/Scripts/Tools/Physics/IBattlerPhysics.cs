@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface IBattlerPhysicsZ : IPhysicsZ
+public interface IBattlerPhysics : IPhysicsZ
 {
     bool freeze { get; set; }
     bool lockZ { set; }

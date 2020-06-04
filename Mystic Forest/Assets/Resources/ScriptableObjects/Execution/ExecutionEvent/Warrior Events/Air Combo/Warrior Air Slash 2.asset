@@ -18,5 +18,8 @@ MonoBehaviour:
     force:
       x: 0
       z: 0
-    verticalForce: 0
-  aerial: 0
+    verticalForce: 3
+    freezeTime: 0.15
+    hasKnockBack: 0
+  aerial: 1
+  interrupted: 0

@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BattlerPhysicsZ : MonoBehaviour, IBattlerPhysicsZ
+public class BattlerPhysicsZ : MonoBehaviour, IBattlerPhysics
 {
-    static Ground ground;
+    static GroundZ ground;
     // only use gravity if airborne
     //public bool IsGrounded => !rb.useGravity;
     public bool IsGrounded { private set; get; }
@@ -58,7 +58,7 @@ public class BattlerPhysicsZ : MonoBehaviour, IBattlerPhysicsZ
                 groundGO = Instantiate(Resources.Load<GameObject>("Prefabs/Miscellaneous/Ground"));
             }
             
-            ground = groundGO.GetComponent<Ground>();
+            ground = groundGO.GetComponent<GroundZ>();
         }
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;

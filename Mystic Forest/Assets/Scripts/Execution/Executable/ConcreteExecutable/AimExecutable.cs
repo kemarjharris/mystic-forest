@@ -8,9 +8,9 @@ public class AimExecutable : Executable
     public ExecutionEvent onStartAiming = null;
     public ExecutionEvent onTargetSelected = null;
 
-    GameObject cursorGameObject = null;
-    ICursor cursor;
-    IHitBox cursorHitBox = null;
+    static GameObject cursorGameObject = null;
+    static ICursor cursor;
+    static IHitBox cursorHitBox = null;
     bool aiming = false;
     IUnityInputService inputService = new UnityInputService();
     IUnityTimeService timeService = new UnityTimeService();
@@ -56,14 +56,22 @@ public class AimExecutable : Executable
 
     public void SpawnCursor(IBattler battler)
     {
-        cursorGameObject = Object.Instantiate(cursorPrefab, battler.gameObject.transform.position, Quaternion.identity);
-        cursor = cursorGameObject.GetComponent<ICursor>();
-        cursorHitBox = cursorGameObject.GetComponent<IHitBox>();
+        if (cursorGameObject == null)
+        {
+            cursorGameObject = Object.Instantiate(cursorPrefab, battler.gameObject.transform.position, Quaternion.identity);
+            cursor = cursorGameObject.GetComponent<ICursor>();
+            cursorHitBox = cursorGameObject.GetComponent<IHitBox>();
+        } else
+        {
+            cursorGameObject.SetActive(true);
+            cursorGameObject.transform.position = battler.gameObject.transform.position;
+        }
+        
     }
 
     public void DespawnCursor()
     {
-        Object.Destroy(cursorGameObject);
+        if (cursorGameObject != null) cursorGameObject.SetActive(false);
     }
 
     public void Aim(string input, IBattler battler, ITargetSet targets)

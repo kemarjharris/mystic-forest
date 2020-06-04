@@ -5,8 +5,8 @@ using System;
 public class PlayerController : MonoBehaviour, IPlayerController
 {
     public BattlerSpeed speeds;
-    IPlayerController neutral;
-    IPlayerController combat;
+    public IPlayerController neutral;
+    public IPlayerController combat;
     bool inCombat;
 
     private void Awake()

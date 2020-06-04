@@ -7,18 +7,20 @@ public class NeutralController : IPlayerController
     BattlerSpeed speeds;
     float horizontal;
     float vertical;
+    public IUnityAxisService service;
 
 
     public NeutralController(BattlerPhysicsZ physics, BattlerSpeed speeds)
     {
+        if (service == null) service = new UnityAxisService();
         this.physics = physics;
         this.speeds = speeds;
     }
 
     public void Update()
     {
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
+        horizontal = service.GetAxis("Horizontal");
+        vertical = service.GetAxis("Vertical");
     }
 
     public void FixedUpdate()

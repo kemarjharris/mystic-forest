@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Debug Test Scenes/Execution Module Animation Test Scene.unity
     guid: 07022e99b2ed5ec4db6583740dad5cdd
+  - enabled: 1
+    path: Assets/Scenes/Debug Test Scenes/Combat Test Scene.unity
+    guid: 1b8652c6d6f32a740ac012e1418f975b
   m_configObjects: {}
