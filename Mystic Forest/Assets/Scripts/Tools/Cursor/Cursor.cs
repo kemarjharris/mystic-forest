@@ -13,7 +13,7 @@ public class Cursor : MonoBehaviour, ICursor
 
     public void Up()
     {
-        newOffset += new VectorZ(0, 1);
+        newOffset += new Vector3(0, 0, 1);
         if (velocity.y < 0)
         {
             velocity = new Vector3(velocity.x, 0, 0);
@@ -22,7 +22,7 @@ public class Cursor : MonoBehaviour, ICursor
 
     public void Down()
     {
-        newOffset += new VectorZ(0, -1);
+        newOffset += new Vector3(0, 0, -1);
         if (velocity.y > 0)
         {
             velocity = new Vector3(velocity.x, 0, 0);
@@ -31,7 +31,7 @@ public class Cursor : MonoBehaviour, ICursor
 
     public void Right()
     {
-        newOffset += new VectorZ(1, 0);
+        newOffset += new Vector3(1, 0, 0);
         if (velocity.x < 0)
         {
             velocity = new Vector3(0, velocity.y, velocity.z);
@@ -40,7 +40,7 @@ public class Cursor : MonoBehaviour, ICursor
 
     public void Left()
     {
-        newOffset += new VectorZ(-1, 0);
+        newOffset += new Vector3(-1, 0, 0);
         if (velocity.x > 0)
         {
             velocity = new Vector3(0, velocity.y, velocity.z);

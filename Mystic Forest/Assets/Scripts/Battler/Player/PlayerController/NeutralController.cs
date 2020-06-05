@@ -3,14 +3,14 @@ using System.Collections;
 
 public class NeutralController : IPlayerController
 {
-    BattlerPhysicsZ physics;
+    IBattlerPhysics physics;
     BattlerSpeed speeds;
     float horizontal;
     float vertical;
     public IUnityAxisService service;
 
 
-    public NeutralController(BattlerPhysicsZ physics, BattlerSpeed speeds)
+    public NeutralController(BattlerPhysics physics, BattlerSpeed speeds)
     {
         if (service == null) service = new UnityAxisService();
         this.physics = physics;
@@ -27,7 +27,7 @@ public class NeutralController : IPlayerController
     {
         if (physics.IsGrounded)
         {
-            physics.SetVelocity(new VectorZ(horizontal, vertical) * speeds.speed, 0);
+            physics.SetVelocity(new Vector3(horizontal, 0, vertical) * speeds.speed);
         }
     }
 

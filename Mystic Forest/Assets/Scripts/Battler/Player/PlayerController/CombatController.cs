@@ -4,15 +4,16 @@ using System.Collections;
 public class CombatController : IPlayerController
 {
     IBattler battler;
-    BattlerPhysicsZ physics;
+    IBattlerPhysics physics;
     IExecutionModule module;
     BattlerSpeed speeds;
     CombatState state;
+    public IUnityAxisService service;
     bool groundedLastFrame;
     float horizontal;
     bool jumped;
 
-    public CombatController(IBattler battler, BattlerPhysicsZ physics, IExecutionModule module, BattlerSpeed speeds)
+    public CombatController(IBattler battler, IBattlerPhysics physics, IExecutionModule module, BattlerSpeed speeds)
     {
         this.battler = battler;
         this.physics = physics;
@@ -20,6 +21,7 @@ public class CombatController : IPlayerController
         this.speeds = speeds;
         state = CombatState.NOT_ATTACKING;
         groundedLastFrame = physics.IsGrounded;
+        if (service == null) service = new UnityAxisService();
     }
 
     public void Update()
@@ -34,9 +36,9 @@ public class CombatController : IPlayerController
         {
             if (physics.IsGrounded)
             {
-                horizontal = Input.GetAxis("Horizontal");
+                horizontal = service.GetAxis("Horizontal");
                 // jump when attack is cancellable, jump cancel
-                if (state != CombatState.ATTACKING && Input.GetAxis("Vertical") > 0)
+                if (state != CombatState.ATTACKING && service.GetAxis("Vertical") > 0)
                 {
                     jumped = true;
                     module.ChangeSet(Aerials());
@@ -56,12 +58,12 @@ public class CombatController : IPlayerController
             // jump
             if (horizontal > 0) horizontal = 1;
             else if (horizontal < 0) horizontal = -1;
-            physics.SetVelocity(new VectorZ(speeds.jumpHorizontalForce * horizontal, 0), speeds.jumpForce);
+            physics.SetVelocity(new Vector3(speeds.jumpHorizontalForce * horizontal, speeds.jumpForce, 0));
             jumped = false;
         } else if (physics.IsGrounded)
         {
             // move
-            physics.SetVelocity(new VectorZ(horizontal * speeds.speed, 0), 0);
+            physics.SetVelocity(new Vector3(horizontal * speeds.speed, 0, 0));
         }
     }
 
@@ -105,4 +107,22 @@ public class CombatController : IPlayerController
         state = CombatState.NOT_ATTACKING;
         StartModuleExecution();
     }
+
+    /* for testing */
+
+    public void SetStateAttacking()
+    {
+        state = CombatState.ATTACKING;
+    }
+
+    public void SetStateAbleToCancelAttack()
+    {
+        state = CombatState.ABLE_TO_CANCEL_ATTACK;
+    }
+
+    public void SetStateNotAttacking()
+    {
+        state = CombatState.NOT_ATTACKING;
+    }
+
 }

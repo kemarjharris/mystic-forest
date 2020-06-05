@@ -3,8 +3,7 @@ using UnityEditor;
 
 public interface IAttack
 {
-    VectorZ force { get; }
-    float verticalForce { get; }
+    Vector3 force { get; }
     float freezeTime { get; }
     bool hasKnockBack { get; }
 }

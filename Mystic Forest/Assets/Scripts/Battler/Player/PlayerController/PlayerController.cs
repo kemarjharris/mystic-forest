@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     {
 
         IBattler battler = GetComponent<IBattler>();
-        BattlerPhysicsZ physics = GetComponent<BattlerPhysicsZ>();
+        BattlerPhysics physics = GetComponent<BattlerPhysics>();
         GameObject moduleGO = GameObject.Find("Execution Module");
         IExecutionModule module;
         if (moduleGO == null)

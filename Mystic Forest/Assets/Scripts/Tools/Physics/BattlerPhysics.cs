@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BattlerPhysicsZ : MonoBehaviour, IBattlerPhysics
+public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
 {
-    static GroundZ ground;
+    static Ground ground;
     // only use gravity if airborne
     //public bool IsGrounded => !rb.useGravity;
     public bool IsGrounded { private set; get; }
@@ -55,10 +55,10 @@ public class BattlerPhysicsZ : MonoBehaviour, IBattlerPhysics
             // ground was not found
             if (groundGO == null)
             {
-                groundGO = Instantiate(Resources.Load<GameObject>("Prefabs/Miscellaneous/Ground"));
+                groundGO = Instantiate(Resources.Load<GameObject>("Prefabs/Miscellaneous/2.5D Ground"));
             }
             
-            ground = groundGO.GetComponent<GroundZ>();
+            ground = groundGO.GetComponent<Ground>();
         }
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
@@ -97,8 +97,10 @@ public class BattlerPhysicsZ : MonoBehaviour, IBattlerPhysics
         }
     }
 
-    public void SetVelocity(VectorZ groundVelocity, float verticalVelocity)
+    public void SetVelocity(Vector3 velocity)
     {
+        float verticalVelocity = velocity.y;
+        Vector3 groundVelocity = new Vector3(velocity.x, 0, velocity.z);
         //rb.velocity = Vector3.zero;
         if (verticalVelocity > 0 && IsGrounded) transform.position += Vector3.up * 0.1f;
         rb.velocity = groundVelocity + Vector3.up * (verticalVelocity < 0 && IsGrounded ? 0 : verticalVelocity);
@@ -122,21 +124,14 @@ public class BattlerPhysicsZ : MonoBehaviour, IBattlerPhysics
             if (collided && hitInfo.collider.gameObject.tag == "Battler")
             {
                 collider.enabled = false;
+                if (rb.velocity.y < 0)
+                {
+                    PushAwayCollider(hitInfo.collider);
+                }
             }
             if (hitInfo.collider == ground.collider)
             {
                 collider.enabled = true;
-            } 
-
-            if (!collider.enabled) // perform our own collision check to push away battlers directly underneath us
-            {
-                
-                bool virtualCollision = Physics.Raycast(new Ray(transform.position + collider.center, Vector3.down), out RaycastHit virtualHitInfo, collider.size.y * transform.localScale.y / 2);
-                if (virtualCollision && virtualHitInfo.collider.gameObject.tag == "Battler")
-                {
-                    PushAwayCollider(virtualHitInfo.collider);
-                }
-                
             }
         }
     }
@@ -144,7 +139,6 @@ public class BattlerPhysicsZ : MonoBehaviour, IBattlerPhysics
     private void OnDrawGizmosSelected()
     {
         Vector3 scaled = Vector3.Scale(collider.size, gameObject.transform.localScale);
-        Gizmos.DrawRay(new Ray(transform.position + collider.center, Vector3.down));
         BoxColliderDrawer.DrawBoxCollider(transform, collider.enabled? Color.magenta: Color.yellow, collider.center, collider.size);
         BoxCastVisualizer.DrawBoxCastBox(transform.position + collider.center + Vector3.down * 0.5f, new Vector3(scaled.x, 1, scaled.z) / 2, Quaternion.identity, Vector3.down, 0, Color.cyan);
     }

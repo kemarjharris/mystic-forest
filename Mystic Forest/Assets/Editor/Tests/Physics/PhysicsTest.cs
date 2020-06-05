@@ -6,10 +6,10 @@ using UnityEngine.TestTools;
 
 namespace Tests
 {
-    public abstract class BasePhysicsZTest
+    public abstract class BasePhysicsTest
     {
         
-        public IPhysicsZ physics;
+        public IBattlerPhysics physics;
 
         [SetUp]
         public abstract void SetUp();
@@ -32,7 +32,7 @@ namespace Tests
         {
             yield return new WaitUntil(() => physics.IsGrounded);
             Vector3 pos = physics.transform.position;
-            physics.SetVelocity(new VectorZ(10, 0), 0);
+            physics.SetVelocity(new Vector3(10, 0, 0));
             yield return new WaitForFixedUpdate();
             Assert.Less(pos.x, physics.transform.position.x);
         }
@@ -44,7 +44,7 @@ namespace Tests
             yield return new WaitUntil(() => physics.IsGrounded);
             Vector3 lastPos = physics.transform.position;
             float lastDistance = Mathf.Infinity;
-            physics.SetVelocity(new VectorZ(10, 0), 0);
+            physics.SetVelocity(new Vector3(10, 0, 0));
             for (int i = 0; i < 10; i++)
             {
                 yield return new WaitForFixedUpdate();
@@ -61,7 +61,7 @@ namespace Tests
         public IEnumerator XEventuallyStopsTest()
         {
             yield return new WaitUntil(() => physics.IsGrounded);
-            physics.SetVelocity(new VectorZ(10, 0), 0);
+            physics.SetVelocity(new Vector3(10, 0));
             yield return new WaitForSeconds(2);
             Vector3 pos = physics.transform.position;
             yield return new WaitForFixedUpdate();
@@ -70,26 +70,25 @@ namespace Tests
         }
 
 
-        // y force and to y and z
+        // z force adds to z
         [UnityTest]
-        public IEnumerator YZForceAddsToYZTest()
+        public IEnumerator ZForceAddsToZTest()
         {
             yield return new WaitUntil(() => physics.IsGrounded);
             Vector3 pos = physics.transform.position;
-            physics.SetVelocity(new VectorZ(0, 10), 0);
+            physics.SetVelocity(new Vector3(0, 0, 10));
             yield return new WaitForFixedUpdate();
-            Assert.Less(pos.y, physics.transform.position.y);
             Assert.Less(pos.z, physics.transform.position.z);
         }
 
-        // y and z slow down
+        // z slows down
         [UnityTest]
-        public IEnumerator YZSlowsDownTest()
+        public IEnumerator ZSlowsDownTest()
         {
             yield return new WaitUntil(() => physics.IsGrounded);
             Vector3 lastPos = physics.transform.position;
             float lastDistance = Mathf.Infinity;
-            physics.SetVelocity(new VectorZ(0, 10), 0);
+            physics.SetVelocity(new Vector3(0, 0, 10));
             for (int i = 0; i < 10; i++)
             {
                 yield return new WaitForFixedUpdate();
@@ -101,12 +100,12 @@ namespace Tests
             }
         }
 
-        // y and z eventually stop
+        // z eventually stops
         [UnityTest]
-        public IEnumerator YZEventuallyStopsTest()
+        public IEnumerator ZEventuallyStopsTest()
         {
             yield return new WaitUntil(() => physics.IsGrounded);
-            physics.SetVelocity(new VectorZ(0, 10), 0);
+            physics.SetVelocity(new Vector3(0, 0, 10));
             yield return new WaitForSeconds(2);
             Vector3 pos = physics.transform.position;
             yield return new WaitForFixedUpdate();
@@ -115,12 +114,12 @@ namespace Tests
 
         }
 
-        // v force adds to y
+        // y force adds to y
         [UnityTest]
         public IEnumerator VerticalForceAddsToYTest()
         {
             Vector3 start = physics.transform.position;
-            physics.SetVelocity(new VectorZ(0, 0), 10);
+            physics.SetVelocity(new Vector3(0, 10, 0));
             yield return new WaitForFixedUpdate();
             Assert.Less(start.y, physics.transform.position.y);
         }
@@ -131,7 +130,7 @@ namespace Tests
         {
             yield return new WaitUntil(() => physics.IsGrounded);
             Vector3 start = physics.transform.position;
-            physics.SetVelocity(new VectorZ(0, 0), 10);
+            physics.SetVelocity(new Vector3(0, 10, 0));
             yield return new WaitForFixedUpdate();
             Assert.AreEqual(start.z, physics.transform.position.z);
         }
@@ -143,12 +142,11 @@ namespace Tests
             yield return new WaitUntil(() => physics.IsGrounded);
             yield return new WaitForSeconds(1);
             Vector3 start = physics.transform.position;
-            physics.SetVelocity(new VectorZ(0, 0), -10);
+            physics.SetVelocity(new Vector3(0, -10, 0));
             yield return new WaitForFixedUpdate();
             Assert.AreEqual(start.y, physics.transform.position.y);
         }
 
-        // Starts falling if y pos greater than z pos
         [UnityTest]
         public IEnumerator FallsIfAirborneTest()
         {
@@ -186,9 +184,9 @@ namespace Tests
         public IEnumerator SetVelocityXChangesVelocityTest()
         {
             yield return new WaitUntil(() => physics.IsGrounded);
-            physics.SetVelocity(new VectorZ(100, 0), 0);
+            physics.SetVelocity(new Vector3(100, 0, 0));
             yield return new WaitForSeconds(0.5f);
-            physics.SetVelocity(new VectorZ(-10, 0), 0);
+            physics.SetVelocity(new Vector3(-10, 0, 0));
             Vector3 oldPos = physics.transform.position;
             yield return new WaitForFixedUpdate();
             Assert.Greater(oldPos.x, physics.transform.position.x);
@@ -196,15 +194,14 @@ namespace Tests
 
         // set yz veloicity instantly changes velocity
         [UnityTest]
-        public IEnumerator SetVelocityYZChangesVelocityTest()
+        public IEnumerator SetVelocityZChangesVelocityTest()
         {
             yield return new WaitUntil(() => physics.IsGrounded);
-            physics.SetVelocity(new VectorZ(0, 100), 0);
+            physics.SetVelocity(new Vector3(0, 0, 100));
             yield return new WaitForSeconds(0.5f);
-            physics.SetVelocity(new VectorZ(0, -10), 0);
+            physics.SetVelocity(new Vector3(0, 0, -10));
             Vector3 oldPos = physics.transform.position;
             yield return new WaitForFixedUpdate();
-            Assert.Greater(oldPos.y, physics.transform.position.y);
             Assert.Greater(oldPos.z, physics.transform.position.z);
         }
 
@@ -215,7 +212,7 @@ namespace Tests
             physics.transform.position += new Vector3(0, 100, 0);
             // let object fall
             yield return new WaitForSeconds(1);
-            physics.SetVelocity(new VectorZ(0, 0), 10);
+            physics.SetVelocity(new Vector3(0, 10, 0));
             Vector3 oldPos = physics.transform.position;
             yield return new WaitForFixedUpdate();
             Assert.Less(oldPos.y, physics.transform.position.y);
@@ -226,35 +223,10 @@ namespace Tests
 
     }
 
-    public class PhysicsZTest : BasePhysicsZTest
-    {
-        [SetUp]
-        public override void SetUp()
-        {
-            GameObject g = new GameObject();
-            g.AddComponent<Rigidbody>();
-            physics = g.AddComponent<PhysicsZ>();
-        }
-
-        // Is grounded on start
-        [Test]
-        public void GroundedOnStartTest()
-        {
-            Assert.True(physics.IsGrounded);
-        }
-
-
-        [TearDown]
-        public override void TearDown()
-        {
-            Object.Destroy(physics.transform.gameObject);
-        }
-    }
-
-    public class BattlerPhysicsZTest : BasePhysicsZTest
+    public class BattlerPhysicsTest : BasePhysicsTest
     {
 
-        BattlerPhysicsZ bPhysics;
+        BattlerPhysics bPhysics;
 
         [SetUp]
         public override void SetUp()
@@ -262,7 +234,7 @@ namespace Tests
             GameObject g = new GameObject();
             g.AddComponent<Rigidbody>();
             g.AddComponent<BoxCollider>();
-            bPhysics = g.AddComponent<BattlerPhysicsZ>();
+            bPhysics = g.AddComponent<BattlerPhysics>();
             physics = bPhysics;
         }
 
@@ -283,7 +255,7 @@ namespace Tests
         {
             yield return WaitUntilGrounded();
             Vector3 start = physics.transform.position;
-            bPhysics.SetVelocity(new VectorZ(10, 0), 0);
+            bPhysics.SetVelocity(new Vector3(10, 0, 0));
             yield return new WaitForFixedUpdate();
             Assert.AreNotEqual(start, bPhysics.transform.position);
             start = bPhysics.transform.position;
@@ -299,7 +271,7 @@ namespace Tests
             yield return WaitUntilGrounded();
             Vector3 start = bPhysics.transform.position;
             bPhysics.freeze = true;
-            bPhysics.SetVelocity(new VectorZ(10, 0), 0);
+            bPhysics.SetVelocity(new Vector3(10, 0, 0));
             yield return new WaitForFixedUpdate();
             Assert.AreEqual(start, bPhysics.transform.position);
         }
@@ -321,7 +293,7 @@ namespace Tests
             
             yield return WaitUntilGrounded();
             // Start moving
-            bPhysics.SetVelocity(new VectorZ(10, 0), 0);
+            bPhysics.SetVelocity(new Vector3(10, 0, 0));
             yield return new WaitForFixedUpdate();
             // freeze to stop movement
             bPhysics.freeze = true;
@@ -346,7 +318,7 @@ namespace Tests
             yield return WaitUntilGrounded();
             Vector3 start = bPhysics.transform.position;
             bPhysics.lockZ = true;
-            bPhysics.SetVelocity(new VectorZ(0, 10), 0);
+            bPhysics.SetVelocity(new Vector3(0, 0, 10));
             yield return new WaitForFixedUpdate();
             Assert.AreEqual(start.z, bPhysics.transform.position.z);
         }

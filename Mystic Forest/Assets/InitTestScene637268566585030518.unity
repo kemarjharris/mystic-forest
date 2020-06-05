@@ -24,9 +24,9 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 3
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -51,8 +51,8 @@ LightmapSettings:
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
-    m_EnableBakedLightmaps: 0
-    m_EnableRealtimeLightmaps: 0
+    m_EnableBakedLightmaps: 1
+    m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
     serializedVersion: 10
     m_Resolution: 2
@@ -112,7 +112,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &633983868
+--- !u!114 &330430737
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,19 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 1803460235, guid: 4113173d5e95493ab8765d7b08371de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &652078233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1703293177, guid: 4113173d5e95493ab8765d7b08371de4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1046313227
+--- !u!114 &898749207
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: -1026517869, guid: 4113173d5e95493ab8765d7b08371de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1604140286
+--- !u!1 &1080841376
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,9 +144,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1604140289}
-  - component: {fileID: 1604140288}
-  - component: {fileID: 1604140287}
+  - component: {fileID: 1080841379}
+  - component: {fileID: 1080841378}
+  - component: {fileID: 1080841377}
   m_Layer: 0
   m_Name: Code-based tests runner
   m_TagString: Untagged
@@ -166,25 +154,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1604140287
+--- !u!114 &1080841377
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1604140286}
+  m_GameObject: {fileID: 1080841376}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1619214696, guid: 53ebcfaa2e1e4e2dbc85882cd5a73fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1604140288
+--- !u!114 &1080841378
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1604140286}
+  m_GameObject: {fileID: 1080841376}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1751138608, guid: 53ebcfaa2e1e4e2dbc85882cd5a73fa1, type: 3}
@@ -196,7 +184,7 @@ MonoBehaviour:
   testStartedEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1604140287}
+      - m_Target: {fileID: 1080841377}
         m_MethodName: TestStarted
         m_Mode: 0
         m_Arguments:
@@ -207,7 +195,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1046313227}
+      - m_Target: {fileID: 898749207}
         m_MethodName: TestStarted
         m_Mode: 0
         m_Arguments:
@@ -218,7 +206,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 633983868}
+      - m_Target: {fileID: 330430737}
         m_MethodName: TestStarted
         m_Mode: 0
         m_Arguments:
@@ -229,7 +217,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 652078233}
+      - m_Target: {fileID: 2113757743}
         m_MethodName: TestStarted
         m_Mode: 0
         m_Arguments:
@@ -243,7 +231,7 @@ MonoBehaviour:
   testFinishedEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1604140287}
+      - m_Target: {fileID: 1080841377}
         m_MethodName: TestFinished
         m_Mode: 0
         m_Arguments:
@@ -254,7 +242,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1046313227}
+      - m_Target: {fileID: 898749207}
         m_MethodName: TestFinished
         m_Mode: 0
         m_Arguments:
@@ -265,7 +253,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 633983868}
+      - m_Target: {fileID: 330430737}
         m_MethodName: TestFinished
         m_Mode: 0
         m_Arguments:
@@ -276,7 +264,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 652078233}
+      - m_Target: {fileID: 2113757743}
         m_MethodName: TestFinished
         m_Mode: 0
         m_Arguments:
@@ -290,7 +278,7 @@ MonoBehaviour:
   runStartedEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1604140287}
+      - m_Target: {fileID: 1080841377}
         m_MethodName: RunStarted
         m_Mode: 0
         m_Arguments:
@@ -301,7 +289,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1046313227}
+      - m_Target: {fileID: 898749207}
         m_MethodName: RunStarted
         m_Mode: 0
         m_Arguments:
@@ -312,7 +300,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 633983868}
+      - m_Target: {fileID: 330430737}
         m_MethodName: RunStarted
         m_Mode: 0
         m_Arguments:
@@ -323,7 +311,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 652078233}
+      - m_Target: {fileID: 2113757743}
         m_MethodName: RunStarted
         m_Mode: 0
         m_Arguments:
@@ -337,7 +325,7 @@ MonoBehaviour:
   runFinishedEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1604140287}
+      - m_Target: {fileID: 1080841377}
         m_MethodName: RunFinished
         m_Mode: 0
         m_Arguments:
@@ -348,7 +336,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1046313227}
+      - m_Target: {fileID: 898749207}
         m_MethodName: RunFinished
         m_Mode: 0
         m_Arguments:
@@ -359,7 +347,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 633983868}
+      - m_Target: {fileID: 330430737}
         m_MethodName: RunFinished
         m_Mode: 0
         m_Arguments:
@@ -370,7 +358,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 652078233}
+      - m_Target: {fileID: 2113757743}
         m_MethodName: RunFinished
         m_Mode: 0
         m_Arguments:
@@ -384,22 +372,21 @@ MonoBehaviour:
   settings:
     filter:
       assemblyNames: []
-      groupNames:
-      - ^Tests.PhysicsZTest$
+      groupNames: []
       categoryNames: []
-      testNames: []
+      testNames:
+      - Tests.CombatControllerTest.Jump_HorizontalInput_DoesNotChangeMovement
       testsToSkip: []
     sceneBased: 0
-    originalScene: Assets/Scenes/Debug Test Scenes/Execution Module Animation Test
-      Scene.unity
-    bootstrapScene: Assets/InitTestScene637261417394968321.unity
---- !u!4 &1604140289
+    originalScene: Assets/Scenes/Debug Test Scenes/2.5D Test Scene.unity
+    bootstrapScene: Assets/InitTestScene637268566585030518.unity
+--- !u!4 &1080841379
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1604140286}
+  m_GameObject: {fileID: 1080841376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -407,3 +394,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2113757743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1703293177, guid: 4113173d5e95493ab8765d7b08371de4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

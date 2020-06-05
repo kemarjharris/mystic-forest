@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class PhysicsZTestScene : MonoBehaviour
 {
-    public PhysicsZ body;
+    public IBattlerPhysics body;
     public float force;
     public float yForce;
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        body.SetVelocity(new VectorZ(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")), 0);
-        if (Input.GetKeyDown("j")) body.SetVelocity(new VectorZ(force, 0), 0);
-        if (Input.GetKeyDown("k")) body.SetVelocity(new VectorZ(0, 0), yForce);
-        if (Input.GetKeyDown("l")) body.SetVelocity(new VectorZ(force, 0), yForce);
+        body.SetVelocity(new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")));
+        if (Input.GetKeyDown("j")) body.SetVelocity(new Vector3(force, 0, 0));
+        if (Input.GetKeyDown("k")) body.SetVelocity(new Vector3(0, yForce, 0));
+        if (Input.GetKeyDown("l")) body.SetVelocity(new Vector3(force, yForce, force));
 
     }
 }

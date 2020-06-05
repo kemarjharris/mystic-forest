@@ -12,7 +12,7 @@ public class ExecutableChainSetVisual : MonoBehaviour
 
     private void Awake()
     {
-        module = GameObject.Find("Execution Module").GetComponent<IExecutionModule>();
+        module = GameObject.FindGameObjectWithTag("Execution Module").GetComponent<IExecutionModule>();
        // if (module == null) module = new GameObject("Execution Module").AddComponent<ExecutionModule>(); 
     }
 
@@ -52,7 +52,8 @@ public class ExecutableChainSetVisual : MonoBehaviour
     {
         if (parent != null) Destroy(parent);
         CreateNewSetVisual(module.set);
-        parent.transform.localPosition = new Vector2(180, -129);
+        parent.transform.localPosition = new Vector2(100, -129);
+        parent.transform.localRotation = Quaternion.identity;
     }
 
     

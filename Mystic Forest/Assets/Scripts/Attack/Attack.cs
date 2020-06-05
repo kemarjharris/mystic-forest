@@ -4,13 +4,11 @@ using UnityEditor;
 [System.Serializable]
 public class Attack : IAttack
 {
-    public VectorZ force = VectorZ.zero;
-    public float verticalForce = 0;
-    public float freezeTime = 0.15f;
+    public Vector3 force = Vector3.zero;
+    public float freezeTime = 0.1f;
     public bool hasKnockBack = true;
 
-    VectorZ IAttack.force => force;
-    float IAttack.verticalForce => verticalForce;
+    Vector3 IAttack.force => force;
     float IAttack.freezeTime => freezeTime;
     bool IAttack.hasKnockBack => hasKnockBack;
 }

@@ -7,26 +7,23 @@ public class Battler : MonoBehaviour, IBattler
     public IMixAnimator animator = null;
     public Transform hitPoint = null;
     IHitBox hitBox;
-    protected IBattlerPhysicsZ physics = null;
+    protected IBattlerPhysics physics = null;
     SpriteRenderer sprite;
     public ExecutableChainSetSOImpl chainSet;
 
     protected void Awake()
     {
-        animator = GetComponent<MixAnimator>();
-        sprite = GetComponent<SpriteRenderer>();
+        animator = GetComponentInChildren<MixAnimator>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
+        sprite.transform.rotation = Camera.main.transform.rotation;
         hitBox = GetComponentInChildren<IHitBox>();
-        physics = GetComponent<BattlerPhysicsZ>();
+        physics = GetComponent<BattlerPhysics>();
         if (physics == null)
         {
-            physics = gameObject.AddComponent<BattlerPhysicsZ>();
+            physics = gameObject.AddComponent<BattlerPhysics>();
         }
-        hitPoint.transform.position = new VectorZ(transform.position.x, transform.position.y);
-    }
-
-    private void Update()
-    {
-        transform.LookAt(Camera.main.transform);
+        hitPoint.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+       
     }
 
     public void StopCombatAnimation() => animator.Stop();
@@ -60,7 +57,7 @@ public class Battler : MonoBehaviour, IBattler
                 }
             }
         }
-        if (attack.hasKnockBack) physics.SetVelocity(attack.force, attack.verticalForce);
+        if (attack.hasKnockBack) physics.SetVelocity(attack.force);
         FreezeFrame(attack.freezeTime);
         StartCoroutine(FlashRed());
     }
