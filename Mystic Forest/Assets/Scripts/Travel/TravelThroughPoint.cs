@@ -5,11 +5,11 @@ using System.Collections;
 [CreateAssetMenu()]
 public class TravelThroughPoint : TravelMethodSO
 {
-    public override IEnumerator Travel(Transform toMove, Transform dest, float speed)
+    public override IEnumerator Travel(Transform toMove, Vector3 destPos, float speed)
     {
         Vector3 startPos = toMove.position;
-        Vector3 destPos = dest.position;
-        float distance = Vector3.Distance((Vector2) startPos, (Vector2) destPos);
+        //Vector3 destPos = dest.position + new Vector3(0, startPos.y, 0);
+        float distance = Vector3.Distance(startPos, destPos);
         float newSpeed = distance / speed;
         float secondsPassed = 0;
         do

@@ -18,6 +18,7 @@ public class ExecutableChainVisual
         if (canvas == null) canvas = GameObject.Find("Canvas");
         parent = new GameObject("Attack Chain Execution Visual");
         parent.transform.SetParent(canvas.transform);
+        parent.transform.localRotation = Quaternion.Euler(canvas.transform.rotation.x, 0, 0);
         int i = 0;
         while (chain.MoveNext())
         {

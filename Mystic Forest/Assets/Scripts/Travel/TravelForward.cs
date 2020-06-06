@@ -5,7 +5,7 @@ using System.Collections;
 [CreateAssetMenu()]
 public class TravelForward : TravelMethodSO
 {
-    public override IEnumerator Travel(Transform toMove, Transform dest, float speed)
+    public override IEnumerator Travel(Transform toMove, Vector3 dest, float speed)
     {
         do
         {

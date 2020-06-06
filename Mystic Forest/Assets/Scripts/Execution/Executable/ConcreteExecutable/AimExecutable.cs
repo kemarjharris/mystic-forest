@@ -58,13 +58,16 @@ public class AimExecutable : Executable
     {
         if (cursorGameObject == null)
         {
-            cursorGameObject = Object.Instantiate(cursorPrefab, battler.gameObject.transform.position, Quaternion.identity);
+            Vector3 battlerPos = battler.gameObject.transform.position;
+            cursorGameObject = Object.Instantiate(cursorPrefab, new Vector3(battlerPos.x, 0, battlerPos.z), Quaternion.identity);
             cursor = cursorGameObject.GetComponent<ICursor>();
+            cursorGameObject.transform.rotation = Quaternion.Euler(90, 0, 0);
             cursorHitBox = cursorGameObject.GetComponent<IHitBox>();
         } else
         {
             cursorGameObject.SetActive(true);
-            cursorGameObject.transform.position = battler.gameObject.transform.position;
+            Vector3 battlerPos = battler.gameObject.transform.position;
+            cursorGameObject.transform.position = new Vector3(battlerPos.x, 0, battlerPos.z);
         }
         
     }
@@ -98,7 +101,7 @@ public class AimExecutable : Executable
             bool specificTargetSelected = false;
             cursorHitBox.CheckCollision(delegate (Collider collider) {
                 IBattler targeted = collider.gameObject.GetComponent<IBattler>();
-                if (targeted == null) return;
+                if (targeted == null || targeted == battler) return;
                 targets.SetTarget(targeted.gameObject.transform);
                 specificTargetSelected = true;
             });
@@ -106,6 +109,8 @@ public class AimExecutable : Executable
             {
                 targets.SetTarget(cursorGameObject.transform);
             }
+            // If no specific target was selected, then the transform is on a point on the floor. This means that it is a floor point.
+            targets.SetFloorPoint(!specificTargetSelected);
             // despawn cursor
             DespawnCursor();
             // handle event

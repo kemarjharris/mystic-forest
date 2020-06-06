@@ -25,8 +25,17 @@ public class ProjectileEvent : ExecutionEvent
         // wait until time to fire projectile
         yield return new WaitForSeconds(projectileSpawnTime);
         // Fire projectile and send it to its destination
-        IProjectile projectile = Instantiate(projectilePrefab, attacker.gameObject.transform.position, Quaternion.identity).GetComponent<IProjectile>();
-        projectile.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(travelMethod.Travel(projectile.gameObject.transform, targets.GetTarget(), projectileSpeed));
+
+        GameObject projectileGO = Instantiate(projectilePrefab, attacker.gameObject.transform.position, Quaternion.identity);
+        IProjectile projectile = projectileGO.GetComponentInChildren<IProjectile>();
+        projectileGO.GetComponentInChildren<SpriteRenderer>().transform.rotation = Camera.main.transform.rotation;
+        Vector3 dest = targets.GetTarget().position;
+        // put dest point at battlers height
+        if (targets.IsFloorPoint())
+        {
+            dest += Vector3.up * attacker.gameObject.transform.position.y;
+        }
+        projectile.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(travelMethod.Travel(projectileGO.transform, dest, projectileSpeed));
         // Check battlers that get hit along the way
         projectile.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(HitBattlers(projectile, attacker));
         onCancellableEvent?.Invoke();

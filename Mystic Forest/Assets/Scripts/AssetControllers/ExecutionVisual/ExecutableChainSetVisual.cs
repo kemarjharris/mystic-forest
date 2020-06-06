@@ -34,10 +34,15 @@ public class ExecutableChainSetVisual : MonoBehaviour
 
     void OnNewChainLoaded(ICustomizableEnumerator<IExecutable> chain)
     {
-        if (parent != null) Destroy(parent);
-        chainVisual = new ExecutableChainVisual(chain);
+        if (parent != null)
+        {
+            Destroy(parent);
+            parent = NewParent();
+        }
+        chainVisual = new ExecutableChainVisual(chain, new Vector3(0, -130), parent.transform);
+        chainVisual.parent.transform.localScale = Vector3.Scale(chainVisual.parent.transform.localScale, new Vector3(40, 40, 0));
+        ResizeParent();
         chain.SetOnMoveNext(chainVisual.MoveNext);
-
     }
 
     void OnChainFinished()
@@ -52,7 +57,21 @@ public class ExecutableChainSetVisual : MonoBehaviour
     {
         if (parent != null) Destroy(parent);
         CreateNewSetVisual(module.set);
-        parent.transform.localPosition = new Vector2(100, -129);
+        
+    }
+
+    private GameObject NewParent()
+    {
+        GameObject parent = new GameObject("Executable Chain Set Visual");
+        GameObject canvas = GameObject.Find("Canvas");
+        parent.transform.SetParent(canvas.transform);
+        return parent;
+    }
+
+    private void ResizeParent()
+    {
+        parent.transform.localPosition = new Vector3(-354, 188, 72);
+        parent.transform.localScale = new Vector2(0.7f, 0.7f);
         parent.transform.localRotation = Quaternion.identity;
     }
 
@@ -60,12 +79,11 @@ public class ExecutableChainSetVisual : MonoBehaviour
 
     private void CreateNewSetVisual(IEnumerable<IExecutableChain> chains)
     {
+
+        parent = NewParent();
         GameObject arrowPrefab = Resources.Load<GameObject>("Prefabs/ExecutionVisual/Arrow");
-        parent = new GameObject("Executable Chain Set Visual");
-        GameObject canvas = GameObject.Find("Canvas");
-        parent.transform.SetParent(canvas.transform);
         float width = arrowPrefab.GetComponent<RectTransform>().rect.width * arrowPrefab.transform.localScale.x * 20;
-        int j = 1;
+        int j = 0;
         foreach (IExecutableChain chain in chains)
         {
             IDirectionCommand command = chain.GetDirectionCommand();
@@ -88,13 +106,13 @@ public class ExecutableChainSetVisual : MonoBehaviour
                 }
                 GameObject arrow = Object.Instantiate(arrowPrefab, parent.transform);
                 arrow.transform.Rotate(new Vector3(0, 0, angle));
-                arrow.transform.position = new Vector3(i * width, 60 * j);
+                arrow.transform.position = new Vector3(i * width, -60 * j);
                 arrow.transform.localScale *= 20;
 
             }
-            new ExecutableChainVisual(chain.GetEnumerator(), new Vector3(i * width, 60 * (j-1)), parent.transform).parent.transform.localScale *= 20;
+            new ExecutableChainVisual(chain.GetEnumerator(), new Vector3(i * width, -60 * (j + 1)), parent.transform).parent.transform.localScale *= 20;
             j++;
         }
-        parent.transform.localScale = new Vector2(0.7f, 0.7f);
+        ResizeParent();
     }
 }

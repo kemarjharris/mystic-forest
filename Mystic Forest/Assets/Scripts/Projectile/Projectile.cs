@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour, IProjectile
 
     private void Awake()
     {
-        hitBox = GetComponent<IHitBox>();
+        hitBox = GetComponentInParent<IHitBox>();
     }
 
     public void CheckCollision(Action<Collider> onCollide)

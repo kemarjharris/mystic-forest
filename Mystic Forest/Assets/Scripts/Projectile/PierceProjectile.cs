@@ -8,7 +8,7 @@ public class PierceProjectile : MonoBehaviour, IProjectile
 
     private void Awake()
     {
-        hitBox = GetComponent<IHitBox>();
+        hitBox = GetComponentInParent<IHitBox>();
     }
 
     public void CheckCollision(Action<Collider> onCollide)
@@ -18,6 +18,6 @@ public class PierceProjectile : MonoBehaviour, IProjectile
 
     public void OnBecameInvisible()
     {
-        Destroy(gameObject);
+        Destroy(gameObject.transform.parent.gameObject);
     }
 }

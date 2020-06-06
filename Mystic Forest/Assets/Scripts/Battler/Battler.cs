@@ -15,7 +15,9 @@ public class Battler : MonoBehaviour, IBattler
     {
         animator = GetComponentInChildren<MixAnimator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
-        sprite.transform.rotation = Camera.main.transform.rotation;
+
+        sprite.transform.forward = Camera.main.transform.forward;
+
         hitBox = GetComponentInChildren<IHitBox>();
         physics = GetComponent<BattlerPhysics>();
         if (physics == null)
