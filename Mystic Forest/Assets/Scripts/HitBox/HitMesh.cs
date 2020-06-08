@@ -13,10 +13,12 @@ public class HitMesh : MonoBehaviour, IHitBox
     public void Awake()
     {
         collider = GetComponent<MeshCollider>();
+        collider.convex = true;
+        collider.isTrigger = true;
         currentlyColliding = new HashSet<Collider>();
     }
 
-    public void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider collider)
     {
         currentlyColliding.Add(collider);
     }
@@ -28,7 +30,7 @@ public class HitMesh : MonoBehaviour, IHitBox
 
     public void CheckCollision(Action<Collider> onCollide)
     {
-        currentlyColliding.RemoveWhere((collider) => collider == null);
+        currentlyColliding.RemoveWhere((collider) => collider.gameObject == null);
         foreach (Collider collider in  currentlyColliding)
         {
             onCollide.Invoke(collider);
@@ -37,6 +39,6 @@ public class HitMesh : MonoBehaviour, IHitBox
 
     public void OnDrawGizmos()
     {
-        Gizmos.DrawWireMesh(collider.sharedMesh, transform.position, transform.rotation, transform.localScale);
+        Gizmos.DrawWireMesh(collider.sharedMesh, transform.position, transform.rotation, transform.lossyScale);
     }
 }

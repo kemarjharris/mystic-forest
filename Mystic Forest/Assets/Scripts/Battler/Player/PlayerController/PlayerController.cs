@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             module = moduleGO.GetComponent<IExecutionModule>();
         }
 
-        neutral = new NeutralController(physics, speeds);
+        neutral = new NeutralController(transform, physics, speeds);
         combat = new CombatController(battler, physics, module, speeds);
         
     }
@@ -75,7 +75,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
         }
     }
 
-    public void OnEnable() { }
+    public void OnEnable() {
+        neutral.OnEnable();
+    }
 
-    public void OnDisable() { }
+    public void OnDisable() {
+        neutral.OnDisable();
+    }
 }
