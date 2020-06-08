@@ -33,7 +33,7 @@ public class NeutralController : IPlayerController
 
         if (Input.GetKeyDown("l"))
         {
-           
+            lockOn.NextToLockOnTo();
         }
     }
 

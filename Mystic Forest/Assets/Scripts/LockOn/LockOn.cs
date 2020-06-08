@@ -5,37 +5,46 @@ using System.Collections.Generic;
 public class LockOn : MonoBehaviour
 {
     List<GameObject> objectsInRange;
-    private static IHitBox hitBox;
+    GameObject lockedOn;
+    public System.Action onScan;
+    public System.Action<GameObject> onLockOn;
     public System.Predicate<Collider> rule { private get;  set; }
+    public System.Action onLockedOnExit;
 
     private void Awake()
     {
-        hitBox = GetComponent<IHitBox>();
+        objectsInRange = new List<GameObject>();
+    }
+
+    public void OnTriggerEnter(Collider collider)
+    {
+        if ((rule != null && rule (collider)) || rule == null)
+        {
+            objectsInRange.Add(collider.gameObject);
+        }
+        
+    }
+
+    public void OnTriggerExit(Collider collider)
+    {
+        if (collider.gameObject == lockedOn)
+        {
+            lockedOn = null;
+            onLockedOnExit?.Invoke();
+        }
+        objectsInRange.Remove(collider.gameObject);
     }
 
     // Returns the next closest batter to the one currently on the targeted list
     public GameObject NextToLockOnTo()
     {
-        Debug.Log("pa a fekkuto");
-        // Create a new list of colliders
-        GameObject last = null;
-        if (objectsInRange != null && objectsInRange.Count > 0)
-        {
-            last = objectsInRange[0];
-        }
-        objectsInRange = new List<GameObject>();
+        objectsInRange.RemoveAll(gameObject => gameObject == null);
+        onScan?.Invoke();
         // Add all colliders to objectsInRange of colliders to be targetted
-        void lockOnToBattler(Collider collider)
-        {
-            if ((rule != null && rule(collider)) || rule == null)
-            {
-                objectsInRange.Add(collider.gameObject);
-            }
-        }
-        hitBox.CheckCollision(lockOnToBattler);
         // return null if no colliders found
         if (objectsInRange.Count <= 0)
         {
+            onLockOn?.Invoke(null);
             return null;
         }
         // sort colliders by distance
@@ -47,16 +56,18 @@ public class LockOn : MonoBehaviour
         }
         objectsInRange.Sort(sortByDistanceFromCenter);
         // return first battler since we cant go over the list circularly
-        if (last != null && objectsInRange.Contains(last))
+        if (lockedOn != null && objectsInRange.Contains(lockedOn))
         {
             // move all colliders that were closer to the last battler (including the last battler) to the back of the list
             // + 1 to include last 
-            int lastPos = objectsInRange.IndexOf(last) + 1;
+            int lastPos = objectsInRange.IndexOf(lockedOn) + 1;
             List<GameObject> objectsToLoop = objectsInRange.GetRange(0, lastPos);
             objectsInRange.RemoveRange(0, lastPos);
             objectsInRange.AddRange(objectsToLoop);
         }
-        return objectsInRange[0];
+        lockedOn = objectsInRange[0];
+        onLockOn?.Invoke(lockedOn);
+        return lockedOn;
     }
 
 }

@@ -37,7 +37,7 @@ public class HitMesh : MonoBehaviour, IHitBox
         }
     }
 
-    public void OnDrawGizmos()
+    public void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireMesh(collider.sharedMesh, transform.position, transform.rotation, transform.lossyScale);
     }
