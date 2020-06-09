@@ -5,7 +5,7 @@ using System.Collections;
 [CreateAssetMenu()]
 public class TravelForward : TravelMethodSO
 {
-    public override IEnumerator Travel(Transform toMove, Vector3 dest, float speed)
+    public override IEnumerator Travel(Transform toMove, Vector3 dest, float speed, System.Action onFinish = null)
     {
         do
         {
@@ -14,5 +14,6 @@ public class TravelForward : TravelMethodSO
             toMove.gameObject.transform.position += new Vector3(distanceTravelled, 0, 0);
             yield return null;
         } while (toMove != null);
+        onFinish?.Invoke();
     }
 }

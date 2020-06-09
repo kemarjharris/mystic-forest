@@ -41,6 +41,7 @@ public class ClosestLockOnVisual : MonoBehaviour
 
     private void PlayScanFadeAnimation()
     {
+        if (!gameObject.activeSelf) return;
         if (scanCoroutine != null)
         {
             StopCoroutine(scanCoroutine);

@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f602630726f2074ab5aad86cf5bfc80, type: 3}
-  m_Name: Warrior Speeds
+  m_Script: {fileID: 11500000, guid: 169fad261df27344a8fe7dadadd24c9a, type: 3}
+  m_Name: Warrior Jump in
   m_EditorClassIdentifier: 
-  jumpForce: 12
-  jumpHorizontalForce: 6
-  speed: 6
-  jumpInSpeed: 6
+  bounceHeight: 1

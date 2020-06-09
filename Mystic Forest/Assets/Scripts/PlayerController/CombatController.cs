@@ -8,17 +8,19 @@ public class CombatController : IPlayerController
     IExecutionModule module;
     BattlerSpeed speeds;
     CombatState state;
+    IMainPlayerController mainController;
     public IUnityAxisService service;
     bool groundedLastFrame;
     float horizontal;
     bool jumped;
 
-    public CombatController(IBattler battler, IBattlerPhysics physics, IExecutionModule module, BattlerSpeed speeds)
+    public CombatController(IBattler battler, IBattlerPhysics physics, IExecutionModule module, BattlerSpeed speeds, IMainPlayerController mainController)
     {
         this.battler = battler;
         this.physics = physics;
         this.module = module;
         this.speeds = speeds;
+        this.mainController = mainController;
         state = CombatState.NOT_ATTACKING;
         groundedLastFrame = physics.IsGrounded;
         if (service == null) service = new UnityAxisService();
@@ -26,7 +28,7 @@ public class CombatController : IPlayerController
 
     public void Update()
     {
-         if (!groundedLastFrame && physics.IsGrounded)
+        if (!groundedLastFrame && physics.IsGrounded)
         {
             module.ChangeSet(NonAerials());
         }

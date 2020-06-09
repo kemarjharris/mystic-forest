@@ -451,6 +451,18 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7549325027591840124, guid: cb10245f5dff17b4f9709cd2c51c56b9,
+        type: 3}
+      propertyPath: jumpIn
+      value: 
+      objectReference: {fileID: 11400000, guid: 35932207472e4b640ab35317a65d3b4f,
+        type: 2}
+    - target: {fileID: 7549325027591840124, guid: cb10245f5dff17b4f9709cd2c51c56b9,
+        type: 3}
+      propertyPath: speeds
+      value: 
+      objectReference: {fileID: 11400000, guid: 6b34d1eae332d1a4cb7805b950053896,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
 --- !u!1 &792695515

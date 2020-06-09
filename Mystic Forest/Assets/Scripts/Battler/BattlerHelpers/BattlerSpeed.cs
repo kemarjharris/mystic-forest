@@ -7,4 +7,5 @@ public class BattlerSpeed : ScriptableObject
     public float jumpForce = 8;
     public float jumpHorizontalForce;
     public float speed = 10;
+    public float jumpInSpeed;
 }

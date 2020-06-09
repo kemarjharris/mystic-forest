@@ -20,4 +20,6 @@ public interface IBattler
 
     bool IsGrounded { get; }
     bool IsFrozen { get; }
+
+    void JumpIn(IBattler targetBattler);
 }

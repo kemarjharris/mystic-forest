@@ -5,7 +5,7 @@ using System.Collections;
 [CreateAssetMenu()]
 public class TravelThroughPoint : TravelMethodSO
 {
-    public override IEnumerator Travel(Transform toMove, Vector3 destPos, float speed)
+    public override IEnumerator Travel(Transform toMove, Vector3 destPos, float speed, System.Action onFinish = null)
     {
         Vector3 startPos = toMove.position;
         //Vector3 destPos = dest.position + new Vector3(0, startPos.y, 0);
@@ -18,5 +18,6 @@ public class TravelThroughPoint : TravelMethodSO
             toMove.position = Vector3.LerpUnclamped(startPos, destPos, secondsPassed);
             yield return null;
         } while (toMove != null);
+        onFinish?.Invoke();
     }
 }

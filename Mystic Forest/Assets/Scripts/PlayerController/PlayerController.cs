@@ -2,7 +2,7 @@
 using UnityEditor;
 using System;
 
-public class PlayerController : MonoBehaviour, IPlayerController
+public class PlayerController : MonoBehaviour, IMainPlayerController
 {
     public BattlerSpeed speeds;
     public IPlayerController neutral;
@@ -24,24 +24,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
             module = moduleGO.GetComponent<IExecutionModule>();
         }
 
-        neutral = new NeutralController(transform, physics, speeds);
-        combat = new CombatController(battler, physics, module, speeds);
+        neutral = new NeutralController(battler, physics, speeds, this);
+        combat = new CombatController(battler, physics, module, speeds, this);
         
     }
 
     public void Update()
     {
-        if (Input.GetKeyDown("space"))
-        {
-            if (inCombat)
-            {
-                FinishCombat();
-            }
-            else
-            {
-                StartCombat();
-            }
-        }
         if (inCombat) {
             combat.Update();
         } else
@@ -50,7 +39,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         }
     }
 
-    public void FinishCombat()
+    public void SwapToNeutralMode()
     {
         
         combat.OnDisable();
@@ -58,7 +47,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         neutral.OnEnable();
     }
 
-    public void StartCombat()
+    public void SwapToCombatMode()
     {
         neutral.OnDisable();
         inCombat = true;
@@ -76,10 +65,16 @@ public class PlayerController : MonoBehaviour, IPlayerController
     }
 
     public void OnEnable() {
-        neutral.OnEnable();
+        SwapToNeutralMode();
     }
 
     public void OnDisable() {
-        neutral.OnDisable();
+        if (inCombat)
+        {
+            combat.OnDisable();
+        } else
+        {
+            neutral.OnDisable();
+        }
     }
 }

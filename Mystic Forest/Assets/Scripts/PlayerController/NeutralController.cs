@@ -10,15 +10,15 @@ public class NeutralController : IPlayerController
     float vertical;
     public IUnityAxisService service;
     private static ClosestLockOn lockOn;
-    private Transform battlerTransform = null;
     private GameObject lockedOn;
     public float timeToHoldForLockOn = 0.2f;
     private float currentTime;
-
+    private IMainPlayerController mainController;
+    IBattler battler;
 
      
 
-    public NeutralController(Transform battlerTransform, BattlerPhysics physics, BattlerSpeed speeds)
+    public NeutralController(IBattler battler, BattlerPhysics physics, BattlerSpeed speeds, IMainPlayerController mainController)
     {
         if (service == null) service = new UnityAxisService();
         if (lockOn == null) {
@@ -28,7 +28,8 @@ public class NeutralController : IPlayerController
         }
         this.physics = physics;
         this.speeds = speeds;
-        this.battlerTransform = battlerTransform;
+        this.battler = battler;
+        this.mainController = mainController;
     }
 
     public void Update()
@@ -50,15 +51,15 @@ public class NeutralController : IPlayerController
             if (currentTime < timeToHoldForLockOn)
             {
                 // switch to combat mode
-
+                mainController.SwapToCombatMode();
             } else 
             {
-                
                 if (lockOn.lockedOn != null)
                 {
                     lockedOn = lockOn.lockedOn;
                     Debug.Log(lockedOn.name);
                     // leap in at lockon on
+                    battler.JumpIn(lockedOn.GetComponent<IBattler>());
                 }
                 lockOn.scan = false;
                 lockedOn = null;
@@ -78,13 +79,16 @@ public class NeutralController : IPlayerController
     public void OnEnable()
     {
         lockOn.gameObject.SetActive(true);
-        lockOn.gameObject.transform.SetParent(battlerTransform);
+        lockOn.gameObject.transform.SetParent(battler.gameObject.transform);
         lockOn.gameObject.transform.localPosition = Vector3.zero;
         lockOn.gameObject.transform.localScale = new Vector3(2.2f, 0.16f, 1.8f);
     }
 
     public void OnDisable()
     {
+        lockOn.scan = false;
+        lockedOn = null;
+        currentTime = 0;
         lockOn.gameObject.SetActive(false);
     }
 }
