@@ -62,7 +62,7 @@ public class AimExecutable : Executable
             cursorGameObject = Object.Instantiate(cursorPrefab, new Vector3(battlerPos.x, 0, battlerPos.z), Quaternion.identity);
             cursor = cursorGameObject.GetComponent<ICursor>();
             cursorGameObject.transform.rotation = Quaternion.Euler(90, 0, 0);
-            cursorHitBox = cursorGameObject.GetComponent<IHitBox>();
+            cursorHitBox = cursorGameObject.GetComponentInChildren<IHitBox>();
         } else
         {
             cursorGameObject.SetActive(true);

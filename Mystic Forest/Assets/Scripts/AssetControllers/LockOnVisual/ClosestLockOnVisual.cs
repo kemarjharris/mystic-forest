@@ -1,42 +1,30 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections;
 
-[RequireComponent(typeof(LockOn))]
-public class LockOnVisual : MonoBehaviour
+[RequireComponent(typeof(ClosestLockOn))]
+public class ClosestLockOnVisual : MonoBehaviour
 {
-    LockOn lockOn;
+
+    ClosestLockOn lockOn;
     public SpriteRenderer scan;
     public SpriteRenderer cursor;
-    public float cursorHeight;
-
-    Coroutine scanCoroutine;
-    Vector3 scanLocalScale;
     Color scanColour;
-
+    Coroutine scanCoroutine;
+    public float cursorHeight;
     Transform followTransform;
 
     private void Awake()
     {
-        lockOn = GetComponent<LockOn>();
+        lockOn = GetComponent<ClosestLockOn>();
         // Turn off sprites
         scan.enabled = false;
         cursor.enabled = false;
         // prepare data for coroutine animation
         scanColour = scan.color;
-        // Add scan events to lock on object
-        lockOn.onScan += PlayScanAnimation;
+        lockOn.onStartScan += ShowScanArea;
+        lockOn.onStopScan += PlayScanFadeAnimation;
         lockOn.onLockOn += AttachCursor;
         lockOn.onLockedOnExit += DetachCursor;
-    }
-
-    private void PlayScanAnimation()
-    {
-        if (scanCoroutine != null)
-        {
-            StopCoroutine(scanCoroutine);
-        }
-        scanCoroutine = StartCoroutine(VisualizeScan());
     }
 
     private void LateUpdate()
@@ -45,22 +33,24 @@ public class LockOnVisual : MonoBehaviour
         cursor.transform.position = followTransform.position + (Vector3.up * cursorHeight);
     }
 
-    private void AttachCursor(GameObject lockedOn)
+    void ShowScanArea()
     {
-        if (lockedOn == null) return;
-        cursor.enabled = true;
-        followTransform = lockedOn.transform;
+        scan.color = scanColour;
+        scan.enabled = true;
     }
 
-    private void DetachCursor()
+    private void PlayScanFadeAnimation()
     {
-        followTransform = null;
-        cursor.enabled = false;
-        cursor.transform.position = Vector3.zero;
+        if (scanCoroutine != null)
+        {
+            StopCoroutine(scanCoroutine);
+        }
+        scanCoroutine = StartCoroutine(FadeScan());
     }
 
-    private IEnumerator VisualizeScan() {
-        float animationTime = 0.2f;
+    private IEnumerator FadeScan()
+    {
+        float animationTime = 0.1f;
         float timePassed = 0;
         scan.enabled = true;
 
@@ -77,9 +67,24 @@ public class LockOnVisual : MonoBehaviour
         scan.enabled = false;
     }
 
-    public void OnDestroy()
+    private void AttachCursor(GameObject lockedOn)
     {
-        lockOn.onScan -= PlayScanAnimation;
+        if (lockedOn == null) return;
+        cursor.enabled = true;
+        followTransform = lockedOn.transform;
+    }
+
+    private void DetachCursor()
+    {
+        followTransform = null;
+        cursor.enabled = false;
+        cursor.transform.position = Vector3.zero;
+    }
+
+    private void OnDestroy()
+    {
+        lockOn.onStartScan -= ShowScanArea;
+        lockOn.onStopScan -= PlayScanFadeAnimation;
         lockOn.onLockOn -= AttachCursor;
         lockOn.onLockedOnExit -= DetachCursor;
     }

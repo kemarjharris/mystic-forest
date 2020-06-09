@@ -16,8 +16,8 @@ public class HitPoint : MonoBehaviour, IHitBox
         }
     }
 
-    public void OnDrawGizmos()
+    public void OnDrawGizmosSelected()
     {
-        Gizmos.DrawSphere(transform.position, radius);
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 }
