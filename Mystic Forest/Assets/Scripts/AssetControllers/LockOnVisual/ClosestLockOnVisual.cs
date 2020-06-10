@@ -41,6 +41,7 @@ public class ClosestLockOnVisual : MonoBehaviour
 
     private void PlayScanFadeAnimation()
     {
+        scan.enabled = false;
         if (!gameObject.activeSelf) return;
         if (scanCoroutine != null)
         {
@@ -53,19 +54,21 @@ public class ClosestLockOnVisual : MonoBehaviour
     {
         float animationTime = 0.1f;
         float timePassed = 0;
-        scan.enabled = true;
 
-        scan.color = scanColour;
-        Color faded = new Color(scanColour.r, scanColour.g, scanColour.b, 0);
-        // expand to scale
-        while (timePassed < animationTime)
+        if (scan.enabled)
         {
-            timePassed += Time.deltaTime;
-            scan.color = Color.Lerp(scanColour, faded, timePassed / animationTime);
-            yield return null;
-        }
+            scan.color = scanColour;
+            Color faded = new Color(scanColour.r, scanColour.g, scanColour.b, 0);
+            // expand to scale
+            while (timePassed < animationTime)
+            {
+                timePassed += Time.deltaTime;
+                scan.color = Color.Lerp(scanColour, faded, timePassed / animationTime);
+                yield return null;
+            }
 
-        scan.enabled = false;
+            scan.enabled = false;
+        }
     }
 
     private void AttachCursor(GameObject lockedOn)

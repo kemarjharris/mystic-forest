@@ -4,39 +4,18 @@ using System.Collections.Generic;
 
 public class ClosestLockOn : MonoBehaviour
 {
-    public GameObject lockedOn;
+    public GameObject lockedOn { get; private set; }
     List<GameObject> inCollider;
     public System.Action onStartScan;
     public System.Action onStopScan;
     public System.Action<GameObject> onLockOn;
     public System.Predicate<Collider> rule { private get; set; }
     public System.Action onLockedOnExit;
-    public bool scan
-    {
-        get
-        {
-            return enabled;
-        }
-        set
-        {
-            if (value)
-            {
-                enabled = true;
-                onStartScan?.Invoke();
-            } else
-            {
-                enabled = false;
-                onStopScan?.Invoke();
-                onLockedOnExit();
-                lockedOn = null;
-            }
-        }
-    }
-    
 
-    private void Awake()
+    public void Awake()
     {
         inCollider = new List<GameObject>();
+        
     }
 
     public void OnTriggerEnter(Collider collider)
@@ -49,6 +28,7 @@ public class ClosestLockOn : MonoBehaviour
 
     public void Update()
     {
+        Debug.Log(CollectionUtils.Print(inCollider));
         inCollider.RemoveAll(gameObject => gameObject == null);
         int sortByDistanceFromCenter(GameObject x, GameObject y)
         {
@@ -73,4 +53,21 @@ public class ClosestLockOn : MonoBehaviour
         }
         inCollider.Remove(collider.gameObject);
     }
+
+    public void OnEnable()
+    {
+        lockedOn = null;
+        enabled = true;
+        onStartScan?.Invoke();
+    }
+
+    public void OnDisable()
+    {
+        inCollider.Clear();
+        enabled = false;
+        onStopScan?.Invoke();
+        onLockedOnExit();
+        lockedOn = null;
+    }
+
 }

@@ -42,9 +42,9 @@ public class NeutralController : IPlayerController
             // Wait until time for leap in
             currentTime += Time.deltaTime;
             // Scan for leap in
-            if (currentTime >= timeToHoldForLockOn && !lockOn.scan)
+            if (currentTime >= timeToHoldForLockOn && !lockOn.enabled)
             {
-                lockOn.scan = true;
+                lockOn.enabled = true;
             }
         } else if (Input.GetKeyUp("z"))
         {
@@ -61,7 +61,7 @@ public class NeutralController : IPlayerController
                     // leap in at lockon on
                     battler.JumpIn(lockedOn.GetComponent<IBattler>());
                 }
-                lockOn.scan = false;
+                lockOn.enabled = false;
                 lockedOn = null;
             }
             currentTime = 0;
@@ -78,6 +78,7 @@ public class NeutralController : IPlayerController
 
     public void OnEnable()
     {
+        lockOn.enabled = false;
         lockOn.gameObject.SetActive(true);
         lockOn.gameObject.transform.SetParent(battler.gameObject.transform);
         lockOn.gameObject.transform.localPosition = Vector3.zero;
@@ -86,7 +87,7 @@ public class NeutralController : IPlayerController
 
     public void OnDisable()
     {
-        lockOn.scan = false;
+        lockOn.enabled  = false;
         lockedOn = null;
         currentTime = 0;
         lockOn.gameObject.SetActive(false);

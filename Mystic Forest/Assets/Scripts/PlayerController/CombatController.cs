@@ -107,7 +107,8 @@ public class CombatController : IPlayerController
     {
         battler.StopCombatAnimation();
         state = CombatState.NOT_ATTACKING;
-        StartModuleExecution();
+        mainController.SwapToNeutralMode();
+        //StartModuleExecution();
     }
 
     /* for testing */
