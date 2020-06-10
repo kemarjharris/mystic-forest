@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             module = moduleGO.GetComponent<IExecutionModule>();
         }
 
-        neutral = new NeutralController(physics, speeds);
+        neutral = new NeutralController(GetComponent<IBattler>(), physics, speeds, GetComponentInChildren<Animator>());
         combat = new CombatController(battler, physics, module, speeds);
         
     }

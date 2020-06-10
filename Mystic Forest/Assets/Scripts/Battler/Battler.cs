@@ -60,7 +60,7 @@ public class Battler : MonoBehaviour, IBattler
             }
         }
         if (attack.hasKnockBack) physics.SetVelocity(attack.force);
-        FreezeFrame(attack.freezeTime);
+        // FreezeFrame(attack.freezeTime);
         StartCoroutine(FlashRed());
     }
 
