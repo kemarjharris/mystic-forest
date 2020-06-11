@@ -11,4 +11,5 @@ public interface IExecutableChain : IEnumerable<IExecutable>, IDirectionPickable
 
     bool IsAerial { get; }
 
+    IExecutableChainSet NextChains(IExecutableChainSet executables);
 }

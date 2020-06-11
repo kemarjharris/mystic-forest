@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f586246667e684cbe3cbfcaed89ae0, type: 3}
+  m_Name: Warrior Jump In Slash
+  m_EditorClassIdentifier: 
+  timeOfContact: 0.2
+  animSO: {fileID: 11400000, guid: 99c6c25e5a10b624ca3cb98a86d3bd69, type: 2}
+  attack:
+    force: {x: 0, y: 0, z: 0}
+    freezeTime: 0.1
+    hasKnockBack: 1
+  aerial: 0
+  interrupted: 0

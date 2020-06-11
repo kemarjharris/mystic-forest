@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour, IMainPlayerController
     public BattlerSpeed speeds;
     public IPlayerController neutral;
     public IPlayerController combat;
-    bool inCombat;
+    public bool inCombat;
 
     private void Awake()
     {

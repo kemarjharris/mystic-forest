@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CreateAssetMenu()]
+[CreateAssetMenu(menuName = "Executable/ExecutableSO/OnReleaseHold Executable")]
 public class OnReleaseHoldExecutableSO : ExecutableSO
 {
     public ExecutionEvent keyDownExecutionEvent;

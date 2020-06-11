@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(ExecutionModule))]
 public class ExecutableChainSetVisual : MonoBehaviour
 {
 
@@ -12,7 +13,7 @@ public class ExecutableChainSetVisual : MonoBehaviour
 
     private void Awake()
     {
-        module = GameObject.FindGameObjectWithTag("Execution Module").GetComponent<IExecutionModule>();
+        module = GetComponent<IExecutionModule>();
        // if (module == null) module = new GameObject("Execution Module").AddComponent<ExecutionModule>(); 
     }
 
@@ -39,6 +40,8 @@ public class ExecutableChainSetVisual : MonoBehaviour
             Destroy(parent);
             parent = NewParent();
         }
+        if (parent == null) { 
+}
         chainVisual = new ExecutableChainVisual(chain, new Vector3(0, -130), parent.transform);
         chainVisual.parent.transform.localScale = Vector3.Scale(chainVisual.parent.transform.localScale, new Vector3(40, 40, 0));
         ResizeParent();

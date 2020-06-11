@@ -15,3 +15,5 @@ MonoBehaviour:
   attacks:
   - {fileID: 11400000, guid: 0c3986695e2f2d442a566440f2fb26ca, type: 2}
   group: {fileID: 11400000, guid: 215c14e93287aa74b95d99e69b090d20, type: 2}
+  aerial: 0
+  rule: {fileID: 11400000, guid: 597c0e4fb4f5eb447ba0056f74ff5d17, type: 2}

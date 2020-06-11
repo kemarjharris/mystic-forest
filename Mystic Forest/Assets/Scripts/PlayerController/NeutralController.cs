@@ -59,7 +59,7 @@ public class NeutralController : IPlayerController
                     lockedOn = lockOn.lockedOn;
                     Debug.Log(lockedOn.name);
                     // leap in at lockon on
-                    battler.JumpIn(lockedOn.GetComponent<IBattler>());
+                    //battler.JumpIn(lockedOn.GetComponent<IBattler>());
                 }
                 lockOn.enabled = false;
                 lockedOn = null;
@@ -82,7 +82,7 @@ public class NeutralController : IPlayerController
         lockOn.gameObject.SetActive(true);
         lockOn.gameObject.transform.SetParent(battler.gameObject.transform);
         lockOn.gameObject.transform.localPosition = Vector3.zero;
-        lockOn.gameObject.transform.localScale = new Vector3(2.2f, 0.16f, 1.8f);
+        lockOn.gameObject.transform.localScale = new Vector3(3.2f, 0.16f, 2.25f);
     }
 
     public void OnDisable()

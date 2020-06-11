@@ -3,13 +3,15 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Collections;
 using System;
+using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "Executable/Executable Chain SO")]
-public class ExecutableChainSO : ScriptableObject, IExecutableChain //, ExecutableAttackChain
+public class ExecutableChainSO : ScriptableObject, IExecutableChain
 {
     public ExecutableSO[] attacks;
     public DirectionGroup group;
     public bool aerial;
+    public ChainRule rule;
 
 
     private List<IExecutable> instances;
@@ -45,4 +47,6 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain //, Executab
     {
         return new CustomizableEnumerator<IExecutable>(LoopEnumerator());
     }
+
+    public IExecutableChainSet NextChains(IExecutableChainSet executables) => rule.Rule(executables);
 }

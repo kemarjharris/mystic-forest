@@ -8,9 +8,11 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
 {
     IDirectionCommandPicker<IExecutableChain> picker;
     IChainExecutor executor;
+    ITargetSet targetSet;
     IBattler battler;
     bool linkerActive;
     public IExecutableChainSet set { get; private set; }
+    public IExecutableChain current;
 
     IActionWrapper IExecutionModule.OnChainCancellable => executor.OnChainCancellable;
     public IActionWrapper OnChainFired => executor.OnChainFired; 
@@ -26,6 +28,13 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         this.battler = battler;
         linkerActive = true;
         OnNewSetLoaded.Invoke();
+    }
+
+    public void StartExecution(IExecutableChain chain, ITargetSet targetSet, IBattler battler)
+    {
+        this.battler = battler;
+        this.targetSet = targetSet;
+        picker.OnSelected.Invoke(chain);
     }
 
     public void ChangeSet(IExecutableChainSet set)
@@ -69,17 +78,27 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     void OnChainSelected(IExecutableChain chain)
     {
         linkerActive = false;
+        current = chain;
         ICustomizableEnumerator<IExecutable> enumerator = chain.GetCustomizableEnumerator();
-        executor.ExecuteChain(battler, new TargetSet(), enumerator, () => OnNewChainLoaded.Invoke(enumerator));
+        if (targetSet == null)
+        {
+            targetSet = new TargetSet();
+        }
+        executor.ExecuteChain(battler, targetSet, enumerator, () => OnNewChainLoaded.Invoke(enumerator));
     }
 
     void OnChainFiredEvent()
     {
+        if (battler != null && battler.ChainSet != null)
+        {
+            ChangeSet(current.NextChains(battler.ChainSet));
+        }
         linkerActive = true;
     }
 
     void OnChainFinishedEvent()
     {
+        targetSet = null;
         linkerActive = false;
     }
 

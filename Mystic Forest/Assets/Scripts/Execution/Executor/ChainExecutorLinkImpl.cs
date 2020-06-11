@@ -110,7 +110,7 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
         }
         else
         {
-            // Notify observer that the attack chain can now be cancelled
+            // Notify observer that all attacks in the chain were fired
             OnChainFired.Invoke();
         }
     }

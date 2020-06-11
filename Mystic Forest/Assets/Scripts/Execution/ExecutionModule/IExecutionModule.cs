@@ -4,6 +4,7 @@ using UnityEditor;
 public interface IExecutionModule
 {
     void StartExecution(IExecutableChainSet set, IBattler battler);
+    void StartExecution(IExecutableChain chain, ITargetSet targetSet, IBattler battler);
     void ChangeSet(IExecutableChainSet set);
 
     IActionWrapper OnChainCancellable { get; }

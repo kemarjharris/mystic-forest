@@ -12,6 +12,7 @@ public class CombatController : IPlayerController
     public IUnityAxisService service;
     bool groundedLastFrame;
     float horizontal;
+    float vertical;
     bool jumped;
 
     public CombatController(IBattler battler, IBattlerPhysics physics, IExecutionModule module, BattlerSpeed speeds, IMainPlayerController mainController)
@@ -39,8 +40,10 @@ public class CombatController : IPlayerController
             if (physics.IsGrounded)
             {
                 horizontal = service.GetAxis("Horizontal");
+                vertical = service.GetAxis("Vertical");
+
                 // jump when attack is cancellable, jump cancel
-                if (state != CombatState.ATTACKING && service.GetAxis("Vertical") > 0)
+                if (Input.GetKeyDown("x"))
                 {
                     jumped = true;
                     module.ChangeSet(Aerials());
@@ -49,6 +52,7 @@ public class CombatController : IPlayerController
         } else
         {
             horizontal = 0;
+            vertical = 0;
         }
         groundedLastFrame = physics.IsGrounded;
     }
@@ -60,12 +64,22 @@ public class CombatController : IPlayerController
             // jump
             if (horizontal > 0) horizontal = 1;
             else if (horizontal < 0) horizontal = -1;
-            physics.SetVelocity(new Vector3(speeds.jumpHorizontalForce * horizontal, speeds.jumpForce, 0));
-            jumped = false;
-        } else if (physics.IsGrounded)
+            
+            if (state == CombatState.ABLE_TO_CANCEL_ATTACK)
+            {
+                physics.SetVelocity(new Vector3(speeds.jumpHorizontalForce * horizontal, speeds.jumpForce));
+                jumped = false;
+            } else if (state == CombatState.NOT_ATTACKING)
+            {
+                physics.SetVelocity(new Vector3(speeds.jumpHorizontalForce * horizontal, speeds.jumpForce, speeds.jumpHorizontalForce * vertical));
+                jumped = false;
+            }
+            
+            
+        } else if (state == CombatState.NOT_ATTACKING && physics.IsGrounded)
         {
             // move
-            physics.SetVelocity(new Vector3(horizontal * speeds.speed, 0, 0));
+            physics.SetVelocity(new Vector3(horizontal * speeds.speed, 0, vertical * speeds.speed));
         }
     }
 
@@ -86,7 +100,7 @@ public class CombatController : IPlayerController
 
     public void OnEnable()
     {
-        physics.lockZ = true;
+        //physics.lockZ = true;
         module.OnNewChainLoaded.AddAction(OnNewChainLoaded);
         module.OnChainCancellable.AddAction(OnChainCancellable);
         module.OnChainFinished.AddAction(OnChainFinished);
@@ -98,7 +112,7 @@ public class CombatController : IPlayerController
         module.OnNewChainLoaded.RemoveAction(OnNewChainLoaded);
         module.OnChainCancellable.RemoveAction(OnChainCancellable);
         module.OnChainFinished.RemoveAction(OnChainFinished);
-        physics.lockZ = false;
+        //physics.lockZ = false;
     }
 
     void OnNewChainLoaded(ICustomizableEnumerator<IExecutable> obj) => state = CombatState.ATTACKING;

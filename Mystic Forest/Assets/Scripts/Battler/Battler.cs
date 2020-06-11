@@ -12,8 +12,6 @@ public class Battler : MonoBehaviour, IBattler
     
     SpriteRenderer sprite;
     public ExecutableChainSetSOImpl chainSet;
-    public BattlerSpeed speeds;
-    public TravelMethodSO jumpIn;
 
     protected void Awake()
     {
@@ -91,6 +89,8 @@ public class Battler : MonoBehaviour, IBattler
         StartCoroutine(waitToUnfreeze());
     }
 
+    /*
+
     public void JumpIn(IBattler target)
     {
         Vector3 jumpInPosition()
@@ -121,6 +121,6 @@ public class Battler : MonoBehaviour, IBattler
         controller.SwapToCombatMode();
 
     }
-
+    */
     public bool IsFrozen => physics.freeze;
 }

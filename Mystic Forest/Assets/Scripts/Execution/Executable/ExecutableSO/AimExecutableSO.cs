@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CreateAssetMenu()]
+[CreateAssetMenu(menuName = "Executable/ExecutableSO/Aim Executable")]
 public class AimExecutableSO : ExecutableSO
 {
     private void OnEnable()
