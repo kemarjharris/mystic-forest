@@ -43,7 +43,7 @@ public class CombatController : IPlayerController
                 vertical = service.GetAxis("Vertical");
 
                 // jump when attack is cancellable, jump cancel
-                if (Input.GetKeyDown("x"))
+                if (Input.GetKeyDown("k"))
                 {
                     jumped = true;
                     module.ChangeSet(Aerials());

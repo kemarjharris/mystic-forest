@@ -17,7 +17,7 @@ public class JointController : MonoBehaviour, IPlayerController
     public ExecutableChainSO jumpIn;
 
 
-    private static ClosestLockOn lockOn;
+    private static LockOn lockOn;
     private GameObject lockedOn;
     public float timeToHoldForLockOn = 0.2f;
     private float currentTime;
@@ -41,7 +41,7 @@ public class JointController : MonoBehaviour, IPlayerController
         groundedLastFrame = physics.IsGrounded;
         if (lockOn == null)
         {
-            lockOn = Object.Instantiate(Resources.Load<GameObject>("Prefabs/Miscellaneous/Closest Lock On Area")).GetComponent<ClosestLockOn>();
+            lockOn = Object.Instantiate(Resources.Load<GameObject>("Prefabs/Miscellaneous/Lock On Area")).GetComponent<LockOn>();
             lockOn.rule = (Collider collider) => collider.gameObject.tag == "Battler";
             lockOn.enabled = false;
         }
@@ -63,10 +63,15 @@ public class JointController : MonoBehaviour, IPlayerController
                 horizontal = service.GetAxis("Horizontal");
                 vertical = service.GetAxis("Vertical");
 
-                LockOn();
-
+                // LockOn();
+                /*
+                if (Input.GetKeyDown("space"))
+                {
+                    lockedOn = lockOn.NextToLockOnTo();
+                } 
+                */
                 // jump when attack is cancellable, jump cancel
-                if (Input.GetKeyDown("x"))
+                if (Input.GetKeyDown("k"))
                 {
                     jumped = true;
                     module.ChangeSet(Aerials());
@@ -143,9 +148,10 @@ public class JointController : MonoBehaviour, IPlayerController
         physics.lockZ = false;
     }
 
+    /*
     void LockOn()
     {
-        if (Input.GetKey("z"))
+        if (Input.GetKey("j"))
         {
             // Wait until time for leap in
             currentTime += Time.deltaTime;
@@ -155,7 +161,7 @@ public class JointController : MonoBehaviour, IPlayerController
                 lockOn.enabled = true;
             }
         }
-        else if (Input.GetKeyUp("z"))
+        else if (Input.GetKeyUp("j"))
         {
             if (currentTime < timeToHoldForLockOn)
             {
@@ -180,6 +186,7 @@ public class JointController : MonoBehaviour, IPlayerController
             currentTime = 0;
         }
     }
+    */
 
     void OnNewChainLoaded(ICustomizableEnumerator<IExecutable> obj) => state = CombatState.ATTACKING;
     void OnChainCancellable() => state = CombatState.ABLE_TO_CANCEL_ATTACK;

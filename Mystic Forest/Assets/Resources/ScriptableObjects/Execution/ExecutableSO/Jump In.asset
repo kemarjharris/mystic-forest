@@ -9,9 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e06ffd3d13ae0140955b503c019f6c7, type: 3}
+  m_Script: {fileID: 11500000, guid: d3d647bc7ef8cf14ab17e1e93c1e30db, type: 3}
   m_Name: Jump In
   m_EditorClassIdentifier: 
   button: 0
   isAerial: 0
-  executionEvent: {fileID: 11400000, guid: afe029d4c623bf34fa3bfdf1b7f65eda, type: 2}
+  lockOnPrefab: {fileID: 6816289334922152840, guid: 7fe8b6e932642ee4b9f72973622427d3,
+    type: 3}
+  onStartLockOn: {fileID: 11400000, guid: f3c01621b83f88b47b84475de0864fe6, type: 2}
+  onTargetSelected: {fileID: 11400000, guid: afe029d4c623bf34fa3bfdf1b7f65eda, type: 2}
+  lockOnDuration: 99

@@ -30,15 +30,15 @@ namespace ChainInputReaderTest
         [Test]
         public void ReadsGetKeyAcceptableInputTest()
         {
-            reader.service.GetKey("z").Returns(true);
-            Assert.AreEqual("z", reader.ReadInput());
+            reader.service.GetKey("j").Returns(true);
+            Assert.AreEqual("j", reader.ReadInput());
         }
 
         [Test]
         public void ReadsKeyUpAcceptableInputTest()
         {
-            reader.service.GetKeyUp("z").Returns(true);
-            Assert.AreEqual("z", reader.ReadInput());
+            reader.service.GetKeyUp("j").Returns(true);
+            Assert.AreEqual("j", reader.ReadInput());
         }
 
         [Test]
@@ -51,8 +51,8 @@ namespace ChainInputReaderTest
         [Test]
         public void ReturnsMultipleInputTest()
         {
-            reader.service.GetKey("z").Returns(true);
-            reader.service.GetKey("x").Returns(true);
+            reader.service.GetKey("j").Returns(true);
+            reader.service.GetKey("k").Returns(true);
             string expected = reader.ReadInput();
             Assert.True(expected.Equals("xz") || expected.Equals("zx"));
         }

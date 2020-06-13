@@ -27,6 +27,7 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
 
     public T InputSelect()
     {
+        Debug.Log(CollectionUtils.Print(inputtedDirections));
         if (commandables == null) throw new NullReferenceException("Commandables are null in DirectionCommandPicker. Did you call the Set method?");
         if (ExistingInput() && service.unscaledTime - timeOfLastInput > timeBeforeClearingInput)
         {
@@ -60,17 +61,17 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
             }
         }
 
-        if (inputService.GetKeyDown("z"))
+        if (inputService.GetKeyDown("j"))
         {
-            inputtedButton = DirectionCommandButton.Z;
+            inputtedButton = DirectionCommandButton.J;
         }
-        else if (inputService.GetKeyDown("x"))
+        else if (inputService.GetKeyDown("k"))
         {
-            inputtedButton = DirectionCommandButton.X;
+            inputtedButton = DirectionCommandButton.K;
         }
-        else if (inputService.GetKeyDown("c"))
+        else if (inputService.GetKeyDown("l"))
         {
-            inputtedButton = DirectionCommandButton.C;
+            inputtedButton = DirectionCommandButton.L;
         }
 
         T t = default;

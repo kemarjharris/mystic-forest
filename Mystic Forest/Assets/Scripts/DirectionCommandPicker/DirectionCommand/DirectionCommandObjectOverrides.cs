@@ -27,15 +27,15 @@ public class DirectionCommandObjectOverrides
             hash += (int)((((int)directions[i]) + 1) * (UnityEngine.Mathf.Pow(10f, i)));
         }
 
-        if (option == DirectionCommandButton.Z)
+        if (option == DirectionCommandButton.J)
         {
             hash *= 17;
         }
-        else if (option == DirectionCommandButton.X)
+        else if (option == DirectionCommandButton.K)
         {
             hash *= 19;
         }
-        else if (option == DirectionCommandButton.C)
+        else if (option == DirectionCommandButton.L)
         {
             hash *= 13;
         }
@@ -91,19 +91,8 @@ public class DirectionCommandObjectOverrides
             }
         }
 
-        switch (option)
-        {
-            case DirectionCommandButton.Z:
-                s += "Z";
-                break;
-            case DirectionCommandButton.C:
-                s += "C";
-                break;
-            case DirectionCommandButton.X:
-                s += "X";
-                break;
-        }
 
+        s += option.ToString();
         return s;
     }
 }

@@ -137,11 +137,11 @@ namespace DirectionCommandPickerTest
         [Test]
         public void ButtonPlusDirectionTest()
         {
-            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S);
+            IDirectionCommand expected = new DirectionCommand( DirectionCommandButton.J, Direction.S);
             picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
             SetAndReadInput(0,0);
-            SetKeyPress("z");
+            SetKeyPress("j");
             IDirectionPickable result = picker.InputSelect();
             Assert.IsNull(picker.InputSelect());
         }
@@ -149,10 +149,10 @@ namespace DirectionCommandPickerTest
         [Test]
         public void SingleKeyAndDriectionInputOnDifferentFramesTest()
         {
-            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S);
+            IDirectionCommand expected = new DirectionCommand( DirectionCommandButton.J, Direction.S);
             picker.Set(new IDirectionPickable[] { expected });
             SetDirectionalService(0, -1);
-            SetKeyPress("z");
+            SetKeyPress("j");
             IDirectionPickable result = picker.InputSelect();
             Assert.AreEqual(expected, result);
         }
@@ -161,11 +161,11 @@ namespace DirectionCommandPickerTest
         [Test]
         public void RollForwardTest()
         {
-            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S, Direction.E);
+            IDirectionCommand expected = new DirectionCommand( DirectionCommandButton.J, Direction.S, Direction.E);
             picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
             SetAndReadInput(1, 0);
-            SetKeyPress("z");
+            SetKeyPress("j");
             Assert.AreEqual(expected, picker.InputSelect());
         }
 
@@ -173,11 +173,11 @@ namespace DirectionCommandPickerTest
         [Test]
         public void RollBackwardsTest()
         {
-            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S, Direction.W);
+            IDirectionCommand expected = new DirectionCommand( DirectionCommandButton.J, Direction.S, Direction.W);
             picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
             SetAndReadInput(-1, 0);
-            SetKeyPress("z");
+            SetKeyPress("j");
             Assert.AreEqual(expected, picker.InputSelect());
         }
 
@@ -185,12 +185,12 @@ namespace DirectionCommandPickerTest
         [Test]
         public void SameDirectionTest()
         {
-            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S, Direction.S);
+            IDirectionCommand expected = new DirectionCommand( DirectionCommandButton.J, Direction.S, Direction.S);
             picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
             SetAndReadInput(0, 0);
             SetAndReadInput(0, -1);
-            SetKeyPress("z");
+            SetKeyPress("j");
             Assert.AreEqual(expected, picker.InputSelect());
         }
 
@@ -198,10 +198,10 @@ namespace DirectionCommandPickerTest
         [Test]
         public void InputClearsAfterSelectingTest()
         {
-            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S);
+            IDirectionCommand expected = new DirectionCommand( DirectionCommandButton.J, Direction.S);
             picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
-            SetKeyPress("z");
+            SetKeyPress("j");
             Assert.NotNull(picker.InputSelect());
             Assert.False(picker.ExistingInput());
         }
@@ -209,10 +209,10 @@ namespace DirectionCommandPickerTest
         [Test]
         public void InputClearsAfterKeyPressTest()
         {
-            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S);
+            IDirectionCommand expected = new DirectionCommand( DirectionCommandButton.J, Direction.S);
             picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
-            SetKeyPress("x");
+            SetKeyPress("k");
             // read input
             picker.InputSelect();
             Assert.False(picker.ExistingInput());
@@ -221,10 +221,10 @@ namespace DirectionCommandPickerTest
         [Test]
         public void NullOnFailiureTest()
         {
-            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.X, Direction.S);
+            IDirectionCommand expected = new DirectionCommand( DirectionCommandButton.K, Direction.S);
             picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
-            SetKeyPress("z");
+            SetKeyPress("j");
             Assert.Null(picker.InputSelect());        }
 
         // existing input empty on start
@@ -240,10 +240,10 @@ namespace DirectionCommandPickerTest
             bool fired = false;
             // true if fired
             picker.OnSelected.AddAction((x) => fired = true);
-            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S);
+            IDirectionCommand expected = new DirectionCommand( DirectionCommandButton.J, Direction.S);
             picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
-            SetKeyPress("z");
+            SetKeyPress("j");
             // event should fire
             picker.InputSelect();
             Assert.True(fired);
@@ -252,34 +252,34 @@ namespace DirectionCommandPickerTest
         [Test]
         public void IteratesThroughInputTest()
         {
-            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.S, Direction.E);
+            IDirectionCommand expected = new DirectionCommand( DirectionCommandButton.J, Direction.S, Direction.E);
             picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(-1, 0);
             SetAndReadInput(0, -1);
             SetAndReadInput(1, 0);
-            SetKeyPress("z");
+            SetKeyPress("j");
             Assert.AreEqual(expected, picker.InputSelect());
         }
 
         [Test]
         public void AcceptsLongerInputFirstTest()
         {
-            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z, Direction.W, Direction.S, Direction.E);
+            IDirectionCommand expected = new DirectionCommand( DirectionCommandButton.J, Direction.W, Direction.S, Direction.E);
             picker.Set(new IDirectionPickable[] { expected,
-                new DirectionCommand(DirectionCommandButton.Z, Direction.S, Direction.E)});
+                new DirectionCommand( DirectionCommandButton.J, Direction.S, Direction.E)});
             SetAndReadInput(-1, 0);
             SetAndReadInput(0, -1);
             SetAndReadInput(1, 0);
-            SetKeyPress("z");
+            SetKeyPress("j");
             Assert.AreEqual(expected, picker.InputSelect());
         }
 
         [Test]
         public void SingleInputTest()
         {
-            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z);
+            IDirectionCommand expected = new DirectionCommand( DirectionCommandButton.J);
             picker.Set(new IDirectionPickable[] { expected });
-            SetKeyPress("z");
+            SetKeyPress("j");
             IDirectionPickable result = picker.InputSelect();
             Assert.AreEqual(expected, result);
         }
@@ -287,10 +287,10 @@ namespace DirectionCommandPickerTest
         [Test]
         public void SingleInputIteratesThroughInputTest()
         {
-            IDirectionCommand expected = new DirectionCommand(DirectionCommandButton.Z);
+            IDirectionCommand expected = new DirectionCommand( DirectionCommandButton.J);
             picker.Set(new IDirectionPickable[] { expected });
             SetAndReadInput(0, -1);
-            SetKeyPress("z");
+            SetKeyPress("j");
             IDirectionPickable result = picker.InputSelect();
             Assert.AreEqual(expected, result);
         }

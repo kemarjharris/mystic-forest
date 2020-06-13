@@ -1,11 +1,25 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class LockOnExecutableSO : ScriptableObject
+[CreateAssetMenu(menuName = "Executable/ExecutableSO/Lock On Executable")]
+public class LockOnExecutableSO : ExecutableSO
 {
-    [MenuItem("Tools/MyTool/Do It in C#")]
-    static void DoIt()
+    public GameObject lockOnPrefab;
+    public ExecutionEvent onStartLockOn;
+    public ExecutionEvent onTargetSelected;
+    public float lockOnDuration;
+
+    private void OnEnable()
     {
-        EditorUtility.DisplayDialog("MyTool", "Do It in C# !", "OK", "");
+        lockOnPrefab = Resources.Load<GameObject>("Prefabs/Miscellaneous/Lock On Area");
     }
+
+    public override IExecutable CreateExecutable() =>
+        new LockOnExecutable
+        {
+            lockOnPrefab = lockOnPrefab,
+            lockOnDuration = lockOnDuration,
+            onStartLockOn = Instantiate(onStartLockOn),
+            onTargetSelected = Instantiate(onTargetSelected)
+        };
 }

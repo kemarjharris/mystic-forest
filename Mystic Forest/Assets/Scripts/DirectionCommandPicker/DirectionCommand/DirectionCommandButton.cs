@@ -3,5 +3,5 @@ using UnityEditor;
 
 public enum DirectionCommandButton
 {
-    Z, X, C, NULL
+    J, K, L, NULL
 }

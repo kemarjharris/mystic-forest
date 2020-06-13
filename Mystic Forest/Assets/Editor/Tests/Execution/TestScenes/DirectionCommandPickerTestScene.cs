@@ -11,13 +11,13 @@ public class DirectionCommandPickerSceneTest : MonoBehaviour
         picker = new DirectionCommandPicker<IDirectionPickable>(1);
         List<IDirectionPickable> pickables = new List<IDirectionPickable>
             (new IDirectionPickable[] {
-                new DirectionCommand(DirectionCommandButton.Z, Direction.S),
-                new DirectionCommand(DirectionCommandButton.Z, Direction.S, Direction.E),
-                new DirectionCommand(DirectionCommandButton.X, Direction.W),
-                new DirectionCommand(DirectionCommandButton.Z, Direction.S, Direction.S),
-                new DirectionCommand(DirectionCommandButton.Z, Direction.S, Direction.W),
-                new DirectionCommand(DirectionCommandButton.Z,Direction.E, Direction.S),
-                new DirectionCommand(DirectionCommandButton.C, Direction.S, Direction.S, Direction.S),
+                new DirectionCommand( DirectionCommandButton.J, Direction.S),
+                new DirectionCommand( DirectionCommandButton.J, Direction.S, Direction.E),
+                new DirectionCommand( DirectionCommandButton.K, Direction.W),
+                new DirectionCommand( DirectionCommandButton.J, Direction.S, Direction.S),
+                new DirectionCommand( DirectionCommandButton.J, Direction.S, Direction.W),
+                new DirectionCommand( DirectionCommandButton.J,Direction.E, Direction.S),
+                new DirectionCommand( DirectionCommandButton.L, Direction.S, Direction.S, Direction.S),
             });
         picker.Set(pickables);
     }

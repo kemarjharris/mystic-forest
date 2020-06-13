@@ -79,19 +79,19 @@ public class AimExecutable : Executable
 
     public void Aim(string input, IBattler battler, ITargetSet targets)
     {
-        if (inputService.GetKey("up"))
+        if (inputService.GetKey("w"))
         {
             cursor.Up();
         }
-        if (inputService.GetKey("left"))
+        if (inputService.GetKey("a"))
         {
             cursor.Left();
         }
-        if (inputService.GetKey("down"))
+        if (inputService.GetKey("s"))
         {
             cursor.Down();
         }
-        if (inputService.GetKey("right"))
+        if (inputService.GetKey("d"))
         {
             cursor.Right();
         }

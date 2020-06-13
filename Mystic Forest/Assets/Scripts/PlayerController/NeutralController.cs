@@ -37,7 +37,7 @@ public class NeutralController : IPlayerController
         horizontal = service.GetAxis("Horizontal");
         vertical = service.GetAxis("Vertical");
 
-        if (Input.GetKey("z"))
+        if (Input.GetKey("j"))
         {
             // Wait until time for leap in
             currentTime += Time.deltaTime;
@@ -46,7 +46,7 @@ public class NeutralController : IPlayerController
             {
                 lockOn.enabled = true;
             }
-        } else if (Input.GetKeyUp("z"))
+        } else if (Input.GetKeyUp("j"))
         {
             if (currentTime < timeToHoldForLockOn)
             {

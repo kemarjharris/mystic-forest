@@ -35,6 +35,18 @@ public class LockOn : MonoBehaviour
         objectsInRange.Remove(collider.gameObject);
     }
 
+    public void Update()
+    {
+        Debug.Log(CollectionUtils.Print(objectsInRange));
+    }
+
+    public void OnDisable()
+    {
+        onLockedOnExit?.Invoke();
+        objectsInRange.Clear();
+        lockedOn = null;
+    }
+
     // Returns the next closest batter to the one currently on the targeted list
     public GameObject NextToLockOnTo()
     {
