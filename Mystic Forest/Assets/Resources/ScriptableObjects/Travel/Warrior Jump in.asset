@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 169fad261df27344a8fe7dadadd24c9a, type: 3}
   m_Name: Warrior Jump in
   m_EditorClassIdentifier: 
-  bounceHeight: 1
+  bounceHeight: 0.5

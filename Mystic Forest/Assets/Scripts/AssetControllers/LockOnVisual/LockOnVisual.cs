@@ -28,6 +28,7 @@ public class LockOnVisual : MonoBehaviour
         lockOn.onScan += PlayScanAnimation;
         lockOn.onLockOn += AttachCursor;
         lockOn.onLockedOnExit += DetachCursor;
+        lockOn.onEnable += RecolourCursor;
     }
 
     private void PlayScanAnimation()
@@ -77,10 +78,13 @@ public class LockOnVisual : MonoBehaviour
         scan.enabled = false;
     }
 
+    public void RecolourCursor() => scan.enabled = false;
+
     public void OnDestroy()
     {
         lockOn.onScan -= PlayScanAnimation;
         lockOn.onLockOn -= AttachCursor;
         lockOn.onLockedOnExit -= DetachCursor;
+        lockOn.onEnable -= RecolourCursor;
     }
 }

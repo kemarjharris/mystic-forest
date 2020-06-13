@@ -10,6 +10,7 @@ public class LockOn : MonoBehaviour
     public System.Action<GameObject> onLockOn;
     public System.Predicate<Collider> rule { private get;  set; }
     public System.Action onLockedOnExit;
+    public System.Action onEnable;
 
     private void Awake()
     {
@@ -39,6 +40,8 @@ public class LockOn : MonoBehaviour
     {
         Debug.Log(CollectionUtils.Print(objectsInRange));
     }
+
+    public void OnEnable() => onEnable?.Invoke();
 
     public void OnDisable()
     {

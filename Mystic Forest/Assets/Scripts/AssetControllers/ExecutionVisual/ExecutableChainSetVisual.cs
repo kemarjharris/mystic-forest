@@ -40,8 +40,9 @@ public class ExecutableChainSetVisual : MonoBehaviour
             Destroy(parent);
             parent = NewParent();
         }
-        if (parent == null) { 
-}
+        if (parent == null) {
+            parent = NewParent();
+        }
         chainVisual = new ExecutableChainVisual(chain, new Vector3(0, -130), parent.transform);
         chainVisual.parent.transform.localScale = Vector3.Scale(chainVisual.parent.transform.localScale, new Vector3(40, 40, 0));
         ResizeParent();

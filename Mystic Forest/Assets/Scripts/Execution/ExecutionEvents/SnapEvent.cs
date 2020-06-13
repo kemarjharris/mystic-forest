@@ -27,6 +27,11 @@ public class SnapEvent : ExecutionEvent
             snapPoint = targetSet.GetTarget().transform.position + (Vector3.up * battler.gameObject.transform.position.y);
         }
 
+        if (battler.gameObject.transform.position == snapPoint)
+        {
+            snapPoint += Vector3.down * 0.1f;
+        }
+
         float CalculateSpeed()
         {
             float time = Mathf.Max(travelTime, 0.01f);

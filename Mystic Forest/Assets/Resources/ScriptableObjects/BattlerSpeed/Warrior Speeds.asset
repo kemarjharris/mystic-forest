@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 12
   jumpHorizontalForce: 6
-  speed: 2
+  speed: 6
   jumpInSpeed: 6

@@ -10,15 +10,21 @@ public class JointController : MonoBehaviour, IPlayerController
     CombatState state;
     public IUnityAxisService service;
     bool groundedLastFrame;
+    public float smoothTime = 0.1f;
     float horizontal;
     float vertical;
+
+    float hVel;
+    float vVel;
+
     bool jumped;
+    bool lockingOn;
 
     public ExecutableChainSO jumpIn;
 
 
-    private static LockOn lockOn;
-    private GameObject lockedOn;
+    private static LockOnController lockOn;
+    // private GameObject lockedOn;
     public float timeToHoldForLockOn = 0.2f;
     private float currentTime;
 
@@ -41,9 +47,12 @@ public class JointController : MonoBehaviour, IPlayerController
         groundedLastFrame = physics.IsGrounded;
         if (lockOn == null)
         {
-            lockOn = Object.Instantiate(Resources.Load<GameObject>("Prefabs/Miscellaneous/Lock On Area")).GetComponent<LockOn>();
+            lockOn = Instantiate(Resources.Load<GameObject>("Prefabs/Miscellaneous/Lock On Area")).GetComponent<LockOnController>();
             lockOn.rule = (Collider collider) => collider.gameObject.tag == "Battler";
-            lockOn.enabled = false;
+            lockOn.onStartLockOn += OnStartLockOn;
+            lockOn.onTargetSelected += OnTargetSelected;
+            
+            lockOn.AttachToBattler(battler);
         }
 
     }
@@ -52,25 +61,17 @@ public class JointController : MonoBehaviour, IPlayerController
     {
         if (!groundedLastFrame && physics.IsGrounded)
         {
-            module.ChangeSet(NonAerials());
+            module.ChangeSet(Normals());
         }
 
         // no input during combat
-        if (state != CombatState.ATTACKING)
+        if (state != CombatState.ATTACKING && !lockingOn)
         {
             if (physics.IsGrounded)
             {
                 horizontal = service.GetAxis("Horizontal");
                 vertical = service.GetAxis("Vertical");
 
-                // LockOn();
-                /*
-                if (Input.GetKeyDown("space"))
-                {
-                    lockedOn = lockOn.NextToLockOnTo();
-                } 
-                */
-                // jump when attack is cancellable, jump cancel
                 if (Input.GetKeyDown("k"))
                 {
                     jumped = true;
@@ -80,8 +81,8 @@ public class JointController : MonoBehaviour, IPlayerController
         }
         else
         {
-            horizontal = 0;
-            vertical = 0;
+            horizontal = Mathf.SmoothDamp(horizontal, 0, ref hVel, smoothTime);
+            vertical = Mathf.SmoothDamp(vertical, 0, ref vVel, smoothTime); ;
         }
         groundedLastFrame = physics.IsGrounded;
     }
@@ -105,7 +106,12 @@ public class JointController : MonoBehaviour, IPlayerController
         }
     }
 
-    void StartModuleExecution() => module.StartExecution(physics.IsGrounded ? NonAerials() : Aerials(), battler);
+    void StartModuleExecution()
+    {
+        lockOn.OnDisable();
+        lockingOn = false;
+        module.StartExecution(physics.IsGrounded ? Normals() : Aerials(), battler);
+    }
 
     IExecutableChainSet Aerials()
     {
@@ -114,7 +120,7 @@ public class JointController : MonoBehaviour, IPlayerController
         return battler.ChainSet.Where(IsAerial);
     }
 
-    IExecutableChainSet NonAerials()
+    IExecutableChainSet Normals()
     {
         bool IsNotAerial(IExecutableChain chain) => !chain.IsAerial;
         return battler.ChainSet.Where(IsNotAerial);
@@ -122,71 +128,21 @@ public class JointController : MonoBehaviour, IPlayerController
 
     public void OnEnable()
     {
-
-        lockOn.enabled = false;
-        lockOn.gameObject.SetActive(true);
-        lockOn.gameObject.transform.SetParent(battler.gameObject.transform);
-        lockOn.gameObject.transform.localPosition = Vector3.zero;
-        lockOn.gameObject.transform.localScale = new Vector3(3.2f, 0.16f, 2.25f);
-
+        lockOn.OnEnable();
+        lockingOn = false;
         module.OnNewChainLoaded.AddAction(OnNewChainLoaded);
         module.OnChainCancellable.AddAction(OnChainCancellable);
         module.OnChainFinished.AddAction(OnChainFinished);
-        StartModuleExecution();
+        //StartModuleExecution();
     }
 
     public void OnDisable()
     {
-        lockOn.enabled = false;
-        lockedOn = null;
-        currentTime = 0;
-        lockOn.gameObject.SetActive(false);
-
+        lockOn.OnDisable();
         module.OnNewChainLoaded.RemoveAction(OnNewChainLoaded);
         module.OnChainCancellable.RemoveAction(OnChainCancellable);
         module.OnChainFinished.RemoveAction(OnChainFinished);
-        physics.lockZ = false;
     }
-
-    /*
-    void LockOn()
-    {
-        if (Input.GetKey("j"))
-        {
-            // Wait until time for leap in
-            currentTime += Time.deltaTime;
-            // Scan for leap in
-            if (currentTime >= timeToHoldForLockOn && !lockOn.enabled)
-            {
-                lockOn.enabled = true;
-            }
-        }
-        else if (Input.GetKeyUp("j"))
-        {
-            if (currentTime < timeToHoldForLockOn)
-            {
-                // switch to combat mode
-                //mainController.SwapToCombatMode();
-            }
-            else
-            {
-                if (lockOn.lockedOn != null)
-                {
-                    lockedOn = lockOn.lockedOn;
-                    Debug.Log(lockedOn.name);
-                    // leap in at lockon on
-                    TargetSet target = new TargetSet();
-                    target.SetTarget(lockedOn.transform);
-                    module.StartExecution(jumpIn, target, battler);
-                    //battler.JumpIn(lockedOn.GetComponent<IBattler>());
-                }
-                lockOn.enabled = false;
-                lockedOn = null;
-            }
-            currentTime = 0;
-        }
-    }
-    */
 
     void OnNewChainLoaded(ICustomizableEnumerator<IExecutable> obj) => state = CombatState.ATTACKING;
     void OnChainCancellable() => state = CombatState.ABLE_TO_CANCEL_ATTACK;
@@ -194,8 +150,34 @@ public class JointController : MonoBehaviour, IPlayerController
     {
         battler.StopCombatAnimation();
         state = CombatState.NOT_ATTACKING;
+        lockOn.OnEnable();
+        lockingOn = false;
         //mainController.SwapToNeutralMode();
-        StartModuleExecution();
+        // StartModuleExecution();
+    }
+
+    // lock on 
+    void OnStartLockOn()
+    {
+        lockingOn = true;
+    }
+
+    void OnTargetSelected(GameObject target)
+    {
+        if (target != null)
+        {
+            lockOn.gameObject.SetActive(false);
+            ITargetSet targetSet = new TargetSet();
+            targetSet.SetTarget(target.transform);
+            module.StartExecution(jumpIn, targetSet, battler);
+        }
+        lockingOn = false;
+    }
+
+    void OnDestroy()
+    {
+        lockOn.onStartLockOn -= OnStartLockOn;
+        lockOn.onTargetSelected -= OnTargetSelected;
     }
 
     /* for testing */
