@@ -24,7 +24,7 @@ public class DirectionCommandObjectOverrides
         int hash = 1;
         for (int i = 0; i < 3 && i < directions.Length; i++)
         {
-            hash += (int)((((int)directions[i]) + 1) * (UnityEngine.Mathf.Pow(10f, i)));
+            hash += (int)((((int)directions[i]) + 1) * (Mathf.Pow(10f, i)));
         }
 
         if (option == DirectionCommandButton.J)
@@ -35,9 +35,9 @@ public class DirectionCommandObjectOverrides
         {
             hash *= 19;
         }
-        else if (option == DirectionCommandButton.L)
+        else if (option == DirectionCommandButton.J_OR_K)
         {
-            hash *= 13;
+            hash *= 23;
         }
         else
         {

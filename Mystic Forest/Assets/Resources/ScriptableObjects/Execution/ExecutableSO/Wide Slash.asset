@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec7c6fa24a61e7439594bd4ed2799a8, type: 3}
   m_Name: Wide Slash
   m_EditorClassIdentifier: 
-  button: 0
+  button: 2
+  isAerial: 0
   executionEvent: {fileID: 11400000, guid: db3f81c2ddb43404485370bc7dbce414, type: 2}

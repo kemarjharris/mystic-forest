@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eca6d92af4fc41e4da69d6f78fe33eda, type: 3}
   m_Name: Rapid Slash
   m_EditorClassIdentifier: 
-  button: 0
+  button: 2
+  isAerial: 0
   executionEvent: {fileID: 11400000, guid: f54065a8e56363847aec2235b4716ff4, type: 2}
   mashTimeEndedEvent: {fileID: 11400000, guid: 7a25ac0cc08fbe94bbe9e19b10ad0863, type: 2}
   mashDuration: 1
+  aerial: 0

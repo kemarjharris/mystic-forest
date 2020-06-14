@@ -16,4 +16,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1991ed4cbe715204084edb2f19014b81, type: 2}
   group: {fileID: 11400000, guid: 7d10bc89a3c117d4cbe8e557fbcd29b8, type: 2}
   aerial: 0
+  skill: 1
   rule: {fileID: 11400000, guid: 597c0e4fb4f5eb447ba0056f74ff5d17, type: 2}

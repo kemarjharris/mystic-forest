@@ -124,10 +124,10 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
             if (collided && hitInfo.collider.gameObject.tag == "Battler")
             {
                 collider.enabled = false;
-                if (rb.velocity.y < 0)
-                {
-                    PushAwayCollider(hitInfo.collider);
-                }
+                //if (rb.velocity.y < 0)
+                //{
+                  //  PushAwayCollider(hitInfo.collider);
+                //}
             }
             if (hitInfo.collider == ground.collider)
             {

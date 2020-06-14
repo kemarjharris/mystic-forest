@@ -69,10 +69,6 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
         {
             inputtedButton = DirectionCommandButton.K;
         }
-        else if (inputService.GetKeyDown("l"))
-        {
-            inputtedButton = DirectionCommandButton.L;
-        }
 
         T t = default;
 
@@ -87,7 +83,12 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
 
             for (int i = 0; i <= count; i ++)
             {
-                t = Select(new DirectionCommand(inputtedButton, inputtedDirections.ToArray()));
+                Direction[] directions = inputtedDirections.ToArray();
+                t = Select(new DirectionCommand(inputtedButton, directions));
+                if (t == null)
+                {
+                    t = Select(new DirectionCommand(DirectionCommandButton.J_OR_K, directions));
+                }
                 if (t != null // valid chain picked
                     && (inputtedDirections.Count != 1 // chain was not a single direction chain
                     || inputtedDirections.Count == 1 && dir == inputtedDirections[0])) // chain was a dingle button chain and dir was held this frame

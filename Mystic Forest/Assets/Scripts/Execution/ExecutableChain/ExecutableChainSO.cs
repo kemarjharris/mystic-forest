@@ -11,6 +11,7 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain
     public ExecutableSO[] attacks;
     public DirectionGroup group;
     public bool aerial;
+    public bool skill;
     public ChainRule rule;
 
 
@@ -19,6 +20,8 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain
     public IExecutable head => attacks[0].CreateExecutable();
 
     public bool IsAerial => aerial;
+
+    public bool IsSkill => skill;
 
     public IEnumerator<IExecutable> GetEnumerator()
     {

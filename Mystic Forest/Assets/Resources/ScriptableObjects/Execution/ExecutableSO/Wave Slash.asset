@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50157883326958a49989b4c938e4cef7, type: 3}
   m_Name: Wave Slash
   m_EditorClassIdentifier: 
-  button: 0
+  button: 2
+  isAerial: 0
   cursorPrefab: {fileID: 8179147261844964283, guid: c4bf4faf680a5a5489ed76487aec7e99,
     type: 3}
   aimDuration: 5

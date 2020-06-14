@@ -91,7 +91,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     {
         if (battler != null && battler.ChainSet != null)
         {
-            ChangeSet(current.NextChains(battler.ChainSet));
+            ChangeSet(current.NextChains(battler.ChainSet).Where(chain => battler.IsGrounded ? !chain.IsAerial : chain.IsAerial));
         }
         linkerActive = true;
     }

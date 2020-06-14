@@ -13,20 +13,11 @@ public class JointController : MonoBehaviour, IPlayerController
     public float smoothTime = 0.1f;
     float horizontal;
     float vertical;
-
     float hVel;
     float vVel;
-
     bool jumped;
-    bool lockingOn;
 
     public ExecutableChainSO jumpIn;
-
-
-    private static LockOnController lockOn;
-    // private GameObject lockedOn;
-    public float timeToHoldForLockOn = 0.2f;
-    private float currentTime;
 
     private void Awake()
     {
@@ -45,16 +36,6 @@ public class JointController : MonoBehaviour, IPlayerController
         if (service == null) service = new UnityAxisService();
         state = CombatState.NOT_ATTACKING;
         groundedLastFrame = physics.IsGrounded;
-        if (lockOn == null)
-        {
-            lockOn = Instantiate(Resources.Load<GameObject>("Prefabs/Miscellaneous/Lock On Area")).GetComponent<LockOnController>();
-            lockOn.rule = (Collider collider) => collider.gameObject.tag == "Battler";
-            lockOn.onStartLockOn += OnStartLockOn;
-            lockOn.onTargetSelected += OnTargetSelected;
-            
-            lockOn.AttachToBattler(battler);
-        }
-
     }
 
     public void Update()
@@ -65,14 +46,14 @@ public class JointController : MonoBehaviour, IPlayerController
         }
 
         // no input during combat
-        if (state != CombatState.ATTACKING && !lockingOn)
+        if (state != CombatState.ATTACKING)
         {
             if (physics.IsGrounded)
             {
                 horizontal = service.GetAxis("Horizontal");
                 vertical = service.GetAxis("Vertical");
 
-                if (Input.GetKeyDown("k"))
+                if (Input.GetKeyDown("l"))
                 {
                     jumped = true;
                     module.ChangeSet(Aerials());
@@ -108,37 +89,33 @@ public class JointController : MonoBehaviour, IPlayerController
 
     void StartModuleExecution()
     {
-        lockOn.OnDisable();
-        lockingOn = false;
         module.StartExecution(physics.IsGrounded ? Normals() : Aerials(), battler);
     }
+
 
     IExecutableChainSet Aerials()
     {
         // Aerial sets
-        bool IsAerial(IExecutableChain chain) => chain.IsAerial;
+        bool IsAerial(IExecutableChain chain) => chain.IsAerial && !chain.IsSkill;
         return battler.ChainSet.Where(IsAerial);
     }
 
     IExecutableChainSet Normals()
     {
-        bool IsNotAerial(IExecutableChain chain) => !chain.IsAerial;
-        return battler.ChainSet.Where(IsNotAerial);
+        bool IsNormal(IExecutableChain chain) => !chain.IsAerial && !chain.IsSkill;
+        return battler.ChainSet.Where(IsNormal);
     }
 
     public void OnEnable()
     {
-        lockOn.OnEnable();
-        lockingOn = false;
         module.OnNewChainLoaded.AddAction(OnNewChainLoaded);
         module.OnChainCancellable.AddAction(OnChainCancellable);
         module.OnChainFinished.AddAction(OnChainFinished);
-        //StartModuleExecution();
+        StartModuleExecution();
     }
 
     public void OnDisable()
     {
-        lockOn.OnDisable();
         module.OnNewChainLoaded.RemoveAction(OnNewChainLoaded);
         module.OnChainCancellable.RemoveAction(OnChainCancellable);
         module.OnChainFinished.RemoveAction(OnChainFinished);
@@ -150,34 +127,7 @@ public class JointController : MonoBehaviour, IPlayerController
     {
         battler.StopCombatAnimation();
         state = CombatState.NOT_ATTACKING;
-        lockOn.OnEnable();
-        lockingOn = false;
-        //mainController.SwapToNeutralMode();
-        // StartModuleExecution();
-    }
-
-    // lock on 
-    void OnStartLockOn()
-    {
-        lockingOn = true;
-    }
-
-    void OnTargetSelected(GameObject target)
-    {
-        if (target != null)
-        {
-            lockOn.gameObject.SetActive(false);
-            ITargetSet targetSet = new TargetSet();
-            targetSet.SetTarget(target.transform);
-            module.StartExecution(jumpIn, targetSet, battler);
-        }
-        lockingOn = false;
-    }
-
-    void OnDestroy()
-    {
-        lockOn.onStartLockOn -= OnStartLockOn;
-        lockOn.onTargetSelected -= OnTargetSelected;
+        StartModuleExecution();
     }
 
     /* for testing */

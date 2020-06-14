@@ -17,7 +17,6 @@ public class DirectionCommandPickerSceneTest : MonoBehaviour
                 new DirectionCommand( DirectionCommandButton.J, Direction.S, Direction.S),
                 new DirectionCommand( DirectionCommandButton.J, Direction.S, Direction.W),
                 new DirectionCommand( DirectionCommandButton.J,Direction.E, Direction.S),
-                new DirectionCommand( DirectionCommandButton.L, Direction.S, Direction.S, Direction.S),
             });
         picker.Set(pickables);
     }

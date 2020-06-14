@@ -29,7 +29,7 @@ public class LockOnExecutable : Executable
         // Wait to start locking on
         if (!lockOnGameObject.activeSelf)
         {
-            if (inputService.GetKeyDown("j"))
+            if (inputService.GetKeyDown("k"))
             {
                 StartLockingOn(battler);
                 state.triggered = true;
@@ -38,7 +38,7 @@ public class LockOnExecutable : Executable
             }
         } else if (timeService.unscaledTime - timeLockOnStarted <= lockOnDuration)
         {
-            if (inputService.GetKeyUp("j"))
+            if (inputService.GetKeyUp("k"))
             {
                 if (target != null)
                 {

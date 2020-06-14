@@ -21,6 +21,16 @@ public abstract class Executable : IExecutable
 
     public abstract void OnStart();
 
-    protected bool CorrectButton(string input) => button.ToString().ToLower().Equals(input.ToLower());
+    protected bool CorrectButton(string input)
+    {
+        if (button == DirectionCommandButton.J_OR_K)
+        {
+            return input == "k" || input == "j";
+        } else
+        {
+            return button.ToString().ToLower().Equals(input.ToLower());
+        }
+        
+    }
 
 }

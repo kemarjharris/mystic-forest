@@ -17,6 +17,7 @@ public class LockOnExecutableSO : ExecutableSO
     public override IExecutable CreateExecutable() =>
         new LockOnExecutable
         {
+            button = button,
             lockOnPrefab = lockOnPrefab,
             lockOnDuration = lockOnDuration,
             onStartLockOn = Instantiate(onStartLockOn),
