@@ -84,7 +84,7 @@ public class LockOnExecutable : Executable
         if (lockOnGameObject == null)
         {
             lockOnGameObject = Object.Instantiate(lockOnPrefab);
-            lockOn = lockOnGameObject.GetComponent<LockOn>();
+            lockOn = lockOnGameObject.GetComponentInChildren<LockOn>();
             lockOn.rule = (Collider collider) => collider.gameObject.tag == "Battler";
         }
         lockOn.gameObject.SetActive(false);

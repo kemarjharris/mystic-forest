@@ -6,7 +6,7 @@ public class Battler : MonoBehaviour, IBattler
 {
     public IMixAnimator animator = null;
     public Transform hitPoint = null;
-    IMainPlayerController controller;
+    IPlayerController controller;
     IHitBox hitBox;
     protected IBattlerPhysics physics = null;
     
@@ -17,7 +17,7 @@ public class Battler : MonoBehaviour, IBattler
     {
         animator = GetComponentInChildren<MixAnimator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
-        controller = GetComponent<IMainPlayerController>();
+        controller = GetComponent<IPlayerController>();
         sprite.transform.forward = Camera.main.transform.forward;
 
         hitBox = GetComponentInChildren<IHitBox>();

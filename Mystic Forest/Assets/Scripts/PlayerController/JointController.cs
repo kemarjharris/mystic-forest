@@ -6,6 +6,7 @@ public class JointController : MonoBehaviour, IPlayerController
     IBattler battler;
     IBattlerPhysics physics;
     IExecutionModule module;
+    IChainExecutor chainExecutor;
     public BattlerSpeed speeds;
     CombatState state;
     public IUnityAxisService service;
@@ -42,7 +43,7 @@ public class JointController : MonoBehaviour, IPlayerController
     {
         if (!groundedLastFrame && physics.IsGrounded)
         {
-            module.ChangeSet(Normals());
+            module.ChangeSet(state == CombatState.NOT_ATTACKING ? Normals() : Skills());
         }
 
         // no input during combat
@@ -89,6 +90,9 @@ public class JointController : MonoBehaviour, IPlayerController
 
     void StartModuleExecution()
     {
+
+
+
         module.StartExecution(physics.IsGrounded ? Normals() : Aerials(), battler);
     }
 
@@ -104,6 +108,12 @@ public class JointController : MonoBehaviour, IPlayerController
     {
         bool IsNormal(IExecutableChain chain) => !chain.IsAerial && !chain.IsSkill;
         return battler.ChainSet.Where(IsNormal);
+    }
+
+    IExecutableChainSet Skills()
+    {
+        bool IsSkill(IExecutableChain chain) => !chain.IsAerial;
+        return battler.ChainSet.Where(IsSkill);
     }
 
     public void OnEnable()

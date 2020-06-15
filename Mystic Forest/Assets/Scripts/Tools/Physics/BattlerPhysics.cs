@@ -118,20 +118,43 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
             // fall
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y + (Physics.gravity.y * Time.fixedDeltaTime), rb.velocity.z);
             
-            // if approaching ground turn on collsion
-            bool collided = CheckUnderCollider(out RaycastHit hitInfo);
-            // if approaching battler turn off collision
-            if (collided && hitInfo.collider.gameObject.tag == "Battler")
+            if (collider.enabled)
             {
-                collider.enabled = false;
-                //if (rb.velocity.y < 0)
-                //{
-                  //  PushAwayCollider(hitInfo.collider);
-                //}
-            }
-            if (hitInfo.collider == ground.collider)
+                // if approaching ground turn on collsion
+                bool collided = CheckUnderCollider(out RaycastHit hitInfo);
+                // if approaching battler turn off collision
+                if (collided && hitInfo.collider.gameObject.tag == "Battler")
+                {
+                    collider.enabled = false;
+                    Debug.Log("LAAAA LALALA NICO NICO NIIII");
+                    //if (rb.velocity.y < 0)
+                    //{
+                    //  PushAwayCollider(hitInfo.collider);
+                    //}
+                }
+            } else
             {
-                collider.enabled = true;
+                RaycastHit[] hits = CheckUnderColliderAll();
+                if (hits.Length > 0)
+                {
+                    int battlerCollider = -1;
+                    int groundCollider = -1;
+                    for (int i = 0; i < hits.Length; i ++)
+                    {
+                        if (hits[i].collider.gameObject.tag == "Battler") battlerCollider = i;
+                        if (hits[i].collider == ground.collider) groundCollider = i;
+                    }
+
+                    if (groundCollider >= 0) // collided w ground 
+                    {
+                        Debug.Log("NIII HAPPI UUUUUN");
+                        if (battlerCollider >= 0) // approaching ground and still overlapping with battler
+                        {
+                            PushAwayCollider(hits[battlerCollider].collider);
+                        }
+                        collider.enabled = true;
+                    }
+                }
             }
         }
     }
@@ -149,6 +172,12 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
         bool collided = Physics.BoxCast(transform.position + collider.center * 0.5f, new Vector3(scaled.x, 1, scaled.z) / 2, Vector3.down, out RaycastHit hitInfo, Quaternion.identity, 0.5f);
         hit = hitInfo;
         return collided;
+    }
+
+    private RaycastHit[] CheckUnderColliderAll()
+    {
+        Vector3 scaled = Vector3.Scale(collider.size, gameObject.transform.localScale);
+        return Physics.BoxCastAll(transform.position + collider.center * 0.5f, new Vector3(scaled.x, 1, scaled.z) / 2, Vector3.down, Quaternion.identity, 0.5f);
     }
 
     private void PushAwayCollider(Collider col)

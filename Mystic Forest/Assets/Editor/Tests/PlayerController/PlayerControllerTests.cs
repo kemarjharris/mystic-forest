@@ -9,7 +9,7 @@ namespace Tests
 {
     public abstract class PlayerControllerTest
     {
-        protected PlayerController controller;
+        protected JointController controller;
         protected GameObject go;
 
         public IEnumerator WaitUntilGrounded()
@@ -45,7 +45,7 @@ namespace Tests
             yield return null;
             UnityEngine.SceneManagement.SceneManager.LoadScene("2.5D Test Scene");
             yield return null;
-            controller = Object.FindObjectOfType<PlayerController>();
+            controller = Object.FindObjectOfType<JointController>();
             controller.enabled = false;
             go = controller.gameObject;
             yield return WaitUntilGrounded();
@@ -56,14 +56,14 @@ namespace Tests
 
     public class NeutralControllerTest : PlayerControllerTest
     {
-        NeutralController neutral;
+        JointController neutral;
         IUnityAxisService service;
         
 
         public override IEnumerator LoadScene()
         {
             yield return base.LoadScene();
-            neutral = (NeutralController)controller.neutral;
+            neutral = controller;
         }
 
         public override void SetDirectionalService(float horizontal, float vertical)
@@ -106,7 +106,7 @@ namespace Tests
 
     public class CombatControllerTest : PlayerControllerTest
     {
-        CombatController combat;
+        JointController combat;
         IUnityAxisService service;
         IExecutionModule module;
 
@@ -114,7 +114,7 @@ namespace Tests
         public override IEnumerator LoadScene()
         {
             yield return base.LoadScene();
-            combat = (CombatController) controller.combat;
+            combat = controller;
         }
 
         public override void SetDirectionalService(float horizontal, float vertical)
