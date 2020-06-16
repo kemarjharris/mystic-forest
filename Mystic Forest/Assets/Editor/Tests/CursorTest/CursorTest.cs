@@ -30,8 +30,8 @@ namespace Tests
             yield return new WaitForSeconds(1.5f);
         }
 
-        public void CheckMovedUp() => Assert.Less(start.y, cursor.transform.position.y);
-        public void CheckMovedDown() => Assert.Greater(start.y, cursor.transform.position.y);
+        public void CheckMovedUp() => Assert.Less(start.z, cursor.transform.position.z);
+        public void CheckMovedDown() => Assert.Greater(start.z, cursor.transform.position.z);
         public void CheckMovedLeft() => Assert.Greater(start.x, cursor.transform.position.x);
         public void CheckMovedRight() => Assert.Less(start.x, cursor.transform.position.x);
 

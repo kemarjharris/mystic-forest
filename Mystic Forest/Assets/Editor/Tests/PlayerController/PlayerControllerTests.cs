@@ -11,6 +11,7 @@ namespace Tests
     {
         protected JointController controller;
         protected GameObject go;
+        protected IUnityInputService inputService;
 
         public IEnumerator WaitUntilGrounded()
         {
@@ -43,7 +44,7 @@ namespace Tests
         public virtual IEnumerator LoadScene()
         {
             yield return null;
-            UnityEngine.SceneManagement.SceneManager.LoadScene("2.5D Test Scene");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Controller Test Scene");
             yield return null;
             controller = Object.FindObjectOfType<JointController>();
             controller.enabled = false;
@@ -51,8 +52,25 @@ namespace Tests
             yield return WaitUntilGrounded();
         }
 
+        public void SetInputService(bool jPressed, bool kPressed, bool lPressed)
+        {
+            inputService = Substitute.For<IUnityInputService>();
+            inputService.GetKeyDown("j").Returns(jPressed);
+            inputService.GetKeyDown("k").Returns(kPressed);
+            inputService.GetKeyDown("l").Returns(lPressed);
+            controller.inputService = inputService;
+        }
+
         public abstract void SetDirectionalService(float horizontal, float vertical);
+
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("Controller Test Scene");
+        }
     }
+
+
 
     public class NeutralControllerTest : PlayerControllerTest
     {
@@ -125,34 +143,21 @@ namespace Tests
             combat.service = service;
         }
 
-        [UnityTest]
-        public IEnumerator Move_LeftInput_MovesLeft()
-        {
-
-            yield return LoadScene();
-            yield return WaitUntilGrounded();
-            yield return Move(combat, -1, 0, (pos) => Assert.Greater(pos.x, go.transform.position.x));
-        }
-
-        [UnityTest]
-        public IEnumerator Move_RightInput_MovesRight()
-        {
-
-            yield return LoadScene();
-            yield return WaitUntilGrounded();
-            yield return Move(combat, 1, 0, (pos) => Assert.Less(pos.x, go.transform.position.x));
-        }
-
         // jumping vertical increases Y and not X
         [UnityTest]
         public IEnumerator Jump_PositiveVerticalInput_IncreasesYPosition()
         {
             yield return LoadScene();
-            SetDirectionalService(0, 1);
+            SetJumpInput();
             Vector3 start = go.transform.position;
             combat.Update();
             combat.FixedUpdate();
             Assert.Less(start.y, go.transform.position.y);
+        }
+
+        public void SetJumpInput()
+        {
+            SetInputService(false, false, true);
         }
 
         // jump up forward increases X and Y
@@ -160,7 +165,8 @@ namespace Tests
         public IEnumerator Jump_PositiveVerticalAndHorizontalInput_JumpsForwards()
         {
             yield return LoadScene();
-            SetDirectionalService(1, 1);
+            SetDirectionalService(1, 0);
+            SetJumpInput();
             Vector3 start = go.transform.position;
             float seconds = 0.5f;
             do
@@ -178,7 +184,8 @@ namespace Tests
         public IEnumerator Jump_PositiveVerticalNegativeHorizontal_JumpsBackward()
         {
             yield return LoadScene();
-            SetDirectionalService(-1, 1);
+            SetDirectionalService(-1, 0);
+            SetJumpInput();
             Vector3 start = go.transform.position;
             float seconds = 0.5f;
             do
@@ -196,21 +203,25 @@ namespace Tests
         public IEnumerator Jump_Airborne_DoesNotJumpAgain()
         {
             yield return LoadScene();
-            SetDirectionalService(0, 1);
+            SetJumpInput();
             Vector3 pos = go.transform.position;
             combat.Update();
             combat.FixedUpdate();
             yield return null;
-            SetDirectionalService(0, 0);
+            SetInputService(false, false, false);
+            float fallTimeOut = 3;
             // loop until falling
             do
             {
                 pos = go.transform.position;
                 combat.Update();
                 combat.FixedUpdate();
+                fallTimeOut -= Time.deltaTime;
                 yield return null;
-            } while (pos.y <= go.transform.position.y);
+            } while (pos.y <= go.transform.position.y && fallTimeOut > 0);
+            if (fallTimeOut <= 0) Assert.Fail("Battler never started falling");
             // upwards input again
+            SetJumpInput();
             pos = go.transform.position;
             yield return null;
             combat.Update();
@@ -225,7 +236,8 @@ namespace Tests
             
             yield return LoadScene();
             // jump forward
-            SetDirectionalService(1, 1);
+            SetJumpInput();
+            SetDirectionalService(1, 0);
             combat.Update();
             combat.FixedUpdate();
             Vector3 pos = go.transform.position;
@@ -249,7 +261,8 @@ namespace Tests
         {
             yield return LoadScene();
             // jump forward
-            SetDirectionalService(1, 1);
+            SetJumpInput();
+            SetDirectionalService(1, 0);
             combat.Update();
             combat.FixedUpdate();
             Vector3 pos = go.transform.position;
@@ -282,7 +295,7 @@ namespace Tests
             yield return null;
             combat.Update();
             combat.FixedUpdate();
-            Assert.Less(0.002f, Vector3.Distance(pos, go.transform.position));
+            Assert.Greater(0.002f, Vector3.Distance(pos, go.transform.position));
         }
 
         // no horizontal movement
@@ -302,7 +315,15 @@ namespace Tests
         [UnityTest]
         public IEnumerator Attack_Attacking_NoJumping()
         {
-            yield return Attack_NoMoving(() => combat.SetStateAttacking(), 0, 1);
+            yield return LoadScene();
+            yield return WaitUntilGrounded();
+            combat.SetStateAttacking();
+            SetJumpInput();
+            Vector3 pos = go.transform.position;
+            yield return null;
+            combat.Update();
+            combat.FixedUpdate();
+            Assert.Greater(0.002f, Vector3.Distance(pos, go.transform.position));
         }
 
         // STATE able to cancel attack
@@ -326,7 +347,7 @@ namespace Tests
             yield return LoadScene();
             yield return WaitUntilGrounded();
             combat.SetStateAbleToCancelAttack();
-            SetDirectionalService(0, 1);
+            SetJumpInput();
             Vector3 start = go.transform.position;
             yield return null;
             combat.Update();

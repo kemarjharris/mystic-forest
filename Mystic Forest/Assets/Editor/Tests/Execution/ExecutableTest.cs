@@ -7,6 +7,333 @@ using UnityEngine.TestTools;
 
 namespace ExecutableTest
 {
+    public class LockOnExecutableTest
+    {
+        LockOnExecutable lockOn;
+        ExecutionEvent onStartLockOnEvent;
+        ExecutionEvent onTargetSelectedEvent;
+        IBattler battler;
+        ITargetSet targets;
+
+        List<GameObject> objects;
+
+        public LockOnExecutable Construct(ExecutionEvent onStartLockOnEvent, ExecutionEvent onTargetSelectedEvent, float duration)
+        {
+            LockOnExecutableSO so = ScriptableObject.CreateInstance<LockOnExecutableSO>();
+            so.onStartLockOn = onStartLockOnEvent;
+            so.onTargetSelected = onTargetSelectedEvent;
+            so.lockOnDuration = duration;
+            LockOnExecutable e = (LockOnExecutable) so.CreateExecutable();
+            e.OnStart();
+            return e;
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            onStartLockOnEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            onTargetSelectedEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            lockOn = Construct(onStartLockOnEvent, onTargetSelectedEvent, 2);
+            lockOn.button = DirectionCommandButton.J;
+            
+            lockOn.timeService = Substitute.For<IUnityTimeService>();
+            lockOn.inputService = Substitute.For<IUnityInputService>();
+            lockOn.axisService = Substitute.For<IUnityAxisService>();
+
+            lockOn.OnStart();
+            GameObject go = Object.Instantiate(Resources.Load<GameObject>("TestPrefabs/MockBattler"));
+            go.transform.position = Vector3.zero;
+            battler = Substitute.For<IBattler>();
+            battler.gameObject.Returns(go);
+            targets = new TargetSet();
+            objects = new List<GameObject>
+            {
+                go
+            };
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            foreach (GameObject gameObject in objects)
+            {
+                Object.Destroy(gameObject);
+            }
+        }
+
+        public GameObject LoadBattler(int xPos)
+        {
+            GameObject go = Object.Instantiate(Resources.Load<GameObject>("TestPrefabs/MockBattler"));
+            go.transform.position = Vector3.right * xPos;
+            go.name = "Mock Battler at " + xPos; 
+            objects.Add(go);
+            return go;
+        }
+
+        public void CallOnInput(string input)
+        {
+            lockOn.OnInput(input, battler, targets);
+        }
+
+
+        // state is false on start
+        [Test]
+        public void OnStart_NotTriggered()
+        {
+            Assert.False(lockOn.IsTriggered());
+        }
+
+        [Test]
+        public void OnStart_NotCancellable()
+        {
+            Assert.False(lockOn.IsInCancelTime());
+        }
+
+        [Test]
+        public void OnStart_NotFinished()
+        {
+            Assert.False(lockOn.IsFinished());
+        }
+
+        [Test]
+        public void OnStart_NotFired()
+        {
+            Assert.False(lockOn.HasFired());
+        }
+
+        [Test]
+        public void OnStart_NotLockingOn()
+        {
+            Assert.False(lockOn.isLockingOn());
+        }
+
+        // Duration Non negative
+        [Test]
+        public void OnStart_NegativeDuration_ThrowsError()
+        {
+            lockOn.lockOnDuration = -1;
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                lockOn.OnStart();
+            });
+        }
+
+        // duration greater than 0
+        [Test]
+        public void OnStart_ZeroDuration_ThrowsError()
+        {
+            lockOn.lockOnDuration = 0;
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                lockOn.OnStart();
+            });
+        }
+
+        // execution events not null
+        [Test]
+        public void OnStart_StartLockOnEventNull_ThrowsExeception()
+        {
+            lockOn.onStartLockOn = null;
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                lockOn.OnStart();
+            });
+        }
+
+        [Test]
+        public void OnStart_TargetSelectedEventNull_ThrowsExeception()
+        {
+            lockOn.onTargetSelected = null;
+            Assert.Throws<System.ArgumentException>(delegate
+            {
+                lockOn.OnStart();
+            });
+        }
+
+        [Test]
+        public void OnStart_SetsUpOnCancellableEvent()
+        {
+            onStartLockOnEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            onTargetSelectedEvent = ScriptableObject.CreateInstance<CancelTestExecutionEvent>();
+            lockOn = Construct(onStartLockOnEvent, onTargetSelectedEvent, 2);
+            lockOn.OnTargetSelectedEvent().OnExecute(null, null);
+            Assert.True(lockOn.IsInCancelTime());
+        }
+
+        [Test]
+        public void OnStart_SetsUpOnFinishedEvent()
+        {
+            onStartLockOnEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
+            onTargetSelectedEvent = ScriptableObject.CreateInstance<FinishTestExecutionEvent>();
+            lockOn = Construct(onStartLockOnEvent, onTargetSelectedEvent, 2);
+            lockOn.OnTargetSelectedEvent().OnExecute(null, null);
+            Assert.True(lockOn.IsFinished());
+        }
+
+        // key down sets triggered
+        [Test]
+        public void OnInput_TriggerKeyDown_TriggersExecutable()
+        {
+            lockOn.inputService.GetKeyDown("j").Returns(true);
+            CallOnInput("j");
+            Assert.True(lockOn.IsTriggered());
+        }
+
+        // key down calls on state 
+        [Test]
+        public void OnInput_TriggerKeyDown_OnStartEventFires()
+        {
+            lockOn.inputService.GetKeyDown("j").Returns(true);
+            CallOnInput("j");
+            Assert.AreEqual(1, ((TestExecutionEvent) lockOn.onStartLockOn).timesExecuted);
+        }
+
+        // time out not triggered does not finish
+        [Test]
+        public void OnInput_NotTriggeredPastDuration_SetsFinished()
+        {
+            lockOn.timeService.unscaledTime.Returns(4);
+            Assert.False(lockOn.IsFinished());
+        }
+
+        // time service timeout triggers finished
+        [Test]
+        public void OnInput_TriggeredTimeOut_SetsFinished()
+        {
+            lockOn.inputService.GetKeyDown("j").Returns(true);
+            CallOnInput("j");
+            // duration defaults to 2
+            lockOn.timeService.unscaledTime.Returns(4);
+            CallOnInput("j");
+            Assert.True(lockOn.IsFinished());
+        }
+
+        public void SimulateKeyUp(string input)
+        {
+            lockOn.inputService.GetKeyDown(input).Returns(true);
+            CallOnInput(input);
+            lockOn.inputService.GetKeyDown(input).Returns(false);
+            lockOn.inputService.GetKeyUp(input).Returns(true);
+            CallOnInput(input);
+        }
+
+        // keyup while triggered triggeres on execute
+        [UnityTest]
+        public IEnumerator OnInput_KeyUpTarget_CallsOnTargetSelected()
+        {
+            LoadBattler(1);
+            yield return new WaitForSeconds(1);
+            SimulateKeyUp("j");
+            Assert.AreEqual(1, ((TestExecutionEvent) lockOn.onTargetSelected).timesExecuted);
+        }
+
+        // keyup while not triggered does not finish
+        [Test]
+        public void OnInput_NotTriggeredKeyUp_DoesNotSetFinished()
+        {
+            lockOn.inputService.GetKeyUp("j").Returns(true);
+            CallOnInput("j");
+            Assert.False(lockOn.IsFinished());
+        }
+
+        // key up notarget sets finished
+        [Test]
+        public void OnInput_KeyUpNoTarget_SetsFinished()
+        {
+            SimulateKeyUp("j");
+            Assert.True(lockOn.IsFinished());
+        }
+
+        // key up target calls fired
+        [UnityTest]
+        public IEnumerator OnInput_KeyUpTarget_SetsFired()
+        {
+            LoadBattler(1);
+            yield return new WaitForSeconds(1);
+            SimulateKeyUp("j");
+            Assert.True(lockOn.HasFired());
+        }
+
+        // target is not parent battler
+        [UnityTest]
+        public IEnumerator OnInput_KeyUpTarget_IsNotParentBattler()
+        {
+            GameObject expected = LoadBattler(1);
+            yield return new WaitForSeconds(1);
+            SimulateKeyUp("j");
+            Assert.AreEqual(expected.transform, targets.GetTarget());
+        }
+
+        // on start lock on selects next target
+        // target selected is battler
+        [UnityTest]
+        public IEnumerator OnInput_KeyDown_SelectsTarget()
+        {
+            GameObject expected = LoadBattler(1);
+            yield return new WaitForSeconds(1);
+            lockOn.inputService.GetKeyDown("j").Returns(true);
+            CallOnInput("j");
+            Assert.AreSame(expected, lockOn.CurrentTarget());
+        }
+
+        [Test]
+        public void OnInput_KeyDown_StartsLockingOn()
+        {
+            lockOn.inputService.GetKeyDown("j").Returns(true);
+            CallOnInput("j");
+            Assert.True(lockOn.isLockingOn());
+        }
+
+        // keyup while triggered stops locking on
+        [Test]
+        public void OnInput_KeyUp_StopsLockingOn()
+        {
+            SimulateKeyUp("j");
+            Assert.False(lockOn.isLockingOn());
+        }
+
+        // null target does not fire on target selected
+        [Test]
+        public void OnInput_KeyUpNoTargets_DoesNotFireOnTargetSelectedEvent()
+        {
+            SimulateKeyUp("j");
+            Assert.AreEqual(0, ((TestExecutionEvent) lockOn.onTargetSelected).timesExecuted);
+        }
+
+        // getkey right positive input switches targets
+        [UnityTest]
+        public IEnumerator OnInput_GetKeyPositiveHorziontalInput_SwitchesTargets()
+        {
+            GameObject a = LoadBattler(1);
+            GameObject b = LoadBattler(-1);
+            yield return new WaitForSeconds(1);
+            lockOn.inputService.GetKeyDown("j").Returns(true);
+            CallOnInput("j");
+            yield return null;
+            lockOn.inputService.GetKeyDown("j").Returns(false);
+            lockOn.inputService.GetKey("j").Returns(true);
+            lockOn.axisService.GetAxisDown("Horizontal").Returns(1);
+            GameObject expected = lockOn.CurrentTarget().transform == a.transform ? b : a;
+
+            CallOnInput("j");
+            Assert.AreSame(expected, lockOn.CurrentTarget().gameObject);
+        }
+
+        // ignores non battlers
+        [Test]
+        public void OnInput_Targeting_IgnoresNonBattlers()
+        {
+            GameObject obj = new GameObject();
+            obj.transform.position = Vector3.right;
+            objects.Add(obj);
+
+            lockOn.inputService.GetKeyDown("j").Returns(true);
+            CallOnInput("j");
+
+            Assert.Null(lockOn.CurrentTarget());
+        }
+    }
+
     public class KeyDownMashExecutableTest
     {
         KeyDownMashExecutable mash;

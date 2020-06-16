@@ -47,14 +47,5 @@ namespace ChainInputReaderTest
             reader.service.GetKey("space").Returns(true);
             Assert.AreEqual("", reader.ReadInput());
         }
-
-        [Test]
-        public void ReturnsMultipleInputTest()
-        {
-            reader.service.GetKey("j").Returns(true);
-            reader.service.GetKey("k").Returns(true);
-            string expected = reader.ReadInput();
-            Assert.True(expected.Equals("xz") || expected.Equals("zx"));
-        }
     }
 }

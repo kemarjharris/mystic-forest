@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections;
 
 public class LockOnExecutable : Executable
 {
@@ -9,36 +10,36 @@ public class LockOnExecutable : Executable
     public ExecutionEvent onTargetSelected;
     public float lockOnDuration;
 
+    public IUnityAxisService axisService = new UnityAxisService();
+    public IUnityInputService inputService = new UnityInputService();
+    public IUnityTimeService timeService = new UnityTimeService();
+
     private static LockOn lockOn;
     private static GameObject lockOnGameObject;
-    private static GameObject target;
+    private GameObject target;
     private float timeLockOnStarted;
-    bool lockOnNextFrame;
-
-    IUnityAxisService axisService = new UnityAxisService();
-    IUnityInputService inputService = new UnityInputService();
-    IUnityTimeService timeService = new UnityTimeService();
 
     public override void OnInput(string input, IBattler battler, ITargetSet targets)
     {
-        if (lockOnNextFrame)
-        {
-            target = lockOn.NextToLockOnTo();
-            lockOnNextFrame = false;
-        }
+        if (!CorrectButton(input)) return;
         // Wait to start locking on
         if (!lockOnGameObject.activeSelf)
         {
-            if (inputService.GetKeyDown("k"))
+            if (inputService.GetKeyDown(input))
             {
                 StartLockingOn(battler);
                 state.triggered = true;
+                target = lockOn.NextToLockOnTo();
+                if (target != null)
+                {
+                    targets.SetTarget(target.transform);
+                }
                 onStartLockOn.OnExecute(battler, targets);
                 timeLockOnStarted = timeService.unscaledTime;
             }
-        } else if (timeService.unscaledTime - timeLockOnStarted <= lockOnDuration)
+        } else if (state.triggered && timeService.unscaledTime - timeLockOnStarted <= lockOnDuration)
         {
-            if (inputService.GetKeyUp("k"))
+            if (inputService.GetKeyUp(input))
             {
                 if (target != null)
                 {
@@ -51,7 +52,7 @@ public class LockOnExecutable : Executable
                 }
                 StopLockingOn();
                 
-            } else if (DirectionalInputDown.InputOnAxisDown(true) > 0)
+            } else if (axisService.GetAxisDown("Horizontal") > 0)
             {
                 target = lockOn.NextToLockOnTo();
             }
@@ -65,10 +66,10 @@ public class LockOnExecutable : Executable
     private void StartLockingOn(IBattler battler)
     {
         lockOnGameObject.SetActive(true);
-        lockOn.gameObject.transform.SetParent(battler.gameObject.transform);
-        lockOn.gameObject.transform.localPosition = Vector3.zero;
-        lockOn.gameObject.transform.localScale = new Vector3(3.2f, 0.16f, 2.25f);
-        lockOnNextFrame = true;
+        lockOnGameObject.transform.SetParent(battler.gameObject.transform);
+        lockOnGameObject.transform.localPosition = Vector3.zero;
+        lockOnGameObject.transform.localScale = new Vector3(3.2f, 1f, 2.25f);
+        lockOn.rule = (Collider collider) => collider.gameObject.tag == "Battler" && battler.gameObject != collider.gameObject;
     }
 
     private void StopLockingOn()
@@ -79,15 +80,27 @@ public class LockOnExecutable : Executable
     public override void OnStart()
     {
         state = new ExecutableState();
+        if (onStartLockOn == null || onTargetSelected == null || lockOnDuration <= 0)
+        {
+            throw new System.ArgumentException("Unacceptable value for Lock On Data On start");
+        } 
+
         onTargetSelected.setOnCancellableEvent(() => state.cancellable = true);
         onTargetSelected.setOnFinishEvent(() => state.finished = true);
         if (lockOnGameObject == null)
         {
             lockOnGameObject = Object.Instantiate(lockOnPrefab);
             lockOn = lockOnGameObject.GetComponentInChildren<LockOn>();
-            lockOn.rule = (Collider collider) => collider.gameObject.tag == "Battler";
         }
         lockOn.gameObject.SetActive(false);
     }
+
+    /* for testing */
+
+    public GameObject CurrentTarget() => target;
+
+    public bool isLockingOn() => lockOnGameObject.activeSelf;
+
+    public ExecutionEvent OnTargetSelectedEvent() => onTargetSelected;
 }
  

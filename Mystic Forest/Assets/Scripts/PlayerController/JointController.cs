@@ -6,10 +6,10 @@ public class JointController : MonoBehaviour, IPlayerController
     IBattler battler;
     IBattlerPhysics physics;
     IExecutionModule module;
-    IChainExecutor chainExecutor;
     public BattlerSpeed speeds;
     CombatState state;
     public IUnityAxisService service;
+    public IUnityInputService inputService;
     bool groundedLastFrame;
     public float smoothTime = 0.1f;
     float horizontal;
@@ -17,8 +17,6 @@ public class JointController : MonoBehaviour, IPlayerController
     float hVel;
     float vVel;
     bool jumped;
-
-    public ExecutableChainSO jumpIn;
 
     private void Awake()
     {
@@ -35,6 +33,7 @@ public class JointController : MonoBehaviour, IPlayerController
             module = moduleGO.GetComponent<IExecutionModule>();
         }
         if (service == null) service = new UnityAxisService();
+        if (inputService == null) inputService = new UnityInputService();
         state = CombatState.NOT_ATTACKING;
         groundedLastFrame = physics.IsGrounded;
     }
@@ -54,7 +53,7 @@ public class JointController : MonoBehaviour, IPlayerController
                 horizontal = service.GetAxis("Horizontal");
                 vertical = service.GetAxis("Vertical");
 
-                if (Input.GetKeyDown("l"))
+                if (inputService.GetKeyDown("l"))
                 {
                     jumped = true;
                     module.ChangeSet(Aerials());
@@ -63,6 +62,7 @@ public class JointController : MonoBehaviour, IPlayerController
         }
         else
         {
+            
             horizontal = Mathf.SmoothDamp(horizontal, 0, ref hVel, smoothTime);
             vertical = Mathf.SmoothDamp(vertical, 0, ref vVel, smoothTime); ;
         }
@@ -90,9 +90,6 @@ public class JointController : MonoBehaviour, IPlayerController
 
     void StartModuleExecution()
     {
-
-
-
         module.StartExecution(physics.IsGrounded ? Normals() : Aerials(), battler);
     }
 

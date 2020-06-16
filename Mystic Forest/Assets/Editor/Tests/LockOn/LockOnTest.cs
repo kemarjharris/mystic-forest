@@ -47,20 +47,17 @@ namespace Tests
             Assert.Null(lockOn.NextToLockOnTo());
         }
 
-        /*
         [UnityTest]
         public IEnumerator LockOn_SameFrameAsActive_ReturnsGameObject()
         {
             lockOn.gameObject.SetActive(false);
             yield return null;
             GameObject expected = SpawnGOWithXPos(1);
-            yield return null;
             lockOn.gameObject.SetActive(true);
             GameObject result = lockOn.NextToLockOnTo();
             Assert.AreSame(expected, result);
 
         }
-        */
 
         // one GameObject in view gives that GameObject
         [UnityTest]
@@ -108,7 +105,6 @@ namespace Tests
             Object.Destroy(GameObject.gameObject);
             // New Target appears
             GameObject expected = SpawnGOWithXPos(1);
-            yield return null;
             GameObject result = lockOn.NextToLockOnTo();
             Assert.AreSame(expected, result);
         }

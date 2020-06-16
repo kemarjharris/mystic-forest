@@ -27,7 +27,6 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
 
     public T InputSelect()
     {
-        Debug.Log(CollectionUtils.Print(inputtedDirections));
         if (commandables == null) throw new NullReferenceException("Commandables are null in DirectionCommandPicker. Did you call the Set method?");
         if (ExistingInput() && service.unscaledTime - timeOfLastInput > timeBeforeClearingInput)
         {
