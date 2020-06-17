@@ -6,6 +6,18 @@ public class DirectionalInput {
 
     static readonly Direction[] dirs = EnumUtil.toArray<Direction>();
     public static IUnityAxisService service = new UnityAxisService();
+    public static IUnityTimeService timeService = new UnityTimeService();
+    private static Axis horizontal = new Axis();
+    private static Axis vertical = new Axis();
+    public static float liveRange = 0.2f;
+    
+
+    private struct Axis
+    {
+        public float value;
+        public int lastFramePressed;
+        public bool pressed;
+    }
 
     private static float InputOnAxis(string axis, float deadzone) {
         float axisValue = service.GetAxisRaw(axis);
@@ -28,9 +40,47 @@ public class DirectionalInput {
             angle = 360 - angle;
         }
         return angle;
-        
-
     }
+
+    public static float GetAxisDown(string axisName)
+    {
+        float CalculateAxis(ref Axis axis)
+        {
+            // assume axis hasnt been pressed
+            float result = 0;
+            // if the axis wasnt already being pressed down, change the value of result
+            axis.value = InputOnAxis(axisName, liveRange);
+            if (!axis.pressed)
+            {
+                result = axis.value;
+            }
+
+            // trigger flag for frame if on new frame
+            if (axis.lastFramePressed != timeService.frameCount)
+            {
+                // axis.pressed is if the axis was pressed this frame
+                axis.pressed = Mathf.Abs(axis.value) > liveRange;
+                // save value of last check 
+                axis.lastFramePressed = timeService.frameCount;
+            }
+
+            return result;
+        }
+
+        if (axisName == "Horizontal")
+        {
+            return CalculateAxis(ref horizontal);
+        }
+        else if (axisName == "Vertical")
+        {
+            return CalculateAxis(ref vertical);
+        } else
+        {
+            Debug.LogWarning("Unsupported axis " + axisName);
+            return 0;
+        }
+    }
+
     public static Direction GetSimpleDirection()
     {
         float angle = Angle();
@@ -55,4 +105,12 @@ public class DirectionalInput {
         }
         return dir;
     }
+
+    /* for testing */
+    public static void Reset()
+    {
+        horizontal = new Axis();
+        vertical = new Axis();
+    }
+
 }
