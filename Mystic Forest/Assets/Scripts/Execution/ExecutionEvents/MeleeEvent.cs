@@ -7,6 +7,7 @@ public class MeleeEvent : ExecutionEvent
     public float timeOfContact;
     public PlayableAnimSO animSO;
     public Attack attack;
+    public Vector3 playerVelocity;
     public bool aerial;
     public bool interrupted;
 
@@ -25,6 +26,10 @@ public class MeleeEvent : ExecutionEvent
     {
         yield return new WaitWhile(() => performer.IsFrozen);
         performer.Play(animSO);
+        if (playerVelocity != Vector3.zero)
+        {
+            performer.SetVelocity(playerVelocity);
+        }
         yield return new WaitForSeconds(timeOfContact);
         if (!interrupted)
         {

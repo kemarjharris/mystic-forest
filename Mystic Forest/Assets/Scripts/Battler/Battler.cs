@@ -89,38 +89,7 @@ public class Battler : MonoBehaviour, IBattler
         StartCoroutine(waitToUnfreeze());
     }
 
-    /*
+    public void SetVelocity(Vector3 velocity) => physics.SetVelocity(velocity);
 
-    public void JumpIn(IBattler target)
-    {
-        Vector3 jumpInPosition()
-        {
-            BoxCollider jumpInCollider = GetComponent<BoxCollider>();
-            BoxCollider targetCollider = target.gameObject.GetComponent<BoxCollider>();
-            float jumpInWidth = (jumpInCollider.size.x * jumpInCollider.gameObject.transform.localScale.x) / 2f;
-            float targetWidth = (targetCollider.size.x * targetCollider.gameObject.transform.localScale.x) / 2f;
-            float xDistance = jumpInWidth + targetWidth;
-            if (transform.position.x <= target.gameObject.transform.position.x)
-            {
-                return target.gameObject.transform.position - (Vector3.right * xDistance);
-            }
-            else
-            {
-                return target.gameObject.transform.position + (Vector3.right * xDistance);
-            }
-        }
-        Vector3 targetPos = jumpInPosition();
-        float CalculateSpeed()
-        {
-            float time = 0.5f;
-            float distance = Vector3.Distance(transform.position, targetPos);
-            return distance / time;
-        }
-        float speed = CalculateSpeed();
-        StartCoroutine(jumpIn.Travel(transform, targetPos, speed));
-        controller.SwapToCombatMode();
-
-    }
-    */
     public bool IsFrozen => physics.freeze;
 }

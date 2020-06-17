@@ -21,6 +21,8 @@ public interface IBattler
     bool IsGrounded { get; }
     bool IsFrozen { get; }
 
+    void SetVelocity(Vector3 velocity);
+
     //void JumpIn(IBattler targetBattler);
 
     Coroutine StartCoroutine(IEnumerator routune);
