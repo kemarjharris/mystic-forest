@@ -19,17 +19,13 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
     private struct PlayableAnimData
     {
         public readonly int pos;
-        public readonly float speed;
-        public readonly System.Func<float, Vector3> func;
-        public readonly AnimationClipPlayable playable;
-        public readonly bool moves;
-        public PlayableAnimData(int pos, float speed, System.Func<float, Vector3> func, AnimationClipPlayable playable, bool moves)
+        public IPlayableAnim anim;
+        public AnimationClipPlayable playable;
+        public PlayableAnimData(int pos, IPlayableAnim anim, AnimationClipPlayable playable)
         {
             this.pos = pos;
-            this.speed = speed;
-            this.func = func;
+            this.anim = anim;
             this.playable = playable;
-            this.moves = moves;
         }
     }
 
@@ -39,7 +35,7 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
         AnimationClipPlayable playable = AnimationClipPlayable.Create(playableGraph, anim.GetAnimationClip());
         playable.SetSpeed(anim.GetSpeed());
         animMap.Add(anim.GetName(),
-           new PlayableAnimData(animMap.Count, anim.GetSpeed(), anim.Evaluate, playable, anim.Moves()));
+           new PlayableAnimData(animMap.Count, anim, playable));
         playableGraph.Connect(playable, 0, mixerPlayable, animMap.Count - 1);
     }
 
@@ -74,7 +70,7 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
                 pair.Value.playable.SetTime(0);
                 mixerPlayable.SetInputWeight(pair.Value.pos, 1);
 
-                if (pair.Value.moves)
+                if (pair.Value.anim.Moves())
                 {
                     if (coroutine != null)
                     {
@@ -93,12 +89,13 @@ public class MixAnimator : MonoBehaviour, IMixAnimator
     {
         Vector3 start = transform.position;
         float timePassed = 0;
-        while (true)
+        float length = data.anim.GetLength() / Mathf.Max(0.01f, data.anim.GetSpeed());
+        while (timePassed < length)
         {
             yield return null;
             if (animator.enabled)
             {
-                transform.position = start + data.func(timePassed);
+                transform.position = start + data.anim.Evaluate(timePassed);
                 timePassed += Time.unscaledDeltaTime;
             }
         }

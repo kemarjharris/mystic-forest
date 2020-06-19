@@ -12,7 +12,7 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
     [Range(0, 1)] public float airForcePercentage = 0.3f;
     Rigidbody rb;
     public new BoxCollider collider;
-
+    Vector3 jumpHorizontalVelocity;
 
     public bool freeze {
         get => rb.isKinematic;
@@ -101,6 +101,7 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
     {
         float verticalVelocity = velocity.y;
         Vector3 groundVelocity = new Vector3(velocity.x, 0, velocity.z);
+        jumpHorizontalVelocity = groundVelocity;
         //rb.velocity = Vector3.zero;
         if (verticalVelocity > 0 && IsGrounded) transform.position += Vector3.up * 0.1f;
         rb.velocity = groundVelocity + Vector3.up * (verticalVelocity < 0 && IsGrounded ? 0 : verticalVelocity);
@@ -111,26 +112,23 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
     {
         if (IsGrounded) // apply drag
         {
+            //jumpHorizontalVelocity = Vector3.zero;
             rb.velocity *= 1 - dragFactor;
         }
         else
         {
             // fall
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y + (Physics.gravity.y * Time.fixedDeltaTime), rb.velocity.z);
+            rb.velocity = new Vector3(jumpHorizontalVelocity.x, rb.velocity.y + (Physics.gravity.y * Time.fixedDeltaTime), jumpHorizontalVelocity.z);
+            
             
             if (collider.enabled)
             {
-                // if approaching ground turn on collsion
                 bool collided = CheckUnderCollider(out RaycastHit hitInfo);
                 // if approaching battler turn off collision
-                if (collided && hitInfo.collider.gameObject.tag == "Battler")
+                if (collided && hitInfo.collider.gameObject.tag == "Battler" && rb.velocity.y < 0)
                 {
+                    //Debug.Break();
                     collider.enabled = false;
-                    Debug.Log("LAAAA LALALA NICO NICO NIIII");
-                    //if (rb.velocity.y < 0)
-                    //{
-                    //  PushAwayCollider(hitInfo.collider);
-                    //}
                 }
             } else
             {
@@ -139,21 +137,39 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
                 {
                     int battlerCollider = -1;
                     int groundCollider = -1;
+                    int wallCollider = -1;
                     for (int i = 0; i < hits.Length; i ++)
                     {
                         if (hits[i].collider.gameObject.tag == "Battler") battlerCollider = i;
-                        if (hits[i].collider == ground.collider) groundCollider = i;
+                        else if (hits[i].collider.gameObject.tag == "Ground") groundCollider = i;
+                        else if (hits[i].collider.gameObject.tag == "Wall") wallCollider = i;
                     }
 
                     if (groundCollider >= 0) // collided w ground 
                     {
-                        Debug.Log("NIII HAPPI UUUUUN");
+                        
                         if (battlerCollider >= 0) // approaching ground and still overlapping with battler
                         {
                             PushAwayCollider(hits[battlerCollider].collider);
                         }
+                        // if approaching ground turn on collsion
+                        collider.enabled = true;
+                    } else if (wallCollider >= 0)
+                    {
+                        if (battlerCollider >= 0) // colliding with wall and a battler
+                        {
+                            // push yourself away from the wall and battler
+                            PushAwayCollider(collider);
+                            jumpHorizontalVelocity = Vector3.zero;
+                        }
+                        // wall enable collider
                         collider.enabled = true;
                     }
+
+
+                } else //  if nothing beneath battler enable collider
+                {
+                    collider.enabled = true;
                 }
             }
         }
@@ -187,7 +203,7 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
 
         if (colliderCenter > col.transform.position.x) push *= -1;
 
-        transform.position -= push;
+        // transform.position -= push;
         col.transform.position += push;
     }
 }

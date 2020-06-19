@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f602630726f2074ab5aad86cf5bfc80, type: 3}
   m_Name: Warrior Speeds
   m_EditorClassIdentifier: 
-  jumpForce: 12
+  jumpForce: 16
   jumpHorizontalForce: 6
   speed: 6
   jumpInSpeed: 6
