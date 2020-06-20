@@ -15,6 +15,21 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
     public new BoxCollider collider;
     Vector3 jumpHorizontalVelocity;
 
+    private bool colliderOn
+    {
+        get
+        {
+            // return collider.enabled;
+            return !collider.isTrigger;
+        }
+
+        set
+        {
+            //collider.enabled = value;
+            collider.isTrigger = !value;
+        }
+    }
+
     public bool freeze {
         get => rb.isKinematic;
         set {
@@ -67,35 +82,51 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
         collider = GetComponent<BoxCollider>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnColliderEnter(Collider other)
     {
         // Case for landing on the ground
-        if (collision.collider == ground.collider)
+        if (other == ground.collider)
         {
             HandleGroundCollision();
         }
-
-        // Case for landing in a battler
-        else if (collision.gameObject.tag == "Battler" && collider.bounds.Contains(collision.transform.position + ((BoxCollider) collision.collider).center)) 
-        {
-            PushAwayCollider(collision.collider);
-        }
     }
 
-
-    private void HandleGroundCollision()
+    private void OnColliderExit(Collider other)
     {
-        IsGrounded = true;
-    }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.collider == ground.collider)
+        Debug.Log("fuurero");
+
+        if (other == ground.collider)
         {
 
             IsGrounded = false;
             //rb.useGravity = true;
         }
+    }
+
+    private void OnCollisionEnter(Collision collision) => OnColliderEnter(collision.collider);
+    private void OnCollisionExit(Collision collision) => OnColliderExit(collision.collider);
+    private void OnTriggerEnter(Collider other) => OnColliderEnter(other);
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Battler" && !colliderOn)
+        {
+            Debug.Log(name);
+
+            if (PointInOABB(transform.position, (BoxCollider) other))
+            {
+                Debug.Log("so my, name is, ragna, da blud, EJ");
+                PushAwayCollider(other);
+            }
+
+        }
+    }
+
+    private void HandleGroundCollision()
+    {
+        IsGrounded = true;
     }
 
     public void SetVelocity(Vector3 velocity)
@@ -121,20 +152,7 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
             // fall
             rb.velocity = new Vector3(jumpHorizontalVelocity.x, Mathf.Max(rb.velocity.y + (Physics.gravity.y * Time.fixedDeltaTime), terminalVelocity), jumpHorizontalVelocity.z);
             
-            
-            if (collider.enabled)
-            {
-                bool collided = CheckUnderCollider(out RaycastHit hitInfo);
-                // if approaching battler turn off collision
-                if (collided && hitInfo.collider.gameObject.tag == "Battler" && rb.velocity.y <= 0)
-                {
-                    collider.enabled = false;
-                    if (hitInfo.collider.attachedRigidbody.velocity.y > 0)
-                    {    // other battler is rising
-                        PushAwayCollider(hitInfo.collider);
-                    }
-                }
-            } else
+            if (!colliderOn) // something currently underneath battler
             {
                 RaycastHit[] hits = CheckUnderColliderAll();
                 if (hits.Length > 0)
@@ -151,13 +169,12 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
 
                     if (groundCollider >= 0) // collided w ground 
                     {
-                        
                         if (battlerCollider >= 0) // approaching ground and still overlapping with battler
                         {
-                            PushAwayCollider(hits[battlerCollider].collider);
+                            // PushAwayCollider(hits[battlerCollider].collider);
                         }
                         // if approaching ground turn on collsion
-                        collider.enabled = true;
+                        colliderOn = true;
                     } else if (wallCollider >= 0)
                     {
                         if (battlerCollider >= 0) // colliding with wall and a battler
@@ -166,14 +183,24 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
                             PushAwayCollider(collider);
                             jumpHorizontalVelocity = Vector3.zero;
                         }
-                        // wall enable collider
-                        collider.enabled = true;
                     }
 
 
                 } else //  if nothing beneath battler enable collider
                 {
-                    collider.enabled = true;
+                    colliderOn = true;
+                }
+            } else // nothing underneath battler
+            {
+                bool collided = CheckUnderCollider(out RaycastHit hitInfo);
+                // if approaching battler turn off collision
+                if (collided && hitInfo.collider.gameObject.tag == "Battler" && rb.velocity.y < 0)
+                {
+                    colliderOn = false;
+                    if (hitInfo.collider.attachedRigidbody.velocity.y > 0)
+                    {    // other battler is rising
+                        PushAwayCollider(hitInfo.collider);
+                    }
                 }
             }
         }
@@ -182,7 +209,7 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
     private void OnDrawGizmosSelected()
     {
         Vector3 scaled = Vector3.Scale(collider.size, gameObject.transform.localScale);
-        BoxColliderDrawer.DrawBoxCollider(transform, collider.enabled? Color.magenta: Color.yellow, collider.center, collider.size);
+        BoxColliderDrawer.DrawBoxCollider(transform, colliderOn ? Color.magenta: Color.yellow, collider.center, collider.size);
         BoxCastVisualizer.DrawBoxCastBox(transform.position + collider.center + Vector3.down * 0.5f, new Vector3(scaled.x, 1, scaled.z) / 2, Quaternion.identity, Vector3.down, 0, Color.cyan);
     }
 
@@ -200,14 +227,28 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
         return Physics.BoxCastAll(transform.position + collider.center * 0.5f, new Vector3(scaled.x, 1, scaled.z) / 2, Vector3.down, Quaternion.identity, 0.5f);
     }
 
-    private void PushAwayCollider(Collider col)
+    private void PushAwayCollider(Collider col, float amount = 1)
     {
         float colliderCenter = transform.position.x + collider.center.x;
         Vector3 push = new Vector3((collider.size.x * transform.localScale.x) / 2, 0, 0);
 
         if (colliderCenter > col.transform.position.x) push *= -1;
+        col.transform.position += push * amount;
+    }
 
-        // transform.position -= push;
-        col.transform.position += push;
+    private bool PointInOABB(Vector3 point, BoxCollider box)
+    {
+        point = box.transform.InverseTransformPoint(point) - box.center;
+
+        // Vector3 size = Vector3.Scale(box.size, box.transform.localScale);
+        float halfX = (box.size.x * 0.5f);
+        float halfY = (box.size.y * 0.5f);
+        float halfZ = (box.size.z * 0.5f);
+        if (point.x < halfX && point.x > -halfX &&
+           point.y < halfY && point.y > -halfY &&
+           point.z < halfZ && point.z > -halfZ)
+            return true;
+        else
+            return false;
     }
 }
