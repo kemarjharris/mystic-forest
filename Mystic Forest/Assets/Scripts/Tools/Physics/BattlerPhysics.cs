@@ -10,6 +10,7 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
     public bool IsGrounded { private set; get; }
     [Range(0, 1)] public float dragFactor = 0.3f;
     [Range(0, 1)] public float airForcePercentage = 0.3f;
+    public float terminalVelocity = -10;
     Rigidbody rb;
     public new BoxCollider collider;
     Vector3 jumpHorizontalVelocity;
@@ -118,17 +119,20 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
         else
         {
             // fall
-            rb.velocity = new Vector3(jumpHorizontalVelocity.x, rb.velocity.y + (Physics.gravity.y * Time.fixedDeltaTime), jumpHorizontalVelocity.z);
+            rb.velocity = new Vector3(jumpHorizontalVelocity.x, Mathf.Max(rb.velocity.y + (Physics.gravity.y * Time.fixedDeltaTime), terminalVelocity), jumpHorizontalVelocity.z);
             
             
             if (collider.enabled)
             {
                 bool collided = CheckUnderCollider(out RaycastHit hitInfo);
                 // if approaching battler turn off collision
-                if (collided && hitInfo.collider.gameObject.tag == "Battler" && rb.velocity.y < 0)
+                if (collided && hitInfo.collider.gameObject.tag == "Battler" && rb.velocity.y <= 0)
                 {
-                    //Debug.Break();
                     collider.enabled = false;
+                    if (hitInfo.collider.attachedRigidbody.velocity.y > 0)
+                    {    // other battler is rising
+                        PushAwayCollider(hitInfo.collider);
+                    }
                 }
             } else
             {

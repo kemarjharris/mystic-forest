@@ -214,8 +214,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.25527415, y: 0.22332478, z: 0.2}
-  m_Center: {x: 0.000107606254, y: -0.13496074, z: 0}
+  m_Size: {x: 0.25527415, y: 0.41112083, z: 0.20000002}
+  m_Center: {x: 0.000107606254, y: -0.041062713, z: 0}
 --- !u!114 &7549325027591840122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,6 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragFactor: 0.3
   airForcePercentage: 0.3
+  terminalVelocity: -19
   collider: {fileID: 7549325027591840120}
 --- !u!95 &5357676517641398453
 Animator:
@@ -276,4 +277,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speeds: {fileID: 11400000, guid: 6b34d1eae332d1a4cb7805b950053896, type: 2}
   smoothTime: 0.1
-  jumpIn: {fileID: 11400000, guid: 43a94eae7e8ef6f40b61fa6526881164, type: 2}

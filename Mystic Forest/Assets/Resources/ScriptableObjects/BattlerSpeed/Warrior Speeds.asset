@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Warrior Speeds
   m_EditorClassIdentifier: 
   jumpForce: 16
-  jumpHorizontalForce: 6
+  jumpHorizontalForce: 4
   speed: 6
   jumpInSpeed: 6
