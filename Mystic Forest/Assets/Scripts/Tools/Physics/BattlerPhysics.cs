@@ -169,23 +169,30 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
 
                     if (groundCollider >= 0) // collided w ground 
                     {
-                        if (battlerCollider >= 0) // approaching ground and still overlapping with battler
-                        {
-                            // PushAwayCollider(hits[battlerCollider].collider);
-                        }
-                        // if approaching ground turn on collsion
                         colliderOn = true;
                     } else if (wallCollider >= 0)
                     {
+                        
                         if (battlerCollider >= 0) // colliding with wall and a battler
                         {
+                            Debug.Log("ienai, mama de");
+
+                            float offset = 1f;
+                            if (hits[wallCollider].collider.transform.position.x > transform.position.x) // wall in front of battler
+                            {
+                                offset *= -1;
+                            }
+
+                            // move slighty to the side of battler to trigger push away
+                            transform.position = hits[battlerCollider].transform.position + Vector3.right * offset;
+
                             // push yourself away from the wall and battler
-                            PushAwayCollider(collider);
+                            PushSelfFromCollider(hits[battlerCollider].collider);
                             jumpHorizontalVelocity = Vector3.zero;
                         }
+
+                        colliderOn = true;
                     }
-
-
                 } else //  if nothing beneath battler enable collider
                 {
                     colliderOn = true;
@@ -221,6 +228,12 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
         return collided;
     }
 
+    private RaycastHit[] CheckCollider()
+    {
+        Vector3 scaled = Vector3.Scale(collider.size, gameObject.transform.localScale);
+        return Physics.BoxCastAll(transform.position + collider.center * 0.5f, new Vector3(scaled.x, 1, scaled.z) / 2, Vector3.zero, Quaternion.identity, 0.5f);
+    }
+
     private RaycastHit[] CheckUnderColliderAll()
     {
         Vector3 scaled = Vector3.Scale(collider.size, gameObject.transform.localScale);
@@ -234,6 +247,15 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
 
         if (colliderCenter > col.transform.position.x) push *= -1;
         col.transform.position += push * amount;
+    }
+
+    private void PushSelfFromCollider(Collider other, float amount = 1)
+    {
+        float colliderCenter = transform.position.x + collider.center.x;
+        Vector3 push = new Vector3((collider.size.x * transform.localScale.x) / 2, 0, 0);
+
+        if (colliderCenter < other.transform.position.x) push *= -1;
+        collider.transform.position += push * amount;
     }
 
     private bool PointInOABB(Vector3 point, BoxCollider box)
