@@ -111,16 +111,9 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Battler" && !colliderOn)
+        if (other.gameObject.tag == "Battler" && !colliderOn && PointInOABB(transform.position, (BoxCollider)other))
         {
-            Debug.Log(name);
-
-            if (PointInOABB(transform.position, (BoxCollider) other))
-            {
-                Debug.Log("so my, name is, ragna, da blud, EJ");
-                PushAwayCollider(other);
-            }
-
+            PushAwayCollider(other);
         }
     }
 
@@ -172,10 +165,8 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
                         colliderOn = true;
                     } else if (wallCollider >= 0)
                     {
-                        
                         if (battlerCollider >= 0) // colliding with wall and a battler
                         {
-                            Debug.Log("ienai, mama de");
 
                             float offset = 1f;
                             if (hits[wallCollider].collider.transform.position.x > transform.position.x) // wall in front of battler
