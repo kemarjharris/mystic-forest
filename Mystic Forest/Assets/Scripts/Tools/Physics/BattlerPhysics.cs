@@ -153,33 +153,43 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
                     int battlerCollider = -1;
                     int groundCollider = -1;
                     int wallCollider = -1;
+                    int edgeWallCollider = -1;
                     for (int i = 0; i < hits.Length; i ++)
                     {
-                        if (hits[i].collider.gameObject.tag == "Battler") battlerCollider = i;
-                        else if (hits[i].collider.gameObject.tag == "Ground") groundCollider = i;
-                        else if (hits[i].collider.gameObject.tag == "Wall") wallCollider = i;
+                        if (hits[i].collider.tag == "Battler" && hits[i].collider != collider) battlerCollider = i;
+                        else if (hits[i].collider.tag == "Ground") groundCollider = i;
+                        else if (hits[i].collider.tag == "Wall") wallCollider = i;
+                        else if (hits[i].collider.tag == "Edge Wall") edgeWallCollider = i;
                     }
 
                     if (groundCollider >= 0) // collided w ground 
                     {
                         colliderOn = true;
-                    } else if (wallCollider >= 0)
+                    } else if (wallCollider >= 0 || edgeWallCollider >= 0) // colliding with wall
                     {
-                        if (battlerCollider >= 0) // colliding with wall and a battler
+                        if (edgeWallCollider >= 0 && battlerCollider >= 0) 
                         {
 
-                            float offset = 1f;
-                            if (hits[wallCollider].collider.transform.position.x > transform.position.x) // wall in front of battler
+                            // if battler is touching wall and ground
+                            RaycastHit[] battlerHits = CheckCollider((BoxCollider) hits[battlerCollider].collider);
+
+
+                            float offset = 0.1f;
+                            if (hits[edgeWallCollider].collider.transform.position.x > transform.position.x) // wall in front of battler
                             {
                                 offset *= -1;
                             }
 
                             // move slighty to the side of battler to trigger push away
-                            transform.position = hits[battlerCollider].transform.position + Vector3.right * offset;
+                            transform.position =
+                                new Vector3(hits[battlerCollider].transform.position.x + offset, transform.position.y, transform.position.z);
 
                             // push yourself away from the wall and battler
                             PushSelfFromCollider(hits[battlerCollider].collider);
                             jumpHorizontalVelocity = Vector3.zero;
+                        } else if (wallCollider >= 0 && battlerCollider >= 0)
+                        {
+                            PushAwayCollider(hits[battlerCollider].collider);
                         }
 
                         colliderOn = true;
@@ -219,7 +229,7 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
         return collided;
     }
 
-    private RaycastHit[] CheckCollider()
+    private RaycastHit[] CheckCollider(BoxCollider collider)
     {
         Vector3 scaled = Vector3.Scale(collider.size, gameObject.transform.localScale);
         return Physics.BoxCastAll(transform.position + collider.center * 0.5f, new Vector3(scaled.x, 1, scaled.z) / 2, Vector3.zero, Quaternion.identity, 0.5f);

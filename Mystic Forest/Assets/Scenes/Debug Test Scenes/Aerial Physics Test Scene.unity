@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 201713076}
   m_Layer: 0
   m_Name: Right Wall
-  m_TagString: Wall
+  m_TagString: Edge Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -571,6 +571,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7549325027591840122, guid: cb10245f5dff17b4f9709cd2c51c56b9,
+        type: 3}
+      propertyPath: terminalVelocity
+      value: -20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
@@ -904,7 +909,7 @@ GameObject:
   - component: {fileID: 1127624788}
   m_Layer: 0
   m_Name: Left Wall
-  m_TagString: Wall
+  m_TagString: Edge Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
