@@ -187,12 +187,16 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
                             // push yourself away from the wall and battler
                             PushSelfFromCollider(hits[battlerCollider].collider);
                             jumpHorizontalVelocity = Vector3.zero;
+
+                            Debug.Log("inotta");
+
                         } else if (wallCollider >= 0 && battlerCollider >= 0)
                         {
                             PushAwayCollider(hits[battlerCollider].collider);
+                        } else
+                        {
+                            colliderOn = true;
                         }
-
-                        colliderOn = true;
                     }
                 } else //  if nothing beneath battler enable collider
                 {
