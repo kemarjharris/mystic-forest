@@ -13,6 +13,8 @@ public class Battler : MonoBehaviour, IBattler
     SpriteRenderer sprite;
     public ExecutableChainSetSOImpl chainSet;
 
+    float hitStun;
+
     protected void Awake()
     {
         animator = GetComponentInChildren<MixAnimator>();
@@ -46,30 +48,28 @@ public class Battler : MonoBehaviour, IBattler
     public void GetAttacked(IAttack attack)
     {
         Debug.Log(name + "was hit");
-        IEnumerator FlashRed()
-        {
-            float frames = 5;
-            for (int i = 0; i < 3; i ++)
-            {
-                sprite.color = Color.red;
-                int j = 0;
-                while (sprite.color != Color.white)
-                {
-                    yield return null;
-                    sprite.color = Color.LerpUnclamped(Color.red, Color.white, j / frames);
-                    j++;
-                    
-                }
-            }
-        }
         if (attack.hasKnockBack) physics.SetVelocity(attack.force);
-        // FreezeFrame(attack.freezeTime);
-        StartCoroutine(FlashRed());
+        FreezeFrame(attack.freezeTime);
+        Flinch(attack);
     }
 
     void Flinch(IAttack attack)
     {
+        eventSet.onBattlerHit(this);
+        IEnumerator flinch()
+        {
+            sprite.color = Color.red;
+            for (; hitStun > 0; hitStun -= Time.deltaTime) yield return null;
+            sprite.color = Color.white;
+            eventSet.onBattlerRecovered(this);
+        }
 
+        float oldHitStun = hitStun;
+        hitStun = attack.hitStun;
+        if (oldHitStun <= 0)
+        {
+            StartCoroutine(flinch());
+        }
     }
 
     public void FreezeFrame(float duration, Action onUnfreeze = null)

@@ -18,5 +18,7 @@ MonoBehaviour:
     force: {x: 0, y: 0, z: 0}
     freezeTime: 0.1
     hasKnockBack: 1
+    hitStun: 2
+  playerVelocity: {x: 0, y: 0, z: 0}
   aerial: 0
   interrupted: 0
