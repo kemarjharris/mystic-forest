@@ -43,7 +43,7 @@ public class MeleeEvent : ExecutionEvent
             });
             if (madeContact)
             {
-                performer.FreezeFrame(attack.freezeTime);
+                //performer.FreezeFrame(attack.freezeTime);
                 onCancellableEvent?.Invoke();
             }
             float waitTime = animSO.GetLength() - timeOfContact + (madeContact ? freezeTime : 0);
