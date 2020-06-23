@@ -15,6 +15,16 @@ public class ComboCounter : MonoBehaviour, IComboCounter
         inHitStun = new HashSet<IBattler>();
     }
 
+    public void Start()
+    {
+        SetUpEvents(AddComboEvents);
+    }
+
+    public void OnDestroy()
+    {
+        SetUpEvents(RemoveComboEvents);
+    }
+
     public void OnBattlerHit(IBattler battler)
     {
         inHitStun.Add(battler);
@@ -31,4 +41,28 @@ public class ComboCounter : MonoBehaviour, IComboCounter
             comboCount = 0;
         }
     }
+
+    void SetUpEvents(Action<IBattler> setupFunction)
+    {
+        GameObject[] battlers = GameObject.FindGameObjectsWithTag("Battler");
+        for (int i = 0; i < battlers.Length; i++)
+        {
+            Battler b = battlers[i].GetComponent<Battler>();
+            setupFunction(b);
+        }
+    }
+
+    void AddComboEvents(IBattler battler)
+    {
+        battler.eventSet.onBattlerHit += OnBattlerHit;
+        battler.eventSet.onBattlerRecovered += OnBattlerRecovered;
+    }
+
+    void RemoveComboEvents(IBattler battler)
+    {
+        battler.eventSet.onBattlerHit -= OnBattlerHit;
+        battler.eventSet.onBattlerRecovered -= OnBattlerRecovered;
+    }
+
+
 }

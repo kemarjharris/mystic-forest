@@ -23,7 +23,7 @@ public interface IBattler
 
     void SetVelocity(Vector3 velocity);
 
-    //void JumpIn(IBattler targetBattler);
-
     Coroutine StartCoroutine(IEnumerator routune);
+
+    IBattlerEventSet eventSet { get; set; }
 }

@@ -19,6 +19,7 @@ public class Battler : MonoBehaviour, IBattler
         sprite = GetComponentInChildren<SpriteRenderer>();
         controller = GetComponent<IPlayerController>();
         sprite.transform.forward = Camera.main.transform.forward;
+        eventSet = new BattlerEventSet();
 
         hitBox = GetComponentInChildren<IHitBox>();
         physics = GetComponent<BattlerPhysics>();
@@ -66,6 +67,11 @@ public class Battler : MonoBehaviour, IBattler
         StartCoroutine(FlashRed());
     }
 
+    void Flinch(IAttack attack)
+    {
+
+    }
+
     public void FreezeFrame(float duration, Action onUnfreeze = null)
     {
         // suspend in air and pause animation
@@ -92,4 +98,6 @@ public class Battler : MonoBehaviour, IBattler
     public void SetVelocity(Vector3 velocity) => physics.SetVelocity(velocity);
 
     public bool IsFrozen => physics.freeze;
+
+    public IBattlerEventSet eventSet { get; set; }
 }
