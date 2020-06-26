@@ -17,6 +17,8 @@ public class JointController : MonoBehaviour, IPlayerController
     float hVel;
     float vVel;
     bool jumped;
+    bool executing = true;
+    bool comboing = false;
 
     private void Awake()
     {
@@ -42,7 +44,7 @@ public class JointController : MonoBehaviour, IPlayerController
     {
         if (!groundedLastFrame && physics.IsGrounded)
         {
-            module.ChangeSet(state == CombatState.NOT_ATTACKING ? Normals() : Skills());
+            module.ChangeSet(comboing? Skills() : StateNormals());
         }
 
         // no input during combat
@@ -52,8 +54,7 @@ public class JointController : MonoBehaviour, IPlayerController
             {
                 horizontal = service.GetAxis("Horizontal");
                 vertical = service.GetAxis("Vertical");
-
-                if (inputService.GetKeyDown("l"))
+                if (inputService.GetKeyDown("space"))
                 {
                     jumped = true;
                     module.ChangeSet(Aerials());
@@ -84,13 +85,28 @@ public class JointController : MonoBehaviour, IPlayerController
         else if (physics.IsGrounded && state == CombatState.NOT_ATTACKING)
         {
             // move
-            physics.SetVelocity(new Vector3(horizontal * speeds.speed, 0, vertical * speeds.speed));
+            physics.SetVelocity(new Vector3(horizontal, 0, comboing ? 0 : vertical) * speeds.speed);
+        }
+    }
+
+    public void LateUpdate()
+    {
+        if (!executing)
+        {
+            StartModuleExecution();
         }
     }
 
     void StartModuleExecution()
     {
-        module.StartExecution(physics.IsGrounded ? Normals() : Aerials(), battler);
+        module.StartExecution(comboing ? Skills() : StateNormals(), battler);
+        executing = true;
+    }
+
+    IExecutableChainSet StateNormals()
+    {
+        bool StateNormal(IExecutableChain chain) => !chain.IsSkill && physics.IsGrounded ? !chain.IsAerial : chain.IsAerial;
+        return battler.ChainSet.Where(StateNormal);
     }
 
 
@@ -109,7 +125,7 @@ public class JointController : MonoBehaviour, IPlayerController
 
     IExecutableChainSet Skills()
     {
-        bool IsSkill(IExecutableChain chain) => !chain.IsAerial;
+        bool IsSkill(IExecutableChain chain) => physics.IsGrounded ? !chain.IsAerial : chain.IsAerial;
         return battler.ChainSet.Where(IsSkill);
     }
 
@@ -118,6 +134,7 @@ public class JointController : MonoBehaviour, IPlayerController
         module.OnNewChainLoaded.AddAction(OnNewChainLoaded);
         module.OnChainCancellable.AddAction(OnChainCancellable);
         module.OnChainFinished.AddAction(OnChainFinished);
+        SetUpComboEvents();
         StartModuleExecution();
     }
 
@@ -126,15 +143,55 @@ public class JointController : MonoBehaviour, IPlayerController
         module.OnNewChainLoaded.RemoveAction(OnNewChainLoaded);
         module.OnChainCancellable.RemoveAction(OnChainCancellable);
         module.OnChainFinished.RemoveAction(OnChainFinished);
+        TearDownComboEvents();
     }
 
-    void OnNewChainLoaded(ICustomizableEnumerator<IExecutable> obj) => state = CombatState.ATTACKING;
+    void OnNewChainLoaded(ICustomizableEnumerator<IExecutable> obj)
+    {
+        state = CombatState.ATTACKING;
+       
+    }
     void OnChainCancellable() => state = CombatState.ABLE_TO_CANCEL_ATTACK;
     void OnChainFinished()
     {
         battler.StopCombatAnimation();
         state = CombatState.NOT_ATTACKING;
-        StartModuleExecution();
+        executing = false;
+    }
+
+    void SetUpComboEvents()
+    {
+        GameObject counter = GameObject.FindGameObjectWithTag("Combo Counter");
+        if (counter != null)
+        {
+            ComboCounter comboCounter = counter.GetComponent<ComboCounter>();
+            comboCounter.onCountIncremented += RaiseComboFlag;
+            comboCounter.onComboFinished += LowerComboFlag;
+        }
+
+    }
+
+    void TearDownComboEvents()
+    {
+        GameObject counter = GameObject.FindGameObjectWithTag("Combo Counter");
+        if (counter != null)
+        {
+            ComboCounter comboCounter = counter.GetComponent<ComboCounter>();
+            comboCounter.onCountIncremented -= RaiseComboFlag;
+            comboCounter.onComboFinished -= LowerComboFlag;
+        }
+    }
+
+    void RaiseComboFlag(int i)
+    {
+        GetComponentInChildren<SpriteRenderer>().color = Color.cyan;
+        comboing = true;
+    }
+
+    void LowerComboFlag()
+    {
+        GetComponentInChildren<SpriteRenderer>().color = Color.white;
+        comboing = false;
     }
 
     /* for testing */

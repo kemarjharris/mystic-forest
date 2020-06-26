@@ -20,23 +20,18 @@ public class EffectMeleeEvent : MeleeEvent
         GameObject gameObject = Instantiate(effectPrefab, performer.gameObject.transform.position, Quaternion.identity);
         MixAnimator animator = gameObject.GetComponent<MixAnimator>();
         animator.Play(effectAnim);
+        // invoke cancellable event
+        onCancellableEvent?.Invoke();
         yield return new WaitForSeconds(timeOfContact);
         // Get hitbox to use
-        HitBox hitBox = gameObject.GetComponentInChildren<HitBox>();
+        IHitBox hitBox = gameObject.GetComponentInChildren<IHitBox>();
         // check hitbox of effect
-        bool madeContact = false;
         hitBox.CheckCollision(delegate (Collider collider) {
             IBattler battler = collider.gameObject.GetComponent<Battler>();
             if (battler == null || battler == performer) return;
             battler.GetAttacked(attack);
-            madeContact = true;
         });
-        if (madeContact)
-        {
-            // invoke cancellable event
-            onCancellableEvent?.Invoke();
-        }
-        yield return new WaitForSeconds(effectAnim.GetLength() - timeOfContact);
+        yield return new WaitForSeconds(animSO.GetLength() - effectSpawnTime);
         Destroy(gameObject);
         onFinishEvent?.Invoke();
     }

@@ -123,6 +123,12 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2058431001446035168, guid: cb10245f5dff17b4f9709cd2c51c56b9,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300202, guid: cad4b22f446e0884e99803495aeef1cf,
+        type: 3}
     - target: {fileID: 7549325027591840112, guid: cb10245f5dff17b4f9709cd2c51c56b9,
         type: 3}
       propertyPath: m_Name
@@ -453,6 +459,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
+      propertyPath: speeds
+      value: 
+      objectReference: {fileID: 11400000, guid: 6b34d1eae332d1a4cb7805b950053896,
+        type: 2}
+    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
+      propertyPath: manaBurst
+      value: 
+      objectReference: {fileID: 11400000, guid: 7bb7d6c704e318f4faca2cebf785a73c,
+        type: 2}
+    - target: {fileID: 5357676517641398453, guid: cb10245f5dff17b4f9709cd2c51c56b9,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 97f2c74a403afb344ae1b092ded45037, type: 2}
+    - target: {fileID: 7549325026198474780, guid: cb10245f5dff17b4f9709cd2c51c56b9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7549325026198474781, guid: cb10245f5dff17b4f9709cd2c51c56b9,
+        type: 3}
+      propertyPath: extents.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7549325026198474781, guid: cb10245f5dff17b4f9709cd2c51c56b9,
+        type: 3}
+      propertyPath: extents.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7549325026198474781, guid: cb10245f5dff17b4f9709cd2c51c56b9,
+        type: 3}
+      propertyPath: extents.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7549325027591840112, guid: cb10245f5dff17b4f9709cd2c51c56b9,
         type: 3}
       propertyPath: m_Name
@@ -1270,6 +1311,11 @@ PrefabInstance:
     - target: {fileID: 938711621057472193, guid: 64758739a69ecd24797cdb87a2ecefb5,
         type: 3}
       propertyPath: m_Name
+      value: Combo Counter
+      objectReference: {fileID: 0}
+    - target: {fileID: 938711621057472193, guid: 64758739a69ecd24797cdb87a2ecefb5,
+        type: 3}
+      propertyPath: m_TagString
       value: Combo Counter
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -18,4 +18,4 @@ MonoBehaviour:
     type: 2}
   releaseExecutionEvent: {fileID: 11400000, guid: 79ecc5f2f0f7fdd40b8642b5dbc7722f,
     type: 2}
-  releaseTime: 1
+  releaseTime: 0.5

@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - Wall
   - Edge Wall
+  - Combo Counter
   layers:
   - Default
   - TransparentFX

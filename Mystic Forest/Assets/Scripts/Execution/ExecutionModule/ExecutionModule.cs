@@ -35,6 +35,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         this.battler = battler;
         this.targetSet = targetSet;
         picker.OnSelected.Invoke(chain);
+        executor.Update();
     }
 
     public void ChangeSet(IExecutableChainSet set)
