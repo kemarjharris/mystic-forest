@@ -14,9 +14,9 @@ public class TravelThroughPoint : TravelMethodSO
         float secondsPassed = 0;
         do
         {
-            secondsPassed += Time.deltaTime / newSpeed;
+            secondsPassed += Time.fixedDeltaTime / newSpeed;
             toMove.position = Vector3.LerpUnclamped(startPos, destPos, secondsPassed);
-            yield return null;
+            yield return new WaitForFixedUpdate();
         } while (toMove != null);
         onFinish?.Invoke();
     }

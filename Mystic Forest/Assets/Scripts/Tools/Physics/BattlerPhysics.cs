@@ -94,9 +94,6 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
 
     private void OnColliderExit(Collider other)
     {
-
-        Debug.Log("fuurero");
-
         if (other == ground.collider)
         {
 

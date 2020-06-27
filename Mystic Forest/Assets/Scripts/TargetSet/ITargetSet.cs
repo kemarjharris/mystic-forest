@@ -7,8 +7,4 @@ public interface ITargetSet
     void SetTarget(Transform target);
 
     Transform GetTarget();
-
-    bool IsFloorPoint();
-
-    bool SetFloorPoint(bool floorPoint);
 }

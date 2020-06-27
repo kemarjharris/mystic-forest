@@ -16,7 +16,7 @@ public class SnapEvent : ExecutionEvent
     {
         nearPointEvent.setOnCancellableEvent(onCancellableEvent);
         nearPointEvent.setOnFinishEvent(onFinishEvent);
-        IBattler target = targetSet.GetTarget().GetComponent<Battler>();
+        IBattler target = pool.target.GetComponent<Battler>();
         Vector3 snapPoint = Vector3.zero;
         if (target != null)
         {

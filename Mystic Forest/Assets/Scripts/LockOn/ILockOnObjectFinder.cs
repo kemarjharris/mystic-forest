@@ -4,6 +4,5 @@ using System.Collections.Generic;
 
 public interface ILockOnObjectFinder
 {
-
     List<Collider> ObjectsInRange();
 }

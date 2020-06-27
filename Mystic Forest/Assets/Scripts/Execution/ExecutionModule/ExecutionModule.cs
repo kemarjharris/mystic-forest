@@ -21,19 +21,23 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     public IActionWrapper<ICustomizableEnumerator<IExecutable>> OnNewChainLoaded { get; private set; } = new ActionWrapper<ICustomizableEnumerator<IExecutable>>();
     public IActionWrapper OnNewSetLoaded { get; private set; } = new ActionWrapper();
 
-    public void StartExecution(IExecutableChainSet set, IBattler battler)
+    public void StartExecution(IExecutableChainSet set, IBattler battler, ITargetSet targetSet = null)
     {
         picker.Set(set);
         this.set = set;
         this.battler = battler;
+        this.targetSet = targetSet;
         linkerActive = true;
         OnNewSetLoaded.Invoke();
     }
 
-    public void StartExecution(IExecutableChain chain, ITargetSet targetSet, IBattler battler)
+    public void StartExecution(IExecutableChain chain, IBattler battler, ITargetSet targetSet = null)
     {
         this.battler = battler;
-        this.targetSet = targetSet;
+        if (targetSet == null)
+        {
+            targetSet = new TargetSet();
+        }
         picker.OnSelected.Invoke(chain);
         executor.Update();
     }

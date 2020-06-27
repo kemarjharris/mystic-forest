@@ -3,22 +3,41 @@ using System.Collections;
 
 public class JointController : MonoBehaviour, IPlayerController
 {
+    // The battler being controlled
     IBattler battler;
+    // Use to move the battler
     IBattlerPhysics physics;
+    // Used for execution
     IExecutionModule module;
+    // Data about how the battler moves
     public BattlerSpeed speeds;
+    // What the battler is doing
     CombatState state;
+    // input services
     public IUnityAxisService service;
     public IUnityInputService inputService;
+    // flag for if the battler was airborne or not
     bool groundedLastFrame;
+    // smoothing for movement
     public float smoothTime = 0.1f;
+    // physics values
     float horizontal;
     float vertical;
     float hVel;
     float vVel;
     bool jumped;
+    // if executor is active
     bool executing = true;
+    // if the battler has a combo active
     bool comboing = false;
+    // Currently targeted enemy
+    ITargetSet target;
+
+    public GameObject lockOnPrefab;
+    GameObject lockOnReticle;
+
+    bool lockedOn { get => lockOnReticle.transform.parent == null; }
+    bool selectingSkill;
 
     private void Awake()
     {
@@ -38,6 +57,8 @@ public class JointController : MonoBehaviour, IPlayerController
         if (inputService == null) inputService = new UnityInputService();
         state = CombatState.NOT_ATTACKING;
         groundedLastFrame = physics.IsGrounded;
+        lockOnReticle = Instantiate(lockOnPrefab);
+        lockOnReticle.SetActive(false);
     }
 
     public void Update()
@@ -99,7 +120,7 @@ public class JointController : MonoBehaviour, IPlayerController
 
     void StartModuleExecution()
     {
-        module.StartExecution(comboing ? Skills() : StateNormals(), battler);
+        module.StartExecution(comboing ? Skills() : StateNormals(), battler, NewTargetSet());
         executing = true;
     }
 
@@ -192,6 +213,18 @@ public class JointController : MonoBehaviour, IPlayerController
     {
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
         comboing = false;
+        lockOnReticle.transform.parent = null;
+        lockOnReticle.SetActive(false);
+    }
+
+    ITargetSet NewTargetSet()
+    {
+        target = new EventTargetSet(delegate(Transform t) {
+            lockOnReticle.SetActive(true);
+            lockOnReticle.transform.SetParent(t);
+            lockOnReticle.transform.localPosition = Vector3.zero;
+        });
+        return target;
     }
 
     /* for testing */

@@ -30,10 +30,6 @@ public class LockOnExecutable : Executable
                 StartLockingOn(battler);
                 state.triggered = true;
                 target = lockOn.NextToLockOnTo();
-                if (target != null)
-                {
-                    targets.SetTarget(target.transform);
-                }
                 onStartLockOn.OnExecute(battler, targets);
                 timeLockOnStarted = timeService.unscaledTime;
             }
@@ -44,6 +40,7 @@ public class LockOnExecutable : Executable
                 if (target != null)
                 {
                     targets.SetTarget(target.transform);
+                    onTargetSelected.pool.target = target.transform;
                     onTargetSelected.OnExecute(battler, targets);
                     state.fired = true;
                 } else

@@ -9,10 +9,10 @@ public class TravelForward : TravelMethodSO
     {
         do
         {
-            float secondsPassed = Time.deltaTime;
+            float secondsPassed = Time.fixedDeltaTime;
             float distanceTravelled = speed * secondsPassed;
             toMove.gameObject.transform.position += new Vector3(distanceTravelled, 0, 0);
-            yield return null;
+            yield return new WaitForFixedUpdate();
         } while (toMove != null);
         onFinish?.Invoke();
     }

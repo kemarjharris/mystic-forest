@@ -102,15 +102,17 @@ public class AimExecutable : Executable
             cursorHitBox.CheckCollision(delegate (Collider collider) {
                 IBattler targeted = collider.gameObject.GetComponent<IBattler>();
                 if (targeted == null || targeted == battler) return;
+                // targets.SetTarget(targeted.gameObject.transform);
+                onTargetSelected.pool.target = targeted.gameObject.transform;
                 targets.SetTarget(targeted.gameObject.transform);
                 specificTargetSelected = true;
             });
             if (!specificTargetSelected)
             {
-                targets.SetTarget(cursorGameObject.transform);
+                onTargetSelected.pool.target = cursorGameObject.transform;
             }
             // If no specific target was selected, then the transform is on a point on the floor. This means that it is a floor point.
-            targets.SetFloorPoint(!specificTargetSelected);
+            onTargetSelected.pool.floorPoint = !specificTargetSelected;
             // despawn cursor
             DespawnCursor();
             // handle event

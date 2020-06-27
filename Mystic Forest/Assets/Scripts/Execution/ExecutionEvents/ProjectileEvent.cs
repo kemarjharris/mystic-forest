@@ -25,13 +25,12 @@ public class ProjectileEvent : ExecutionEvent
         // wait until time to fire projectile
         yield return new WaitForSeconds(projectileSpawnTime);
         // Fire projectile and send it to its destination
-
         GameObject projectileGO = Instantiate(projectilePrefab, attacker.gameObject.transform.position, Quaternion.identity);
         IProjectile projectile = projectileGO.GetComponentInChildren<IProjectile>();
         projectileGO.GetComponentInChildren<SpriteRenderer>().transform.rotation = Camera.main.transform.rotation;
-        Vector3 dest = targets.GetTarget().position;
+        Vector3 dest = pool.target.position;
         // put dest point at battlers height
-        if (targets.IsFloorPoint())
+        if (pool.floorPoint)
         {
             dest += Vector3.up * attacker.gameObject.transform.position.y;
         }
@@ -56,7 +55,7 @@ public class ProjectileEvent : ExecutionEvent
         do
         {
             projectile.CheckCollision(onCollide);
-            yield return null;
+            yield return new WaitForFixedUpdate();
         } while (projectile != null);
     }
 }

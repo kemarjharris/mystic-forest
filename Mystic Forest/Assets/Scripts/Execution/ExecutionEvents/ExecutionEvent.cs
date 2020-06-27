@@ -5,6 +5,7 @@ public abstract class ExecutionEvent : ScriptableObject
 {
     protected System.Action onFinishEvent;
     protected System.Action onCancellableEvent;
+    public IExecutablePool pool = new ExecutablePool();
 
     public abstract void OnExecute(IBattler attacker, ITargetSet targets);
 

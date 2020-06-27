@@ -32,7 +32,7 @@ public class ArcToPoint : TravelMethodSO
             Vector3 lerp = Vector3.Lerp(startPos, destination, t);
             lerp = new Vector3(lerp.x, lerp.y + QuadraticFunction(distance, bounceHeight, t), lerp.z);
             transform.position = lerp;
-            yield return null;
+            yield return new WaitForFixedUpdate();
         } while (t <= 1);
     }
 

@@ -51,8 +51,9 @@ public class LockOn : MonoBehaviour
         // sort colliders by distance
         int sortByDistanceFromCenter(Collider x, Collider y)
         {
-            float xDistance = Vector3.Distance(x.transform.position, transform.position);
-            float yDistance = Vector3.Distance(y.transform.position, transform.position);
+
+            float xDistance = Vector3.Distance(new Vector3(x.transform.position.x, 0, x.transform.position.z), transform.position);
+            float yDistance = Vector3.Distance(new Vector3(y.transform.position.x, 0, y.transform.position.z), transform.position);
             return xDistance.CompareTo(yDistance);
         }
         objectsInRange.Sort(sortByDistanceFromCenter);
