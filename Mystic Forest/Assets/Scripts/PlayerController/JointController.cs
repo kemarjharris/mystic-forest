@@ -36,8 +36,10 @@ public class JointController : MonoBehaviour, IPlayerController
     public GameObject lockOnPrefab;
     GameObject lockOnReticle;
 
-    bool lockedOn { get => lockOnReticle.transform.parent == null; }
+    bool lockedOn { get => lockOnReticle.gameObject.activeSelf; }
     bool selectingSkill;
+    float skillTimeOut;
+
 
     private void Awake()
     {
@@ -67,6 +69,16 @@ public class JointController : MonoBehaviour, IPlayerController
         {
             module.ChangeSet(comboing? Skills() : StateNormals());
         }
+
+        if (state == CombatState.NOT_ATTACKING && !lockedOn && Input.GetKeyDown("l"))
+        {
+            skillTimeOut = 1;
+            if (!selectingSkill)
+            {
+                StartCoroutine(SelectSkill());
+            }
+        }
+
 
         // no input during combat
         if (state != CombatState.ATTACKING)
@@ -170,6 +182,7 @@ public class JointController : MonoBehaviour, IPlayerController
     void OnNewChainLoaded(ICustomizableEnumerator<IExecutable> obj)
     {
         state = CombatState.ATTACKING;
+        selectingSkill = false;
        
     }
     void OnChainCancellable() => state = CombatState.ABLE_TO_CANCEL_ATTACK;
@@ -225,6 +238,31 @@ public class JointController : MonoBehaviour, IPlayerController
             lockOnReticle.transform.localPosition = Vector3.zero;
         });
         return target;
+    }
+
+    IEnumerator SelectSkill()
+    {
+        selectingSkill = true;
+        module.ChangeSet(Skills());
+        GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
+
+        float fdt = Time.fixedDeltaTime;
+        Time.timeScale = 0.1f;
+        Time.fixedDeltaTime = Time.timeScale * fdt;
+
+        while (skillTimeOut >= 0 && selectingSkill)
+        {
+            skillTimeOut -= Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = fdt;
+
+        GetComponentInChildren<SpriteRenderer>().color = Color.white;
+        module.ChangeSet(StateNormals());
+        selectingSkill = false;
+
     }
 
     /* for testing */
