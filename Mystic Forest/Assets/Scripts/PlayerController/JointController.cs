@@ -40,6 +40,8 @@ public class JointController : MonoBehaviour, IPlayerController
     bool selectingSkill;
     float skillTimeOut;
 
+    public ExecutableChainSO jumpIn;
+    IExecutableChainSet jumpInSet; 
 
     private void Awake()
     {
@@ -61,13 +63,15 @@ public class JointController : MonoBehaviour, IPlayerController
         groundedLastFrame = physics.IsGrounded;
         lockOnReticle = Instantiate(lockOnPrefab);
         lockOnReticle.SetActive(false);
+        jumpInSet = new ExecutableChainSetImpl(new IExecutableChain[] { jumpIn });
+
     }
 
     public void Update()
     {
         if (!groundedLastFrame && physics.IsGrounded)
         {
-            module.ChangeSet(comboing? Skills() : StateNormals());
+            module.ChangeSet(!comboing && state == CombatState.NOT_ATTACKING ? JumpIn() : StateNormals());
         }
 
         if (state == CombatState.NOT_ATTACKING && !lockedOn && Input.GetKeyDown("l"))
@@ -132,16 +136,15 @@ public class JointController : MonoBehaviour, IPlayerController
 
     void StartModuleExecution()
     {
-        module.StartExecution(comboing ? Skills() : StateNormals(), battler, NewTargetSet());
+        module.StartExecution(comboing ? StateNormals() : JumpIn(), battler, NewTargetSet());
         executing = true;
     }
 
     IExecutableChainSet StateNormals()
     {
-        bool StateNormal(IExecutableChain chain) => !chain.IsSkill && physics.IsGrounded ? !chain.IsAerial : chain.IsAerial;
+        bool StateNormal(IExecutableChain chain) => physics.IsGrounded ? !chain.IsAerial : chain.IsAerial;
         return battler.ChainSet.Where(StateNormal);
     }
-
 
     IExecutableChainSet Aerials()
     {
@@ -150,16 +153,9 @@ public class JointController : MonoBehaviour, IPlayerController
         return battler.ChainSet.Where(IsAerial);
     }
 
-    IExecutableChainSet Normals()
+    IExecutableChainSet JumpIn()
     {
-        bool IsNormal(IExecutableChain chain) => !chain.IsAerial && !chain.IsSkill;
-        return battler.ChainSet.Where(IsNormal);
-    }
-
-    IExecutableChainSet Skills()
-    {
-        bool IsSkill(IExecutableChain chain) => physics.IsGrounded ? !chain.IsAerial : chain.IsAerial;
-        return battler.ChainSet.Where(IsSkill);
+        return jumpInSet;
     }
 
     public void OnEnable()
@@ -228,6 +224,7 @@ public class JointController : MonoBehaviour, IPlayerController
         comboing = false;
         lockOnReticle.transform.parent = null;
         lockOnReticle.SetActive(false);
+        
     }
 
     ITargetSet NewTargetSet()
@@ -243,7 +240,7 @@ public class JointController : MonoBehaviour, IPlayerController
     IEnumerator SelectSkill()
     {
         selectingSkill = true;
-        module.ChangeSet(Skills());
+        module.ChangeSet(StateNormals());
         GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
 
         float fdt = Time.fixedDeltaTime;
@@ -259,10 +256,14 @@ public class JointController : MonoBehaviour, IPlayerController
         Time.timeScale = 1;
         Time.fixedDeltaTime = fdt;
 
-        GetComponentInChildren<SpriteRenderer>().color = Color.white;
-        module.ChangeSet(StateNormals());
-        selectingSkill = false;
+        // timed out
+        if (skillTimeOut < 0)
+        {
+            selectingSkill = false;
+            module.ChangeSet(JumpIn());
+        }
 
+        GetComponentInChildren<SpriteRenderer>().color = Color.white;
     }
 
     /* for testing */
