@@ -155,7 +155,13 @@ public class JointController : MonoBehaviour, IPlayerController
 
     IExecutableChainSet JumpIn()
     {
-        return jumpInSet;
+        if (!physics.IsGrounded)
+        {
+            return new ExecutableChainSetImpl(new IExecutableChain[0]);
+        } else
+        {
+            return jumpInSet;
+        }
     }
 
     public void OnEnable()
@@ -224,7 +230,7 @@ public class JointController : MonoBehaviour, IPlayerController
         comboing = false;
         lockOnReticle.transform.parent = null;
         lockOnReticle.SetActive(false);
-        
+        StartModuleExecution();
     }
 
     ITargetSet NewTargetSet()
