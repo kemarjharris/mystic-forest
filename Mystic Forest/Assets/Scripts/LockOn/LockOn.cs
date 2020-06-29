@@ -5,7 +5,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(ILockOnObjectFinder))]
 public class LockOn : MonoBehaviour
 {
-    Collider lockedOn;
+    Transform lockedOn;
     public System.Action onScan;
     public System.Action<GameObject> onLockOn;
     public System.Predicate<Collider> rule { private get;  set; }
@@ -22,9 +22,22 @@ public class LockOn : MonoBehaviour
 
     public void OnDisable()
     {
+        RemoveTarget();
+    }
+
+    public void RemoveTarget()
+    {
         onLockedOnExit?.Invoke();
         lockedOn = null;
     }
+
+    public void SetTarget(Transform target)
+    {
+        lockedOn = target;
+        onLockOn?.Invoke(target.gameObject);
+    }
+
+    public Transform GetTarget() => lockedOn;
 
     // Returns the next closest batter to the one currently on the targeted list
     public GameObject NextToLockOnTo()
@@ -58,16 +71,20 @@ public class LockOn : MonoBehaviour
         }
         objectsInRange.Sort(sortByDistanceFromCenter);
         // return first battler since we cant go over the list circularly
-        if (lockedOn != null && objectsInRange.Contains(lockedOn))
+
+        if (lockedOn != null)
         {
-            // move all colliders that were closer to the last battler (including the last battler) to the back of the list
-            // + 1 to include last 
-            int lastPos = objectsInRange.IndexOf(lockedOn) + 1;
+            Collider lockedOnCollider = lockedOn.GetComponent<Collider>();
+            if (objectsInRange.Contains(lockedOnCollider)) { 
+                // move all colliders that were closer to the last battler (including the last battler) to the back of the list
+                // + 1 to include last 
+                int lastPos = objectsInRange.IndexOf(lockedOnCollider) + 1;
             List<Collider> objectsToLoop = objectsInRange.GetRange(0, lastPos);
             objectsInRange.RemoveRange(0, lastPos);
             objectsInRange.AddRange(objectsToLoop);
+            }
         }
-        lockedOn = objectsInRange[0];
+        lockedOn = objectsInRange[0].transform;
         onLockOn?.Invoke(lockedOn.gameObject);
         return lockedOn.gameObject;
     }

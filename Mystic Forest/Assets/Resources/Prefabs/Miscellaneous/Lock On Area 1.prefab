@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 4066560404359876280}
   - component: {fileID: 8299980763744934206}
   - component: {fileID: 245353866}
+  - component: {fileID: 114980096030383480}
   m_Layer: 0
   m_Name: Lock On Area 1
   m_TagString: Untagged
@@ -217,7 +218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eca5eeb62939b2640879fe6dc3f0e221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scan: {fileID: 4280317714372561336}
   cursor: {fileID: 4280317712725218977}
   cursorHeight: 1
 --- !u!114 &245353866
@@ -233,3 +233,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 1, y: 10, z: 1}
+--- !u!114 &114980096030383480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7349572506496408635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05f8f2db3951d8a4780f3bb90e24d7f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scan: {fileID: 4280317714372561336}

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class JointController : MonoBehaviour, IPlayerController
 {
@@ -33,15 +34,21 @@ public class JointController : MonoBehaviour, IPlayerController
     // Currently targeted enemy
     ITargetSet target;
 
+    /*
+        public GameObject lockOnPrefab;
+        GameObject lockOnReticle;
+       
+    */
     public GameObject lockOnPrefab;
-    GameObject lockOnReticle;
+    private LockOn lockOn;
 
-    bool lockedOn { get => lockOnReticle.gameObject.activeSelf; }
     bool selectingSkill;
     float skillTimeOut;
 
-    public ExecutableChainSO jumpIn;
-    IExecutableChainSet jumpInSet; 
+
+
+
+    //IExecutableChainSet jumpInSet; 
 
     private void Awake()
     {
@@ -61,9 +68,23 @@ public class JointController : MonoBehaviour, IPlayerController
         if (inputService == null) inputService = new UnityInputService();
         state = CombatState.NOT_ATTACKING;
         groundedLastFrame = physics.IsGrounded;
+        lockOn = Instantiate(lockOnPrefab).GetComponent<LockOn>();
+        target = NewTargetSet();
+        lockOn.onLockOn += delegate (GameObject t)
+        {
+            if (t.transform != target.GetTarget())
+            {
+                target.SetTarget(t.transform);
+            }
+        };
+        lockOn.rule = (Collider collider) => collider.gameObject.tag == "Battler" && battler.gameObject != collider.gameObject;
+        lockOn.transform.SetParent(transform);
+        lockOn.transform.localPosition = Vector3.zero;
+        /*
         lockOnReticle = Instantiate(lockOnPrefab);
         lockOnReticle.SetActive(false);
-        jumpInSet = new ExecutableChainSetImpl(new IExecutableChain[] { jumpIn });
+        */
+        //jumpInSet = new ExecutableChainSetImpl(new IExecutableChain[] { jumpIn });
 
     }
 
@@ -71,10 +92,10 @@ public class JointController : MonoBehaviour, IPlayerController
     {
         if (!groundedLastFrame && physics.IsGrounded)
         {
-            module.ChangeSet(!comboing && state == CombatState.NOT_ATTACKING ? JumpIn() : StateNormals());
+            module.ChangeSet(!comboing && state == CombatState.NOT_ATTACKING ? StateNormals() : StateNormals());
         }
 
-        if (state == CombatState.NOT_ATTACKING && !lockedOn && Input.GetKeyDown("l"))
+        if (state == CombatState.NOT_ATTACKING && Input.GetKeyDown("k"))
         {
             skillTimeOut = 1;
             if (!selectingSkill)
@@ -83,7 +104,13 @@ public class JointController : MonoBehaviour, IPlayerController
             }
         }
 
+        if (Input.GetKeyDown("l"))
+        {
+            GameObject targ = lockOn.NextToLockOnTo();
+        }
 
+
+       
         // no input during combat
         if (state != CombatState.ATTACKING)
         {
@@ -136,7 +163,7 @@ public class JointController : MonoBehaviour, IPlayerController
 
     void StartModuleExecution()
     {
-        module.StartExecution(comboing ? StateNormals() : JumpIn(), battler, NewTargetSet());
+        module.StartExecution(comboing ? StateNormals() : StateNormals(), battler, target);
         executing = true;
     }
 
@@ -146,22 +173,17 @@ public class JointController : MonoBehaviour, IPlayerController
         return battler.ChainSet.Where(StateNormal);
     }
 
+    IExecutableChainSet StateSkills()
+    {
+        bool StateSkill(IExecutableChain chain) => chain.IsSkill && physics.IsGrounded ? !chain.IsAerial : chain.IsAerial;
+        return battler.ChainSet.Where(StateSkill);
+    }
+
     IExecutableChainSet Aerials()
     {
         // Aerial sets
         bool IsAerial(IExecutableChain chain) => chain.IsAerial && !chain.IsSkill;
         return battler.ChainSet.Where(IsAerial);
-    }
-
-    IExecutableChainSet JumpIn()
-    {
-        if (!physics.IsGrounded)
-        {
-            return new ExecutableChainSetImpl(new IExecutableChain[0]);
-        } else
-        {
-            return jumpInSet;
-        }
     }
 
     public void OnEnable()
@@ -228,17 +250,18 @@ public class JointController : MonoBehaviour, IPlayerController
     {
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
         comboing = false;
-        lockOnReticle.transform.parent = null;
-        lockOnReticle.SetActive(false);
+        lockOn.RemoveTarget();
+        target = NewTargetSet();
         StartModuleExecution();
     }
 
     ITargetSet NewTargetSet()
     {
         target = new EventTargetSet(delegate(Transform t) {
-            lockOnReticle.SetActive(true);
-            lockOnReticle.transform.SetParent(t);
-            lockOnReticle.transform.localPosition = Vector3.zero;
+            if (lockOn.GetTarget() != t)
+            {
+                lockOn.SetTarget(t);
+            }
         });
         return target;
     }
@@ -246,7 +269,7 @@ public class JointController : MonoBehaviour, IPlayerController
     IEnumerator SelectSkill()
     {
         selectingSkill = true;
-        module.ChangeSet(StateNormals());
+        module.ChangeSet(StateSkills());
         GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
 
         float fdt = Time.fixedDeltaTime;
@@ -266,7 +289,7 @@ public class JointController : MonoBehaviour, IPlayerController
         if (skillTimeOut < 0)
         {
             selectingSkill = false;
-            module.ChangeSet(JumpIn());
+            module.ChangeSet(StateNormals());
         }
 
         GetComponentInChildren<SpriteRenderer>().color = Color.white;

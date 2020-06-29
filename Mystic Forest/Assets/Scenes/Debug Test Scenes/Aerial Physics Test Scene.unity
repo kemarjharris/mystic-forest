@@ -473,12 +473,26 @@ PrefabInstance:
     - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
       propertyPath: lockOnPrefab
       value: 
-      objectReference: {fileID: 5273552161685839817, guid: 7962ae4b447dfac45a5b3443ecf1f34b,
+      objectReference: {fileID: 2842591358034228965, guid: 6d8467779025d50488df1be256ee524c,
         type: 3}
     - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
       propertyPath: jumpIn
       value: 
-      objectReference: {fileID: 11400000, guid: 43a94eae7e8ef6f40b61fa6526881164,
+      objectReference: {fileID: 11400000, guid: afe029d4c623bf34fa3bfdf1b7f65eda,
+        type: 2}
+    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
+      propertyPath: chargeTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
+      propertyPath: basics
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f2c4837a9ef00640a27ba417add0f83,
+        type: 2}
+    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
+      propertyPath: chargeAnim
+      value: 
+      objectReference: {fileID: 11400000, guid: ebb4b76c44a8e8b43be018cf779ffdec,
         type: 2}
     - target: {fileID: 2058431001446035168, guid: cb10245f5dff17b4f9709cd2c51c56b9,
         type: 3}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Warrior Slash Combo
   m_EditorClassIdentifier: 
   attacks:
-  - {fileID: 11400000, guid: 70b8f4373e88ccd42b942b5a03ae2523, type: 2}
+  - {fileID: 11400000, guid: 750a4854de2db204b911fc71ce65c1ac, type: 2}
   - {fileID: 11400000, guid: 9a9a55eaea43087488ed3a7b618b71ce, type: 2}
   - {fileID: 11400000, guid: 62e3214f5f7cdf1479d60609d285a96c, type: 2}
   group: {fileID: 11400000, guid: 99387bbcdb339454db42fc2a3ddc0d39, type: 2}
