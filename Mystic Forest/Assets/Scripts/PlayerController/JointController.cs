@@ -34,6 +34,8 @@ public class JointController : MonoBehaviour, IPlayerController
     // Currently targeted enemy
     ITargetSet target;
 
+    public ExecutableChainSO lockOnAttack;
+
     /*
         public GameObject lockOnPrefab;
         GameObject lockOnReticle;
@@ -72,7 +74,7 @@ public class JointController : MonoBehaviour, IPlayerController
         target = NewTargetSet();
         lockOn.onLockOn += delegate (GameObject t)
         {
-            if (t.transform != target.GetTarget())
+            if (t!= null && t.transform != target.GetTarget())
             {
                 target.SetTarget(t.transform);
             }
@@ -104,16 +106,19 @@ public class JointController : MonoBehaviour, IPlayerController
             }
         }
 
-        if (Input.GetKeyDown("l"))
-        {
-            GameObject targ = lockOn.NextToLockOnTo();
-        }
-
-
-       
         // no input during combat
         if (state != CombatState.ATTACKING)
         {
+
+            if (Input.GetKeyDown("l"))
+            {
+                GameObject targ = lockOn.NextToLockOnTo();
+            } else if (Input.GetKeyDown("q"))
+            {
+                lockOn.RemoveTarget();
+                target.SetTarget(null);
+            }
+
             if (physics.IsGrounded)
             {
                 horizontal = service.GetAxis("Horizontal");
@@ -169,13 +174,13 @@ public class JointController : MonoBehaviour, IPlayerController
 
     IExecutableChainSet StateNormals()
     {
-        bool StateNormal(IExecutableChain chain) => physics.IsGrounded ? !chain.IsAerial : chain.IsAerial;
+        bool StateNormal(IExecutableChain chain) => !chain.IsSkill && (physics.IsGrounded ? !chain.IsAerial : chain.IsAerial);
         return battler.ChainSet.Where(StateNormal);
     }
 
     IExecutableChainSet StateSkills()
     {
-        bool StateSkill(IExecutableChain chain) => chain.IsSkill && physics.IsGrounded ? !chain.IsAerial : chain.IsAerial;
+        bool StateSkill(IExecutableChain chain) => chain.IsSkill && (physics.IsGrounded ? !chain.IsAerial : chain.IsAerial);
         return battler.ChainSet.Where(StateSkill);
     }
 
@@ -184,6 +189,11 @@ public class JointController : MonoBehaviour, IPlayerController
         // Aerial sets
         bool IsAerial(IExecutableChain chain) => chain.IsAerial && !chain.IsSkill;
         return battler.ChainSet.Where(IsAerial);
+    }
+
+    IExecutableChainSet LockOnAttack()
+    {
+        return new ExecutableChainSetImpl(new IExecutableChain[] { lockOnAttack });
     }
 
     public void OnEnable()

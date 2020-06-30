@@ -494,6 +494,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: ebb4b76c44a8e8b43be018cf779ffdec,
         type: 2}
+    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
+      propertyPath: lockOnAttack
+      value: 
+      objectReference: {fileID: 11400000, guid: 43a94eae7e8ef6f40b61fa6526881164,
+        type: 2}
     - target: {fileID: 2058431001446035168, guid: cb10245f5dff17b4f9709cd2c51c56b9,
         type: 3}
       propertyPath: m_Sprite
