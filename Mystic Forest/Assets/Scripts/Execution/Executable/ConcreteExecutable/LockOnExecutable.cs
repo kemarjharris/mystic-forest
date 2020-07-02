@@ -29,7 +29,14 @@ public class LockOnExecutable : Executable
             {
                 StartLockingOn(battler);
                 state.triggered = true;
-                target = lockOn.NextToLockOnTo();
+                if (targets.GetTarget() == null)
+                {
+                    target = lockOn.NextToLockOnTo();
+                } else
+                {
+                    target = targets.GetTarget().gameObject;
+                    lockOn.SetTarget(target.transform);
+                }
                 onStartLockOn.OnExecute(battler, targets);
                 timeLockOnStarted = timeService.unscaledTime;
             }

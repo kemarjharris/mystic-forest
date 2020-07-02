@@ -192,12 +192,12 @@ PrefabInstance:
     - target: {fileID: 7549325027591840113, guid: cb10245f5dff17b4f9709cd2c51c56b9,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 7549325027591840113, guid: cb10245f5dff17b4f9709cd2c51c56b9,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7549325027591840113, guid: cb10245f5dff17b4f9709cd2c51c56b9,
         type: 3}
@@ -498,6 +498,11 @@ PrefabInstance:
       propertyPath: lockOnAttack
       value: 
       objectReference: {fileID: 11400000, guid: 43a94eae7e8ef6f40b61fa6526881164,
+        type: 2}
+    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
+      propertyPath: aerials
+      value: 
+      objectReference: {fileID: 11400000, guid: e5f556f4c2c356f41bdb2d7527b007b9,
         type: 2}
     - target: {fileID: 2058431001446035168, guid: cb10245f5dff17b4f9709cd2c51c56b9,
         type: 3}

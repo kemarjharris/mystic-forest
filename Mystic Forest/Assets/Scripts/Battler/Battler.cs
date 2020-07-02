@@ -9,7 +9,6 @@ public class Battler : MonoBehaviour, IBattler
     IPlayerController controller;
     IHitBox hitBox;
     protected IBattlerPhysics physics = null;
-    
     SpriteRenderer sprite;
     public ExecutableChainSetSOImpl chainSet;
 
@@ -22,13 +21,14 @@ public class Battler : MonoBehaviour, IBattler
         controller = GetComponent<IPlayerController>();
         sprite.transform.forward = Camera.main.transform.forward;
         eventSet = new BattlerEventSet();
-
+        
         hitBox = GetComponentInChildren<IHitBox>();
         physics = GetComponent<BattlerPhysics>();
         if (physics == null)
         {
             physics = gameObject.AddComponent<BattlerPhysics>();
         }
+        ChainSet = new StateExecutableChainSetImpl(physics, chainSet);
         hitPoint.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
        
     }
@@ -43,7 +43,7 @@ public class Battler : MonoBehaviour, IBattler
 
     public bool IsGrounded => physics.IsGrounded;
 
-    public IExecutableChainSet ChainSet => chainSet;
+    public IExecutableChainSet ChainSet { get; private set; }
 
     public void GetAttacked(IAttack attack)
     {

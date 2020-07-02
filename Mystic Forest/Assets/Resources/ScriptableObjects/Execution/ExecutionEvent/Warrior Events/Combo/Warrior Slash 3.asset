@@ -15,10 +15,10 @@ MonoBehaviour:
   timeOfContact: 0.2
   animSO: {fileID: 11400000, guid: 124f1d3c687801d43ab80b55dd0d64e5, type: 2}
   attack:
-    force: {x: 0, y: 0, z: 0}
+    force: {x: 4, y: 0, z: 0}
     freezeTime: 0.1
     hasKnockBack: 1
     hitStun: 1
-  playerVelocity: {x: 0, y: 0, z: 0}
+  playerVelocity: {x: 3, y: 0, z: 0}
   aerial: 0
   interrupted: 0

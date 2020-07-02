@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: 0
   isAerial: 0
-  chargeTime: 0.2
+  chargeTime: 0.5
   maxTime: 2
   keyDown: {fileID: 11400000, guid: f3c01621b83f88b47b84475de0864fe6, type: 2}
   earlyEvent: {fileID: 11400000, guid: 79ecc5f2f0f7fdd40b8642b5dbc7722f, type: 2}

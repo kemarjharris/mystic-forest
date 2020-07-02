@@ -9,9 +9,9 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     IDirectionCommandPicker<IExecutableChain> picker;
     IChainExecutor executor;
     ITargetSet targetSet;
-    IBattler battler;
     bool linkerActive;
     public IExecutableChainSet set { get; private set; }
+    public IBattler battler { get; private set; }
     public IExecutableChain current;
 
     IActionWrapper IExecutionModule.OnChainCancellable => executor.OnChainCancellable;

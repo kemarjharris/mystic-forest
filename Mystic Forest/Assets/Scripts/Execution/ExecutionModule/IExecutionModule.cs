@@ -15,6 +15,7 @@ public interface IExecutionModule
     IActionWrapper OnNewSetLoaded { get; }
 
     IExecutableChainSet set { get; }
+    IBattler battler { get; }
 
 
 }

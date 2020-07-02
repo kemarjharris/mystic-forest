@@ -28,13 +28,16 @@ public class JointController : MonoBehaviour, IPlayerController
     float vVel;
     bool jumped;
     // if executor is active
-    bool executing = true;
+    bool executing;
     // if the battler has a combo active
-    bool comboing = false;
+     bool comboing = false;
     // Currently targeted enemy
     ITargetSet target;
 
+    /*
+    public ExecutableChainSO basics;
     public ExecutableChainSO lockOnAttack;
+    public ExecutableChainSO aerials;
 
     /*
         public GameObject lockOnPrefab;
@@ -92,19 +95,45 @@ public class JointController : MonoBehaviour, IPlayerController
 
     public void Update()
     {
+        /*
         if (!groundedLastFrame && physics.IsGrounded)
         {
-            module.ChangeSet(!comboing && state == CombatState.NOT_ATTACKING ? StateNormals() : StateNormals());
+            module.ChangeSet(StateNormals());
         }
+        */
 
-        if (state == CombatState.NOT_ATTACKING && Input.GetKeyDown("k"))
+
+        /*
+        if (state == CombatState.NOT_ATTACKING)
         {
-            skillTimeOut = 1;
-            if (!selectingSkill)
-            {
-                StartCoroutine(SelectSkill());
+            if (Input.GetKeyDown("j")) {
+
+                if (physics.IsGrounded)
+                {
+                    if (CheckRange())
+                    {
+                        module.StartExecution(basics, battler, target);
+                    }
+                    else
+                    {
+                        module.StartExecution(lockOnAttack, battler, target);
+                    }
+                } else
+                {
+                    module.StartExecution(aerials, battler, target);
+                }
+            } else if (Input.GetKeyDown("k")) {
+
+                skillTimeOut = 1;
+                if (!selectingSkill)
+                {
+                    StartCoroutine(SelectSkill());
+                }
             }
         }
+        */
+
+
 
         // no input during combat
         if (state != CombatState.ATTACKING)
@@ -126,7 +155,7 @@ public class JointController : MonoBehaviour, IPlayerController
                 if (inputService.GetKeyDown("space"))
                 {
                     jumped = true;
-                    module.ChangeSet(Aerials());
+                    //module.ChangeSet(Aerials());
                 }
             }
         }
@@ -136,7 +165,7 @@ public class JointController : MonoBehaviour, IPlayerController
             horizontal = Mathf.SmoothDamp(horizontal, 0, ref hVel, smoothTime);
             vertical = Mathf.SmoothDamp(vertical, 0, ref vVel, smoothTime); ;
         }
-        groundedLastFrame = physics.IsGrounded;
+       
     }
 
     public void FixedUpdate()
@@ -158,6 +187,8 @@ public class JointController : MonoBehaviour, IPlayerController
         }
     }
 
+
+    
     public void LateUpdate()
     {
         if (!executing)
@@ -165,13 +196,15 @@ public class JointController : MonoBehaviour, IPlayerController
             StartModuleExecution();
         }
     }
+    
 
     void StartModuleExecution()
     {
-        module.StartExecution(comboing ? StateNormals() : StateNormals(), battler, target);
+        module.StartExecution(battler.ChainSet, battler, target);
         executing = true;
     }
 
+    /*
     IExecutableChainSet StateNormals()
     {
         bool StateNormal(IExecutableChain chain) => !chain.IsSkill && (physics.IsGrounded ? !chain.IsAerial : chain.IsAerial);
@@ -191,9 +224,21 @@ public class JointController : MonoBehaviour, IPlayerController
         return battler.ChainSet.Where(IsAerial);
     }
 
+    /*
+
     IExecutableChainSet LockOnAttack()
     {
         return new ExecutableChainSetImpl(new IExecutableChain[] { lockOnAttack });
+    }
+
+        */
+    bool CheckRange()
+    {
+        Collider[] colliders = Physics.OverlapCapsule(transform.position + new Vector3(0.5f, 0, 0), transform.position + new Vector3(0.5f, 10, 0), 0.5f);  //Physics.OverlapSphere(transform.position + (Vector3.right * 0.5f), 0.5f);
+        List<Collider> inRange = new List<Collider>(colliders);
+        Collider collider = GetComponent<Collider>();
+        inRange.RemoveAll((c) => c == collider);
+        return inRange.Count > 0;
     }
 
     public void OnEnable()
@@ -202,7 +247,7 @@ public class JointController : MonoBehaviour, IPlayerController
         module.OnChainCancellable.AddAction(OnChainCancellable);
         module.OnChainFinished.AddAction(OnChainFinished);
         SetUpComboEvents();
-        StartModuleExecution();
+        // StartModuleExecution();
     }
 
     public void OnDisable()
@@ -279,7 +324,7 @@ public class JointController : MonoBehaviour, IPlayerController
     IEnumerator SelectSkill()
     {
         selectingSkill = true;
-        module.ChangeSet(StateSkills());
+        // module.ChangeSet(StateSkills());
         GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
 
         float fdt = Time.fixedDeltaTime;
@@ -299,7 +344,7 @@ public class JointController : MonoBehaviour, IPlayerController
         if (skillTimeOut < 0)
         {
             selectingSkill = false;
-            module.ChangeSet(StateNormals());
+            // module.ChangeSet(StateNormals());
         }
 
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
@@ -321,4 +366,13 @@ public class JointController : MonoBehaviour, IPlayerController
     {
         state = CombatState.NOT_ATTACKING;
     }
+
+    /*
+
+    public void OnDrawGizmos()
+    {
+        //Gizmos.DrawWireSphere(transform.position + (Vector3.right *0.5f), 0.5f);
+        CapsuleVisualizer.DrawWireCapsule(transform.position + new Vector3(0.5f, 0, 0), transform.position + new Vector3(0.5f, 10, 0), 0.5f);
+    }
+    */
 }
