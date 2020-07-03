@@ -109,7 +109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7549325026198474783}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.33599997, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7549325027591840113}
@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 5357676517641398453}
   - component: {fileID: 5928545063431492230}
   - component: {fileID: 603432356}
+  - component: {fileID: 202504862}
   m_Layer: 5
   m_Name: Warrior
   m_TagString: Battler
@@ -214,8 +215,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.25527415, y: 0.41112083, z: 0.20000002}
-  m_Center: {x: 0.000107606254, y: -0.041062713, z: 0}
+  m_Size: {x: 0.25527415, y: 0.43273014, z: 0.20000002}
+  m_Center: {x: 0, y: -0.028092146, z: 0}
 --- !u!114 &7549325027591840122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,7 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragFactor: 0.3
   airForcePercentage: 0.3
-  terminalVelocity: -19
+  terminalVelocity: -20
   collider: {fileID: 7549325027591840120}
 --- !u!95 &5357676517641398453
 Animator:
@@ -277,3 +278,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speeds: {fileID: 11400000, guid: 6b34d1eae332d1a4cb7805b950053896, type: 2}
   smoothTime: 0.1
+--- !u!114 &202504862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7549325027591840112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a02cef7ce4f15a84dac139f0248a3026, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lockOnPrefab: {fileID: 2842591358034228965, guid: 6d8467779025d50488df1be256ee524c,
+    type: 3}
+  skillTimeOut: 1
+  closeRange: {fileID: 11400000, guid: c73f14f52dc0c384d8a5610a86954a62, type: 2}
+  assault: {fileID: 11400000, guid: 43a94eae7e8ef6f40b61fa6526881164, type: 2}

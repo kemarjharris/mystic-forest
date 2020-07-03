@@ -28,7 +28,7 @@ public class StateExecutableChainSetImpl : IExecutableChainSet
         return false;
     }
 
-    public IExecutableChainSet Union(IExecutableChainSet other) => set.Union(other);
+    public IExecutableChainSet Union(IExecutableChainSet other) => new StateExecutableChainSetImpl(physics, state, set.Union(other));
 
     public IExecutableChainSet Where(Predicate<IExecutableChain> predicate)
     {
@@ -45,7 +45,7 @@ public class StateExecutableChainSetImpl : IExecutableChainSet
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    bool CorrectState(IExecutableChain chain)
+    public bool CorrectState(IExecutableChain chain)
     {
         // correct aerial state
         if ((chain.IsAerial && !physics.IsGrounded) || (!chain.IsAerial && physics.IsGrounded)) {

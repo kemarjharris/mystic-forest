@@ -354,29 +354,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!1 &202504861 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7549325027591840112, guid: cb10245f5dff17b4f9709cd2c51c56b9,
-    type: 3}
-  m_PrefabInstance: {fileID: 547970965}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &202504862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202504861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a02cef7ce4f15a84dac139f0248a3026, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lockOnPrefab: {fileID: 2842591358034228965, guid: 6d8467779025d50488df1be256ee524c,
-    type: 3}
-  skillTimeOut: 1
-  closeRange: {fileID: 11400000, guid: c73f14f52dc0c384d8a5610a86954a62, type: 2}
-  assault: {fileID: 11400000, guid: 43a94eae7e8ef6f40b61fa6526881164, type: 2}
 --- !u!1 &429407121
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,96 +461,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
-      propertyPath: speeds
-      value: 
-      objectReference: {fileID: 11400000, guid: 6b34d1eae332d1a4cb7805b950053896,
-        type: 2}
-    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
-      propertyPath: manaBurst
-      value: 
-      objectReference: {fileID: 11400000, guid: 7bb7d6c704e318f4faca2cebf785a73c,
-        type: 2}
-    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
-      propertyPath: lockOnPrefab
-      value: 
-      objectReference: {fileID: 2842591358034228965, guid: 6d8467779025d50488df1be256ee524c,
-        type: 3}
-    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
-      propertyPath: jumpIn
-      value: 
-      objectReference: {fileID: 11400000, guid: afe029d4c623bf34fa3bfdf1b7f65eda,
-        type: 2}
-    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
-      propertyPath: chargeTime
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
-      propertyPath: basics
-      value: 
-      objectReference: {fileID: 11400000, guid: 37b719a63dc82c243a22c821a53dc220,
-        type: 2}
-    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
-      propertyPath: chargeAnim
-      value: 
-      objectReference: {fileID: 11400000, guid: ebb4b76c44a8e8b43be018cf779ffdec,
-        type: 2}
-    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
-      propertyPath: lockOnAttack
-      value: 
-      objectReference: {fileID: 11400000, guid: 43a94eae7e8ef6f40b61fa6526881164,
-        type: 2}
-    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
-      propertyPath: aerials
-      value: 
-      objectReference: {fileID: 11400000, guid: e5f556f4c2c356f41bdb2d7527b007b9,
-        type: 2}
-    - target: {fileID: 603432356, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
-      propertyPath: assault
-      value: 
-      objectReference: {fileID: 11400000, guid: 43a94eae7e8ef6f40b61fa6526881164,
-        type: 2}
-    - target: {fileID: 2058431001446035168, guid: cb10245f5dff17b4f9709cd2c51c56b9,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300122, guid: cad4b22f446e0884e99803495aeef1cf,
-        type: 3}
-    - target: {fileID: 5357676517641398453, guid: cb10245f5dff17b4f9709cd2c51c56b9,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 97f2c74a403afb344ae1b092ded45037, type: 2}
-    - target: {fileID: 7549325026198474780, guid: cb10245f5dff17b4f9709cd2c51c56b9,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7549325026198474781, guid: cb10245f5dff17b4f9709cd2c51c56b9,
-        type: 3}
-      propertyPath: extents.z
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7549325026198474781, guid: cb10245f5dff17b4f9709cd2c51c56b9,
-        type: 3}
-      propertyPath: extents.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7549325026198474781, guid: cb10245f5dff17b4f9709cd2c51c56b9,
-        type: 3}
-      propertyPath: extents.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7549325026198474781, guid: cb10245f5dff17b4f9709cd2c51c56b9,
-        type: 3}
-      propertyPath: center.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7549325026198474781, guid: cb10245f5dff17b4f9709cd2c51c56b9,
-        type: 3}
-      propertyPath: center.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7549325027591840112, guid: cb10245f5dff17b4f9709cd2c51c56b9,
         type: 3}
       propertyPath: m_Name
@@ -683,26 +570,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7549325027591840120, guid: cb10245f5dff17b4f9709cd2c51c56b9,
-        type: 3}
-      propertyPath: m_Center.y
-      value: -0.028092146
-      objectReference: {fileID: 0}
-    - target: {fileID: 7549325027591840120, guid: cb10245f5dff17b4f9709cd2c51c56b9,
-        type: 3}
-      propertyPath: m_Center.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7549325027591840120, guid: cb10245f5dff17b4f9709cd2c51c56b9,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.43273014
-      objectReference: {fileID: 0}
-    - target: {fileID: 7549325027591840122, guid: cb10245f5dff17b4f9709cd2c51c56b9,
-        type: 3}
-      propertyPath: terminalVelocity
-      value: -20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb10245f5dff17b4f9709cd2c51c56b9, type: 3}
