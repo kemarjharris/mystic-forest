@@ -10,6 +10,7 @@ public class Battler : MonoBehaviour, IBattler
     IHitBox hitBox;
     protected IBattlerPhysics physics = null;
     SpriteRenderer sprite;
+
     public ExecutableChainSetSOImpl chainSet;
 
     float hitStun;
@@ -28,9 +29,10 @@ public class Battler : MonoBehaviour, IBattler
         {
             physics = gameObject.AddComponent<BattlerPhysics>();
         }
-        ChainSet = new StateExecutableChainSetImpl(physics, chainSet);
+        executionState = new ExecutionState();
+        ChainSet = new StateExecutableChainSetImpl(physics, executionState, chainSet);
         hitPoint.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-       
+        
     }
 
     public void StopCombatAnimation() => animator.Stop();
@@ -100,4 +102,5 @@ public class Battler : MonoBehaviour, IBattler
     public bool IsFrozen => physics.freeze;
 
     public IBattlerEventSet eventSet { get; set; }
+    public ExecutionState executionState { get; private set; }
 }

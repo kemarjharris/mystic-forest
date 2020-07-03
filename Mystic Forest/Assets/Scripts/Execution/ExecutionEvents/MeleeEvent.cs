@@ -14,7 +14,7 @@ public class MeleeEvent : ExecutionEvent
     public override void OnExecute(IBattler attacker, ITargetSet targets)
     {
         interrupted = false;
-        attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(AttackDelay(attacker, targets, onCancellableEvent, onFinishEvent));
+        attacker.StartCoroutine(AttackDelay(attacker, targets, onCancellableEvent, onFinishEvent));
     }
 
     public override void Interrupt()

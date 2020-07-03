@@ -18,8 +18,14 @@ public class ComboTextController : MonoBehaviour
 
     public void DisplayNumberCount(int count)
     {
-        number.gameObject.SetActive(true);
-        number.text = count.ToString();
+        if (count > 1)
+        {
+            if (!number.gameObject.activeSelf)
+            {
+                number.gameObject.SetActive(true);
+            }
+            number.text = count.ToString();
+        }
     }
 
     public void HideComboDisplay()

@@ -129,6 +129,8 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
         int hash = command.GetHashCode();
         foreach (IDirectionPickable pickable in commandables)
         {
+            //
+
             if (pickable.GetDirectionCommand().GetHashCode() == hash)
             {
                 return (T) pickable;

@@ -20,14 +20,14 @@ public class SnapEvent : ExecutionEvent
         Vector3 snapPoint = Vector3.zero;
         if (target != null)
         {
-            snapPoint = SnapPosition(battler.gameObject, target.gameObject);
+            snapPoint = SnapPosition(battler.transform.gameObject, target.transform.gameObject);
         }
         else
         {
-            snapPoint = targetSet.GetTarget().transform.position + (Vector3.up * battler.gameObject.transform.position.y);
+            snapPoint = targetSet.GetTarget().transform.position + (Vector3.up * battler.transform.position.y);
         }
 
-        if (battler.gameObject.transform.position == snapPoint)
+        if (battler.transform.position == snapPoint)
         {
             snapPoint += Vector3.down * 0.1f;
         }
@@ -35,12 +35,12 @@ public class SnapEvent : ExecutionEvent
         float CalculateSpeed()
         {
             float time = Mathf.Max(travelTime, 0.01f);
-            float distance = Vector3.Distance(battler.gameObject.transform.position, snapPoint);
+            float distance = Vector3.Distance(battler.transform.position, snapPoint);
             return distance / time;
         }
         float speed = CalculateSpeed();
         battler.StartCoroutine(ExecuteNearPointEvent(battler, targetSet, snapPoint));
-        battler.StartCoroutine(travelMethod.Travel(battler.gameObject.transform, snapPoint, speed));
+        battler.StartCoroutine(travelMethod.Travel(battler.transform, snapPoint, speed));
         battler.Play(travelAnim);
     }
 
@@ -48,7 +48,7 @@ public class SnapEvent : ExecutionEvent
     {
         bool isNearPoint()
         {
-            Vector3 battlerPoint = battler.gameObject.transform.position;
+            Vector3 battlerPoint = battler.transform.position;
             return Mathf.Abs(snapPoint.x - battlerPoint.x) < nearPointDefinition.x && Mathf.Abs(snapPoint.y - battlerPoint.y) < nearPointDefinition.y && Mathf.Abs(snapPoint.z - battlerPoint.z) < nearPointDefinition.z;
         }
         yield return new WaitUntil(isNearPoint);
@@ -59,16 +59,16 @@ public class SnapEvent : ExecutionEvent
     {
         BoxCollider jumpInCollider = battler.GetComponent<BoxCollider>();
         BoxCollider targetCollider = target.gameObject.GetComponent<BoxCollider>();
-        float jumpInWidth = (jumpInCollider.size.x * jumpInCollider.gameObject.transform.localScale.x) / 2f;
-        float targetWidth = (targetCollider.size.x * targetCollider.gameObject.transform.localScale.x) / 2f;
+        float jumpInWidth = (jumpInCollider.size.x * jumpInCollider.transform.localScale.x) / 2f;
+        float targetWidth = (targetCollider.size.x * targetCollider.transform.localScale.x) / 2f;
         float xDistance = jumpInWidth + targetWidth;
-        if (battler.transform.position.x <= target.gameObject.transform.position.x)
+        if (battler.transform.position.x <= target.transform.position.x)
         {
-            return target.gameObject.transform.position - (Vector3.right * xDistance);
+            return target.transform.position - (Vector3.right * xDistance);
         }
         else
         {
-            return target.gameObject.transform.position + (Vector3.right * xDistance);
+            return target.transform.position + (Vector3.right * xDistance);
         }
     }
 }

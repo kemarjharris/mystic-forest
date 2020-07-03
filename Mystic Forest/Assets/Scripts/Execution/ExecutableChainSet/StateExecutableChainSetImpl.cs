@@ -7,26 +7,17 @@ public class StateExecutableChainSetImpl : IExecutableChainSet
 {
     IExecutableChainSet set;
     IBattlerPhysics physics;
-    bool usingAerials;
+    ExecutionState state;
+    // ISkillCaster skillCaster;
 
-    public StateExecutableChainSetImpl(IBattlerPhysics physics, IExecutableChainSet set)
+    public StateExecutableChainSetImpl(IBattlerPhysics physics, ExecutionState state, IExecutableChainSet set)
     {
         this.physics = physics;
+        this.state = state;
         this.set = set;
+        
+        // this.skillCaster = skillCaster;
     }
-
-    IExecutableChainSet Aerials()
-    {
-        // Aerial sets
-        bool IsAerial(IExecutableChain chain) => chain.IsAerial && !chain.IsSkill;
-        return set.Where(IsAerial);
-    }
-    IExecutableChainSet Normals()
-    {
-        bool isNormal(IExecutableChain chain) => !chain.IsAerial && !chain.IsSkill;
-        return set.Where(isNormal);
-    }
-
 
     public bool Contains(IExecutableChain chain)
     {
@@ -41,13 +32,11 @@ public class StateExecutableChainSetImpl : IExecutableChainSet
 
     public IExecutableChainSet Where(Predicate<IExecutableChain> predicate)
     {
-        IExecutableChainSet tempSet = physics.IsGrounded ? Normals() : Aerials();
-        return tempSet.Where(predicate);
+        return new StateExecutableChainSetImpl(physics, state, set.Where(predicate));
     }
 
     public IEnumerator<IExecutableChain> GetEnumerator()
     {
-        bool grounded = physics.IsGrounded;
         foreach (IExecutableChain chain in set)
         {
             if (CorrectState(chain)) yield return chain;
@@ -56,7 +45,21 @@ public class StateExecutableChainSetImpl : IExecutableChainSet
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    bool CorrectState(IExecutableChain chain) => (chain.IsAerial && !physics.IsGrounded) || (!chain.IsAerial && physics.IsGrounded);
+    bool CorrectState(IExecutableChain chain)
+    {
+        // correct aerial state
+        if ((chain.IsAerial && !physics.IsGrounded) || (!chain.IsAerial && physics.IsGrounded)) {
+            // correct skill state
+            if (!chain.IsSkill || state.comboing || (chain.IsSkill && state.selectingSkill))
+            //{
+
+                
+                    return true;
+                
+            //}
+        }
+        return false;
+    }
 
     
 }

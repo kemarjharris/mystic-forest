@@ -58,7 +58,7 @@ public class AimExecutable : Executable
     {
         if (cursorGameObject == null)
         {
-            Vector3 battlerPos = battler.gameObject.transform.position;
+            Vector3 battlerPos = battler.transform.position;
             cursorGameObject = Object.Instantiate(cursorPrefab, new Vector3(battlerPos.x, 0, battlerPos.z), Quaternion.identity);
             cursor = cursorGameObject.GetComponent<ICursor>();
             cursorGameObject.transform.rotation = Quaternion.Euler(90, 0, 0);
@@ -66,7 +66,7 @@ public class AimExecutable : Executable
         } else
         {
             cursorGameObject.SetActive(true);
-            Vector3 battlerPos = battler.gameObject.transform.position;
+            Vector3 battlerPos = battler.transform.position;
             cursorGameObject.transform.position = new Vector3(battlerPos.x, 0, battlerPos.z);
         }
         
@@ -102,9 +102,9 @@ public class AimExecutable : Executable
             cursorHitBox.CheckCollision(delegate (Collider collider) {
                 IBattler targeted = collider.gameObject.GetComponent<IBattler>();
                 if (targeted == null || targeted == battler) return;
-                // targets.SetTarget(targeted.gameObject.transform);
-                onTargetSelected.pool.target = targeted.gameObject.transform;
-                targets.SetTarget(targeted.gameObject.transform);
+                // targets.SetTarget(targeted.transform);
+                onTargetSelected.pool.target = targeted.transform;
+                targets.SetTarget(targeted.transform);
                 specificTargetSelected = true;
             });
             if (!specificTargetSelected)

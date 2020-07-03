@@ -4,7 +4,8 @@ using UnityEngine;
 
 public interface IBattler
 {
-    GameObject gameObject { get; }
+    Transform transform { get; }
+
     Transform hitPoint { get; }
 
     void Play(IPlayableAnim animation);
@@ -16,9 +17,11 @@ public interface IBattler
     void GetAttacked(IAttack attack);
 
     IExecutableChainSet ChainSet { get; }
+
     void FreezeFrame(float duration, System.Action onUnfreeze = null);
 
     bool IsGrounded { get; }
+
     bool IsFrozen { get; }
 
     void SetVelocity(Vector3 velocity);
@@ -26,4 +29,6 @@ public interface IBattler
     Coroutine StartCoroutine(IEnumerator routune);
 
     IBattlerEventSet eventSet { get; set; }
+
+    ExecutionState executionState { get; }
 }

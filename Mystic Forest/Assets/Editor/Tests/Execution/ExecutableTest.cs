@@ -44,7 +44,7 @@ namespace ExecutableTest
             GameObject go = Object.Instantiate(Resources.Load<GameObject>("TestPrefabs/MockBattler"));
             go.transform.position = Vector3.zero;
             battler = Substitute.For<IBattler>();
-            battler.gameObject.Returns(go);
+            battler.transform.Returns(go.transform);
             targets = new TargetSet();
             objects = new List<GameObject>
             {

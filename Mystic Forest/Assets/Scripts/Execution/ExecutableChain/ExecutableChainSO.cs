@@ -5,7 +5,7 @@ using System.Collections;
 using System;
 using UnityEngine.Events;
 
-[CreateAssetMenu(menuName = "Executable/Executable Chain SO")]
+[CreateAssetMenu(menuName = "Executable/Chain/Executable Chain SO")]
 public class ExecutableChainSO : ScriptableObject, IExecutableChain
 {
     public ExecutableSO[] attacks;
@@ -17,17 +17,17 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain
 
     private List<IExecutable> instances;
 
-    public IExecutable head => attacks[0].CreateExecutable();
+    public virtual IExecutable head => attacks[0].CreateExecutable();
 
-    public bool IsAerial => aerial;
+    public virtual bool IsAerial => aerial;
 
-    public bool IsSkill => skill;
+    public virtual bool IsSkill => skill;
 
-    public IEnumerator<IExecutable> GetEnumerator()
+    public virtual IEnumerator<IExecutable> GetEnumerator()
     {
         return GetCustomizableEnumerator();
     }
-    
+
     IEnumerator<IExecutable> LoopEnumerator()
     {
         instances = new List<IExecutable>();
@@ -39,17 +39,19 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain
         return instances.GetEnumerator();
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
+    public virtual IDirectionCommand GetDirectionCommand() => new DirectionCommand(attacks.Length > 0 ? head.GetButton() : DirectionCommandButton.NULL, group.directions);
 
-    public IDirectionCommand GetDirectionCommand() => new DirectionCommand(attacks.Length > 0 ? head.GetButton() : DirectionCommandButton.NULL, group.directions);
-
-    public ICustomizableEnumerator<IExecutable> GetCustomizableEnumerator()
+    public virtual ICustomizableEnumerator<IExecutable> GetCustomizableEnumerator()
     {
         return new CustomizableEnumerator<IExecutable>(LoopEnumerator());
     }
 
-    public IExecutableChainSet NextChains(IExecutableChainSet executables) => rule.Rule(executables);
+    public virtual IExecutableChainSet NextChains(IExecutableChainSet executables) => rule.Rule(executables);
+
+    public override string ToString()
+    {
+        return name.Split('(')[0];
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => LoopEnumerator();
 }

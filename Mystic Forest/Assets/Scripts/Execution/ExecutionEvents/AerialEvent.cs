@@ -28,7 +28,7 @@ public class AerialEvent : ExecutionEvent
                 yield return new WaitWhile(() => !eventFired && !attacker.IsGrounded);
                 if (attacker.IsGrounded && !eventFired) executionEvent.Interrupt();
             }
-            attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(Interrupt());
+            attacker.StartCoroutine(Interrupt());
             executionEvent.OnExecute(attacker, targets);
         } else
         {

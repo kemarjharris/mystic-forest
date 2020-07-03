@@ -11,7 +11,7 @@ public class TravelForward : TravelMethodSO
         {
             float secondsPassed = Time.fixedDeltaTime;
             float distanceTravelled = speed * secondsPassed;
-            toMove.gameObject.transform.position += new Vector3(distanceTravelled, 0, 0);
+            toMove.position += new Vector3(distanceTravelled, 0, 0);
             yield return new WaitForFixedUpdate();
         } while (toMove != null);
         onFinish?.Invoke();

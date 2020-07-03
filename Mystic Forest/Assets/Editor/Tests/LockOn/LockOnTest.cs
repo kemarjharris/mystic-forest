@@ -16,8 +16,8 @@ namespace Tests
         {
             // a sphere
             lockOn = Object.Instantiate(Resources.Load<GameObject>("Test Lock On GameObject")).GetComponent<LockOn>();
-            lockOn.gameObject.transform.localScale = new Vector3(10, 10, 10);
-            lockOn.gameObject.transform.position = Vector3.zero;
+            lockOn.transform.localScale = new Vector3(10, 10, 10);
+            lockOn.transform.position = Vector3.zero;
             objects = new List<GameObject>();
         }
 
@@ -182,8 +182,8 @@ namespace Tests
             // lock on to closest
             lockOn.NextToLockOnTo();
             // GameObjects swap distances, expected is now closest
-            toSwap.gameObject.transform.position = Vector3.left * -2;
-            expected.gameObject.transform.position = Vector3.left * -1;
+            toSwap.transform.position = Vector3.left * -2;
+            expected.transform.position = Vector3.left * -1;
             yield return null;
             GameObject result = lockOn.NextToLockOnTo();
             Assert.AreSame(expected, result);

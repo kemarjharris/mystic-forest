@@ -17,7 +17,7 @@ public class EffectMeleeEvent : MeleeEvent
         yield return new WaitForSeconds(effectSpawnTime);
 
         // spawn effect and play animation
-        GameObject gameObject = Instantiate(effectPrefab, performer.gameObject.transform.position, Quaternion.identity);
+        GameObject gameObject = Instantiate(effectPrefab, performer.transform.position, Quaternion.identity);
         MixAnimator animator = gameObject.GetComponent<MixAnimator>();
         animator.Play(effectAnim);
         // invoke cancellable event

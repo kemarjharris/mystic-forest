@@ -83,10 +83,7 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
         {
             // Runs when chain finishes running
             // tell observer that the attack chain is done
-            seconds = null;
-            prev = null;
-            curr = null;
-            OnChainFinished.Invoke();
+            StopExecuting();
         }
     }
 
@@ -113,6 +110,14 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
             // Notify observer that all attacks in the chain were fired
             OnChainFired.Invoke();
         }
+    }
+
+    public void StopExecuting()
+    {
+        seconds = null;
+        prev = null;
+        curr = null;
+        OnChainFinished.Invoke();
     }
 
     /* For testing purposes */

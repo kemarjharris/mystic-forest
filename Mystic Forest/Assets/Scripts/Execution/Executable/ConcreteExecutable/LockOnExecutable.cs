@@ -70,10 +70,10 @@ public class LockOnExecutable : Executable
     private void StartLockingOn(IBattler battler)
     {
         lockOnGameObject.SetActive(true);
-        lockOnGameObject.transform.SetParent(battler.gameObject.transform);
+        lockOnGameObject.transform.SetParent(battler.transform);
         lockOnGameObject.transform.localPosition = Vector3.zero;
         lockOnGameObject.transform.localScale = new Vector3(3.2f, 1f, 2.25f);
-        lockOn.rule = (Collider collider) => collider.gameObject.tag == "Battler" && battler.gameObject != collider.gameObject;
+        lockOn.rule = (Collider collider) => collider.gameObject.tag == "Battler" && battler.transform != collider.transform;
     }
 
     private void StopLockingOn()

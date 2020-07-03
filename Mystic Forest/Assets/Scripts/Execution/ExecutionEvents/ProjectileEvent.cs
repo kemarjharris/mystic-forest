@@ -14,7 +14,7 @@ public class ProjectileEvent : ExecutionEvent
 
     public override void OnExecute(IBattler attacker, ITargetSet targets)
     {
-        attacker.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(FireProjectile(attacker, targets));
+        attacker.transform.GetComponent<MonoBehaviour>().StartCoroutine(FireProjectile(attacker, targets));
     }
 
     IEnumerator FireProjectile(IBattler attacker, ITargetSet targets)
@@ -25,14 +25,14 @@ public class ProjectileEvent : ExecutionEvent
         // wait until time to fire projectile
         yield return new WaitForSeconds(projectileSpawnTime);
         // Fire projectile and send it to its destination
-        GameObject projectileGO = Instantiate(projectilePrefab, attacker.gameObject.transform.position, Quaternion.identity);
+        GameObject projectileGO = Instantiate(projectilePrefab, attacker.transform.position, Quaternion.identity);
         IProjectile projectile = projectileGO.GetComponentInChildren<IProjectile>();
         projectileGO.GetComponentInChildren<SpriteRenderer>().transform.rotation = Camera.main.transform.rotation;
         Vector3 dest = pool.target.position;
         // put dest point at battlers height
         if (pool.floorPoint)
         {
-            dest += Vector3.up * attacker.gameObject.transform.position.y;
+            dest += Vector3.up * attacker.transform.position.y;
         }
         projectile.gameObject.GetComponent<MonoBehaviour>().StartCoroutine(travelMethod.Travel(projectileGO.transform, dest, projectileSpeed));
         // Check battlers that get hit along the way

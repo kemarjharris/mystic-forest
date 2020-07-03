@@ -11,7 +11,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     ITargetSet targetSet;
     bool linkerActive;
     public IExecutableChainSet set { get; private set; }
-    public IBattler battler { get; private set; }
+    public IBattler battler;
     public IExecutableChain current;
 
     IActionWrapper IExecutionModule.OnChainCancellable => executor.OnChainCancellable;
@@ -21,6 +21,8 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     public IActionWrapper<ICustomizableEnumerator<IExecutable>> OnNewChainLoaded { get; private set; } = new ActionWrapper<ICustomizableEnumerator<IExecutable>>();
     public IActionWrapper OnNewSetLoaded { get; private set; } = new ActionWrapper();
 
+    bool updated;
+
     public void StartExecution(IExecutableChainSet set, IBattler battler, ITargetSet targetSet = null)
     {
         picker.Set(set);
@@ -29,6 +31,8 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         this.targetSet = targetSet;
         linkerActive = true;
         OnNewSetLoaded.Invoke();
+        // Call again if the module already updated this frame, otherwise its going to update again on its own
+        if (updated) Update();
     }
 
     public void StartExecution(IExecutableChain chain, IBattler battler, ITargetSet targetSet = null)
@@ -39,8 +43,12 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
             targetSet = new TargetSet();
         }
         picker.OnSelected.Invoke(chain);
-        executor.Update();
+        // Call again if the module already updated this frame, otherwise its going to update again on its own
+        if (updated) Update();
     }
+
+    // calls on chain finished which sets linker false
+    public void StopExecution() => executor.StopExecuting();
 
     public void ChangeSet(IExecutableChainSet set)
     {
@@ -78,6 +86,12 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
             IExecutableChain chain = picker.InputSelect();
         }
         executor.Update();
+        updated = true;
+    }
+
+    private void LateUpdate()
+    {
+        updated = false;
     }
 
     void OnChainSelected(IExecutableChain chain)
@@ -94,10 +108,12 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
 
     void OnChainFiredEvent()
     {
+        
         if (battler != null && battler.ChainSet != null)
         {
-            ChangeSet(current.NextChains(battler.ChainSet).Where(chain => battler.IsGrounded ? !chain.IsAerial : chain.IsAerial));
+            ChangeSet(current.NextChains(battler.ChainSet));
         }
+        
         linkerActive = true;
     }
 
@@ -107,10 +123,12 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         linkerActive = false;
     }
 
+
     /* For testing */
 
     public bool LinkerIsActive() => linkerActive;
 
+    
 }
 
 // states:
