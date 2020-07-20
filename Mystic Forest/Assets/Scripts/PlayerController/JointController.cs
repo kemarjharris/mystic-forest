@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Zenject;
 
 public class JointController : MonoBehaviour, IPlayerController
 {
@@ -21,13 +22,19 @@ public class JointController : MonoBehaviour, IPlayerController
     float vVel;
     bool jumped;
 
+    [Inject]
+    public void Construct(IUnityAxisService axisService, IUnityInputService inputService)
+    {
+        service = axisService;
+        this.inputService = inputService;
+    }
+
     private void Awake()
     {
-
         battler = GetComponent<IBattler>();
         physics = GetComponent<BattlerPhysics>();
-        if (service == null) service = new UnityAxisService();
-        if (inputService == null) inputService = new UnityInputService();
+        // if (service == null) service = new UnityAxisService();
+        // if (inputService == null) inputService = new UnityInputService();
     }
 
     public void Update()

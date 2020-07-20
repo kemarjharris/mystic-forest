@@ -4,13 +4,15 @@ using UnityEditor;
 [System.Serializable]
 public class Attack : IAttack
 {
-    public Vector3 force = Vector3.zero;
+    public Force force;
     public float freezeTime = 0.1f;
     public bool hasKnockBack = true;
     public float hitStun = 0;
 
+    public Transform origin { get; set; }
+
     float IAttack.hitStun => hitStun;
-    Vector3 IAttack.force => force;
+    IForce IAttack.force => force;
     float IAttack.freezeTime => freezeTime;
     bool IAttack.hasKnockBack => hasKnockBack;
 }

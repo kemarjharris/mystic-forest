@@ -43,6 +43,9 @@ public class LockOn : MonoBehaviour
     public GameObject NextToLockOnTo()
     {
         List<Collider> objectsInRange = finder.ObjectsInRange();
+
+        Debug.Log(CollectionUtils.Print(objectsInRange));
+
         if (rule != null)
         {
             for (int i = objectsInRange.Count - 1; i >= 0; i--)

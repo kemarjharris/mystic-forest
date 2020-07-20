@@ -35,6 +35,6 @@ public class Ground : MonoBehaviour
 
     public void OnDrawGizmosSelected()
     {
-        BoxColliderDrawer.DrawBoxCollider(transform, Color.black, collider.center, collider.size, 0.2f);
+        BoxColliderDrawer.DrawBoxCollider(transform, Color.black, collider.center, collider.size, transform.rotation, 0.2f);
     }
 }

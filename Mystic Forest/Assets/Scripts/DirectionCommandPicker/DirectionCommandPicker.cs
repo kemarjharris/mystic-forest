@@ -2,21 +2,30 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Zenject;
 
 public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : IDirectionPickable
 {
+    // Dependencies
+    public IUnityTimeService service;
+    public IUnityInputService inputService;
+    readonly float timeBeforeClearingInput;
 
+    // Events
+    public IActionWrapper<T> OnSelected { get; private set; }
+
+    // State
     private IEnumerable<T> commandables;
     private List<Direction> inputtedDirections;
     private DirectionCommandButton inputtedButton;
-    public IUnityTimeService service = new UnityTimeService();
-    public IUnityInputService inputService = new UnityInputService();
-    public IActionWrapper<T> OnSelected { get; private set; }
-
     float timeOfLastInput;
-    readonly float timeBeforeClearingInput;
-
     
+    [Inject]
+    public void Construct(IUnityTimeService service, IUnityInputService inputService)
+    {
+        this.service = service;
+        this.inputService = inputService;
+    }
 
     public DirectionCommandPicker(float timeBeforeClearingInput) {
         inputtedDirections = new List<Direction>(); 

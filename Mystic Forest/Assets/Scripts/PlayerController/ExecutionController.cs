@@ -1,50 +1,59 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Zenject;
 
+[RequireComponent(typeof(Battler))]
 public class ExecutionController : MonoBehaviour
 {
-    public GameObject lockOnPrefab;
-    private LockOn lockOn;
-
-    // Used for execution
+    /// Dependencies 
+    // Execution Module
     IExecutionModule module;
+    // The interface for tracking combos
+    IComboCounter comboCounter;
+    // Unity Services
+    IUnityInputService inputService;
+    IUnityTimeService timeService;
+    // Concrete gameobject
+    private LockOn lockOn;
+    // The amount of time it takes to cast a skill
+    public float skillTimeOut = 1;
+
+    /// State
+    float timeOut;
     // The battler being controlled
-    IBattler battler;
+    public IBattler battler;
     // Currently targeted enemy
     ITargetSet target;
-    public float skillTimeOut;
-    float timeOut;
+    // Definition of when to use assault
     public RangeSO closeRange;
     public ExecutableChainSO assault;
 
+    [Inject]
+    public void Construct(IUnityInputService inputService, IUnityTimeService timeService, IExecutionModule module, IComboCounter comboCounter, LockOn lockOn)
+    {
+        this.inputService = inputService;
+        this.timeService = timeService;
+        this.module = module;
+        this.comboCounter = comboCounter;
+        this.lockOn = lockOn;
+    }
+
+
     private void Awake()
     {
-
-        lockOn = Instantiate(lockOnPrefab).GetComponent<LockOn>();
         target = NewTargetSet();
-        lockOn.onLockOn += delegate (GameObject t)
-        {
-            if (t != null && t.transform != target.GetTarget())
-            {
-                target.SetTarget(t.transform);
-            }
-        };
-        lockOn.rule = (Collider collider) => collider.gameObject.tag == "Battler" && battler.transform != collider.transform;
-        lockOn.transform.SetParent(transform);
-        lockOn.transform.localPosition = Vector3.zero;
-        module = GameObject.FindGameObjectWithTag("Execution Module").GetComponent<IExecutionModule>();
+        SetUpLockOn();
         battler = GetComponent<Battler>();
     }
 
     private void Update()
-    {
-        if (battler.executionState.combatState != CombatState.ATTACKING)
+    { 
+        if (battler.executionState.combatState == CombatState.NOT_ATTACKING)
         {
             // not fighting
             if (!battler.executionState.comboing)
             {
-
-                if (Input.GetKeyDown("j"))
+                if (inputService.GetKeyDown("j"))
                 {
                     if (battler.IsGrounded && !closeRange.BattlerInRange(battler.transform))
                     {
@@ -54,7 +63,7 @@ public class ExecutionController : MonoBehaviour
                     {
                         module.StartExecution(battler.ChainSet, battler, target);
                     }
-                } else if (Input.GetKeyDown("k"))
+                } else if (inputService.GetKeyDown("k"))
                 {
                     timeOut = skillTimeOut;
                     if (!battler.executionState.selectingSkill)
@@ -64,13 +73,13 @@ public class ExecutionController : MonoBehaviour
                 }
             } else // fighting
             {
-                if (Input.GetKeyDown("j"))
+                if (inputService.GetKeyDown("j"))
                 {
                     module.StartExecution(battler.ChainSet, battler, target);
                 }
             }
 
-            if (Input.GetKeyDown("l"))
+            if (inputService.GetKeyDown("l"))
             {
                 GameObject targ = lockOn.NextToLockOnTo();
             }
@@ -124,25 +133,14 @@ public class ExecutionController : MonoBehaviour
 
     void SetUpComboEvents()
     {
-        GameObject counter = GameObject.FindGameObjectWithTag("Combo Counter");
-        if (counter != null)
-        {
-            ComboCounter comboCounter = counter.GetComponent<ComboCounter>();
-            comboCounter.onCountIncremented += RaiseComboFlag;
-            comboCounter.onComboFinished += LowerComboFlag;
-        }
-
+        comboCounter.onCountIncremented += RaiseComboFlag;
+        comboCounter.onComboFinished += LowerComboFlag;
     }
 
     void TearDownComboEvents()
     {
-        GameObject counter = GameObject.FindGameObjectWithTag("Combo Counter");
-        if (counter != null)
-        {
-            ComboCounter comboCounter = counter.GetComponent<ComboCounter>();
-            comboCounter.onCountIncremented -= RaiseComboFlag;
-            comboCounter.onComboFinished -= LowerComboFlag;
-        }
+        comboCounter.onCountIncremented -= RaiseComboFlag;
+        comboCounter.onComboFinished -= LowerComboFlag;
     }
 
     void RaiseComboFlag(int i)
@@ -157,6 +155,20 @@ public class ExecutionController : MonoBehaviour
         battler.executionState.comboing = false;
         lockOn.RemoveTarget();
         target = NewTargetSet();
+    }
+
+    void SetUpLockOn()
+    {
+        lockOn.onLockOn += delegate (GameObject t)
+        {
+            if (t != null && t.transform != target.GetTarget())
+            {
+                target.SetTarget(t.transform);
+            }
+        };
+        lockOn.rule = (Collider collider) => collider.gameObject.tag == "Battler" && battler.transform != collider.transform;
+        lockOn.transform.SetParent(transform);
+        lockOn.transform.localPosition = Vector3.zero;
     }
 
 
@@ -188,5 +200,10 @@ public class ExecutionController : MonoBehaviour
         }
 
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        closeRange.Draw(transform);
     }
 }

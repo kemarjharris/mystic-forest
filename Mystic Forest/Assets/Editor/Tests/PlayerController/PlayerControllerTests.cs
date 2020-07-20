@@ -4,11 +4,16 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using NSubstitute;
+using UnityEngine.SceneManagement;
 
 namespace Tests
 {
     public abstract class PlayerControllerTest
     {
+
+        [OneTimeTearDown]
+        public void OneTimeTearDown() => TestTools.DestroyAllGameObjects();
+
         protected JointController controller;
         protected GameObject go;
         protected IUnityInputService inputService;
@@ -57,16 +62,17 @@ namespace Tests
             inputService = Substitute.For<IUnityInputService>();
             inputService.GetKeyDown("j").Returns(jPressed);
             inputService.GetKeyDown("k").Returns(kPressed);
-            inputService.GetKeyDown("l").Returns(lPressed);
+            inputService.GetKeyDown("space").Returns(lPressed);
             controller.inputService = inputService;
         }
 
-        public abstract void SetDirectionalService(float horizontal, float vertical);
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
+        public void SetDirectionalService(float horizontal, float vertical)
         {
-            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("Controller Test Scene");
+
+            IUnityAxisService service = Substitute.For<IUnityAxisService>();
+            service.GetAxis("Horizontal").Returns(horizontal);
+            service.GetAxis("Vertical").Returns(vertical);
+            controller.service = service;
         }
     }
 
@@ -84,14 +90,6 @@ namespace Tests
             neutral = controller;
         }
 
-        public override void SetDirectionalService(float horizontal, float vertical)
-        {
-           
-            IUnityAxisService service = Substitute.For<IUnityAxisService>();
-            service.GetAxis("Horizontal").Returns(horizontal);
-            service.GetAxis("Vertical").Returns(vertical);
-            neutral.service = service;
-        }
 
         [UnityTest]
         public IEnumerator Move_LeftInput_MovesLeft()
@@ -135,7 +133,7 @@ namespace Tests
             combat = controller;
         }
 
-        public override void SetDirectionalService(float horizontal, float vertical)
+        public new void SetDirectionalService(float horizontal, float vertical)
         {
             IUnityAxisService service = Substitute.For<IUnityAxisService>();
             service.GetAxis("Horizontal").Returns(horizontal);

@@ -39,6 +39,7 @@ public class MeleeEvent : ExecutionEvent
                 IBattler battler = collider.gameObject.GetComponent<Battler>();
                 if (battler == null || battler == performer) return;
                 madeContact = true;
+                attack.origin = performer.transform;
                 battler.GetAttacked(attack);
             });
             if (madeContact)

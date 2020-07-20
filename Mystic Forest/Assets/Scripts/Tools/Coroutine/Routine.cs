@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface Routine : IEnumerator
+public interface IRoutine : IEnumerator
 {
 
     // Use this for initialization
@@ -13,4 +13,6 @@ public interface Routine : IEnumerator
     bool IsRunning();
 
     bool IsFinishedRunning();
+
+    System.Action OnRoutineFinished { get; set; }
 }

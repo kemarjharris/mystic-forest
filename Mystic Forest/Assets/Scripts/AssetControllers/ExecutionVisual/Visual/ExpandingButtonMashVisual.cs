@@ -6,7 +6,7 @@ public class ExpandingButtonMashVisual: ExecutionVisual
 {
     public Image timer;
 
-    private Routine routine;
+    private IRoutine routine;
     private Vector3 startScale;
 
     private void Awake()

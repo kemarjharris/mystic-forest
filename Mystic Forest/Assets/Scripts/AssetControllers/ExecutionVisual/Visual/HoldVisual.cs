@@ -7,7 +7,7 @@ public class HoldVisual : ExecutionVisual
     public SpriteRenderer fullCircle;
     public SpriteRenderer increasingCircle;
     public SpriteRenderer outerCircle;
-    public Routine fillRoutine;
+    public IRoutine fillRoutine;
     public const float fillScale = 1/ 0.65f;
 
     public void Initialize(OnReleaseHoldExecutable executable)

@@ -50,8 +50,11 @@ public class Battler : MonoBehaviour, IBattler
     public void GetAttacked(IAttack attack)
     {
         Debug.Log(name + "was hit");
-        if (attack.hasKnockBack) physics.SetVelocity(attack.force);
-        FreezeFrame(attack.freezeTime);
+        FreezeFrame(attack.freezeTime,
+            delegate() {
+                if (attack.hasKnockBack) physics.ApplyForce(attack.force, attack.origin);
+            }
+        );
         Flinch(attack);
     }
 
@@ -102,5 +105,5 @@ public class Battler : MonoBehaviour, IBattler
     public bool IsFrozen => physics.freeze;
 
     public IBattlerEventSet eventSet { get; set; }
-    public ExecutionState executionState { get; private set; }
+    public IExecutionState executionState { get; private set; }
 }

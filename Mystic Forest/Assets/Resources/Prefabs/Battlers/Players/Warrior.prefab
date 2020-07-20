@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8236324615538754330}
   - component: {fileID: 2058431001446035168}
+  - component: {fileID: 1333750098996129609}
+  - component: {fileID: 4574508256192308539}
   m_Layer: 5
   m_Name: Sprite
   m_TagString: Untagged
@@ -27,9 +29,10 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7549325026198474780}
   m_Father: {fileID: 7549325027591840113}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -84,6 +87,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1333750098996129609
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6866306381509982460}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 97f2c74a403afb344ae1b092ded45037, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4574508256192308539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6866306381509982460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b21d23dac0db12f449d23a4e181188bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7549325026198474783
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,7 +146,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7549325027591840113}
+  m_Father: {fileID: 8236324615538754330}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7549325026198474781
@@ -142,8 +176,6 @@ GameObject:
   - component: {fileID: 7549325027591840123}
   - component: {fileID: 7549325027591840120}
   - component: {fileID: 7549325027591840122}
-  - component: {fileID: 5357676517641398453}
-  - component: {fileID: 5928545063431492230}
   - component: {fileID: 603432356}
   - component: {fileID: 202504862}
   m_Layer: 5
@@ -164,7 +196,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
-  - {fileID: 7549325026198474780}
   - {fileID: 8236324615538754330}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -233,37 +264,6 @@ MonoBehaviour:
   airForcePercentage: 0.3
   terminalVelocity: -20
   collider: {fileID: 7549325027591840120}
---- !u!95 &5357676517641398453
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7549325027591840112}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 97f2c74a403afb344ae1b092ded45037, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5928545063431492230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7549325027591840112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b21d23dac0db12f449d23a4e181188bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &603432356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,8 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a02cef7ce4f15a84dac139f0248a3026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockOnPrefab: {fileID: 2842591358034228965, guid: 6d8467779025d50488df1be256ee524c,
-    type: 3}
   skillTimeOut: 1
   closeRange: {fileID: 11400000, guid: c73f14f52dc0c384d8a5610a86954a62, type: 2}
   assault: {fileID: 11400000, guid: 43a94eae7e8ef6f40b61fa6526881164, type: 2}

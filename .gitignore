@@ -10,6 +10,7 @@
 [Ll]ogs/
 [Mm]emoryCaptures/
 [Pp]lugins/
+!*.asmdef
 
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
@@ -59,4 +60,5 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+
 

@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Debug Test Scenes/Controller Test Scene.unity
     guid: b742935c8f4878a4cb6b30c3e290488b
+  - enabled: 1
+    path: Assets/Scenes/Debug Test Scenes/Blank Test Scene.unity
+    guid: 544b44319111af244a00a352dfeb38ad
   m_configObjects: {}

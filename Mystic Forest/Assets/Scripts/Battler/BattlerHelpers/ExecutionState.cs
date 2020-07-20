@@ -1,9 +1,16 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class ExecutionState
+public interface IExecutionState
 {
-    public CombatState combatState = CombatState.NOT_ATTACKING;
-    public bool comboing;
-    public bool selectingSkill;
+    CombatState combatState { get; set; }
+    bool comboing { get; set; }
+    bool selectingSkill { get; set; }
+}
+
+public class ExecutionState : IExecutionState
+{
+    public CombatState combatState { get; set; } = CombatState.NOT_ATTACKING;
+    public bool comboing { get; set; }
+    public bool selectingSkill { get; set; } 
 }

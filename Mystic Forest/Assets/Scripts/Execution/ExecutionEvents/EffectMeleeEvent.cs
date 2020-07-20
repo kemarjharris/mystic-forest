@@ -29,6 +29,7 @@ public class EffectMeleeEvent : MeleeEvent
         hitBox.CheckCollision(delegate (Collider collider) {
             IBattler battler = collider.gameObject.GetComponent<Battler>();
             if (battler == null || battler == performer) return;
+            attack.origin = gameObject.transform;
             battler.GetAttacked(attack);
         });
         yield return new WaitForSeconds(animSO.GetLength() - effectSpawnTime);

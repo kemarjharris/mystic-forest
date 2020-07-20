@@ -10,12 +10,21 @@ namespace ExecutionModuleTest
     public class ExecutionModuleTest
     {
         ExecutionModule module;
+        IDirectionCommandPicker<IExecutableChain> picker;
+        ChainExecutorLinkImpl executor;
+
 
         [SetUp]
         public void SetUp()
         {
             GameObject go = new GameObject();
             module = go.AddComponent<ExecutionModule>();
+            DirectionCommandPicker<IExecutableChain> picker = new DirectionCommandPicker<IExecutableChain>(0);
+            picker.Construct(Substitute.For<IUnityTimeService>(), Substitute.For<IUnityInputService>());
+            this.picker = picker;
+            ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
+            this.executor = executor;
+            module.Construct(this.picker, this.executor);
         }
 
         [TearDown]
@@ -34,9 +43,6 @@ namespace ExecutionModuleTest
         [Test]
         public void ExecutorNotExecutingOnStartTest()
         {
-            ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
-            DirectionCommandPicker<IExecutableChain> picker = new DirectionCommandPicker<IExecutableChain>(0);
-            module.Initialize(picker, executor);
             Assert.False(executor.IsExecuting());
         }
 
@@ -44,10 +50,8 @@ namespace ExecutionModuleTest
         [Test]
         public void ChainSelectedSetsLinkerInactiveTest()
         {
-            DirectionCommandPicker<IExecutableChain> picker = new DirectionCommandPicker<IExecutableChain>(0);
+
             IExecutableChain chain = Substitute.For<IExecutableChain>();
-            IChainExecutor executor = Substitute.For<IChainExecutor>();
-            module.Initialize(picker, executor);
             picker.OnSelected.Invoke(chain);
             Assert.False(module.LinkerIsActive());
         }
@@ -58,9 +62,6 @@ namespace ExecutionModuleTest
         {
             // precondition is linker is inactive
             ChainSelectedSetsLinkerInactiveTest();
-            ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
-            IDirectionCommandPicker<IExecutableChain> picker = Substitute.For<IDirectionCommandPicker<IExecutableChain>>();
-            module.Initialize(picker, executor);
             executor.OnChainFired.Invoke();
             Assert.True(module.LinkerIsActive());
         }
@@ -75,9 +76,6 @@ namespace ExecutionModuleTest
         [Test]
         public void StartExecutionKeepsExecutorInactiveTest()
         {
-            ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
-            DirectionCommandPicker<IExecutableChain> picker = new DirectionCommandPicker<IExecutableChain>(0);
-            module.Initialize(picker, executor);
             module.StartExecution(Substitute.For<IExecutableChainSet>(), Substitute.For<IBattler>());
             Assert.False(executor.IsExecuting());
         }
@@ -86,9 +84,6 @@ namespace ExecutionModuleTest
         [Test]
         public void ChainFinishedSetsLinkerInactiveTest()
         {
-            ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
-            IDirectionCommandPicker<IExecutableChain> picker = Substitute.For<IDirectionCommandPicker<IExecutableChain>>();
-            module.Initialize(picker, executor);
             executor.OnChainFinished.Invoke();
             Assert.False(module.LinkerIsActive());
         }
@@ -96,9 +91,6 @@ namespace ExecutionModuleTest
         [Test]
         public void ChainSelectedStartsExecutionTest()
         {
-            ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
-            DirectionCommandPicker<IExecutableChain> picker = new DirectionCommandPicker<IExecutableChain>(0);
-            module.Initialize(picker, executor);
             IExecutableChain chain = Substitute.For<IExecutableChain>();
             chain.GetEnumerator().Returns(
                 new List<IExecutable>

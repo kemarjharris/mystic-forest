@@ -6,20 +6,21 @@ using System;
 
 public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<AttackChainExecutionModule.ExecutionStatus>
 {
-    IEnumerator<IExecutable> seconds;
-    bool timeCheck;
+    // Dependendencies
+    IChainInputReader reader = new ChainInputReader();
 
-    ITargetSet targets;
-    IBattler attacker;
-
-    IExecutable prev = null;
-    IExecutable curr = null;
-
+    // Events
     public IActionWrapper OnChainCancellable { get; }
     public IActionWrapper OnChainFired { get; }
     public IActionWrapper OnChainFinished { get; }
 
-    IChainInputReader reader = new ChainInputReader();
+    // State
+    IBattler attacker;
+    ITargetSet targets;
+    IEnumerator<IExecutable> seconds;
+    IExecutable prev = null;
+    IExecutable curr = null;
+    bool timeCheck;
 
     public ChainExecutorLinkImpl()
     {

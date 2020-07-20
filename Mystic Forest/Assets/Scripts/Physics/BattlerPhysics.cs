@@ -14,6 +14,7 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
     Rigidbody rb;
     public new BoxCollider collider;
     Vector3 jumpHorizontalVelocity;
+    IRoutine forceRoutine;
 
     private bool colliderOn
     {
@@ -129,13 +130,26 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
         rb.velocity = groundVelocity + Vector3.up * (verticalVelocity < 0 && IsGrounded ? 0 : verticalVelocity);
     }
 
+    public void ApplyForce(IForce force, Transform origin)
+    {
+        if (forceRoutine != null && forceRoutine.IsRunning())
+        {
+            forceRoutine.Stop();
+        }
+        forceRoutine = new RoutineImpl(force.ApplyForce(this, origin), this);
+        forceRoutine.OnRoutineFinished = () => forceRoutine = null;
+        forceRoutine.Start();
+    }
+
 
     public void FixedUpdate()
     {
         if (IsGrounded) // apply drag
         {
-            //jumpHorizontalVelocity = Vector3.zero;
-            rb.velocity *= 1 - dragFactor;
+            if (forceRoutine == null)
+            {   
+                rb.velocity *= 1 - dragFactor;
+            }
         }
         else
         {
@@ -185,8 +199,6 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
                             PushSelfFromCollider(hits[battlerCollider].collider);
                             jumpHorizontalVelocity = Vector3.zero;
 
-                            Debug.Log("inotta");
-
                         } else if (wallCollider >= 0 && battlerCollider >= 0)
                         {
                             PushAwayCollider(hits[battlerCollider].collider);
@@ -218,7 +230,7 @@ public class BattlerPhysics : MonoBehaviour, IBattlerPhysics
     private void OnDrawGizmosSelected()
     {
         Vector3 scaled = Vector3.Scale(collider.size, gameObject.transform.localScale);
-        BoxColliderDrawer.DrawBoxCollider(transform, colliderOn ? Color.magenta: Color.yellow, collider.center, collider.size);
+        BoxColliderDrawer.DrawBoxCollider(transform, colliderOn ? Color.magenta: Color.yellow, collider.center, collider.size, transform.rotation);
         BoxCastVisualizer.DrawBoxCastBox(transform.position + collider.center + Vector3.down * 0.5f, new Vector3(scaled.x, 1, scaled.z) / 2, Quaternion.identity, Vector3.down, 0, Color.cyan);
     }
 

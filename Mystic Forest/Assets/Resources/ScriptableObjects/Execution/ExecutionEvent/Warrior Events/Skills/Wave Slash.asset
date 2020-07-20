@@ -19,7 +19,10 @@ MonoBehaviour:
     type: 3}
   travelMethod: {fileID: 11400000, guid: 10592bfdcc4bfc74589b3c02c06dcdd8, type: 2}
   attack:
-    force: {x: 14, y: 6, z: 0}
-    freezeTime: 0.1
+    force:
+      direction: {x: 14, y: 1}
+      mode: 1
+      applyUntil: 01000000
+    freezeTime: 0
     hasKnockBack: 1
     hitStun: 1

@@ -2,7 +2,8 @@
     "name": "Tests",
     "references": [
         "Main",
-        "TestTools"
+        "Zenject-TestFramework",
+        "Zenject"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"

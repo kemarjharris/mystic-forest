@@ -38,7 +38,7 @@ namespace Tests
         [TearDown]
         public void TearDown()
         {
-            Object.Destroy(obj);
+            TestTools.DestroyAllGameObjects();
         }
 
         // test animation plays
@@ -97,6 +97,7 @@ namespace Tests
         }
 
         // test movement moves from point a to point b 
+        /*
         [UnityTest]
         public IEnumerator MovesFromAToBTest()
         {
@@ -136,7 +137,7 @@ namespace Tests
             Vector2 expected = obj.transform.position;
             Assert.AreEqual(newPos + new Vector2(0, 5), expected);
         }
-
+        */
         [UnityTest]
         public IEnumerator ZeroSpeedDoesntCrashTest()
         {
@@ -165,6 +166,7 @@ namespace Tests
         }
 
         // no movement should not move
+        /*
         [UnityTest]
         public IEnumerator Play_MovesIsFalse_DoesNotMoveObject()
         {
@@ -172,7 +174,7 @@ namespace Tests
             animator.Play(animMap["Test False Movement"]);
             yield return new WaitForSecondsRealtime(1.1f);
             Assert.AreEqual(start, animator.transform.position);
-        }
+        }*/
 
         // playing paused animation plays animation
         [UnityTest]
@@ -191,7 +193,7 @@ namespace Tests
             yield return new WaitForSeconds(1.1f);
             Assert.AreEqual(Color.red, obj.GetComponent<SpriteRenderer>().color);
         }
-
+        /*
         [UnityTest]
         public IEnumerator Play_PausedMovement_PlaysMovement()
         {
@@ -202,7 +204,7 @@ namespace Tests
             animator.Play(animMap["Test Move Up"]);
             yield return new WaitForSeconds(1.1f);
             Assert.AreEqual(start + Vector3.up * 5, obj.transform.position);
-        }
+        }*/
 
         // Pausing animation stops animation
         [UnityTest]
@@ -251,6 +253,7 @@ namespace Tests
             Assert.AreEqual(Color.black, obj.GetComponent<SpriteRenderer>().color);
         }
 
+        /*
         // unpause continues animation movement
         [UnityTest]
         public IEnumerator Unpause_PausedMovingAnimation_ContinuesMovement()
@@ -268,6 +271,7 @@ namespace Tests
             yield return new WaitForSeconds(0.6f);
             Assert.AreEqual((start + (Vector3.right * 5)).x, obj.transform.position.x);
         }
+        */
 
     }
 }

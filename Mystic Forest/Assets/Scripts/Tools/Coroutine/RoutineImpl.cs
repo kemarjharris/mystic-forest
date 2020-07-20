@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RoutineImpl : Routine
+public class RoutineImpl : IRoutine
 {
 
     public RoutineImpl(IEnumerator enumerator, MonoBehaviour runner, bool alreadyRunning = false)
@@ -15,6 +15,7 @@ public class RoutineImpl : Routine
     public IEnumerator enumerator;
     public bool running;
     bool started = false;
+    public System.Action OnRoutineFinished { get; set; }
 
     public object Current
     {
@@ -34,6 +35,10 @@ public class RoutineImpl : Routine
         //Debug.Log("ive got here!");
         started = true;
         running = enumerator.MoveNext();
+        if (!running)
+        {
+            OnRoutineFinished?.Invoke();
+        }
         return running;
     }
 
@@ -52,6 +57,7 @@ public class RoutineImpl : Routine
     public void Stop()
     {
         runner.StopCoroutine(this);
+        OnRoutineFinished?.Invoke();
         running = false;
     }
 

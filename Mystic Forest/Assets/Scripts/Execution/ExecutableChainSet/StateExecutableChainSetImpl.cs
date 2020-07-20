@@ -7,10 +7,10 @@ public class StateExecutableChainSetImpl : IExecutableChainSet
 {
     IExecutableChainSet set;
     IBattlerPhysics physics;
-    ExecutionState state;
+    IExecutionState state;
     // ISkillCaster skillCaster;
 
-    public StateExecutableChainSetImpl(IBattlerPhysics physics, ExecutionState state, IExecutableChainSet set)
+    public StateExecutableChainSetImpl(IBattlerPhysics physics, IExecutionState state, IExecutableChainSet set)
     {
         this.physics = physics;
         this.state = state;

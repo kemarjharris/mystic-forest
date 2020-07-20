@@ -3,25 +3,33 @@ using UnityEditor;
 using System.Runtime;
 using System.Collections.Generic;
 using System;
+using Zenject;
 
 public class ExecutionModule : MonoBehaviour, IExecutionModule
 {
+    // Dependencies
     IDirectionCommandPicker<IExecutableChain> picker;
     IChainExecutor executor;
+    // Events
+    public IActionWrapper OnChainFired => executor.OnChainFired;
+    public IActionWrapper OnChainFinished => executor.OnChainFinished;
+    public IActionWrapper<ICustomizableEnumerator<IExecutable>> OnNewChainLoaded { get; private set; } = new ActionWrapper<ICustomizableEnumerator<IExecutable>>();
+    public IActionWrapper OnNewSetLoaded { get; private set; } = new ActionWrapper();
+    IActionWrapper IExecutionModule.OnChainCancellable => executor.OnChainCancellable;
+    IActionWrapper<IExecutableChain> IExecutionModule.OnChainSelected => picker.OnSelected;
+    // State
     ITargetSet targetSet;
     bool linkerActive;
     public IExecutableChainSet set { get; private set; }
     public IBattler battler;
     public IExecutableChain current;
-
-    IActionWrapper IExecutionModule.OnChainCancellable => executor.OnChainCancellable;
-    public IActionWrapper OnChainFired => executor.OnChainFired; 
-    public IActionWrapper OnChainFinished => executor.OnChainFinished;
-    IActionWrapper<IExecutableChain> IExecutionModule.OnChainSelected => picker.OnSelected;
-    public IActionWrapper<ICustomizableEnumerator<IExecutable>> OnNewChainLoaded { get; private set; } = new ActionWrapper<ICustomizableEnumerator<IExecutable>>();
-    public IActionWrapper OnNewSetLoaded { get; private set; } = new ActionWrapper();
-
     bool updated;
+
+    [Inject]
+    public void Construct(IDirectionCommandPicker<IExecutableChain> picker, IChainExecutor executor)
+    {
+        Initialize(picker, executor);
+    }
 
     public void StartExecution(IExecutableChainSet set, IBattler battler, ITargetSet targetSet = null)
     {
@@ -60,16 +68,10 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     public void Initialize(IDirectionCommandPicker<IExecutableChain> picker, IChainExecutor executor)
     {
         picker.OnSelected.AddAction(OnChainSelected);
-        //executor.OnChainCancellable = onChainCancellable;
         executor.OnChainFired.AddAction(OnChainFiredEvent);
         executor.OnChainFinished.AddAction(OnChainFinishedEvent);
         this.picker = picker;
         this.executor = executor;
-    }
-
-    private void Awake()
-    {
-        Initialize(new DirectionCommandPicker<IExecutableChain>(0.4f), new ChainExecutorLinkImpl());
     }
 
     private void OnDestroy()
@@ -123,6 +125,8 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         linkerActive = false;
     }
 
+    /* For DI */
+    public class Factory : PlaceholderFactory<ExecutionModule> { }
 
     /* For testing */
 

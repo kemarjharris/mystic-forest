@@ -4,7 +4,7 @@ using UnityEditor;
 
 public class CapsuleVisualizer : MonoBehaviour
 {
-    /*
+    
     public static void DrawWireCapsule(Vector3 _pos, Vector3 _pos2, float _radius, Color _color = default)
     {
         if (_color != default) Handles.color = _color;
@@ -37,5 +37,5 @@ public class CapsuleVisualizer : MonoBehaviour
     {
         Handles.DrawLine(new Vector3(arg1, arg2, 0f), new Vector3(arg1, arg2, forward));
     }
-    */
+    
 }

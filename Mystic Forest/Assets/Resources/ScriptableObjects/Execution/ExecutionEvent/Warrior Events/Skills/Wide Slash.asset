@@ -15,7 +15,10 @@ MonoBehaviour:
   timeOfContact: 0.15
   animSO: {fileID: 11400000, guid: 124f1d3c687801d43ab80b55dd0d64e5, type: 2}
   attack:
-    force: {x: 0, y: 0, z: 0}
+    force:
+      direction: {x: 20, y: 0}
+      mode: 2
+      applyUntil: 00000000
     freezeTime: 0.1
     hasKnockBack: 1
     hitStun: 0.8

@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: Warrior Slash 3
   m_EditorClassIdentifier: 
   timeOfContact: 0.2
-  animSO: {fileID: 11400000, guid: 124f1d3c687801d43ab80b55dd0d64e5, type: 2}
+  animSO: {fileID: 11400000, guid: c4fc2b2f35b490c488669929a2fd345e, type: 2}
   attack:
-    force: {x: 4, y: 0, z: 0}
+    force:
+      direction: {x: 2, y: 0}
+      outwards: 0
+      applyUnitl: 00000000
     freezeTime: 0.1
     hasKnockBack: 1
     hitStun: 1
-  playerVelocity: {x: 3, y: 0, z: 0}
+  playerVelocity: {x: 6, y: 0, z: 0}
   aerial: 0
   interrupted: 0

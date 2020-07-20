@@ -30,5 +30,5 @@ public interface IBattler
 
     IBattlerEventSet eventSet { get; set; }
 
-    ExecutionState executionState { get; }
+    IExecutionState executionState { get; }
 }

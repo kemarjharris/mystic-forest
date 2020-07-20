@@ -14,6 +14,9 @@ namespace Tests
         [SetUp]
         public abstract void SetUp();
 
+        [OneTimeTearDown]
+        public void OneTimeTearDown() => TestTools.DestroyAllGameObjects();
+
         // velocity 0 on start
         [UnityTest]
         public IEnumerator NotMovingOnStartTest()

@@ -49,6 +49,7 @@ public class ProjectileEvent : ExecutionEvent
         {
             IBattler battler = collider.gameObject.GetComponent<Battler>();
             if (battler == null || battler == attacker || hitBattlers.Contains(battler)) return;
+            attack.origin = projectile.gameObject.transform;
             battler.GetAttacked(attack);
             hitBattlers.Add(battler);
         }
