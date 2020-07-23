@@ -8,6 +8,7 @@ public class PlayerSwitcher : MonoBehaviour
     List<IPlayer> players;
     IPlayer activePlayer;
     KeyCode[] keyCodes;
+    public System.Action<IPlayer> onPlayerSwitched;
 
     [Inject]
     public void Construct(List<IPlayer> players)
@@ -79,6 +80,7 @@ public class PlayerSwitcher : MonoBehaviour
             if (switchedInPlayer == players[i])
             {
                 players[i].eventSet.onPlayerSwitchedIn?.Invoke();
+                onPlayerSwitched?.Invoke(switchedInPlayer);
             } else
             {
                 players[i].eventSet.onPlayerSwitchedOut?.Invoke();
