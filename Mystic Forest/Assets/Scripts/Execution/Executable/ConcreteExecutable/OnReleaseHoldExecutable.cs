@@ -24,6 +24,7 @@ public class OnReleaseHoldExecutable : Executable
             timeStarted = service.unscaledTime;
             onStartHolding?.Invoke();
             keyDownExecutionEvent.OnExecute(battler, targets);
+            battler.eventSet.onEventExecuted?.Invoke();
             state.triggered = true;
         }
         else if (IsTriggered() && key == InstructionKeyEvent.KEYUP)

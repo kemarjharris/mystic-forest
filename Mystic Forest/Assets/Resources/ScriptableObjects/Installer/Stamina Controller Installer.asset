@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d801d8e992a0e2409289005962aeed3, type: 3}
+  m_Name: Stamina Controller Installer
+  m_EditorClassIdentifier: 
+  observers:
+  - {fileID: 1848498769506440446, guid: 3bd1fdd3d10b9da40beb0d735edf67cc, type: 3}
+  stamina:
+    MinValue: 0
+    MaxValue: 100
+  restorationPerSecond: 10
+  restore: 0

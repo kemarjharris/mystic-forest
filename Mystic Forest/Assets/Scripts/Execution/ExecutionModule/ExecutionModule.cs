@@ -9,7 +9,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
 {
     // Dependencies
     IDirectionCommandPicker<IExecutableChain> picker;
-    IChainExecutor executor;
+    protected IChainExecutor executor;
     // Events
     public IActionWrapper OnChainFired => executor.OnChainFired;
     public IActionWrapper OnChainFinished => executor.OnChainFinished;
@@ -18,8 +18,8 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     IActionWrapper IExecutionModule.OnChainCancellable => executor.OnChainCancellable;
     IActionWrapper<IExecutableChain> IExecutionModule.OnChainSelected => picker.OnSelected;
     // State
-    ITargetSet targetSet;
-    bool linkerActive;
+    protected ITargetSet targetSet;
+    protected bool linkerActive;
     public IExecutableChainSet set { get; private set; }
     public IBattler battler;
     public IExecutableChain current;
@@ -96,7 +96,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         updated = false;
     }
 
-    void OnChainSelected(IExecutableChain chain)
+    protected virtual void OnChainSelected(IExecutableChain chain)
     {
         linkerActive = false;
         current = chain;

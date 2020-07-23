@@ -49,6 +49,7 @@ public class LockOnExecutable : Executable
                     targets.SetTarget(target.transform);
                     onTargetSelected.pool.target = target.transform;
                     onTargetSelected.OnExecute(battler, targets);
+                    battler.eventSet.onEventExecuted?.Invoke();
                     state.fired = true;
                 } else
                 {

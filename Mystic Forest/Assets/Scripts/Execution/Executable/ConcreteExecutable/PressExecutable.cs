@@ -33,6 +33,7 @@ public class PressExecutable : Executable {
             {
                 state.triggered = true;
                 state.fired = true;
+                battler.eventSet.onEventExecuted?.Invoke();
                 executionEvent.OnExecute(battler, targets);
             }
         }

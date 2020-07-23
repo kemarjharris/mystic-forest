@@ -1,33 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[ExecuteInEditMode]
 public class CanvasPosition : MonoBehaviour
 {
-    public Canvas canvas;
-    public RectTransform canvasRect;
+    Canvas canvas;
+    RectTransform canvasRect;
     [Range(0, 1)] public float xPos;
     [Range(0, 1)] public float yPos;
+    public bool addToCanvas;
     private Vector3 oldValues;
     Vector3 bottomPoint;
 
-    private void Awake()
-    {
-        if (this.canvas == null)
-        {
-            Canvas canvas = GetComponentInParent<Canvas>();
-            if (canvas != null) this.canvas = canvas;
-            else
-            {
-                canvas = FindObjectOfType<Canvas>();
-                if (canvas != null) this.canvas = canvas;
-            }
-        }
-        canvasRect = canvas.GetComponent<RectTransform>();
-    }
-
+    [ExecuteInEditMode]
     public void Update()
     {
+        SetCanvas();
+
 
         if (new Vector3(xPos, yPos, canvasRect.rotation.eulerAngles.x) == oldValues) return;
         float tempx = canvas.pixelRect.width * (xPos - canvasRect.pivot.x);
@@ -40,6 +28,22 @@ public class CanvasPosition : MonoBehaviour
         transform.rotation = canvas.transform.rotation;
 
         oldValues = new Vector3(xPos, yPos, canvasRect.rotation.eulerAngles.x);
+    }
+
+    public void SetCanvas()
+    {
+        if (this.canvas == null)
+        {
+            Canvas canvas = GetComponentInParent<Canvas>();
+            if (canvas != null) this.canvas = canvas;
+            else
+            {
+                canvas = FindObjectOfType<Canvas>();
+                if (canvas != null) this.canvas = canvas;
+            }
+            canvasRect = canvas.GetComponent<RectTransform>();
+            if (addToCanvas) transform.SetParent(canvasRect);
+        }
     }
 
 }

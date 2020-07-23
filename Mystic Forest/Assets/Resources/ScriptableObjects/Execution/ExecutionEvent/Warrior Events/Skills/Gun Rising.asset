@@ -16,7 +16,7 @@ MonoBehaviour:
   animSO: {fileID: 11400000, guid: 1744f1e42f66abc4db6049f84c78afe6, type: 2}
   attack:
     force:
-      direction: {x: 1, y: 16}
+      direction: {x: 1, y: 12}
       mode: 0
       applyUntil: 00000000
     freezeTime: 0.15

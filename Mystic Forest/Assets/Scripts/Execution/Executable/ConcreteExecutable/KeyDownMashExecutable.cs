@@ -42,6 +42,7 @@ public class KeyDownMashExecutable : Executable
                 if (!state.triggered)
                 {
                     firstKeyDownTime = service.unscaledTime;
+                    battler.eventSet.onEventExecuted?.Invoke();
                     state.triggered = true;
                 }
                 // visual.ExpandButton();

@@ -14,4 +14,6 @@ public interface IExecutableChain : IEnumerable<IExecutable>, IDirectionPickable
     bool IsSkill { get; }
 
     IExecutableChainSet NextChains(IExecutableChainSet executables);
+
+    float staminaCost { get; }
 }

@@ -117,6 +117,7 @@ public class AimExecutable : Executable
             DespawnCursor();
             // handle event
             onTargetSelected.OnExecute(battler, targets);
+            battler.eventSet.onEventExecuted?.Invoke();
             state.fired = true;
         }
     }

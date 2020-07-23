@@ -18,4 +18,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a73a865bc484f6f458f05f106d35f1b1, type: 2}
   group: {fileID: 11400000, guid: 99387bbcdb339454db42fc2a3ddc0d39, type: 2}
   aerial: 1
+  skill: 0
   rule: {fileID: 11400000, guid: 597c0e4fb4f5eb447ba0056f74ff5d17, type: 2}
+  staminaCost: 20

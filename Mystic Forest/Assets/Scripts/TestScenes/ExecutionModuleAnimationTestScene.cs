@@ -11,7 +11,7 @@ public class ExecutionModuleAnimationTestScene : MonoBehaviour
 
     private void Start()
     {
-        module = GameObject.Find("Execution Module").GetComponent<ExecutionModule>();
+       // module = GameObject.Find("Execution Module").GetComponent<ExecutionModule>();
         Battler[] battlers = FindObjectsOfType<Battler>();
         for (int i = 0; i < battlers.Length; i ++)
         {

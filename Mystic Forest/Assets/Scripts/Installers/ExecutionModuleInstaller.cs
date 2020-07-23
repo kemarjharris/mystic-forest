@@ -7,7 +7,7 @@ public class ExecutionModuleInstaller : MonoInstaller
 {
     public float directionCommandPickerClearTime;
     public GameObject executionModulePrefab;
-    [InjectOptional] IExecutionModule module;
+    [InjectOptional] IExecutionModule module = null;
 
     public override void InstallBindings()
     {

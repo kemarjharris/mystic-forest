@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using Zenject;
 
 public class Battler : MonoBehaviour, IBattler
 {
@@ -10,25 +11,28 @@ public class Battler : MonoBehaviour, IBattler
     IHitBox hitBox;
     protected IBattlerPhysics physics = null;
     SpriteRenderer sprite;
-
     public ExecutableChainSetSOImpl chainSet;
-
+    public IBattlerEventSet eventSet { get; set; }
+    public IExecutionState executionState { get; private set; }
+    public IExecutableChainSet ChainSet { get; private set; }
     float hitStun;
+
+    [Inject]
+    public void Construct(IBattlerEventSet eventSet)
+    {
+        this.eventSet = eventSet;
+    }
 
     protected void Awake()
     {
         animator = GetComponentInChildren<MixAnimator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         controller = GetComponent<IPlayerController>();
-        sprite.transform.forward = Camera.main.transform.forward;
-        eventSet = new BattlerEventSet();
-        
+        physics = GetComponent<IBattlerPhysics>();
         hitBox = GetComponentInChildren<IHitBox>();
-        physics = GetComponent<BattlerPhysics>();
-        if (physics == null)
-        {
-            physics = gameObject.AddComponent<BattlerPhysics>();
-        }
+
+
+        sprite.transform.forward = Camera.main.transform.forward;
         executionState = new ExecutionState();
         ChainSet = new StateExecutableChainSetImpl(physics, executionState, chainSet);
         hitPoint.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
@@ -45,7 +49,9 @@ public class Battler : MonoBehaviour, IBattler
 
     public bool IsGrounded => physics.IsGrounded;
 
-    public IExecutableChainSet ChainSet { get; private set; }
+    public void SetVelocity(Vector3 velocity) => physics.SetVelocity(velocity);
+
+    public bool IsFrozen => physics.freeze;
 
     public void GetAttacked(IAttack attack)
     {
@@ -99,11 +105,4 @@ public class Battler : MonoBehaviour, IBattler
         // add gravity and play animation
         StartCoroutine(waitToUnfreeze());
     }
-
-    public void SetVelocity(Vector3 velocity) => physics.SetVelocity(velocity);
-
-    public bool IsFrozen => physics.freeze;
-
-    public IBattlerEventSet eventSet { get; set; }
-    public IExecutionState executionState { get; private set; }
 }

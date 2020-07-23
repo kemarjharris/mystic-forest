@@ -147,12 +147,14 @@ public class ExecutionController : MonoBehaviour
     {
         GetComponentInChildren<SpriteRenderer>().color = Color.cyan;
         battler.executionState.comboing = true;
+        
     }
 
     void LowerComboFlag()
     {
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
         battler.executionState.comboing = false;
+        battler.eventSet.onComboFinished?.Invoke();
         lockOn.RemoveTarget();
         target = NewTargetSet();
     }

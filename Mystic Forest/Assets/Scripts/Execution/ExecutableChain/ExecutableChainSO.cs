@@ -13,6 +13,7 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain
     public bool aerial;
     public bool skill;
     public ChainRule rule;
+    public float staminaCost;
 
 
     private List<IExecutable> instances;
@@ -22,6 +23,8 @@ public class ExecutableChainSO : ScriptableObject, IExecutableChain
     public virtual bool IsAerial => aerial;
 
     public virtual bool IsSkill => skill;
+
+    float IExecutableChain.staminaCost => staminaCost;
 
     public virtual IEnumerator<IExecutable> GetEnumerator()
     {
