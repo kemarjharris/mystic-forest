@@ -35,6 +35,14 @@ public class JointController : MonoBehaviour, IPlayerController
         physics = GetComponent<BattlerPhysics>();
         // if (service == null) service = new UnityAxisService();
         // if (inputService == null) inputService = new UnityInputService();
+        battler.eventSet.onPlayerSwitchedIn += Enable;
+        battler.eventSet.onPlayerSwitchedOut += Disable;
+    }
+
+    private void OnDestroy()
+    {
+        battler.eventSet.onPlayerSwitchedIn -= Enable;
+        battler.eventSet.onPlayerSwitchedOut -= Disable;
     }
 
     public void Update()
@@ -81,6 +89,9 @@ public class JointController : MonoBehaviour, IPlayerController
         }
     }
 
+
+    void Enable() => enabled = true;
+    void Disable() => enabled = false;
 
     /* for testing */
 

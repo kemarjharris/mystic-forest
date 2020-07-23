@@ -41,9 +41,21 @@ public class ExecutionController : MonoBehaviour
 
     private void Awake()
     {
+        battler = GetComponent<Battler>();
+        battler.eventSet.onPlayerSwitchedIn += Enable;
+        battler.eventSet.onPlayerSwitchedOut += Disable;
+    }
+
+    private void Start()
+    {
         target = NewTargetSet();
         SetUpLockOn();
-        battler = GetComponent<Battler>();
+    }
+
+    private void OnDestroy()
+    {
+        battler.eventSet.onPlayerSwitchedIn -= Enable;
+        battler.eventSet.onPlayerSwitchedOut -= Disable;
     }
 
     private void Update()
@@ -172,6 +184,9 @@ public class ExecutionController : MonoBehaviour
         lockOn.transform.SetParent(transform);
         lockOn.transform.localPosition = Vector3.zero;
     }
+
+    void Enable() => enabled = true;
+    void Disable() => enabled = false;
 
 
     IEnumerator SelectSkill()

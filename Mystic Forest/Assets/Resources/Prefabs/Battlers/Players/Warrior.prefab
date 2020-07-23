@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300122, guid: cad4b22f446e0884e99803495aeef1cf, type: 3}
+  m_Sprite: {fileID: 21300066, guid: cad4b22f446e0884e99803495aeef1cf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -163,6 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   center: {x: 0, y: 0, z: 0}
   extents: {x: 0, y: 0, z: 0.1}
+  rotation: {x: 0, y: 0, z: 0}
 --- !u!1 &7549325027591840112
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,12 +173,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7549325027591840113}
-  - component: {fileID: 7549325027591840124}
   - component: {fileID: 7549325027591840123}
   - component: {fileID: 7549325027591840120}
   - component: {fileID: 7549325027591840122}
   - component: {fileID: 603432356}
   - component: {fileID: 202504862}
+  - component: {fileID: 1199685108935581710}
+  - component: {fileID: 547970967}
   m_Layer: 5
   m_Name: Warrior
   m_TagString: Battler
@@ -205,20 +207,6 @@ RectTransform:
   m_AnchoredPosition: {x: -6.44, y: 0.69}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7549325027591840124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7549325027591840112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b7d6adfa4f88d64580b247b150588e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitPoint: {fileID: 7549325026198474780}
-  chainSet: {fileID: 11400000, guid: cbd8ab4e6aab7e54591d6c5664af78b9, type: 2}
 --- !u!54 &7549325027591840123
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -293,3 +281,36 @@ MonoBehaviour:
   skillTimeOut: 1
   closeRange: {fileID: 11400000, guid: c73f14f52dc0c384d8a5610a86954a62, type: 2}
   assault: {fileID: 11400000, guid: 43a94eae7e8ef6f40b61fa6526881164, type: 2}
+--- !u!114 &1199685108935581710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7549325027591840112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9c420fded014c94bae248ec249fe4cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPoint: {fileID: 7549325026198474780}
+  chainSet: {fileID: 11400000, guid: cbd8ab4e6aab7e54591d6c5664af78b9, type: 2}
+--- !u!114 &547970967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7549325027591840112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers:
+  - {fileID: 11400000, guid: 4596526d060f68b4188f4df9f9a19c96, type: 2}
+  - {fileID: 11400000, guid: 68f2143d974b4ff4c94b7d2d9ad47ad0, type: 2}
+  _monoInstallers: []
+  _installerPrefabs: []
+  _autoRun: 1
+  _kernel: {fileID: 0}
