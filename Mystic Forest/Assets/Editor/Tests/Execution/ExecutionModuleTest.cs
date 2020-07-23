@@ -9,13 +9,13 @@ namespace ExecutionModuleTest
 {
     public class ExecutionModuleTest
     {
-        ExecutionModule module;
-        IDirectionCommandPicker<IExecutableChain> picker;
-        ChainExecutorLinkImpl executor;
+        protected ExecutionModule module;
+        protected IDirectionCommandPicker<IExecutableChain> picker;
+        protected ChainExecutorLinkImpl executor;
 
 
         [SetUp]
-        public void SetUp()
+        public virtual void SetUp()
         {
             GameObject go = new GameObject();
             module = go.AddComponent<ExecutionModule>();
@@ -103,6 +103,80 @@ namespace ExecutionModuleTest
             );
             picker.OnSelected.Invoke(chain);
             Assert.True(executor.IsExecuting());
+        }
+    }
+
+    public class StaminaExecutionModuleTest : ExecutionModuleTest
+    {
+        IStaminaController controller;
+        IBattlerEventSet eventSet;
+
+
+        [SetUp]
+        public override void SetUp()
+        {
+            GameObject go = new GameObject();
+            StaminaExecutionModule sModule = go.AddComponent<StaminaExecutionModule>();
+            controller = Substitute.For<IStaminaController>();
+            controller.stamina.Returns(1);
+            eventSet = new BattlerEventSet();
+
+            sModule.Construct(controller, eventSet);
+            DirectionCommandPicker<IExecutableChain> picker = new DirectionCommandPicker<IExecutableChain>(0);
+            picker.Construct(Substitute.For<IUnityTimeService>(), Substitute.For<IUnityInputService>());
+            picker.Set(Substitute.For<IExecutableChainSet>());
+            this.picker = picker;
+            ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
+            this.executor = executor;
+            module = sModule;
+            module.Construct(this.picker, this.executor);
+        }
+
+        IExecutableChain SubChain()
+        {
+            IExecutableChain chain = Substitute.For<IExecutableChain>();
+            chain.staminaCost.Returns(1);
+            return chain;
+
+        }
+
+        // does not execute when stamina is at 0
+        [Test]
+        public void ExecuteChain_StaminaIsAtZero_DoesNotExecuteChain()
+        {
+            controller.stamina.Returns(0);
+            IExecutableChain chain = SubChain();
+            IChainExecutor executor = Substitute.For<IChainExecutor>();
+            module.Construct(picker, executor);
+            module.StartExecution(chain, Substitute.For<IBattler>());
+
+            // stamina is 0 so chain shouldnt get executed
+            executor.DidNotReceive().ExecuteChain(Arg.Any<IBattler>(), Arg.Any<ITargetSet>(), Arg.Any<IEnumerator<IExecutable>>());
+        }
+
+        // deducts chain cost when event executed
+        [Test]
+        public void ExecutingChain_EventExecuted_CallsDecreaseStamina()
+        {
+            module.StartExecution(SubChain(), Substitute.For<IBattler>());
+            eventSet.onEventExecuted();
+            controller.Received().DecreaseStamina(1);
+        }
+
+        // stops restoring when event executed
+        [Test]
+        public void ExecutingChain_EventExecuted_StopsRestoringStamina()
+        {
+            eventSet.onEventExecuted();
+            controller.Received().StopRestoring();
+        }
+
+        // starts restoring when combo finished
+        [Test]
+        public void ExecutingChain_ComboFinished_StartsRestoringStamina()
+        {
+            eventSet.onComboFinished();
+            controller.Received().StartRestoring();
         }
     }
 }

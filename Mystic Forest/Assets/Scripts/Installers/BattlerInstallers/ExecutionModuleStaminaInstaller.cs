@@ -15,6 +15,7 @@ public class ExecutionModuleStaminaInstaller : ScriptableObjectInstaller
             Container.Bind<IExecutionModule>().To<StaminaExecutionModule>().FromComponentInNewPrefab(executionModulePrefab).AsSingle();
             Container.Bind<IChainExecutor>().To<ChainExecutorLinkImpl>().AsSingle();
             Container.Bind<IDirectionCommandPicker<IExecutableChain>>().To<DirectionCommandPicker<IExecutableChain>>().AsSingle().WithArguments(dcpResetTime).WhenInjectedInto<IExecutionModule>();
+            Container.Bind<IStaminaController>().FromComponentInChildren().AsSingle();
         }
         else
         {

@@ -12,24 +12,24 @@ public class StaminaController : MonoBehaviour, IStaminaController
     public bool restore;
 
     float IStaminaController.stamina => stamina.Value;
+    float IStaminaController.maxStamina => stamina.MaxValue;
 
     public void Start()
     {
         restore = true;
-        if (stamina == null)
-        {
-            stamina = new BoundedFloat(0, 0, 0);
-        }
-        floatObservers = new List<BoundedFloatObserver>();
-        for (int i = 0; i < observers.Count; i++)
-        {
-            BoundedFloatObserver bfo = observers[i].GetComponent<BoundedFloatObserver>();
-            if (bfo != null)
+        if (observers != null) {
+            floatObservers = new List<BoundedFloatObserver>();
+            for (int i = 0; i < observers.Count; i++)
             {
-                floatObservers.Add(bfo);
-                bfo.Observe(stamina);
+                BoundedFloatObserver bfo = observers[i].GetComponent<BoundedFloatObserver>();
+                if (bfo != null)
+                {
+                    floatObservers.Add(bfo);
+                    bfo.Observe(stamina);
+                }
             }
         }
+        
         stamina.Value = stamina.MaxValue;
     }
 
@@ -48,7 +48,7 @@ public class StaminaController : MonoBehaviour, IStaminaController
 
     public void DecreaseStamina(float value)
     {
-        stamina.Value -= value;
+        stamina.Value -= Mathf.Max(0, value);
     }
 
     public void StopRestoring()

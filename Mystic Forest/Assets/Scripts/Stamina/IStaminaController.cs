@@ -4,4 +4,5 @@
     void StartRestoring();
     void StopRestoring();
     float stamina { get; }
+    float maxStamina { get; }
 }

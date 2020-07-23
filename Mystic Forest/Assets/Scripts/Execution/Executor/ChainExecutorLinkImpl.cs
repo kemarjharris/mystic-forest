@@ -73,7 +73,7 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
             }
         }
         // polling for onCancellableEvent
-        if (!timeCheck && curr != null && prev.IsInCancelTime())
+        if (!timeCheck && curr != null && prev != null && prev.IsInCancelTime())
         {
             OnChainCancellable.Invoke();
             curr = null;

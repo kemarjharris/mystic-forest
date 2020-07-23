@@ -8,14 +8,10 @@ public class StaminaExecutionModule : ExecutionModule
     float cost;
     IBattlerEventSet eventSet;
 
-    private void Start()
-    {
-        controller = GetComponent<IStaminaController>();
-    }
-
     [Inject]
-    public void Construct(IBattlerEventSet eventSet)
+    public void Construct(IStaminaController controller, IBattlerEventSet eventSet)
     {
+        this.controller = controller;
         this.eventSet = eventSet;
         eventSet.onEventExecuted += DecreaseStamina;
         eventSet.onComboFinished += RestoreStamina;
