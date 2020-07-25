@@ -10,6 +10,9 @@ TagManager:
   - Wall
   - Edge Wall
   - Combo Counter
+  - asteroid
+  - ship
+  - Main Canvas
   layers:
   - Default
   - TransparentFX

@@ -8,42 +8,66 @@ public class CanvasPosition : MonoBehaviour
     [Range(0, 1)] public float xPos;
     [Range(0, 1)] public float yPos;
     public bool addToCanvas;
+    public bool changeScale = true;
+    public bool hardUpdate;
     private Vector3 oldValues;
     Vector3 bottomPoint;
+    public CanvasMode canvasMode;
+
 
     [ExecuteInEditMode]
-    public void Update()
+    public void LateUpdate()
     {
         SetCanvas();
 
 
-        if (new Vector3(xPos, yPos, canvasRect.rotation.eulerAngles.x) == oldValues) return;
-        float tempx = canvas.pixelRect.width * (xPos - canvasRect.pivot.x);
-        float tempy = canvas.pixelRect.height * (yPos - canvasRect.pivot.y);
-        // calculate point where the z position should be if the canvas is rotated along y axis
-        float radians = Mathf.Deg2Rad * canvasRect.rotation.eulerAngles.x;
-        float zPosOffset = yPos * Mathf.Tan(radians);
-        Vector3 tempPos = canvas.transform.TransformPoint(new Vector3(tempx, tempy, zPosOffset));
-        transform.position = tempPos;
-        transform.rotation = canvas.transform.rotation;
-
-        oldValues = new Vector3(xPos, yPos, canvasRect.rotation.eulerAngles.x);
+        if (hardUpdate || new Vector3(xPos, yPos, canvasRect.rotation.eulerAngles.x) != oldValues)
+        {
+            float tempx = canvasRect.rect.width * (xPos - canvasRect.pivot.x);
+            float tempy = canvasRect.rect.height * (yPos - canvasRect.pivot.y);
+            // calculate point where the z position should be if the canvas is rotated along y axis
+            float radians = Mathf.Deg2Rad * canvasRect.rotation.eulerAngles.x;
+            float zPosOffset = yPos * Mathf.Tan(radians);
+            Vector3 tempPos = canvas.transform.TransformPoint(new Vector3(tempx, tempy, zPosOffset));
+            transform.position = tempPos;
+            transform.rotation = canvas.transform.rotation;
+            oldValues = new Vector3(xPos, yPos, canvasRect.rotation.eulerAngles.x);
+        }
+         
     }
 
-    public void SetCanvas()
+    void SetCanvas()
     {
         if (this.canvas == null)
         {
-            Canvas canvas = GetComponentInParent<Canvas>();
-            if (canvas != null) this.canvas = canvas;
-            else
+            Canvas canvas = null;
+            switch(canvasMode)
             {
-                canvas = FindObjectOfType<Canvas>();
-                if (canvas != null) this.canvas = canvas;
+                case CanvasMode.MAIN_CANVAS:
+                    canvas = GameObject.FindGameObjectWithTag("Main Canvas").GetComponent<Canvas>();
+                    break;
+                case CanvasMode.CANVAS_IN_PARENT:
+                    canvas = GetComponentInParent<Canvas>();
+                    break;
+                case CanvasMode.FIND_OBJECT_OF_TYPE:
+                    canvas = FindObjectOfType<Canvas>();
+                    break;
             }
-            canvasRect = canvas.GetComponent<RectTransform>();
-            if (addToCanvas) transform.SetParent(canvasRect);
+            SetCanvas(canvas);
         }
+        
+    }
+
+    public void SetCanvas(Canvas canvas)
+    {
+        this.canvas = canvas;
+        canvasRect = canvas.GetComponent<RectTransform>();
+        if (addToCanvas) transform.SetParent(canvasRect, changeScale);
+    }
+
+    public enum CanvasMode
+    {
+        MAIN_CANVAS, CANVAS_IN_PARENT, FIND_OBJECT_OF_TYPE
     }
 
 }

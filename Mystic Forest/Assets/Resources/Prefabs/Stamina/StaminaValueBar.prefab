@@ -383,3 +383,4 @@ MonoBehaviour:
   xPos: 0.5
   yPos: 0.9
   addToCanvas: 1
+  changeScale: 1

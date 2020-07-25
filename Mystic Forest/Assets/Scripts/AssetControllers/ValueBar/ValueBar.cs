@@ -19,7 +19,7 @@ public class ValueBar : BoundedFloatObserver {
     {
         if (showText) text.transform.position = new Vector2(transform.position.x, transform.position.y);
         slider = GetComponent<Slider>();
-        GetComponent<Slider>().interactable = false;
+        slider.interactable = false;
         text.transform.localPosition = Vector3.zero;
         if (!showText) text.gameObject.SetActive(false);
     }
@@ -49,9 +49,9 @@ public class ValueBar : BoundedFloatObserver {
             ValueBar bar = go.GetComponent<ValueBar>();
             bar.value = visualizable;
             bar.showText = showText;
-        }
-        
+        } else
+        {
             value = visualizable;
-        
+        }
     }
 }

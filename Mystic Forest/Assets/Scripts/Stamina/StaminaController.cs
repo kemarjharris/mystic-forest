@@ -5,31 +5,22 @@ using System.Collections.Generic;
 
 public class StaminaController : MonoBehaviour, IStaminaController
 {
-    public List<GameObject> observers;
-    List<BoundedFloatObserver> floatObservers;
-    public BoundedFloat stamina;
+    public BoundedValue<float> stamina;
     public float restorationPerSecond;
     public bool restore;
 
     float IStaminaController.stamina => stamina.Value;
     float IStaminaController.maxStamina => stamina.MaxValue;
 
+    [Inject]
+    public void Construct(BoundedValue<float> stamina)
+    {
+        this.stamina = stamina;
+    }
+
     public void Start()
     {
         restore = true;
-        if (observers != null) {
-            floatObservers = new List<BoundedFloatObserver>();
-            for (int i = 0; i < observers.Count; i++)
-            {
-                BoundedFloatObserver bfo = observers[i].GetComponent<BoundedFloatObserver>();
-                if (bfo != null)
-                {
-                    floatObservers.Add(bfo);
-                    bfo.Observe(stamina);
-                }
-            }
-        }
-        
         stamina.Value = stamina.MaxValue;
     }
 

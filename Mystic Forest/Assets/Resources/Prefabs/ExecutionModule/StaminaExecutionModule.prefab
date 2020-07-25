@@ -45,8 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c321943512dddd43926874d0e888279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  observers:
-  - {fileID: 1848498769506440446, guid: 3bd1fdd3d10b9da40beb0d735edf67cc, type: 3}
+  observers: []
   stamina:
     MinValue: 0
     MaxValue: 100
