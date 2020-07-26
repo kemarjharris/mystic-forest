@@ -14,7 +14,7 @@ public class StaminaExecutionModule : ExecutionModule
         this.controller = controller;
         this.eventSet = eventSet;
         eventSet.onEventExecuted += DecreaseStamina;
-        eventSet.onComboFinished += RestoreStamina;
+        eventSet.onPlayerBecomeInactive += RestoreStamina;
     }
 
     protected override void OnChainSelected(IExecutableChain chain)

@@ -10,5 +10,6 @@ public struct BattlerEventSet : IBattlerEventSet
     public Action onPlayerSwitchedOut { get; set; }
     public Action onEventExecuted { get; set; }
     public Action onComboFinished { get; set; }
+    public Action onPlayerBecomeInactive { get; set; }
 
 }

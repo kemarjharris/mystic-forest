@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ValueBar : BoundedFloatObserver {
+public class ValueBar : MonoBehaviour {
 
     BoundedValue<float> value;
     public Text text;
     public bool showText;
-    Slider slider;
+    public Slider slider;
 
     public void Construct(BoundedValue<float> value)
     {
@@ -18,7 +18,6 @@ public class ValueBar : BoundedFloatObserver {
     private void Start()
     {
         if (showText) text.transform.position = new Vector2(transform.position.x, transform.position.y);
-        slider = GetComponent<Slider>();
         slider.interactable = false;
         text.transform.localPosition = Vector3.zero;
         if (!showText) text.gameObject.SetActive(false);
@@ -29,7 +28,7 @@ public class ValueBar : BoundedFloatObserver {
         slider.value = CalculateValue();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         UpdateValue();
         
@@ -39,19 +38,5 @@ public class ValueBar : BoundedFloatObserver {
     float CalculateValue()
     {
         return value.Value / value.MaxValue;
-    }
-
-    public override void Observe(BoundedValue<float> visualizable)
-    {
-        if (!gameObject.activeInHierarchy)
-        {
-            GameObject go = Instantiate(gameObject);
-            ValueBar bar = go.GetComponent<ValueBar>();
-            bar.value = visualizable;
-            bar.showText = showText;
-        } else
-        {
-            value = visualizable;
-        }
     }
 }

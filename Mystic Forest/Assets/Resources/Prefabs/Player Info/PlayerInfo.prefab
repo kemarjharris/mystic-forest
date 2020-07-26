@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.14433958, g: 0.8018868, b: 0, a: 0.8117647}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 1516023130762841454}
-  staminaBar: {fileID: 4661203211644983359}
+  staminaBar: {fileID: 5774800581041699493}
   activeColour: {r: 0, g: 0.2271987, b: 0.9716981, a: 1}
   inActiveColour: {r: 0.16862746, g: 0.09411766, b: 0.5372549, a: 1}
   backPanel: {fileID: 114236033258773318}
@@ -231,6 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 4091433133039602149}
   showText: 0
+  slider: {fileID: 114790493384839588}
 --- !u!1 &1174153349797732
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,7 +627,7 @@ GameObject:
   - component: {fileID: 224456178408131018}
   - component: {fileID: 114758407597988508}
   - component: {fileID: 222593921421784836}
-  - component: {fileID: 4661203211644983359}
+  - component: {fileID: 5774800581041699493}
   m_Layer: 5
   m_Name: SP
   m_TagString: Untagged
@@ -676,10 +677,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.17923284, g: 1, b: 0, a: 1}
-    m_HighlightedColor: {r: 0.18039216, g: 1, b: 0, a: 1}
-    m_PressedColor: {r: 0.18039216, g: 1, b: 0, a: 1}
-    m_DisabledColor: {r: 0.18039216, g: 1, b: 0, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -691,7 +692,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 114925345516727226}
   m_FillRect: {fileID: 224073682116746166}
   m_HandleRect: {fileID: 0}
@@ -711,7 +712,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1995885686839730}
   m_CullTransparentMesh: 0
---- !u!114 &4661203211644983359
+--- !u!114 &5774800581041699493
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -720,11 +721,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1995885686839730}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16841ee7e2a872a4a98fa5559896a8ed, type: 3}
+  m_Script: {fileID: 11500000, guid: b32ef7d61845d334ca288b21a1c698db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 943531275142678627}
   showText: 0
+  slider: {fileID: 114758407597988508}
+  fill: {fileID: 114925345516727226}
+  fullColor: {r: 0.38163263, g: 1, b: 0.25, a: 1}
 --- !u!1 &1736153776835787636
 GameObject:
   m_ObjectHideFlags: 0

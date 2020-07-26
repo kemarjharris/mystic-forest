@@ -47,15 +47,14 @@ public class PlayerSwitcher : MonoBehaviour
         if (numberPressed > 0)
         {
             int listPosition = numberPressed - 1;
-            if (listPosition < players.Count)
+            if (listPosition < players.Count && activePlayer.executionState.combatState == CombatState.NOT_ATTACKING)
             {
-                
                 IPlayer selectedPlayer = players[listPosition];
-                Debug.Log(selectedPlayer);
                 if (selectedPlayer != activePlayer)
                 {
-                    activePlayer = selectedPlayer;
-                    NotifyPlayers(selectedPlayer);
+                        activePlayer = selectedPlayer;
+                        NotifyPlayers(selectedPlayer);
+                    
                 }
             }
         }

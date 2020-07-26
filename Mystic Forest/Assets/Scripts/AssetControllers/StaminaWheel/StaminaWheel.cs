@@ -2,13 +2,14 @@
 using System.Collections;
 using Zenject;
 
-public class StaminaWheel : ValueCircle
+public class StaminaWheel : MonoBehaviour
 {
     public Vector3 offset;
     RectTransform canvasTransform;
     new Camera camera;
     CanvasPosition cp;
     Transform followTransform;
+    public ValueCircle circle;
 
     private void Start()
     {
@@ -22,7 +23,6 @@ public class StaminaWheel : ValueCircle
 
     protected void LateUpdate()
     {
-        base.Update();
         transform.rotation = canvasTransform.rotation;
         Vector3 viewportPoint = camera.WorldToViewportPoint(followTransform.position + offset);
         cp.xPos = viewportPoint.x;
@@ -34,7 +34,7 @@ public class StaminaWheel : ValueCircle
     [Inject]
     public void Construct(BoundedValue<float> stamina, IPlayer player)
     {
-        base.Construct(stamina);
+        circle.Construct(stamina);
         followTransform = player.transform;
     }
 }

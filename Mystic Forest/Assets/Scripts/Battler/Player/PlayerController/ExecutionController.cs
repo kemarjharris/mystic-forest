@@ -43,6 +43,7 @@ public class ExecutionController : MonoBehaviour
     {
         battler = GetComponent<Battler>();
         battler.eventSet.onPlayerSwitchedIn += Enable;
+        battler.eventSet.onPlayerSwitchedOut += LowerComboFlag;
         battler.eventSet.onPlayerSwitchedOut += Disable;
     }
 
@@ -55,6 +56,7 @@ public class ExecutionController : MonoBehaviour
     private void OnDestroy()
     {
         battler.eventSet.onPlayerSwitchedIn -= Enable;
+        battler.eventSet.onPlayerSwitchedOut -= LowerComboFlag;
         battler.eventSet.onPlayerSwitchedOut -= Disable;
     }
 
@@ -140,7 +142,14 @@ public class ExecutionController : MonoBehaviour
     void OnChainFinished()
     {
         battler.StopCombatAnimation();
+        bool wasAttacking = battler.executionState.combatState != CombatState.NOT_ATTACKING;
         battler.executionState.combatState = CombatState.NOT_ATTACKING;
+
+        if (wasAttacking && battler.executionState.comboing == false)
+        {
+            battler.eventSet.onPlayerBecomeInactive?.Invoke();
+        }
+        
     }
 
     void SetUpComboEvents()
@@ -165,8 +174,17 @@ public class ExecutionController : MonoBehaviour
     void LowerComboFlag()
     {
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
+
+        bool wasComboing = battler.executionState.comboing;
         battler.executionState.comboing = false;
+        
+
         battler.eventSet.onComboFinished?.Invoke();
+
+        if (wasComboing && battler.executionState.combatState == CombatState.NOT_ATTACKING)
+        {
+            battler.eventSet.onPlayerBecomeInactive?.Invoke();
+        }
         lockOn.RemoveTarget();
         target = NewTargetSet();
     }
