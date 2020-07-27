@@ -33,7 +33,7 @@ public class Battler : MonoBehaviour, IBattler
 
 
         sprite.transform.forward = Camera.main.transform.forward;
-        executionState = new ExecutionState();
+        executionState = new ExecutionState(eventSet);
         ChainSet = new StateExecutableChainSetImpl(physics, executionState, chainSet);
         hitPoint.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         

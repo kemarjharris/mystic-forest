@@ -70,10 +70,10 @@ namespace Tests
 
         StateExecutableChainSetImpl CreateSet(IExecutableChainSet set, bool grounded, bool comboing, bool selectingSkill)
         {
-            ExecutionState state = new ExecutionState();
+            IExecutionState state = Substitute.For<IExecutionState>();
             IBattlerPhysics physics = Substitute.For<IBattlerPhysics>();
             physics.IsGrounded.Returns(grounded);
-            state.comboing = comboing;
+            state.comboing.Returns(comboing);
             state.selectingSkill = selectingSkill;
             return new StateExecutableChainSetImpl(physics, state, set);
         }
@@ -182,7 +182,7 @@ namespace Tests
             Assert.IsInstanceOf(typeof(StateExecutableChainSetImpl), 
                 new StateExecutableChainSetImpl(
                     Substitute.For<IBattlerPhysics>(), 
-                    new ExecutionState(),
+                    Substitute.For<IExecutionState>(),
                     Substitute.For<IExecutableChainSet>()
                 ).Where((chain) => true));
         }
@@ -192,7 +192,7 @@ namespace Tests
         {
             Assert.IsInstanceOf(typeof(StateExecutableChainSetImpl), 
                 new StateExecutableChainSetImpl(Substitute.For<IBattlerPhysics>(),
-                new ExecutionState(),
+                Substitute.For<IExecutionState>(),
                 Substitute.For<IExecutableChainSet>())
             .Union(Substitute.For<IExecutableChainSet>()));
         }

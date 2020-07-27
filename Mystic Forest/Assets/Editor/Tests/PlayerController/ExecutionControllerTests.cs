@@ -97,8 +97,11 @@ public class ExecutionControllerTests : SceneTestFixture
     // attacking, not attacking, able to cancel attack
     // normal, comboing, selecting skills
 
-    
-    
+
+
+    // active on swap in
+    // inactive on swap out
+    // not comboing after swap out
 
     // normal state, close range, attack key down, fires basic chain
     [UnityTest]

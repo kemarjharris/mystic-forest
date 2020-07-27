@@ -171,11 +171,11 @@ namespace ExecutionModuleTest
             controller.Received().StopRestoring();
         }
 
-        // starts restoring when combo finished
+        // starts restoring when becomes inactive
         [Test]
-        public void ExecutingChain_ComboFinished_StartsRestoringStamina()
+        public void ExecutingChain_BecomeInactive_StartsRestoringStamina()
         {
-            eventSet.onComboFinished();
+            eventSet.onPlayerBecomeInactive();
             controller.Received().StartRestoring();
         }
     }

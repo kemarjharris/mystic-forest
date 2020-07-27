@@ -82,7 +82,10 @@ namespace Tests
     {
         JointController neutral;
         IUnityAxisService service;
-        
+
+        // active on swap in
+        // inactive on swap out
+
 
         public override IEnumerator LoadScene()
         {

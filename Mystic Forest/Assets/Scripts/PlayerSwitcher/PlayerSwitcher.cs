@@ -9,11 +9,13 @@ public class PlayerSwitcher : MonoBehaviour
     IPlayer activePlayer;
     KeyCode[] keyCodes;
     public System.Action<IPlayer> onPlayerSwitched;
+    IUnityInputService inputService;
 
     [Inject]
-    public void Construct(List<IPlayer> players)
+    public void Construct(List<IPlayer> players, IUnityInputService inputService)
     {
         this.players = players;
+        this.inputService = inputService;
     }
 
     public void Start()
@@ -63,7 +65,7 @@ public class PlayerSwitcher : MonoBehaviour
     public int NumberPressed()
     {
         for(int i = 0; i < keyCodes.Length; i ++ ){
-            if (Input.GetKeyDown(keyCodes[i]))
+            if (inputService.GetKeyDown(keyCodes[i]))
             {
                 int numberPressed = i + 1;
                 return numberPressed;

@@ -38,7 +38,6 @@ public class ExecutionController : MonoBehaviour
         this.lockOn = lockOn;
     }
 
-
     private void Awake()
     {
         battler = GetComponent<Battler>();
@@ -142,14 +141,7 @@ public class ExecutionController : MonoBehaviour
     void OnChainFinished()
     {
         battler.StopCombatAnimation();
-        bool wasAttacking = battler.executionState.combatState != CombatState.NOT_ATTACKING;
-        battler.executionState.combatState = CombatState.NOT_ATTACKING;
-
-        if (wasAttacking && battler.executionState.comboing == false)
-        {
-            battler.eventSet.onPlayerBecomeInactive?.Invoke();
-        }
-        
+        battler.executionState.combatState = CombatState.NOT_ATTACKING;        
     }
 
     void SetUpComboEvents()
@@ -175,16 +167,7 @@ public class ExecutionController : MonoBehaviour
     {
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
 
-        bool wasComboing = battler.executionState.comboing;
         battler.executionState.comboing = false;
-        
-
-        battler.eventSet.onComboFinished?.Invoke();
-
-        if (wasComboing && battler.executionState.combatState == CombatState.NOT_ATTACKING)
-        {
-            battler.eventSet.onPlayerBecomeInactive?.Invoke();
-        }
         lockOn.RemoveTarget();
         target = NewTargetSet();
     }
