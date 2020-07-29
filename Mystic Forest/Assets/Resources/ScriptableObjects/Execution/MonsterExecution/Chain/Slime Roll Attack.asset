@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a226c91c3df6884e9799fc1009a91bf, type: 3}
+  m_Name: Slime Roll Attack
+  m_EditorClassIdentifier: 
+  attacks:
+  - {fileID: 11400000, guid: de1b20320c08a884e91d647b6da36d11, type: 2}
+  travelMethodSO: {fileID: 11400000, guid: eebae53e58df2a74b93e18acc267dcdf, type: 2}
+  startPositionOffset: {x: -5, y: 0, z: 0}
+  travelSpeed: 5

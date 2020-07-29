@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8355297121140373144}
   - component: {fileID: 8355297121140373141}
   - component: {fileID: 160245070}
+  - component: {fileID: 899693418}
+  - component: {fileID: 899693419}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -48,10 +50,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 0}
-  - {fileID: 8355297121140373141}
   - {fileID: 160245070}
   - {fileID: 8355297121140373144}
+  - {fileID: 8355297121140373141}
+  - {fileID: 899693419}
+  - {fileID: 899693418}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -108,4 +111,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockOnPrefab: {fileID: 2842591358034228965, guid: 6d8467779025d50488df1be256ee524c,
+    type: 3}
+--- !u!114 &899693418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8355297121140373150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97a33ee51c177e8498357a8d32600e21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &899693419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8355297121140373150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faf7b9b837f825e479dc761b6bba4297, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSwitcherPrefab: {fileID: 849583249340481365, guid: 373d81b972cb4f94b9c8291407816b0c,
     type: 3}

@@ -34,7 +34,6 @@ public class MeleeEvent : ExecutionEvent
         if (!interrupted)
         {
             bool madeContact = false;
-            float freezeTime = 0.1f;
             performer.CheckCollision(delegate (Collider collider) {
                 IBattler battler = collider.gameObject.GetComponent<Battler>();
                 if (battler == null || battler == performer) return;
@@ -47,7 +46,7 @@ public class MeleeEvent : ExecutionEvent
                 performer.FreezeFrame(attack.freezeTime);
                 onCancellableEvent?.Invoke();
             }
-            float waitTime = animSO.GetLength() - timeOfContact + (madeContact ? freezeTime : 0);
+            float waitTime = animSO.GetLength() - timeOfContact + (madeContact ? attack.freezeTime : 0);
             yield return new WaitForSecondsRealtime(waitTime);
         }
         onFinishEvent?.Invoke();

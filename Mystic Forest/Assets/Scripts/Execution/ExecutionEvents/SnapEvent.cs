@@ -7,6 +7,7 @@ public class SnapEvent : ExecutionEvent
 
     public TravelMethodSO travelMethod;
     public float travelTime;
+    public bool useAnimLength;
     public PlayableAnimSO travelAnim;
     public ExecutionEvent nearPointEvent;
     public Vector3 nearPointDefinition;
@@ -16,7 +17,16 @@ public class SnapEvent : ExecutionEvent
     {
         nearPointEvent.setOnCancellableEvent(onCancellableEvent);
         nearPointEvent.setOnFinishEvent(onFinishEvent);
-        IBattler target = pool.target.GetComponent<Battler>();
+        IBattler target = null;
+        if (pool.target == null)
+        {
+            target = targetSet.GetTarget().GetComponent<Battler>();
+        } else
+        {
+            target = pool.target.GetComponent<Battler>();
+        }
+        
+        Debug.Log(target.transform);
         Vector3 snapPoint = Vector3.zero;
         if (target != null)
         {
@@ -34,7 +44,15 @@ public class SnapEvent : ExecutionEvent
 
         float CalculateSpeed()
         {
-            float time = Mathf.Max(travelTime, 0.01f);
+            float time = 0;
+            if (useAnimLength)
+            {
+                time = travelAnim.GetLength() * travelAnim.speed;
+            } else
+            {
+                time = Mathf.Max(travelTime, 0.01f);
+            }
+
             float distance = Vector3.Distance(battler.transform.position, snapPoint);
             return distance / time;
         }

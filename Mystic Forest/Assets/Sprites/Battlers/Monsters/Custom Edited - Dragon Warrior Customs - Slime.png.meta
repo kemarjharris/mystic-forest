@@ -1,0 +1,1317 @@
+fileFormatVersion: 2
+guid: a63ce3c1e1f0539428718a97d1d1e04b
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Custom Edited - Dragon Warrior Customs - Slime_0
+    21300002: Custom Edited - Dragon Warrior Customs - Slime_1
+    21300004: Custom Edited - Dragon Warrior Customs - Slime_2
+    21300006: Custom Edited - Dragon Warrior Customs - Slime_3
+    21300008: Custom Edited - Dragon Warrior Customs - Slime_4
+    21300010: Custom Edited - Dragon Warrior Customs - Slime_5
+    21300012: Custom Edited - Dragon Warrior Customs - Slime_6
+    21300014: Custom Edited - Dragon Warrior Customs - Slime_7
+    21300016: Custom Edited - Dragon Warrior Customs - Slime_8
+    21300018: Custom Edited - Dragon Warrior Customs - Slime_9
+    21300020: Custom Edited - Dragon Warrior Customs - Slime_10
+    21300022: Custom Edited - Dragon Warrior Customs - Slime_11
+    21300024: Custom Edited - Dragon Warrior Customs - Slime_12
+    21300026: Custom Edited - Dragon Warrior Customs - Slime_13
+    21300028: Custom Edited - Dragon Warrior Customs - Slime_14
+    21300030: Custom Edited - Dragon Warrior Customs - Slime_15
+    21300032: Custom Edited - Dragon Warrior Customs - Slime_16
+    21300034: Custom Edited - Dragon Warrior Customs - Slime_17
+    21300036: Custom Edited - Dragon Warrior Customs - Slime_18
+    21300038: Custom Edited - Dragon Warrior Customs - Slime_19
+    21300040: Custom Edited - Dragon Warrior Customs - Slime_20
+    21300042: Custom Edited - Dragon Warrior Customs - Slime_21
+    21300044: Custom Edited - Dragon Warrior Customs - Slime_22
+    21300046: Custom Edited - Dragon Warrior Customs - Slime_23
+    21300048: Custom Edited - Dragon Warrior Customs - Slime_24
+    21300050: Custom Edited - Dragon Warrior Customs - Slime_25
+    21300052: Custom Edited - Dragon Warrior Customs - Slime_26
+    21300054: Custom Edited - Dragon Warrior Customs - Slime_27
+    21300056: Custom Edited - Dragon Warrior Customs - Slime_28
+    21300058: Custom Edited - Dragon Warrior Customs - Slime_29
+    21300060: Custom Edited - Dragon Warrior Customs - Slime_30
+    21300062: Custom Edited - Dragon Warrior Customs - Slime_31
+    21300064: Custom Edited - Dragon Warrior Customs - Slime_32
+    21300066: Custom Edited - Dragon Warrior Customs - Slime_33
+    21300068: Custom Edited - Dragon Warrior Customs - Slime_34
+    21300070: Custom Edited - Dragon Warrior Customs - Slime_35
+    21300072: Custom Edited - Dragon Warrior Customs - Slime_36
+    21300074: Custom Edited - Dragon Warrior Customs - Slime_37
+    21300076: Custom Edited - Dragon Warrior Customs - Slime_38
+    21300078: Custom Edited - Dragon Warrior Customs - Slime_39
+    21300080: Custom Edited - Dragon Warrior Customs - Slime_40
+    21300082: Custom Edited - Dragon Warrior Customs - Slime_41
+    21300084: Custom Edited - Dragon Warrior Customs - Slime_42
+    21300086: Custom Edited - Dragon Warrior Customs - Slime_43
+    21300088: Custom Edited - Dragon Warrior Customs - Slime_44
+    21300090: Custom Edited - Dragon Warrior Customs - Slime_45
+    21300092: Custom Edited - Dragon Warrior Customs - Slime_46
+    21300094: Custom Edited - Dragon Warrior Customs - Slime_47
+    21300096: Custom Edited - Dragon Warrior Customs - Slime_48
+    21300098: Custom Edited - Dragon Warrior Customs - Slime_49
+    21300100: Custom Edited - Dragon Warrior Customs - Slime_50
+    21300102: Custom Edited - Dragon Warrior Customs - Slime_51
+    21300104: Custom Edited - Dragon Warrior Customs - Slime_52
+    21300106: Custom Edited - Dragon Warrior Customs - Slime_53
+    21300108: Custom Edited - Dragon Warrior Customs - Slime_54
+    21300110: Custom Edited - Dragon Warrior Customs - Slime_55
+    21300112: Custom Edited - Dragon Warrior Customs - Slime_56
+    21300114: Custom Edited - Dragon Warrior Customs - Slime_57
+  externalObjects: {}
+  serializedVersion: 9
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 394
+        width: 27
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3347b67a42af6d46b3509320b7ddea8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_1
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 394
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c76ea845a36d4504c89a81f2621d106b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 394
+        width: 27
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d1b7ded11af357458c2c93d6258f476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_3
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 394
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e69cec0f6eac80d45b2751847809a0a8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 393
+        width: 25
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6004ad715c18c3e4b868e7763e378854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_5
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 345
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04ea43b3066043547bd1319f7b66a79a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_6
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 345
+        width: 29
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 664cac849415b1b47a9ad12188d64f9b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_7
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 345
+        width: 29
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c45897348d394264b90100035875cc77
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_8
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 345
+        width: 31
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ee238152c8dc4446b1a7c6a06554753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_9
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 303
+        width: 31
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21a81b19621df9546b410a9a770ad2d5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_10
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 303
+        width: 33
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6012d0943efd64e4293b4d6511572ac0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_11
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 303
+        width: 38
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76ff52c88128c124187f01815e9392d0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_12
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 303
+        width: 40
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 757a97d0494bb7049af6c0ae8cb6efa6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_13
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 303
+        width: 40
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edbb6841e2473df408d3d7860c6be932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_14
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 303
+        width: 40
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8da0f69fbf4b7384097baaaeed4c038f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_15
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 303
+        width: 40
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 039039db5af8d174298217125bc9925f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_16
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 303
+        width: 40
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09d6fdbe0a2b2a74bbb13d5d1c6d3168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_17
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 254
+        width: 29
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4377aa16c227f2c48b9dd883aa6089c2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_18
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 254
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d15cccf8776f464fbf9890f1d2683fe
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_19
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 254
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b9626898ffd67d4789d72b9bb01aa7c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_20
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 254
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12c323e4e791bfe49aa798d7581fa2da
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_21
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 254
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ad8fbe326dc83846890320f9e046e4e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_22
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 254
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 560d5e7861776b34982b16f5441cdbf8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_23
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 254
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c91ecf54c28efa342a63b45b0373356a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_24
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 254
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f2ef3b6a17834b4c9e8a3e57ad1075a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_25
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 254
+        width: 25
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b69d761189cfc143946f18f7134b982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_26
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 254
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c960d3aa0e88038439eaf8c2f8f705d4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_27
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 254
+        width: 29
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 404a0787fffb5324eb09ca272c83b14b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_28
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 205
+        width: 38
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6439f08c81c6a98499e873d96094b528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_29
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 205
+        width: 33
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c53197ec78d66584983750bf3ebb4e34
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_30
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 205
+        width: 31
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1e1f83ddba9800438a00bc0554d1f0d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_31
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 205
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a03ca51ae3d8de646adc716b91785c0a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_32
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 205
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 746fee879a3184147b0e6c4fcc0d1114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_33
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 205
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9366320d9fa83a9439d918facac786b6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_34
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 205
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b310207e4ebe324986a8ee9215720bc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_35
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 205
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afa51ba2a9d9ecb4eb4bbe192798536c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_36
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 205
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01221bbe42a926349be4ea2d17997606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_37
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 205
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4943dc2536a20f043bd9f82a1d765b1c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_38
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 205
+        width: 25
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 170e66a6b26c5994db71e966e5ac34f9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_39
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 151
+        width: 47
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb684b8573bc1bc4a891ff7a64236926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_40
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 152
+        width: 25
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3713480144c32f49ba326fe814698e9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_41
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 151
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ac6d8570f022bb4a90951460846465d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_42
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 152
+        width: 25
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fd1bff56d8ca79498333c51bf0686b8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_43
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 89
+        width: 25
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0baa8af398566d49bff04880097a4f8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_44
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 89
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97d45a61cb1e2134aa10c72d93d125fc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_45
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 89
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 785f29cb48eaaa544a141ca4da9efaf6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_46
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 89
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06d5af37094e81045b25be371401eef4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_47
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 89
+        width: 27
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe07f2554ec0ccf478b669096bdff70f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_48
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 36
+        width: 25
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dae5fb3214dd1b14fbcacd5d2361e63c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_49
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 47
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 419c90c7a23808f48829e16aee2d4140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_50
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 47
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e26b27bab50c784c8a94ac573b1f49a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_51
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 47
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bd5c2f85c135c145a7264183c6c7edf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_52
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 47
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d34956a70acb7f4a9d01e52ff8267b4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_53
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 47
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4dc5b2d34ade3584f9177a6246398640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_54
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 47
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46904048835bc3547bd75b949340b1e9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_55
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 47
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 531d3fccd5e84a94b9f2b95ae7713ccb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_56
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 7
+        width: 30
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 053ecc0c6c637aa4482410c482c19f78
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom Edited - Dragon Warrior Customs - Slime_57
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 7
+        width: 30
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af4c48d53753a7a4c8b9eb9807195d0c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: eb4ce0101a3273443b0ea9df4adc385e
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

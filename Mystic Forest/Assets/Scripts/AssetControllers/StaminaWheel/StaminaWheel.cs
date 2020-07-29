@@ -27,7 +27,6 @@ public class StaminaWheel : MonoBehaviour
         Vector3 viewportPoint = camera.WorldToViewportPoint(followTransform.position + offset);
         cp.xPos = viewportPoint.x;
         cp.yPos = viewportPoint.y;
-        Debug.Log(viewportPoint.x);
     }
 
 

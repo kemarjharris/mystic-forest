@@ -2,7 +2,6 @@
 using UnityEditor;
 using System.Collections;
 
-[CreateAssetMenu()]
 public class TravelForward : TravelMethodSO
 {
     public override IEnumerator Travel(Transform toMove, Vector3 dest, float speed, System.Action onFinish = null)
