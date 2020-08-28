@@ -21,7 +21,6 @@ public class PlayerInfoManager : MonoBehaviour
     private void Awake()
     {
         GameObjectContext[] contexts = FindObjectsOfType<GameObjectContext>();
-        Canvas canvas = GameObject.FindGameObjectWithTag("Main Canvas").GetComponent<Canvas>();
         int numberPlayerInfoOnScreen = 0;
         infos = new Dictionary<IPlayer, PlayerInfo>();
         for (int i = 0; i < contexts.Length; i++)
@@ -30,8 +29,8 @@ public class PlayerInfoManager : MonoBehaviour
             if (player != null && numberPlayerInfoOnScreen < maxControllers)
             {
                 GameObject playerInfoGameObject = contexts[i].Container.InstantiatePrefab(playerInfoPrefab);
-                PlacePlayerInfo(playerInfoGameObject, numberPlayerInfoOnScreen, canvas);
                 infos.Add(player, playerInfoGameObject.GetComponent<PlayerInfo>());
+                PlacePlayerInfo(playerInfoGameObject, numberPlayerInfoOnScreen);
                 numberPlayerInfoOnScreen++;
             }
         }
@@ -52,14 +51,12 @@ public class PlayerInfoManager : MonoBehaviour
         }
     }
 
-    void PlacePlayerInfo(GameObject playerInfoGameObject, int numOfPlayerInfoOnScreen, Canvas canvas)
+    void PlacePlayerInfo(GameObject playerInfoGameObject, int numOfPlayerInfoOnScreen)
     {
-        Transform transform = playerInfoGameObject.transform;
-        transform.SetParent(canvas.transform, false);
-        CanvasPosition cp = playerInfoGameObject.AddComponent<CanvasPosition>();
-        cp.SetCanvas(canvas);
-        cp.xPos = (((float)numOfPlayerInfoOnScreen * 2) + 1) / ((float)maxControllers * 2);
-        cp.yPos = yPos;
-        cp.transform.localScale = new Vector3(scaling, scaling, scaling);
+        playerInfoGameObject.transform.SetParent(transform);
+        ViewportPosition vp = playerInfoGameObject.AddComponent<ViewportPosition>();
+        vp.xPos = (((float)numOfPlayerInfoOnScreen * 2) + 1) / ((float)maxControllers * 2);
+        vp.yPos = yPos;
+        vp.transform.localScale = new Vector3(scaling, scaling, scaling);
     }
 }

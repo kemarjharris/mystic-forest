@@ -10,7 +10,7 @@ public class PlayerInfo : MonoBehaviour
     public Image backPanel;
 
     [Inject]
-    public void Construct(IPlayer player, BoundedValue<float> stamina) //, BoundedFloat stamina*/)
+    public void Construct(IPlayer player, BoundedValue<float> stamina)
     {
         nameText.text = player.transform.gameObject.name;
         staminaBar.Construct(stamina);

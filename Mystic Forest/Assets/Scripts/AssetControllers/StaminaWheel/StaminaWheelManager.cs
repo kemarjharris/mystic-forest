@@ -49,7 +49,8 @@ public class StaminaWheelManager : MonoBehaviour
 
     void PlaceStaminaWheel(Transform playerTransform, Transform staminaWheelTransform)
     {
-        staminaWheelTransform.localScale = new Vector3(scaling, scaling, scaling);
+        
         staminaWheelTransform.SetParent(transform);
+        staminaWheelTransform.localScale = new Vector3(scaling, scaling, scaling);
     }
 }
