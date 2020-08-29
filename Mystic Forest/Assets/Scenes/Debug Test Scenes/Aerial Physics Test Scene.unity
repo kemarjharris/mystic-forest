@@ -339,9 +339,9 @@ GameObject:
   - component: {fileID: 1577441314}
   - component: {fileID: 1577441313}
   - component: {fileID: 1577441312}
-  - component: {fileID: 1577441315}
   - component: {fileID: 1577441316}
   - component: {fileID: 1577441317}
+  - component: {fileID: 1577441315}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -422,11 +422,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1577441311}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 440cfd3528c735441a63724e505291bf, type: 3}
+  m_Script: {fileID: 11500000, guid: dd82a1d31d9467e49b68903f4c20b1e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followTransform: {fileID: 1674877550}
   offset: {x: 0, y: 0, z: -10}
+  followTransform: {fileID: 0}
+  smoothTime: 0.1
 --- !u!114 &1577441316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,12 +528,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e8f16da5f1e4f542800823831ab55bb, type: 3}
---- !u!4 &1674877550 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8645074079017424478, guid: cb10245f5dff17b4f9709cd2c51c56b9,
-    type: 3}
-  m_PrefabInstance: {fileID: 547970965}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3006666771558611928
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -704,11 +699,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4326193067856843278, guid: 743a69122e707614fb9c3f8301315287,
-        type: 3}
-      propertyPath: scaling
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 6693599792319151646, guid: 743a69122e707614fb9c3f8301315287,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -718,16 +708,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7185769376024928391, guid: 743a69122e707614fb9c3f8301315287,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -744.9057
-      objectReference: {fileID: 0}
-    - target: {fileID: 7185769376024928391, guid: 743a69122e707614fb9c3f8301315287,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 728.9869
       objectReference: {fileID: 0}
     - target: {fileID: 9019041838651701479, guid: 743a69122e707614fb9c3f8301315287,
         type: 3}
