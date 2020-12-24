@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f602630726f2074ab5aad86cf5bfc80, type: 3}
-  m_Name: Warrior Speeds
+  m_Script: {fileID: 11500000, guid: 4b4b6a5c8816c5f4887482284d3571bd, type: 3}
+  m_Name: Targeter Installer
   m_EditorClassIdentifier: 
-  jumpForce: 12
-  jumpHorizontalForce: 4
-  speed: 6
+  targeter: {fileID: 607160818514588732, guid: 995788e7a6b046e4bae4091d9155e1ef, type: 3}

@@ -14,7 +14,7 @@ public class ExecutionController : MonoBehaviour
     IUnityInputService inputService;
     IUnityTimeService timeService;
     // Concrete gameobject
-    private LockOn lockOn;
+    ITargeter target;
     // The amount of time it takes to cast a skill
     public float skillTimeOut = 1;
 
@@ -22,20 +22,19 @@ public class ExecutionController : MonoBehaviour
     float timeOut;
     // The battler being controlled
     public IBattler battler;
-    // Currently targeted enemy
-    ITargetSet target;
+    
     // Definition of when to use assault
     public RangeSO closeRange;
     public ExecutableChainSO assault;
 
     [Inject]
-    public void Construct(IUnityInputService inputService, IUnityTimeService timeService, IExecutionModule module, IComboCounter comboCounter, LockOn lockOn)
+    public void Construct(IUnityInputService inputService, IUnityTimeService timeService, IExecutionModule module, IComboCounter comboCounter, ITargeter targeter)
     {
         this.inputService = inputService;
         this.timeService = timeService;
         this.module = module;
         this.comboCounter = comboCounter;
-        this.lockOn = lockOn;
+        this.target = targeter;
     }
 
     private void Awake()
@@ -44,12 +43,6 @@ public class ExecutionController : MonoBehaviour
         battler.eventSet.onPlayerSwitchedIn += Enable;
         battler.eventSet.onPlayerSwitchedOut += LowerComboFlag;
         battler.eventSet.onPlayerSwitchedOut += Disable;
-    }
-
-    private void Start()
-    {
-        target = NewTargetSet();
-        SetUpLockOn();
     }
 
     private void OnDestroy()
@@ -70,11 +63,11 @@ public class ExecutionController : MonoBehaviour
                 {
                     if (battler.IsGrounded && !closeRange.BattlerInRange(battler.transform))
                     {
-                        module.StartExecution(assault, battler, target);
+                        module.StartExecution(assault, battler, target.targetSet);
                     }
                     else
                     {
-                        module.StartExecution(battler.ChainSet, battler, target);
+                        module.StartExecution(battler.ChainSet, battler, target.targetSet);
                     }
                 } else if (inputService.GetKeyDown("k"))
                 {
@@ -88,33 +81,13 @@ public class ExecutionController : MonoBehaviour
             {
                 if (inputService.GetKeyDown("j"))
                 {
-                    module.StartExecution(battler.ChainSet, battler, target);
+                    module.StartExecution(battler.ChainSet, battler, target.targetSet);
                 }
-            }
-
-            if (inputService.GetKeyDown("l"))
-            {
-                GameObject targ = lockOn.NextToLockOnTo();
-            }
-            else if (Input.GetKeyDown("q"))
-            {
-                lockOn.RemoveTarget();
-                target.SetTarget(null);
             }
         }
     }
 
-    ITargetSet NewTargetSet()
-    {
-        target = new EventTargetSet(delegate (Transform t) {
-            if (lockOn.GetTarget() != t)
-            {
-                lockOn.SetTarget(t);
-            }
-        });
-        return target;
-    }
-
+     
     public void OnEnable()
     {
         module.OnNewChainLoaded.AddAction(OnNewChainLoaded);
@@ -166,24 +139,7 @@ public class ExecutionController : MonoBehaviour
     void LowerComboFlag()
     {
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
-
         battler.executionState.comboing = false;
-        lockOn.RemoveTarget();
-        target = NewTargetSet();
-    }
-
-    void SetUpLockOn()
-    {
-        lockOn.onLockOn += delegate (GameObject t)
-        {
-            if (t != null && t.transform != target.GetTarget())
-            {
-                target.SetTarget(t.transform);
-            }
-        };
-        lockOn.rule = (Collider collider) => collider.gameObject.tag == "Battler" && battler.transform != collider.transform;
-        lockOn.transform.SetParent(transform);
-        lockOn.transform.localPosition = Vector3.zero;
     }
 
     void Enable() => enabled = true;
@@ -195,7 +151,7 @@ public class ExecutionController : MonoBehaviour
         
         battler.executionState.selectingSkill = true;
         GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
-        module.StartExecution(battler.ChainSet, battler, target);
+        module.StartExecution(battler.ChainSet, battler, target.targetSet);
 
         float fdt = Time.fixedDeltaTime;
         Time.timeScale = 0.1f;
@@ -222,6 +178,6 @@ public class ExecutionController : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        closeRange.Draw(transform);
+        // closeRange.Draw(transform);
     }
 }

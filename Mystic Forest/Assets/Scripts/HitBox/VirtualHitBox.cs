@@ -8,10 +8,12 @@ public class VirtualHitBox : MonoBehaviour, IHitBox
     public Vector3 extents;
     public Vector3 rotation;
 
+    Quaternion Rotation => Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z) * Quaternion.Euler(rotation);
+
     public void CheckCollision(System.Action<Collider> onCollide)
     {
         if (onCollide == null) return;
-        Collider[] overlapColliders = Physics.OverlapBox(transform.position + center, Vector3.Scale(extents, transform.localScale), Quaternion.Euler(rotation));
+        Collider[] overlapColliders = Physics.OverlapBox(transform.position + (Rotation * center), Vector3.Scale(extents, transform.localScale), Rotation);
         for (int i = 0; i < overlapColliders.Length; i++)
         {
             onCollide?.Invoke(overlapColliders[i]);
@@ -20,6 +22,6 @@ public class VirtualHitBox : MonoBehaviour, IHitBox
 
     private void OnDrawGizmosSelected()
     {
-        BoxColliderDrawer.DrawBoxCollider(transform, Color.red, center, extents * 2, Quaternion.Euler(rotation));
+        BoxColliderDrawer.DrawBoxCollider(transform, Color.red, Rotation * center, extents * 2, Rotation);
     }
 }

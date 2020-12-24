@@ -25,6 +25,8 @@ public class Ground : MonoBehaviour
         return transform.position + (Vector3.up * ColliderHeight());
     }
 
+    
+
     private float ColliderHeight()
     {
         // get the height of the collider 

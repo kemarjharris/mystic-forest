@@ -9,11 +9,6 @@ public class LockOnExecutableSO : ExecutableSO
     public ExecutionEvent onTargetSelected;
     public float lockOnDuration;
 
-    private void OnEnable()
-    {
-        lockOnPrefab = Resources.Load<GameObject>("Prefabs/Miscellaneous/Lock On Area 1");
-    }
-
     public override IExecutable CreateExecutable() =>
         new LockOnExecutable
         {

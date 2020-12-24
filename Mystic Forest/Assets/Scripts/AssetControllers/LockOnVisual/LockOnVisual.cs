@@ -6,14 +6,14 @@ using System.Collections;
 public class LockOnVisual : MonoBehaviour
 {
     LockOn lockOn;
-    public SpriteRenderer cursor;
+    public GameObject cursor;
     public float cursorHeight;
     Transform followTransform;
 
     private void Awake()
     {
         lockOn = GetComponent<LockOn>();
-        cursor.enabled = false;
+        cursor.SetActive(false);
         lockOn.onLockOn += AttachCursor;
         lockOn.onLockedOnExit += DetachCursor;
     }
@@ -27,14 +27,14 @@ public class LockOnVisual : MonoBehaviour
     private void AttachCursor(GameObject lockedOn)
     {
         if (lockedOn == null) return;
-        cursor.enabled = true;
+        cursor.SetActive(true);
         followTransform = lockedOn.transform;
     }
 
     private void DetachCursor()
     {
         followTransform = null;
-        cursor.enabled = false;
+        cursor.SetActive(false);
         cursor.transform.position = Vector3.zero;
     }
 

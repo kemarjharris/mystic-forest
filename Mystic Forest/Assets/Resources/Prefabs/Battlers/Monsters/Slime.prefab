@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2121330830495486066}
   - component: {fileID: 1396979646781542875}
   - component: {fileID: 4511080935902157737}
+  - component: {fileID: 2511266090070475033}
   m_Layer: 5
   m_Name: Sprite
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6821680707907438190}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.23344539, y: -0, z: -0, w: 0.9723699}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -92,7 +93,7 @@ Animator:
   m_GameObject: {fileID: 6821680707907438190}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 97f2c74a403afb344ae1b092ded45037, type: 2}
+  m_Controller: {fileID: 9100000, guid: 92079945dc5ff1946b4d0d230d1aeb0e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -113,6 +114,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b21d23dac0db12f449d23a4e181188bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2511266090070475033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6821680707907438190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7920e403b2ea05d4aa8d7c18d3aafe89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  main: {fileID: 2846634824970806638}
+  flipped: 0
 --- !u!1 &7576717228133900258
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +158,7 @@ Transform:
   m_GameObject: {fileID: 7576717228133900258}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 1020163439855999535}
   m_Father: {fileID: 0}
@@ -176,8 +191,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.25527415, y: 0.43273014, z: 0.20000002}
-  m_Center: {x: 0, y: -0.028092146, z: 0}
+  m_Size: {x: 0.27549118, y: 0.26490375, z: 0.20000002}
+  m_Center: {x: -0.0011257827, y: 0.0046598716, z: 0}
 --- !u!114 &7576717228133900264
 MonoBehaviour:
   m_ObjectHideFlags: 0
