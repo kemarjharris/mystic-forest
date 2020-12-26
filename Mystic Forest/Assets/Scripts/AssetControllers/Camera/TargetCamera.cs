@@ -27,8 +27,6 @@ public class TargetCamera : MonoBehaviour
     public void Construct(PlayerSwitcher switcher)
     {
         this.switcher = switcher;
-
-        
     }
 
     public void Awake()

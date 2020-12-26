@@ -6,6 +6,7 @@ using UnityEngine;
 public class Ground : MonoBehaviour
 {
     public new BoxCollider collider { get; private set; }
+    public SpriteRenderer floor;
 
     private void Awake()
     {

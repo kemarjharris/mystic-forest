@@ -35,9 +35,4 @@ public class Wall : MonoBehaviour
     {
         return touching.Contains(gameObject);
     }
-
-    private void OnDrawGizmosSelected()
-    {
-        BoxColliderDrawer.DrawBoxCollider(transform, Color.green, collider.center, collider.size, transform.rotation, 0.2f);
-    }
 }
