@@ -25,7 +25,7 @@ namespace ExecutorTest
             IExecutable executable = Substitute.For<IExecutable>();
             IEnumerator<IExecutable> executables = new List<IExecutable>( new IExecutable[] { executable }).GetEnumerator();
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
-            executor.ExecuteChain(null, null, executables);
+            executor.ExecuteChain(null, executables);
             Assert.AreSame(executables, executor.GetExecutables());
         }
 
@@ -36,7 +36,7 @@ namespace ExecutorTest
             IExecutable executable = Substitute.For<IExecutable>();
             IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { executable }).GetEnumerator();
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
-            executor.ExecuteChain(null, null, executables);
+            executor.ExecuteChain(null, executables);
             Assert.AreSame(executable, executor.GetCurr());
         }
 
@@ -49,7 +49,7 @@ namespace ExecutorTest
             IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { executable }).GetEnumerator();
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executor.Construct(executables, prev, null);
-            executor.ExecuteChain(null, null, executables);
+            executor.ExecuteChain(null, executables);
             Assert.AreSame(prev, executor.GetPrev());    
         }
 
@@ -62,7 +62,7 @@ namespace ExecutorTest
             IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { executable }).GetEnumerator();
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executor.Construct(executables, prev, null);
-            executor.ExecuteChain(null, null, executables);
+            executor.ExecuteChain(null, executables);
             Assert.Null(executor.GetPrev());
         }
 
@@ -76,7 +76,7 @@ namespace ExecutorTest
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executable.When(x => x.OnStart()).
                 Do(delegate { onStartCalled = true; });
-            executor.ExecuteChain(null, null, executables);
+            executor.ExecuteChain(null, executables);
             Assert.True(onStartCalled);
 
         }
@@ -128,9 +128,9 @@ namespace ExecutorTest
                     currIsCancellable,
                     currIsFinished
                 );
-            executor.GetCurr().WhenForAnyArgs(x => x.OnInput("return", null, null)).
+            executor.GetCurr().WhenForAnyArgs(x => x.OnInput("return", null)).
                 Do(@event);
-            executor.GetPrev().WhenForAnyArgs(x => x.OnInput("return", null, null)).
+            executor.GetPrev().WhenForAnyArgs(x => x.OnInput("return", null)).
                 Do(@event);
 
             return executor;
@@ -148,7 +148,7 @@ namespace ExecutorTest
         {
             bool onInputCalled = false;
             IExecutable curr = SetUpExecutableState(false, false, false);
-            curr.WhenForAnyArgs(x => x.OnInput("return", null, null)).
+            curr.WhenForAnyArgs(x => x.OnInput("return", null)).
                 Do(delegate { onInputCalled = true; });
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executor.Construct(
@@ -166,7 +166,7 @@ namespace ExecutorTest
         {
             bool onInputCalled = false;
             IExecutable curr = SetUpExecutableState(true, false, false);
-            curr.WhenForAnyArgs(x => x.OnInput("return", null, null)).
+            curr.WhenForAnyArgs(x => x.OnInput("return", null)).
                 Do(delegate { onInputCalled = true; });
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
             executor.Construct(
@@ -368,7 +368,7 @@ namespace ExecutorTest
             IExecutable curr = SetUpExecutableState(false, false, true);
             IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { curr }).GetEnumerator();
             ChainExecutorLinkImpl executor = new ChainExecutorLinkImpl();
-            executor.ExecuteChain(null, null, executables);
+            executor.ExecuteChain(null, executables);
             Assert.True(executor.IsExecuting());
             executor.Update();
             Assert.False(executor.IsExecuting());
@@ -383,7 +383,7 @@ namespace ExecutorTest
             IExecutable executable = SetUpExecutableState(true, false, false);
             executable.HasFired().Returns(true);
             IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { executable }).GetEnumerator();
-            executor.ExecuteChain(null, null, executables);
+            executor.ExecuteChain(null, executables);
             executor.Update();
             Assert.AreEqual(1, timesFired);
         } 
@@ -397,7 +397,7 @@ namespace ExecutorTest
             IExecutable executable = SetUpExecutableState(true, false, false);
             executable.HasFired().Returns(true);
             IEnumerator<IExecutable> executables = new List<IExecutable>(new IExecutable[] { executable }).GetEnumerator();
-            executor.ExecuteChain(null, null, executables);
+            executor.ExecuteChain(null, executables);
             executor.Update();
             Assert.AreEqual(0, timesFired);
         }

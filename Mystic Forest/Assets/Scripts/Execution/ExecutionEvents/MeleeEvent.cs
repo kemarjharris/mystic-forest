@@ -11,10 +11,10 @@ public class MeleeEvent : ExecutionEvent
     public bool aerial;
     public bool interrupted;
 
-    public override void OnExecute(IBattler attacker, ITargetSet targets)
+    public override void OnExecute(IBattler attacker)
     {
         interrupted = false;
-        attacker.StartCoroutine(AttackDelay(attacker, targets, onCancellableEvent, onFinishEvent));
+        attacker.StartCoroutine(AttackDelay(attacker, onCancellableEvent, onFinishEvent));
     }
 
     public override void Interrupt()
@@ -22,13 +22,13 @@ public class MeleeEvent : ExecutionEvent
         interrupted = true;
     }
 
-    protected virtual IEnumerator AttackDelay(IBattler performer, ITargetSet targets, System.Action onCancellableEvent, System.Action onFinishEvent)
+    protected virtual IEnumerator AttackDelay(IBattler performer, System.Action onCancellableEvent, System.Action onFinishEvent)
     {
         yield return new WaitWhile(() => performer.IsFrozen);
         performer.Play(animSO);
         if (playerVelocity != Vector3.zero)
         {
-            performer.SetVelocity(playerVelocity);
+            performer.SetVelocity(performer.transform.YRotate(playerVelocity));
         }
         yield return new WaitForSeconds(timeOfContact);
         if (!interrupted)

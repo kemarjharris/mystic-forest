@@ -185,5 +185,53 @@ namespace Tests
         {
             RunTests(-1, false);
         }
+
+        [Test]
+        public void AngleToDirectionTestE()
+        {
+            Assert.AreEqual(Direction.E, DirectionalInput.AngleToDirection(0));
+        }
+
+        [Test]
+        public void AngleToDirectionTestNE()
+        {
+            Assert.AreEqual(Direction.NE, DirectionalInput.AngleToDirection(45));
+        }
+
+        [Test]
+        public void AngleToDirectionTestN()
+        {
+            Assert.AreEqual(Direction.N, DirectionalInput.AngleToDirection(90));
+        }
+
+        [Test]
+        public void AngleToDirectionTestNW()
+        {
+            Assert.AreEqual(Direction.NW, DirectionalInput.AngleToDirection(135));
+        }
+
+        [Test]
+        public void AngleToDirectionTestW()
+        {
+            Assert.AreEqual(Direction.W, DirectionalInput.AngleToDirection(180));
+        }
+
+        [Test]
+        public void AngleToDirectionTestSW()
+        {
+            Assert.AreEqual(Direction.SW, DirectionalInput.AngleToDirection(225));
+        }
+
+        [Test]
+        public void AngleToDirectionTestS()
+        {
+            Assert.AreEqual(Direction.S, DirectionalInput.AngleToDirection(270));
+        }
+
+        [Test]
+        public void AngleToDirectionTestSE()
+        {
+            Assert.AreEqual(Direction.SE, DirectionalInput.AngleToDirection(315));
+        }
     }
 }

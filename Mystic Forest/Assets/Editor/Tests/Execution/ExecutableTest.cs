@@ -45,7 +45,7 @@ namespace ExecutableTest
             go.transform.position = Vector3.zero;
             battler = Substitute.For<IBattler>();
             battler.transform.Returns(go.transform);
-            targets = new TargetSet();
+            targets = new EventTargetSet();
             objects = new List<GameObject>
             {
                 go
@@ -72,7 +72,7 @@ namespace ExecutableTest
 
         public void CallOnInput(string input)
         {
-            lockOn.OnInput(input, battler, targets);
+            lockOn.OnInput(input, battler);
         }
 
 
@@ -156,7 +156,7 @@ namespace ExecutableTest
             onStartLockOnEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
             onTargetSelectedEvent = ScriptableObject.CreateInstance<CancelTestExecutionEvent>();
             lockOn = Construct(onStartLockOnEvent, onTargetSelectedEvent, 2);
-            lockOn.OnTargetSelectedEvent().OnExecute(null, null);
+            lockOn.OnTargetSelectedEvent().OnExecute(null);
             Assert.True(lockOn.IsInCancelTime());
         }
 
@@ -166,7 +166,7 @@ namespace ExecutableTest
             onStartLockOnEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
             onTargetSelectedEvent = ScriptableObject.CreateInstance<FinishTestExecutionEvent>();
             lockOn = Construct(onStartLockOnEvent, onTargetSelectedEvent, 2);
-            lockOn.OnTargetSelectedEvent().OnExecute(null, null);
+            lockOn.OnTargetSelectedEvent().OnExecute(null);
             Assert.True(lockOn.IsFinished());
         }
 
@@ -261,7 +261,7 @@ namespace ExecutableTest
             GameObject expected = LoadBattler(1);
             yield return new WaitForSeconds(1);
             SimulateKeyUp("j");
-            Assert.AreEqual(expected.transform, targets.GetTarget());
+            Assert.AreEqual(expected, lockOn.CurrentTarget());
         }
 
         // on start lock on selects next target
@@ -437,7 +437,7 @@ namespace ExecutableTest
             IUnityInputService inputService = Substitute.For<IUnityInputService>();
             inputService.GetKeyDown("j").Returns(true);
             mash.instruction.service = inputService;
-            mash.OnInput("j", null, null);
+            mash.OnInput("j", null);
         }
 
         // key down fires key down event
@@ -472,7 +472,7 @@ namespace ExecutableTest
         {
             SimulateKeyDown();
             mash.service.unscaledTime.Returns(2.5f);
-            mash.OnInput("j", null, null);
+            mash.OnInput("j", null);
             Assert.AreEqual(0, ((TestExecutionEvent) mashFinishedEvent).timesExecuted);
             Assert.AreEqual(1, ((TestExecutionEvent) mash.GetMashEndedExecutionEvent()).timesExecuted);
         }
@@ -482,7 +482,7 @@ namespace ExecutableTest
         {
             SimulateKeyDown();
             mash.service.unscaledTime.Returns(2.5f);
-            mash.OnInput("", null, null);
+            mash.OnInput("", null);
             Assert.AreEqual(0, ((TestExecutionEvent)mashFinishedEvent).timesExecuted);
             Assert.AreEqual(1, ((TestExecutionEvent)mash.GetMashEndedExecutionEvent()).timesExecuted);
         }
@@ -495,7 +495,7 @@ namespace ExecutableTest
             mash.OnStart();
             SimulateKeyDown();
             mash.service.unscaledTime.Returns(2.5f);
-            mash.OnInput("", null, null);
+            mash.OnInput("", null);
             Assert.True(mash.HasFired());
         }
 
@@ -560,7 +560,7 @@ namespace ExecutableTest
             inputService.GetKeyDown("k").Returns(true);
             mash.instruction.service = inputService;
             mash.button =  DirectionCommandButton.J;
-            mash.OnInput("k", null, null);
+            mash.OnInput("k",null);
             Assert.False(mash.IsTriggered());
         }
 
@@ -574,7 +574,7 @@ namespace ExecutableTest
             mash.OnStart();
             SimulateKeyDown();
             mash.service.unscaledTime.Returns(2.5f);
-            mash.OnInput("j", null, null);
+            mash.OnInput("j",null);
             Assert.True(mash.IsInCancelTime());
         }
 
@@ -587,14 +587,14 @@ namespace ExecutableTest
             mash.OnStart();
             SimulateKeyDown();
             mash.service.unscaledTime.Returns(2.5f);
-            mash.OnInput("j", null, null);
+            mash.OnInput("j",null);
             Assert.True(mash.IsFinished());
         }
 
         public void SimulateEndMashTimeWithNoKeyDown()
         {
             mash.service.unscaledTime.Returns(2.51f);
-            mash.OnInput("j", null, null);
+            mash.OnInput("j", null);
         }
 
         // no key down at end time triggered is false
@@ -753,7 +753,7 @@ namespace ExecutableTest
         {
             // test instruction used is 2 seconds long
             hold.service.unscaledTime.Returns(3);
-            hold.OnInput("j", null, null);
+            hold.OnInput("j", null);
             // Since there was no key down executable shouldnt be finished even though time has passed
             Assert.False(hold.IsFinished());
         }
@@ -810,7 +810,7 @@ namespace ExecutableTest
             TestExecutionEvent testEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
             hold.keyDownExecutionEvent = testEvent;
             hold.instruction.service.GetKeyDown("j").Returns(true);
-            hold.OnInput("j", null, null);
+            hold.OnInput("j", null);
             Assert.AreEqual(1, ((TestExecutionEvent)hold.GetKeyDownExecutionEvent()).timesExecuted);
         }
 
@@ -821,7 +821,7 @@ namespace ExecutableTest
             TestExecutionEvent testEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
             hold.keyDownExecutionEvent = testEvent;
             hold.instruction.service.GetKeyDown("j").Returns(true);
-            hold.OnInput("j", null, null);
+            hold.OnInput("j", null);
             Assert.IsTrue(hold.IsTriggered());
         }
 
@@ -832,7 +832,7 @@ namespace ExecutableTest
             hold.keyDownExecutionEvent = testEvent;
             hold.button =  DirectionCommandButton.J;
             hold.instruction.service.GetKeyDown("k").Returns(true);
-            hold.OnInput("k", null, null);
+            hold.OnInput("k", null);
             Assert.False(hold.IsTriggered());
         }
 
@@ -843,8 +843,8 @@ namespace ExecutableTest
             TestExecutionEvent testEvent = ScriptableObject.CreateInstance<TestExecutionEvent>();
             hold.keyDownExecutionEvent = testEvent;
             hold.instruction.service.GetKeyDown("j").Returns(true);
-            hold.OnInput("j", null, null);
-            hold.OnInput("j", null, null);
+            hold.OnInput("j", null);
+            hold.OnInput("j", null);
             Assert.AreEqual(1, ((TestExecutionEvent)hold.GetKeyDownExecutionEvent()).timesExecuted);
         }
 
@@ -856,12 +856,12 @@ namespace ExecutableTest
             hold.keyDownExecutionEvent = testEvent;
             hold.instruction.service.GetKeyDown("j").Returns(true);
             // trigger first time
-            hold.OnInput("j", null, null);
+            hold.OnInput("j", null);
             // check conditions for test
             Assert.IsTrue(hold.IsTriggered());
             Assert.IsFalse(hold.IsInCancelTime());
             // key down again
-            hold.OnInput("j", null, null);
+            hold.OnInput("j", null);
             Assert.IsTrue(hold.IsFinished());
         }
 
@@ -874,7 +874,7 @@ namespace ExecutableTest
             hold.instruction.service.GetKeyUp("j").Returns(true);
             // pre condition triggered is false
             Assert.False(hold.IsTriggered());
-            hold.OnInput("j", null, null);
+            hold.OnInput("j", null);
             // Check key up does not fire release event
             Assert.AreEqual(0, testEvent.timesExecuted);
         }
@@ -918,20 +918,20 @@ namespace ExecutableTest
             hold.releaseExecutionEvent = testEvent;
             hold.OnStart();
             hold.instruction.service.GetKeyDown("j").Returns(true);
-            hold.OnInput("j", null, null);
+            hold.OnInput("j", null);
             //pre condition
             Assert.True(hold.IsTriggered());
             hold.instruction.service.GetKeyDown("j").Returns(false);
             hold.instruction.service.GetKeyUp("j").Returns(true);
 
-            hold.OnInput("j", null, null);
+            hold.OnInput("j", null);
             Assert.True(hold.IsFinished());
         }
 
         public void SimulateBadKey()
         {
             hold.instruction.service.GetKeyDown("j").Returns(true);
-            hold.OnInput("j", null, null);
+            hold.OnInput("j", null);
 
             //pre condition is that hold is triggered
             Assert.True(hold.IsTriggered());
@@ -943,13 +943,13 @@ namespace ExecutableTest
             service.unscaledTime.Returns(1);
             hold.service = service;
             // Fire event again
-            hold.OnInput("j", null, null);
+            hold.OnInput("j", null);
         }
 
         public void SimulateKeyUp()
         {
             hold.instruction.service.GetKeyDown("j").Returns(true);
-            hold.OnInput("j", null, null);
+            hold.OnInput("j", null);
 
             //pre condition is that hold is triggered
             Assert.True(hold.IsTriggered());
@@ -961,7 +961,7 @@ namespace ExecutableTest
             service.unscaledTime.Returns(2);
             hold.service = service;
             // Fire event again
-            hold.OnInput("j", null, null);
+            hold.OnInput("j", null);
         }
 
         // BadKey triggeres on release event
@@ -1092,7 +1092,7 @@ namespace ExecutableTest
             Assert.False(press.HasFired());
         }
 
-        //public abstract void OnInput(string input, IBattler battler, ITargetSet targets);
+        //public abstract void OnInput(string input, IBattler battler);
         // test key up does nothing
         [Test]
         public void KeyUpDoesNothingTest()
@@ -1106,7 +1106,7 @@ namespace ExecutableTest
 
             press = Construct(instruction, executionEvent);
 
-            press.OnInput("j", battler, targets);
+            press.OnInput("j", battler);
 
             Assert.IsFalse(press.IsTriggered());
         }
@@ -1125,7 +1125,7 @@ namespace ExecutableTest
 
             press = Construct(instruction, executionEvent);
 
-            press.OnInput("j", battler, targets);
+            press.OnInput("j", battler);
 
             Assert.IsFalse(press.IsTriggered());
         }
@@ -1141,7 +1141,7 @@ namespace ExecutableTest
 
             press = Construct(instruction, executionEvent);
 
-            press.OnInput("j", battler, targets);
+            press.OnInput("j", battler);
 
             Assert.IsTrue(press.IsTriggered());
         }
@@ -1158,7 +1158,7 @@ namespace ExecutableTest
             press = Construct(instruction, executionEvent);
             press.button =  DirectionCommandButton.J;
             press.OnStart();
-            press.OnInput("k", battler, targets);
+            press.OnInput("k", battler);
 
             Assert.False(press.IsTriggered());
         }
@@ -1187,7 +1187,7 @@ namespace ExecutableTest
             // triggers event
             press = Construct(instruction, executionEvent);
             press.OnStart();
-            press.OnInput("j", battler, targets);
+            press.OnInput("j", battler);
 
             Assert.IsTrue(((TestExecutionEvent) press.GetExecutionEvent()).timesExecuted == 1);
         }
@@ -1202,7 +1202,7 @@ namespace ExecutableTest
             // triggers event
             press = Construct(instruction, executionEvent);
             press.OnStart();
-            press.OnInput("j", battler, targets);
+            press.OnInput("j", battler);
 
             Assert.IsTrue(press.HasFired());
         }
@@ -1218,7 +1218,7 @@ namespace ExecutableTest
             press = Construct(instruction, executionEvent);
             press.OnStart();
             // cancel event fires immediately with this event
-            press.OnInput("j", battler, targets);
+            press.OnInput("j", battler);
 
             Assert.IsTrue(press.IsInCancelTime());
         }
@@ -1234,7 +1234,7 @@ namespace ExecutableTest
 
             press = Construct(instruction, executionEvent);
             press.OnStart();
-            press.OnInput("j", battler, targets);
+            press.OnInput("j", battler);
 
             Assert.IsTrue(press.IsFinished());
         }
@@ -1252,12 +1252,12 @@ namespace ExecutableTest
             press.OnStart();
             // triggers event
             // this should keep cancel time false and set istriggered to true with the given execution event
-            press.OnInput("j", battler, targets);
+            press.OnInput("j", battler);
             Assert.IsTrue(press.IsTriggered());
             Assert.IsFalse(press.IsInCancelTime());
 
             // calling it again with keydown should not trigger event again
-            press.OnInput("j", battler, targets);
+            press.OnInput("j", battler);
             TestExecutionEvent test = (TestExecutionEvent)press.GetExecutionEvent();
             Assert.AreEqual(1, test.timesExecuted);
         }

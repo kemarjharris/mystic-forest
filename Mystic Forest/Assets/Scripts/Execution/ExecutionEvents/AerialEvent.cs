@@ -5,7 +5,7 @@ public class AerialEvent : ExecutionEvent
 {
     public ExecutionEvent executionEvent;
 
-    public override void OnExecute(IBattler attacker, ITargetSet targets)
+    public override void OnExecute(IBattler attacker)
     {
         if (!attacker.IsGrounded)
         {
@@ -29,7 +29,7 @@ public class AerialEvent : ExecutionEvent
                 if (attacker.IsGrounded && !eventFired) executionEvent.Interrupt();
             }
             attacker.StartCoroutine(Interrupt());
-            executionEvent.OnExecute(attacker, targets);
+            executionEvent.OnExecute(attacker);
         } else
         {
             onFinishEvent?.Invoke();

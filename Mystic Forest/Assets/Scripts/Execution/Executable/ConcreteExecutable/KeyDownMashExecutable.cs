@@ -27,7 +27,7 @@ public class KeyDownMashExecutable : Executable
         mashTimeEndedEvent.setOnFinishEvent(delegate { state.finished = true; });
     }
 
-    public override void OnInput(string input, IBattler battler, ITargetSet targets)
+    public override void OnInput(string input, IBattler battler)
     {
         // Only start timer after first key down
         float pressTime = state.triggered ? service.unscaledTime - firstKeyDownTime : 0;
@@ -47,7 +47,7 @@ public class KeyDownMashExecutable : Executable
                 }
                 // visual.ExpandButton();
                 onKeyDown?.Invoke();
-                executionEvent.OnExecute(battler, targets);
+                executionEvent.OnExecute(battler);
             }
         }
         else
@@ -55,7 +55,7 @@ public class KeyDownMashExecutable : Executable
             if (state.triggered)
             {
                 executionEvent.Interrupt();
-                mashTimeEndedEvent.OnExecute(battler, targets);
+                mashTimeEndedEvent.OnExecute(battler);
                 state.fired = true;
             }
             else

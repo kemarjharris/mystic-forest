@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236b1e1ecc55fe740bfa1e21d3037f9b, type: 3}
   m_Name: Rapid Slash
   m_EditorClassIdentifier: 
-  attacks:
+  aerial: 0
+  rule: {fileID: 11400000, guid: 597c0e4fb4f5eb447ba0056f74ff5d17, type: 2}
+  executables:
   - {fileID: 11400000, guid: 0c3986695e2f2d442a566440f2fb26ca, type: 2}
   group: {fileID: 11400000, guid: 215c14e93287aa74b95d99e69b090d20, type: 2}
-  aerial: 0
   skill: 1
-  rule: {fileID: 11400000, guid: 597c0e4fb4f5eb447ba0056f74ff5d17, type: 2}
+  StaminaCost: 0

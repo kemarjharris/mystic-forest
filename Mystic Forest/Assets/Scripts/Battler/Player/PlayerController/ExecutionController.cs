@@ -13,8 +13,6 @@ public class ExecutionController : MonoBehaviour
     // Unity Services
     IUnityInputService inputService;
     IUnityTimeService timeService;
-    // Concrete gameobject
-    ITargeter target;
     // The amount of time it takes to cast a skill
     public float skillTimeOut = 1;
 
@@ -26,15 +24,18 @@ public class ExecutionController : MonoBehaviour
     // Definition of when to use assault
     public RangeSO closeRange;
     public ExecutableChainSO assault;
+    Transform target;
+    IDirectionCommandPicker<IExecutableChain> picker;
 
     [Inject]
-    public void Construct(IUnityInputService inputService, IUnityTimeService timeService, IExecutionModule module, IComboCounter comboCounter, ITargeter targeter)
+    public void Construct(IUnityInputService inputService, IUnityTimeService timeService, IExecutionModule module, IComboCounter comboCounter, IDirectionCommandPicker<IExecutableChain> picker)
     {
         this.inputService = inputService;
         this.timeService = timeService;
         this.module = module;
         this.comboCounter = comboCounter;
-        this.target = targeter;
+        this.picker = picker;
+       // this.target = targeter;
     }
 
     private void Awake()
@@ -43,6 +44,21 @@ public class ExecutionController : MonoBehaviour
         battler.eventSet.onPlayerSwitchedIn += Enable;
         battler.eventSet.onPlayerSwitchedOut += LowerComboFlag;
         battler.eventSet.onPlayerSwitchedOut += Disable;
+
+        picker.Set(battler.ChainSet);
+
+        battler.targetSet.onTargetChanged += delegate (Transform t)
+        {
+            if (t == null)
+            {
+                battler.executionState.selectingSkill = false;
+            }
+            else if (target == null) // selecting a target for the first time;
+            {
+                battler.executionState.selectingSkill = true;
+            }
+            target = t;
+        };
     }
 
     private void OnDestroy()
@@ -54,39 +70,38 @@ public class ExecutionController : MonoBehaviour
 
     private void Update()
     { 
-        if (battler.executionState.combatState == CombatState.NOT_ATTACKING)
+        if (battler.executionState.combatState == CombatState.NOT_ATTACKING && !battler.executionState.comboing)
         {
-            // not fighting
-            if (!battler.executionState.comboing)
+            // try to select a chain if targeting
+            IExecutableChain selectedChain = null;
+            if (target != null)
             {
-                if (inputService.GetKeyDown("j"))
+                selectedChain = picker.InputSelect();
+            }
+
+            // if the attack button was pressed or the player was trying to attack 
+            if (inputService.GetKeyDown("j") || selectedChain != null)
+            {
+                // get the direction command of the chain if selected chain wasnt null
+                IDirectionCommand c = null;
+                if (selectedChain != null)
                 {
-                    if (battler.IsGrounded && !closeRange.BattlerInRange(battler.transform))
-                    {
-                        module.StartExecution(assault, battler, target.targetSet);
-                    }
-                    else
-                    {
-                        module.StartExecution(battler.ChainSet, battler, target.targetSet);
-                    }
-                } else if (inputService.GetKeyDown("k"))
-                {
-                    timeOut = skillTimeOut;
-                    if (!battler.executionState.selectingSkill)
-                    {
-                        StartCoroutine(SelectSkill());
-                    }
+                    c = selectedChain.GetDirectionCommand();
                 }
-            } else // fighting
-            {
-                if (inputService.GetKeyDown("j"))
+
+                // normal attack or not targetting and assaault condition, assault
+                if ((target == null || normalAttack(c)) && battler.IsGrounded && !closeRange.BattlerInRange(battler.transform))
                 {
-                    module.StartExecution(battler.ChainSet, battler, target.targetSet);
+                    module.StartExecution(assault, battler);
+                } else if (selectedChain != null)// execute whatever the chain was
+                {
+                    module.StartExecution(selectedChain, battler);
                 }
             }
         }
     }
 
+    bool normalAttack(IDirectionCommand c) => c != null && c.directions.Length == 0 && c.option == DirectionCommandButton.J;
      
     public void OnEnable()
     {
@@ -151,7 +166,7 @@ public class ExecutionController : MonoBehaviour
         
         battler.executionState.selectingSkill = true;
         GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
-        module.StartExecution(battler.ChainSet, battler, target.targetSet);
+        module.StartExecution(battler.ChainSet, battler);
 
         float fdt = Time.fixedDeltaTime;
         Time.timeScale = 0.1f;

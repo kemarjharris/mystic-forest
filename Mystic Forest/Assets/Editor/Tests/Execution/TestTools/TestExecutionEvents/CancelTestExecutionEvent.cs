@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class CancelTestExecutionEvent : ExecutionEvent
 {
-    public override void OnExecute(IBattler attacker, ITargetSet targets)
+    public override void OnExecute(IBattler attacker)
     {
         onCancellableEvent?.Invoke();
     }

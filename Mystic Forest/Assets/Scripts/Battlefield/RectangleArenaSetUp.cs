@@ -30,10 +30,11 @@ public class RectangleArenaSetUp : MonoBehaviour
 
     public void UpdateArenaSize(Vector3 size)
     {
-        float xChange = size.x / ground.collider.size.x;
-        float yChange = size.z / ground.collider.size.z;
+        float xChange = size.x / Mathf.Max(0.00001f, Mathf.Abs(ground.collider.size.x));
+        float yChange = size.z / Mathf.Max(0.00001f, Mathf.Abs(ground.collider.size.z));
 
         Vector3 scaleFactor = new Vector3(xChange, yChange, 1);
+
         ground.floor.transform.localScale = Vector3.Scale(scaleFactor, ground.floor.transform.localScale);
         ground.collider.size = new Vector3(size.x, ground.collider.size.y, size.z);
 

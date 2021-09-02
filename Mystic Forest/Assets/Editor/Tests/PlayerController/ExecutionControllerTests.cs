@@ -111,7 +111,7 @@ public class ExecutionControllerTests : SceneTestFixture
         yield return InitScene();
         SimulateKeyDown();
         yield return null;
-        module.Received().StartExecution(battler.ChainSet, battler, Arg.Any<ITargetSet>());
+        module.Received().StartExecution(battler.ChainSet, battler);
     }
 
     // normal state, long range, attack key down, fires assault chain
@@ -122,7 +122,7 @@ public class ExecutionControllerTests : SceneTestFixture
         controller.closeRange = ScriptableObject.CreateInstance<LongRangeSO>();
         SimulateKeyDown();
         yield return null;
-        module.Received().StartExecution(controller.assault, battler, Arg.Any<ITargetSet>());
+        module.Received().StartExecution(controller.assault, battler);
     }
 
     // normal state, jumping, fires basic chain
@@ -133,7 +133,7 @@ public class ExecutionControllerTests : SceneTestFixture
         battler.IsGrounded.Returns(false);
         SimulateKeyDown();
         yield return null;
-        module.Received().StartExecution(battler.ChainSet, battler, Arg.Any<ITargetSet>());
+        module.Received().StartExecution(battler.ChainSet, battler);
     }
 
     // comboing but not executing, attack key down, fires basic chain
@@ -146,7 +146,7 @@ public class ExecutionControllerTests : SceneTestFixture
 
         SimulateKeyDown();
         yield return null;
-        module.Received().StartExecution(battler.ChainSet, battler, Arg.Any<ITargetSet>());
+        module.Received().StartExecution(battler.ChainSet, battler);
     }
 
     // comboing but not executing, attack key down outside of basic range fires basic chain
@@ -159,7 +159,7 @@ public class ExecutionControllerTests : SceneTestFixture
         controller.closeRange = ScriptableObject.CreateInstance<LongRangeSO>();
         SimulateKeyDown();
         yield return null;
-        module.Received().StartExecution(battler.ChainSet, battler, Arg.Any<ITargetSet>());
+        module.Received().StartExecution(battler.ChainSet, battler);
     }
 
     // normal state, skill key down, starts selecting skill
@@ -169,7 +169,7 @@ public class ExecutionControllerTests : SceneTestFixture
         yield return InitScene();
         SimulateSkillKeyDown();
         yield return null;
-        module.Received().StartExecution(battler.ChainSet, battler, Arg.Any<ITargetSet>());
+        module.Received().StartExecution(battler.ChainSet, battler);
     }
 
     // normal state, skill key down changes battler state
@@ -215,7 +215,7 @@ public class ExecutionControllerTests : SceneTestFixture
         SimulateSkillKeyDown();
         yield return null;
         state.DidNotReceive().selectingSkill = true;
-        module.DidNotReceive().StartExecution(battler.ChainSet, battler, Arg.Any<ITargetSet>());
+        module.DidNotReceive().StartExecution(battler.ChainSet, battler);
     }
 
     // Executing unable to start execution
@@ -226,8 +226,8 @@ public class ExecutionControllerTests : SceneTestFixture
         state.combatState.Returns(CombatState.ATTACKING);
         SimulateKeyDown();
         yield return null;
-        module.DidNotReceive().StartExecution(battler.ChainSet, battler, Arg.Any<ITargetSet>());
-        module.DidNotReceive().StartExecution(controller.assault, battler, Arg.Any<ITargetSet>());
+        module.DidNotReceive().StartExecution(battler.ChainSet, battler);
+        module.DidNotReceive().StartExecution(controller.assault, battler);
     }
 
     [UnityTest]
@@ -237,8 +237,8 @@ public class ExecutionControllerTests : SceneTestFixture
         state.combatState.Returns(CombatState.ABLE_TO_CANCEL_ATTACK);
         SimulateKeyDown();
         yield return null;
-        module.DidNotReceive().StartExecution(battler.ChainSet, battler, Arg.Any<ITargetSet>());
-        module.DidNotReceive().StartExecution(controller.assault, battler, Arg.Any<ITargetSet>());
+        module.DidNotReceive().StartExecution(battler.ChainSet, battler);
+        module.DidNotReceive().StartExecution(controller.assault, battler);
     }
 
     [UnityTest]
@@ -249,6 +249,6 @@ public class ExecutionControllerTests : SceneTestFixture
         SimulateSkillKeyDown();
         yield return null;
         state.DidNotReceive().selectingSkill = true;
-        module.DidNotReceive().StartExecution(battler.ChainSet, battler, Arg.Any<ITargetSet>());
+        module.DidNotReceive().StartExecution(battler.ChainSet, battler);
     }
 }

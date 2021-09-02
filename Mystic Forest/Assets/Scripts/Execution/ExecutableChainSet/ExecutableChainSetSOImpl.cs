@@ -5,7 +5,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(menuName = "Executable/Executable Chain Set SO")]
 public class ExecutableChainSetSOImpl : ScriptableObject, IExecutableChainSet
 {
-    public List<ExecutableChainSO> chainList;
+    public List<BaseChainSO> chainList;
     IExecutableChainSet set;
 
     public void OnEnable()

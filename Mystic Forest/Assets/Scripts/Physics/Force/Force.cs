@@ -17,7 +17,7 @@ public class Force : IForce
 
         do
         {
-            physics.SetVelocity(forceVector.v);
+            physics.SetVelocity(applier.YRotate(forceVector.v));
             yield return new WaitForFixedUpdate();
         } while (!UntilConditionMet(physics));
     }
@@ -71,7 +71,6 @@ public class Force : IForce
         yield return new WaitForFixedUpdate();
         Vector3 position = transform.position;
         Vector3 velocity = (position - previousPosition) / Time.fixedDeltaTime;
-        Debug.Log(velocity);
         forceVector.v = velocity;
     }
 

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236b1e1ecc55fe740bfa1e21d3037f9b, type: 3}
   m_Name: Gun Rising
   m_EditorClassIdentifier: 
-  attacks:
+  aerial: 0
+  rule: {fileID: 11400000, guid: 597c0e4fb4f5eb447ba0056f74ff5d17, type: 2}
+  executables:
   - {fileID: 11400000, guid: 3dd9df72e6fe5ef419d63d66839876e3, type: 2}
   group: {fileID: 11400000, guid: 782419e24e04ac0469d572bc2fe14700, type: 2}
-  aerial: 0
   skill: 1
-  rule: {fileID: 11400000, guid: 597c0e4fb4f5eb447ba0056f74ff5d17, type: 2}
-  staminaCost: 10
+  StaminaCost: 0

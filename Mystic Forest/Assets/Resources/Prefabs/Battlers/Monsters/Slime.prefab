@@ -138,10 +138,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2846634824970806638}
   - component: {fileID: 7576717228133900265}
-  - component: {fileID: 7576717228133900266}
-  - component: {fileID: 7576717228133900264}
   - component: {fileID: 135529309841023237}
   - component: {fileID: 774931811814751581}
+  - component: {fileID: 1854643443004702127}
+  - component: {fileID: 3490772841754374078}
   m_Layer: 5
   m_Name: Slime
   m_TagString: Battler
@@ -180,35 +180,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 48
   m_CollisionDetection: 0
---- !u!65 &7576717228133900266
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7576717228133900258}
-  m_Material: {fileID: 13400000, guid: 406f8b7d91f96e142beb3415d3d9632e, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.27549118, y: 0.26490375, z: 0.20000002}
-  m_Center: {x: -0.0011257827, y: 0.0046598716, z: 0}
---- !u!114 &7576717228133900264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7576717228133900258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2cb2abe8aace9344aa9db9ab4d7efbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dragFactor: 0.3
-  airForcePercentage: 0.3
-  terminalVelocity: -20
-  collider: {fileID: 7576717228133900266}
 --- !u!114 &135529309841023237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,6 +212,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitPoint: {fileID: 7576717229460680334}
   chainSet: {fileID: 11400000, guid: 93516bf520eafd740aca4ba254eb1660, type: 2}
+--- !u!114 &1854643443004702127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576717228133900258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f6fc8d4a847988428fe931b3b364c24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 2121330830495486066}
+  detection: {fileID: 0}
+  terminalVelocity: -20
+  drag: 20
+--- !u!136 &3490772841754374078
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576717228133900258}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.17
+  m_Height: 0.31
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0.03}
 --- !u!1 &7576717229460680333
 GameObject:
   m_ObjectHideFlags: 0

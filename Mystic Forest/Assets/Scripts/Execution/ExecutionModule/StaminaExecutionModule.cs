@@ -25,11 +25,7 @@ public class StaminaExecutionModule : ExecutionModule
         {
             cost = chain.staminaCost;
             ICustomizableEnumerator<IExecutable> enumerator = chain.GetCustomizableEnumerator();
-            if (targetSet == null)
-            {
-                targetSet = new TargetSet();
-            }
-            executor.ExecuteChain(battler, targetSet, enumerator, () => OnNewChainLoaded.Invoke(enumerator));
+            executor.ExecuteChain(battler, enumerator, () => OnNewChainLoaded.Invoke(enumerator));
         }
     }
 

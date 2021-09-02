@@ -12,9 +12,10 @@ public class Battler : MonoBehaviour, IBattler
     protected IBattlerPhysics physics = null;
     SpriteRenderer sprite;
     public ExecutableChainSetSOImpl chainSet;
-    public IBattlerEventSet eventSet { get; set; }
+    public IBattlerEventSet eventSet { get; private set; }
     public IExecutionState executionState { get; private set; }
     public IExecutableChainSet ChainSet { get; private set; }
+    public ITargetSet targetSet { get; private set; }
     float hitStun;
 
     [Inject]
@@ -36,7 +37,8 @@ public class Battler : MonoBehaviour, IBattler
         executionState = new ExecutionState(eventSet);
         ChainSet = new StateExecutableChainSetImpl(physics, executionState, chainSet);
         hitPoint.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-        
+        targetSet = new EventTargetSet();
+
     }
 
     public void StopCombatAnimation() => animator.Stop();

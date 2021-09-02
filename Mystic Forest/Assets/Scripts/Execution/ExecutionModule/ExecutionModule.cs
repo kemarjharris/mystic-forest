@@ -18,7 +18,6 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
     IActionWrapper IExecutionModule.OnChainCancellable => executor.OnChainCancellable;
     IActionWrapper<IExecutableChain> IExecutionModule.OnChainSelected => picker.OnSelected;
     // State
-    protected ITargetSet targetSet;
     protected bool linkerActive;
     public IExecutableChainSet set { get; private set; }
     public IBattler battler;
@@ -31,25 +30,20 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         Initialize(picker, executor);
     }
 
-    public void StartExecution(IExecutableChainSet set, IBattler battler, ITargetSet targetSet = null)
+    public void StartExecution(IExecutableChainSet set, IBattler battler = null)
     {
         picker.Set(set);
         this.set = set;
         this.battler = battler;
-        this.targetSet = targetSet;
         linkerActive = true;
         OnNewSetLoaded.Invoke();
         // Call again if the module already updated this frame, otherwise its going to update again on its own
         if (updated) Update();
     }
 
-    public void StartExecution(IExecutableChain chain, IBattler battler, ITargetSet targetSet = null)
+    public void StartExecution(IExecutableChain chain, IBattler battler = null)
     {
         this.battler = battler;
-        if (targetSet == null)
-        {
-            targetSet = new TargetSet();
-        }
         picker.OnSelected.Invoke(chain);
         // Call again if the module already updated this frame, otherwise its going to update again on its own
         if (updated) Update();
@@ -101,11 +95,7 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
         linkerActive = false;
         current = chain;
         ICustomizableEnumerator<IExecutable> enumerator = chain.GetCustomizableEnumerator();
-        if (targetSet == null)
-        {
-            targetSet = new TargetSet();
-        }
-        executor.ExecuteChain(battler, targetSet, enumerator, () => OnNewChainLoaded.Invoke(enumerator));
+        executor.ExecuteChain(battler, enumerator, () => OnNewChainLoaded.Invoke(enumerator));
     }
 
     void OnChainFiredEvent()
@@ -121,7 +111,6 @@ public class ExecutionModule : MonoBehaviour, IExecutionModule
 
     void OnChainFinishedEvent()
     {
-        targetSet = null;
         linkerActive = false;
     }
 

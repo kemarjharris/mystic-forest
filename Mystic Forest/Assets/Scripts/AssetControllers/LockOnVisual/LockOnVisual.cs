@@ -2,40 +2,41 @@
 using UnityEditor;
 using System.Collections;
 
-[RequireComponent(typeof(LockOn))]
 public class LockOnVisual : MonoBehaviour
 {
-    LockOn lockOn;
+    public LockOn lockOn;
     public GameObject cursor;
+    private GameObject cursorGO;
     public float cursorHeight;
     Transform followTransform;
 
     private void Awake()
     {
-        lockOn = GetComponent<LockOn>();
-        cursor.SetActive(false);
+        cursorGO = Instantiate(cursor);
         lockOn.onLockOn += AttachCursor;
         lockOn.onLockedOnExit += DetachCursor;
+        cursorGO.transform.SetParent(transform);
+        cursorGO.SetActive(false);
     }
 
     private void LateUpdate()
     {
         if (followTransform == null) return;
-        cursor.transform.position = followTransform.position + (Vector3.up * cursorHeight);
+        cursorGO.transform.position = followTransform.position + (Vector3.up * cursorHeight);
     }
 
     private void AttachCursor(GameObject lockedOn)
     {
         if (lockedOn == null) return;
-        cursor.SetActive(true);
+        cursorGO.SetActive(true);
         followTransform = lockedOn.transform;
     }
 
     private void DetachCursor()
     {
         followTransform = null;
-        cursor.SetActive(false);
-        cursor.transform.position = Vector3.zero;
+        cursorGO.SetActive(false);
+        cursorGO.transform.position = Vector3.zero;
     }
 
     public void OnDestroy()

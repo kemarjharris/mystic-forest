@@ -19,7 +19,7 @@ public class LockOnExecutable : Executable
     private GameObject target;
     private float timeLockOnStarted;
 
-    public override void OnInput(string input, IBattler battler, ITargetSet targets)
+    public override void OnInput(string input, IBattler battler)
     {
         if (!CorrectButton(input)) return;
         // Wait to start locking on
@@ -29,15 +29,16 @@ public class LockOnExecutable : Executable
             {
                 StartLockingOn(battler);
                 state.triggered = true;
-                if (targets.GetTarget() == null)
+                if (battler.targetSet.GetTarget() == null)
                 {
                     target = lockOn.NextToLockOnTo();
+                    battler.targetSet.MarkTarget(target.transform);
                 } else
                 {
-                    target = targets.GetTarget().gameObject;
+                    target = battler.targetSet.GetTarget().gameObject;
                     lockOn.SetTarget(target.transform);
                 }
-                onStartLockOn.OnExecute(battler, targets);
+                onStartLockOn.OnExecute(battler);
                 timeLockOnStarted = timeService.unscaledTime;
             }
         } else if (state.triggered && timeService.unscaledTime - timeLockOnStarted <= lockOnDuration)
@@ -46,20 +47,23 @@ public class LockOnExecutable : Executable
             {
                 if (target != null)
                 {
-                    targets.SetTarget(target.transform);
+                    battler.targetSet.SetTarget(target.transform);
                     onTargetSelected.pool.target = target.transform;
-                    onTargetSelected.OnExecute(battler, targets);
+                    onTargetSelected.OnExecute(battler);
                     battler.eventSet.onEventExecuted?.Invoke();
                     state.fired = true;
                 } else
                 {
                     state.finished = true;
+                    Transform currentTarget = battler.targetSet.GetTarget();
+                    if (currentTarget != null) battler.targetSet.MarkTarget(currentTarget);
                 }
                 StopLockingOn();
                 
             } else if (axisService.GetAxisDown("Horizontal") > 0)
             {
                 target = lockOn.NextToLockOnTo();
+                battler.targetSet.MarkTarget(target.transform);
             }
         } else
         {
@@ -98,7 +102,7 @@ public class LockOnExecutable : Executable
             lockOnGameObject = Object.Instantiate(lockOnPrefab);
             lockOn = lockOnGameObject.GetComponentInChildren<LockOn>();
         }
-        lockOn.gameObject.SetActive(false);
+        lockOnGameObject.SetActive(false);
     }
 
     /* for testing */

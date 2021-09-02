@@ -2,12 +2,15 @@
 using System.Collections;
 using Zenject;
 
-public class MagicMeter : MonoBehaviour
+public class MagicMeter : MonoBehaviour, IMagicMeter
 {
     public ValueBar bar;
     BoundedValue<float> value;
     public MagicMeterSettings settings;
-    public float Value => value.Value;
+    public float Value { get => value.Value; set => this.value.Value = value; }
+    public ValueBarFlash flash;
+
+    public bool decreaseMana = true;
 
     private void Start()
     {
@@ -22,14 +25,26 @@ public class MagicMeter : MonoBehaviour
         }
     }
 
+    public bool CheckMana(float mana)
+    {
+        bool enough = Value >= mana;
+        if (!enough) flash.Flash();
+        return enough;
+    }
+
     public void OnBattlerHit(IBattler battler)
     {
         value.Value += settings.incrementBy;
     }
 
+    public void DecreaseMana(float mana)
+    {
+        Value -= mana;
+    }
+
     private void Update()
     {
-        value.Value -= Time.deltaTime * settings.decreasePerSecond;
+        if (decreaseMana) value.Value -= Time.deltaTime * settings.decreasePerSecond;
     }
 
 }

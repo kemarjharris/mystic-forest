@@ -32,7 +32,7 @@ public class JointController : MonoBehaviour, IPlayerController
     private void Awake()
     {
         battler = GetComponent<IBattler>();
-        physics = GetComponent<BattlerPhysics>();
+        physics = GetComponent<IBattlerPhysics>();
         // if (service == null) service = new UnityAxisService();
         // if (inputService == null) inputService = new UnityInputService();
         battler.eventSet.onPlayerSwitchedIn += Enable;

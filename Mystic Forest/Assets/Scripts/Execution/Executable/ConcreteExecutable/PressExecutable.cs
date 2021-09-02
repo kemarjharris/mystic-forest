@@ -23,7 +23,7 @@ public class PressExecutable : Executable {
         instruction.reset();
     }
 
-    public override void OnInput(string input, IBattler battler, ITargetSet targets)
+    public override void OnInput(string input, IBattler battler)
     {
         InstructionKeyEvent keyEvent = instruction.lookAtTime(input);
         // only react on keydown
@@ -34,7 +34,7 @@ public class PressExecutable : Executable {
                 state.triggered = true;
                 state.fired = true;
                 battler.eventSet.onEventExecuted?.Invoke();
-                executionEvent.OnExecute(battler, targets);
+                executionEvent.OnExecute(battler);
             }
         }
     }

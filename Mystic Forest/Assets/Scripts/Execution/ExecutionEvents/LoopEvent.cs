@@ -5,7 +5,7 @@ public class LoopEvent : ExecutionEvent
 {
     public ExecutionEvent[] events;
 
-    public override void OnExecute(IBattler attacker, ITargetSet targets)
+    public override void OnExecute(IBattler attacker)
     {
         if (FireNext) return; // do nothing if event is going to fire again already
         if (IsExecuting)
@@ -27,7 +27,7 @@ public class LoopEvent : ExecutionEvent
                 {
                     events[pos].setOnCancellableEvent(fireNextEvent);
                     // Execute the next attack
-                    events[pos].OnExecute(attacker, targets);
+                    events[pos].OnExecute(attacker);
                     // Ready to set to fire again if more input occurs
                     FireNext = false;
                     IsExecuting = true;
@@ -37,7 +37,7 @@ public class LoopEvent : ExecutionEvent
             events[pos].setOnCancellableEvent(fireNextEvent);
             IsExecuting = true;
             // Fire the current event
-            events[pos].OnExecute(attacker, targets);
+            events[pos].OnExecute(attacker);
         }
     }
 

@@ -7,4 +7,6 @@ public interface IDirectionCommandPicker<T>
     T InputSelect();
     void Set(IEnumerable<T> enumerable);
     IActionWrapper<T> OnSelected { get; }
+
+    Direction heldDirection { get; }
 }

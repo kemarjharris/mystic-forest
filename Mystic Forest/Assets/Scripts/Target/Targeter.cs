@@ -7,12 +7,10 @@ public class Targeter : MonoBehaviour, ITargeter
 {
 
     public LockOn lockOn;
-    // Currently targeted enemy
-    public ITargetSet target;
     IUnityInputService inputService;
     IPlayer battler;
 
-    public ITargetSet targetSet => target;
+    public ITargetSet targetSet => battler.targetSet;
 
     public Action<Transform> onLockOn { get; set; }
 
@@ -21,15 +19,25 @@ public class Targeter : MonoBehaviour, ITargeter
     {
         this.battler = battler;
         this.inputService = inputService;
+
     }
 
     private void Start()
     {
-        target = NewTargetSet();
-        SetUpLockOn();
+
         battler.eventSet.onPlayerSwitchedIn += TargeterOn;
         battler.eventSet.onPlayerSwitchedOut += TargeterOff;
-        // enabled = false;
+
+        battler.targetSet.onTargetChanged += delegate (Transform t)
+        {
+            if (lockOn.GetTarget() != t)
+            {
+                lockOn.SetTarget(t);
+            }
+            battler.target = t;
+        };
+
+        SetUpLockOn();
     }
 
     public void TargeterOn() => enabled = true;
@@ -40,9 +48,9 @@ public class Targeter : MonoBehaviour, ITargeter
     {
         lockOn.onLockOn += delegate (GameObject t)
         {
-            if (t != null && t.transform != target.GetTarget())
+            if (t != null && t.transform != targetSet.GetTarget())
             {
-                target.SetTarget(t.transform);
+                targetSet.SetTarget(t.transform);
                 battler.target = t.transform;
             }
         };
@@ -68,21 +76,7 @@ public class Targeter : MonoBehaviour, ITargeter
         else if (Input.GetKeyDown("q"))
         {
             lockOn.RemoveTarget();
-            target.SetTarget(null);
+            targetSet.SetTarget(null);
         }
     }
-
-    ITargetSet NewTargetSet()
-    {
-        target = new EventTargetSet(delegate (Transform t) {
-            
-            if (lockOn.GetTarget() != t)
-            {
-                lockOn.SetTarget(t);
-            }
-            battler.target = t;
-        });
-        return target;
-    }
-
 }

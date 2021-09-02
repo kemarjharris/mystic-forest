@@ -26,7 +26,7 @@ public class MonsterAI : MonoBehaviour
         if (Input.GetKeyDown("u"))
         {
             ITargetSet target = targetSelector.SelectTarget(players);
-            module.StartExecution(chain, monster, target);
+            module.StartExecution(chain, monster);
         }
        
     }

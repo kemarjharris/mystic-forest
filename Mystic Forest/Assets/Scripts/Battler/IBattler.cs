@@ -28,7 +28,9 @@ public interface IBattler
 
     Coroutine StartCoroutine(IEnumerator routune);
 
-    IBattlerEventSet eventSet { get; set; }
+    IBattlerEventSet eventSet { get; }
 
     IExecutionState executionState { get; }
+
+    ITargetSet targetSet { get; }
 }

@@ -4,12 +4,8 @@ using System.Collections;
 public class EventTargetSet : ITargetSet
 {
     Transform target;
-    System.Action<Transform> onTargetChanged;
-
-    public EventTargetSet(System.Action<Transform> onTargetChanged = null)
-    {
-        this.onTargetChanged = onTargetChanged;
-    }
+    public System.Action<Transform> onTargetChanged { get; set; }
+    public System.Action<Transform> onTargetMarked { get; set; }
 
     public Transform GetTarget() => target;
 
@@ -18,4 +14,7 @@ public class EventTargetSet : ITargetSet
         this.target = target;
         onTargetChanged?.Invoke(target);
     }
+
+    public void MarkTarget(Transform target) => onTargetMarked?.Invoke(target);
+ 
 }

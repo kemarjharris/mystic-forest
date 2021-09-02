@@ -7,7 +7,7 @@ public abstract class ExecutionEvent : ScriptableObject
     protected System.Action onCancellableEvent;
     public IExecutablePool pool = new ExecutablePool();
 
-    public abstract void OnExecute(IBattler attacker, ITargetSet targets);
+    public abstract void OnExecute(IBattler attacker);
 
     public void setOnCancellableEvent(System.Action onCancellableEvent)
     {

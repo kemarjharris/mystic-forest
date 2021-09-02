@@ -44,7 +44,7 @@ public class LockOn : MonoBehaviour
     {
         List<Collider> objectsInRange = finder.ObjectsInRange();
 
-        Debug.Log(CollectionUtils.Print(objectsInRange));
+        // Debug.Log(CollectionUtils.Print(objectsInRange));
 
         if (rule != null)
         {

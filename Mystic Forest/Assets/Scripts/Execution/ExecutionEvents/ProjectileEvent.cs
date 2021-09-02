@@ -12,12 +12,12 @@ public class ProjectileEvent : ExecutionEvent
     public TravelMethodSO travelMethod = null;
     public Attack attack;
 
-    public override void OnExecute(IBattler attacker, ITargetSet targets)
+    public override void OnExecute(IBattler attacker)
     {
-        attacker.transform.GetComponent<MonoBehaviour>().StartCoroutine(FireProjectile(attacker, targets));
+        attacker.transform.GetComponent<MonoBehaviour>().StartCoroutine(FireProjectile(attacker));
     }
 
-    IEnumerator FireProjectile(IBattler attacker, ITargetSet targets)
+    IEnumerator FireProjectile(IBattler attacker)
     {
         yield return new WaitWhile(() => attacker.IsFrozen);
         // play firing animation

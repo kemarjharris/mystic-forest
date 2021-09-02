@@ -6,7 +6,7 @@ public class AnimationEvent : ExecutionEvent
 {
     public PlayableAnimSO animation;
 
-    public override void OnExecute(IBattler attacker, ITargetSet targets)
+    public override void OnExecute(IBattler attacker)
     {
         attacker.Play(animation);
     }

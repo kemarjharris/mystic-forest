@@ -125,7 +125,6 @@ public class TargetCamera : MonoBehaviour
             // https://forum.unity.com/threads/quaternion-smoothdamp.793533/
             transform.position = Vector3.SmoothDamp(transform.position, vr.v, ref velocity, smoothTime);
             transform.rotation = QuaternionUtil.SmoothDamp(transform.rotation, vr.r, ref derivative, smoothTime);
-            Debug.Log(transform.eulerAngles);
             yield return null;
         }
     }

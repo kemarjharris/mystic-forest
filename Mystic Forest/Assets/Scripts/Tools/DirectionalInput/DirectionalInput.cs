@@ -27,18 +27,52 @@ public class DirectionalInput {
 
     private static bool AnyInput(float deadzone) => Mathf.Abs(InputOnAxis("Horizontal", deadzone)) > 0 || Mathf.Abs(InputOnAxis("Vertical", deadzone)) > 0;
 
-    private static float Angle()
+    public static Direction AngleToDirection(float angle)
+    {
+        angle = PositiveAngle(angle);
+        if (angle > 360 - (360 / 16) || angle < (360 / 16))
+        {
+            return Direction.E;
+        }
+        else
+        {
+            angle -= (360 / 16);
+            int posn = Mathf.FloorToInt((angle / (360 / 8))) + 1;
+            return dirs[posn];
+        }
+    }
+
+    public static Direction AngleToSimpleDirection(float angle)
+    {
+        angle = PositiveAngle(angle);
+        int posn;
+        Direction dir;
+        if (angle > 360 - (360 / 8) || angle < (360 / 8))
+        {
+            return Direction.E;
+        }
+        else
+        {
+            angle -= (360 / 8);
+            posn = Mathf.FloorToInt(angle / (360 / 4)) + 1;
+            dir = dirs[posn * 2];
+            return dir;
+        }
+    }
+
+    public static float Angle()
     {
         if (!AnyInput(0.2f)) return -1;
         float yAxis = InputOnAxis("Vertical", 0.2f);
         float xAxis = InputOnAxis("Horizontal", 0.2f);
 
-        float angle = Vector2.Angle(Vector2.up, new Vector2(xAxis, yAxis));
+        float angle = Vector2.Angle(Vector2.right, new Vector2(xAxis, yAxis));
 
-        if (xAxis < 0)
+        if (yAxis < 0)
         {
             angle = 360 - angle;
         }
+
         return angle;
     }
 
@@ -84,26 +118,46 @@ public class DirectionalInput {
     public static Direction GetSimpleDirection()
     {
         float angle = Angle();
-        int posn;
-        Direction dir;
         if (angle < 0)
         {
-            posn = -1;
-            dir = Direction.NULL;
-
-        }
-        else if (angle > 360 - (360 / 8) || angle < (360 / 8))
-        {
-            posn = 0;
-            dir = Direction.N;
+            return Direction.NULL;
         }
         else
         {
-            angle -= (360 / 8);
-            posn = Mathf.FloorToInt((angle / (360 / 4))) + 1;
-            dir = dirs[posn * 2]; 
+            return AngleToSimpleDirection(angle);
         }
-        return dir;
+    }
+
+    public static Direction GetDirection()
+    {
+
+        float angle = Angle();
+        if (angle < 0)
+        {
+            return Direction.NULL;
+
+        }
+        else
+        {
+            return AngleToDirection(angle);
+        }
+    }
+
+    public static float DirectionToAngle(Direction direction)
+    {
+       
+        if (direction != Direction.NULL) {
+            float angle = 0;
+            for (int i = 0; i < dirs.Length; i++)
+            {
+                if (dirs[i] == direction)
+                {
+                    return angle;
+                }
+                angle += 45;
+            }
+        }
+        return Mathf.NegativeInfinity;
     }
 
     /* for testing */
@@ -111,6 +165,16 @@ public class DirectionalInput {
     {
         horizontal = new Axis();
         vertical = new Axis();
+    }
+
+    static float PositiveAngle(float angle)
+    {
+        angle = angle % 360;
+        if (angle < 0)
+        {
+            angle += 360;
+        }
+        return angle;
     }
 
 }

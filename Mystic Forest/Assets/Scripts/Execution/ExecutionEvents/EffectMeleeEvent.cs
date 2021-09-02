@@ -9,7 +9,7 @@ public class EffectMeleeEvent : MeleeEvent
     public PlayableAnimSO effectAnim;
     public GameObject effectPrefab;
 
-    protected override IEnumerator AttackDelay(IBattler performer, ITargetSet targets, System.Action onCancellableEvent, System.Action onFinishEvent)
+    protected override IEnumerator AttackDelay(IBattler performer, System.Action onCancellableEvent, System.Action onFinishEvent)
     {
         yield return new WaitWhile(() => performer.IsFrozen);
         // play attack animation

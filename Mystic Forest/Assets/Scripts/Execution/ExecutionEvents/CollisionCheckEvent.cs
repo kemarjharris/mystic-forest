@@ -6,7 +6,7 @@ public class CollisionCheckEvent : ExecutionEvent
 {
     public Attack attack;
 
-    public override void OnExecute(IBattler performer, ITargetSet targets)
+    public override void OnExecute(IBattler performer)
     {
         bool madeContact = false;
         performer.CheckCollision(delegate (Collider collider) {

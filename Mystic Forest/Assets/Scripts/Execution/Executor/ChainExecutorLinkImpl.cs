@@ -16,7 +16,6 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
 
     // State
     IBattler attacker;
-    ITargetSet targets;
     IEnumerator<IExecutable> seconds;
     IExecutable prev = null;
     IExecutable curr = null;
@@ -29,10 +28,9 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
         OnChainFinished = new ActionWrapper();
     }
 
-    public void ExecuteChain(IBattler attacker, ITargetSet targets, IEnumerator<IExecutable> chain, Action onSuccessfulLoad = null)
+    public void ExecuteChain(IBattler attacker, IEnumerator<IExecutable> chain, Action onSuccessfulLoad = null)
     {
         this.attacker = attacker;
-        this.targets = targets;
         Load(chain, onSuccessfulLoad);
     }
 
@@ -63,7 +61,7 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
             {
 
                 string input = reader.ReadInput();
-                curr.OnInput(input, attacker, targets);
+                curr.OnInput(input, attacker);
                 // curr attack finished after input was read, move to next attack.
                 // This block gets executed on the first frame where curr is in cancel time
                 if (curr.HasFired())
@@ -118,7 +116,7 @@ public class ChainExecutorLinkImpl : IChainExecutor// : Activity, Observable<Att
         seconds = null;
         prev = null;
         curr = null;
-        OnChainFinished.Invoke();
+        OnChainFinished?.Invoke();
     }
 
     /* For testing purposes */

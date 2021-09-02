@@ -14,9 +14,13 @@ public class TargetAxisMovementController : MonoBehaviour
     public IUnityInputService inputService;
     // smoothing for movement
     public float smoothTime = 0.1f;
+    // range for valid movement input
+    public float liveRange = 0.5f;
     // physics values
     float horizontal;
     float vertical;
+    float horizontalRaw;
+    float verticalRaw;
     float hVel;
     float vVel;
     bool jumped;
@@ -34,7 +38,7 @@ public class TargetAxisMovementController : MonoBehaviour
     private void Awake()
     {
         battler = GetComponent<IBattler>();
-        physics = GetComponent<BattlerPhysics>();
+        physics = GetComponent<IBattlerPhysics>();
         battler.eventSet.onPlayerSwitchedIn += Enable;
         battler.eventSet.onPlayerSwitchedOut += Disable;
         targeter.onLockOn += RotateToTarget;
@@ -49,14 +53,20 @@ public class TargetAxisMovementController : MonoBehaviour
 
     public void Update()
     {
+
         // no input during combat
         if (battler.executionState.combatState != CombatState.ATTACKING)
         {
+            
+
             if (physics.IsGrounded)
             {
 
                 horizontal = service.GetAxis("Horizontal");
                 vertical = service.GetAxis("Vertical");
+                horizontalRaw = service.GetAxisRaw("Horizontal");
+                verticalRaw = service.GetAxisRaw("Vertical");
+
                 if (inputService.GetKeyDown("space"))
                 {
                     jumped = true;
@@ -69,12 +79,13 @@ public class TargetAxisMovementController : MonoBehaviour
                     Vector3 faceVector = (target.position - transform.position).normalized;
                     transform.right = new Vector3(faceVector.x, 0, faceVector.z);
                 }
+            } else
+            {
+                horizontal = 0;
+                vertical = 0;
+                horizontalRaw = 0;
+                verticalRaw = 0;
             }
-        }
-        else
-        {
-            horizontal = Mathf.SmoothDamp(horizontal, 0, ref hVel, smoothTime); 
-            vertical = Mathf.SmoothDamp(vertical, 0, ref vVel, smoothTime); ;
         }
 
         if (physics.IsGrounded) RotateToTarget(targeter.targetSet.GetTarget());
@@ -87,14 +98,15 @@ public class TargetAxisMovementController : MonoBehaviour
     {
         Vector3 right = Right().normalized;
 
+        // jump
         if (jumped && !physics.freeze)
         {
-            // jump
-            if (horizontal > 0) horizontal = 1;
-            else if (horizontal < 0) horizontal = -1;
-            
+            float h = 0;
 
-            float h = speeds.jumpHorizontalForce * horizontal;
+            if (horizontalRaw > liveRange) h = 1;
+            else if (horizontalRaw < -liveRange) h = -1;
+
+            h *= speeds.jumpHorizontalForce;
 
             if (targeter.targetSet.GetTarget() != null)
             {
@@ -102,10 +114,12 @@ public class TargetAxisMovementController : MonoBehaviour
                 
             } else
             {
-                if (vertical > 0) vertical = 1;
-                else if (vertical < 0) vertical = -1;
+                float v = 0;
 
-                float v = speeds.jumpHorizontalForce * vertical;
+                if (verticalRaw > liveRange) v = 1;
+                else if (verticalRaw < -liveRange) v = -1;
+                
+                v *= speeds.jumpHorizontalForce;
 
                 physics.SetVelocity((right * h) + (Forward() * v) + (Vector3.up * speeds.jumpForce));
 
@@ -120,7 +134,7 @@ public class TargetAxisMovementController : MonoBehaviour
             if (targeter.targetSet.GetTarget() != null)
             {
                 physics.SetVelocity(right * horizontal * speeds.speed);
-            } else
+            } else if (horizontalRaw != 0 || verticalRaw != 0)
             {
                 Vector3 movementVector = ((right * horizontal) + Forward() * vertical) *speeds.speed;
                 physics.SetVelocity(movementVector);

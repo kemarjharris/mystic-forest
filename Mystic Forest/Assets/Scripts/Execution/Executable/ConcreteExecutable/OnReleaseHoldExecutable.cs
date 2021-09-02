@@ -12,7 +12,7 @@ public class OnReleaseHoldExecutable : Executable
     public System.Action onStartHolding;
     public System.Action onRelease;
 
-    public override void OnInput(string input, IBattler battler, ITargetSet targets)
+    public override void OnInput(string input, IBattler battler)
     {
         if (!CorrectButton(input)) return;
         // Dont start counting until first key down
@@ -23,13 +23,13 @@ public class OnReleaseHoldExecutable : Executable
         {
             timeStarted = service.unscaledTime;
             onStartHolding?.Invoke();
-            keyDownExecutionEvent.OnExecute(battler, targets);
+            keyDownExecutionEvent.OnExecute(battler);
             battler.eventSet.onEventExecuted?.Invoke();
             state.triggered = true;
         }
         else if (IsTriggered() && key == InstructionKeyEvent.KEYUP)
         {
-            OnRelease(battler, targets);
+            OnRelease(battler);
             state.fired = true;
         }
         if (key == InstructionKeyEvent.BADKEY)
@@ -40,10 +40,10 @@ public class OnReleaseHoldExecutable : Executable
         }
     }
 
-    void OnRelease(IBattler battler, ITargetSet targets)
+    void OnRelease(IBattler battler)
     {
         onRelease?.Invoke();
-        releaseExecutionEvent.OnExecute(battler, targets);
+        releaseExecutionEvent.OnExecute(battler);
     }
 
     public override void OnStart()

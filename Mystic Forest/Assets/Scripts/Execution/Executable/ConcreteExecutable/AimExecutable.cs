@@ -24,14 +24,14 @@ public class AimExecutable : Executable
         onTargetSelected.setOnFinishEvent(() => state.finished = true);
     }
 
-    public override void OnInput(string input, IBattler battler, ITargetSet targets)
+    public override void OnInput(string input, IBattler battler)
     {
         if (!aiming)
         {
-            WaitForInput(input, battler, targets);
+            WaitForInput(input, battler);
         } else if (timeService.unscaledTime - timeStartedAiming <= aimDuration)
         {
-            Aim(input, battler, targets);
+            Aim(input, battler);
         } else
         {
             DespawnCursor();
@@ -39,14 +39,14 @@ public class AimExecutable : Executable
         }
     }
 
-    public void WaitForInput(string input, IBattler battler, ITargetSet targets)
+    public void WaitForInput(string input, IBattler battler)
     {
         if (CorrectButton(input) && inputService.GetKeyDown(input))
         {
             // spawn cursor
             SpawnCursor(battler);
             // Fire key down event
-            onStartAiming.OnExecute(battler, targets);
+            onStartAiming.OnExecute(battler);
             // start timer
             timeStartedAiming = timeService.unscaledTime;
             state.triggered = true;
@@ -77,7 +77,7 @@ public class AimExecutable : Executable
         if (cursorGameObject != null) cursorGameObject.SetActive(false);
     }
 
-    public void Aim(string input, IBattler battler, ITargetSet targets)
+    public void Aim(string input, IBattler battler)
     {
         if (inputService.GetKey("w"))
         {
@@ -104,7 +104,7 @@ public class AimExecutable : Executable
                 if (targeted == null || targeted == battler) return;
                 // targets.SetTarget(targeted.transform);
                 onTargetSelected.pool.target = targeted.transform;
-                targets.SetTarget(targeted.transform);
+                battler.targetSet.SetTarget(targeted.transform);
                 specificTargetSelected = true;
             });
             if (!specificTargetSelected)
@@ -116,7 +116,7 @@ public class AimExecutable : Executable
             // despawn cursor
             DespawnCursor();
             // handle event
-            onTargetSelected.OnExecute(battler, targets);
+            onTargetSelected.OnExecute(battler);
             battler.eventSet.onEventExecuted?.Invoke();
             state.fired = true;
         }

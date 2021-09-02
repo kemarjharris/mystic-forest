@@ -2,5 +2,5 @@
 public enum Direction
 {
     // order matters
-    NULL, NE, E, SE, S, SW, W, NW, N
+    E, NE, N, NW, W, SW, S, SE, NULL
 }

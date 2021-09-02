@@ -3,8 +3,8 @@ using UnityEditor;
 
 public interface IExecutionModule
 {
-    void StartExecution(IExecutableChainSet set, IBattler battler, ITargetSet targetSet = null);
-    void StartExecution(IExecutableChain chain, IBattler battler, ITargetSet targetSet = null);
+    void StartExecution(IExecutableChainSet set, IBattler battler);
+    void StartExecution(IExecutableChain chain, IBattler battler);
     void StopExecution();
     void ChangeSet(IExecutableChainSet set);
 

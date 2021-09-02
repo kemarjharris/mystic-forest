@@ -31,7 +31,7 @@ public class ExecutorTestScene : MonoBehaviour
                     visual = null;
                     chainExecutor = null;
                 });
-                chainExecutor.ExecuteChain(null, null, enumerator);
+                chainExecutor.ExecuteChain(null, enumerator);
             }
         }
 

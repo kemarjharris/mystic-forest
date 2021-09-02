@@ -8,6 +8,7 @@ public class StaminaController : MonoBehaviour, IStaminaController
     public BoundedValue<float> stamina;
     public float restorationPerSecond;
     public bool restore;
+    public bool unlimitedStamina;
 
     float IStaminaController.stamina => stamina.Value;
     float IStaminaController.maxStamina => stamina.MaxValue;
@@ -39,6 +40,7 @@ public class StaminaController : MonoBehaviour, IStaminaController
 
     public void DecreaseStamina(float value)
     {
+        if (unlimitedStamina) return;
         stamina.Value -= Mathf.Max(0, value);
     }
 

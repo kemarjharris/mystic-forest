@@ -119,6 +119,6 @@ public class CameraBillboard : MonoBehaviour
 // midpoint between player and target
 Vector3 midpoint = new Vector3((transform.position.x + target.transform.position.x) / 2, 0, (transform.position.z + target.position.z) / 2);
 // rotate only along y axis
-Quaternion rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, GeometryUtils.PlaneRotation(transform.position, target.position, midpoint).eulerAngles.y, transform.rotation.eulerAngles.z);
+Quaternion rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, GeometryUtils.PlaneRotation(transform.position.position, midpoint).eulerAngles.y, transform.rotation.eulerAngles.z);
 
 transform.rotation = rotation;*/

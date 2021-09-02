@@ -49,7 +49,7 @@ namespace Tests
         public void ExecutingTrueOnInputTest()
         {
             loop.events = new ExecutionEvent[] { testEvent };
-            loop.OnExecute(battler, targets);
+            loop.OnExecute(battler);
             Assert.True(loop.IsExecuting);
         }
 
@@ -58,7 +58,7 @@ namespace Tests
         public void ExecutingFalseWhenCancelFiresTest()
         {
             // cancel event set in SetUp
-            loop.OnExecute(battler, targets);
+            loop.OnExecute(battler);
             bool result = loop.IsExecuting;
             Assert.False(result);
         }
@@ -69,7 +69,7 @@ namespace Tests
         {
             Assert.False(loop.FireNext);
             loop.IsExecuting = true;
-            loop.OnExecute(battler, targets);
+            loop.OnExecute(battler);
             Assert.True(loop.FireNext);
         }
 
@@ -79,7 +79,7 @@ namespace Tests
         {
             loop.events = new ExecutionEvent[] { testEvent };
             loop.FireNext = true;
-            loop.OnExecute(battler, targets);
+            loop.OnExecute(battler);
             Assert.AreEqual(0, testEvent.timesExecuted);
         }
 
@@ -88,7 +88,7 @@ namespace Tests
         public void PosIncreasesWhenCancelEventFiresTest()
         {
             int pos = loop.pos;
-            loop.OnExecute(battler,targets);
+            loop.OnExecute(battler);
             Assert.AreEqual(pos + 1, loop.pos);
         }
 
@@ -96,7 +96,7 @@ namespace Tests
         [Test]
         public void FireNextFalseAfterCancelEventFiresTest()
         {
-            loop.OnExecute(battler, targets);
+            loop.OnExecute(battler);
             Assert.False(loop.FireNext);
         }
 
@@ -104,8 +104,8 @@ namespace Tests
         public void OnInputTwiceSetsFireNextTest()
         {
             loop.events = new ExecutionEvent[] { testEvent };
-            loop.OnExecute(battler, targets);
-            loop.OnExecute(battler, targets);
+            loop.OnExecute(battler);
+            loop.OnExecute(battler);
             Assert.True(loop.FireNext);
         }
 
@@ -115,8 +115,8 @@ namespace Tests
         {
 
             loop.events = new ExecutionEvent[] { manualEvent, testEvent };
-            loop.OnExecute(battler, targets);
-            loop.OnExecute(battler, targets);
+            loop.OnExecute(battler);
+            loop.OnExecute(battler);
             Assert.True(loop.FireNext);
             manualEvent.FireOnCancelEvent();
             Assert.AreEqual(1, testEvent.timesExecuted);
@@ -127,7 +127,7 @@ namespace Tests
         public void FireNextFalseDoesNotFireNextTest()
         {
             loop.events = new ExecutionEvent[] { manualEvent, testEvent };
-            loop.OnExecute(battler, targets);
+            loop.OnExecute(battler);
             Assert.False(loop.FireNext);
             manualEvent.FireOnCancelEvent();
             Assert.AreEqual(0, testEvent.timesExecuted);
@@ -137,8 +137,8 @@ namespace Tests
         public void FireNextTrueCancelEventFiresSetsExecutingTrueTest()
         {
             loop.events = new ExecutionEvent[] { manualEvent, testEvent };
-            loop.OnExecute(battler, targets);
-            loop.OnExecute(battler, targets);
+            loop.OnExecute(battler);
+            loop.OnExecute(battler);
             Assert.True(loop.FireNext);
             manualEvent.FireOnCancelEvent();
             Assert.True(loop.IsExecuting);
@@ -150,13 +150,13 @@ namespace Tests
             ManualCancelExecutionEvent @event = ScriptableObject.CreateInstance<ManualCancelExecutionEvent>();
             loop.events = new ExecutionEvent[] { manualEvent, @event, testEvent };
             // set first event to fire
-            loop.OnExecute(battler, targets);
+            loop.OnExecute(battler);
             // set next event to fire
-            loop.OnExecute(battler, targets);
+            loop.OnExecute(battler);
             // fire first event, next event will fire
             manualEvent.FireOnCancelEvent();
             // next event isnt finished, set to fire again
-            loop.OnExecute(battler, targets);
+            loop.OnExecute(battler);
             // fire next event, test event should fire too
             manualEvent.FireOnCancelEvent();
             Assert.AreEqual(1, testEvent.timesExecuted);
@@ -166,8 +166,8 @@ namespace Tests
         public void DoesNotFireAgainIfInterruptedTest()
         {
             loop.events = new ExecutionEvent[] { manualEvent, testEvent };
-            loop.OnExecute(battler, targets);
-            loop.OnExecute(battler, targets);
+            loop.OnExecute(battler);
+            loop.OnExecute(battler);
             loop.Interrupt();
             manualEvent.FireOnCancelEvent();
             Assert.AreEqual(0, testEvent.timesExecuted);   

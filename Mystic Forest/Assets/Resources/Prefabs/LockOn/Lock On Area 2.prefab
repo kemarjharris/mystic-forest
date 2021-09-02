@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eca5eeb62939b2640879fe6dc3f0e221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockOn: {fileID: 0}
   cursor: {fileID: 8785039420643818621}
   cursorHeight: 0
 --- !u!114 &4795212680087758676

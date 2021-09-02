@@ -13,6 +13,8 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
 
     // Events
     public IActionWrapper<T> OnSelected { get; private set; }
+    public Action<List<Direction>, DirectionCommandButton> OnNewInput { get; set; }
+    public Direction heldDirection { get; private set; }
 
     // State
     private IEnumerable<T> commandables;
@@ -36,12 +38,14 @@ public class DirectionCommandPicker<T> : IDirectionCommandPicker<T> where T : ID
 
     public T InputSelect()
     {
+
         if (commandables == null) throw new NullReferenceException("Commandables are null in DirectionCommandPicker. Did you call the Set method?");
         if (ExistingInput() && service.unscaledTime - timeOfLastInput > timeBeforeClearingInput)
         {
             clear();
         }
         Direction dir = DirectionalInput.GetSimpleDirection();
+        heldDirection = dir;
 
         if (inputtedDirections.Count <= 0)
         {

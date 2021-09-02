@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236b1e1ecc55fe740bfa1e21d3037f9b, type: 3}
   m_Name: Drop Thrust
   m_EditorClassIdentifier: 
-  attacks:
+  aerial: 1
+  rule: {fileID: 11400000, guid: 597c0e4fb4f5eb447ba0056f74ff5d17, type: 2}
+  executables:
   - {fileID: 11400000, guid: 0827ede505a989847ae42806b2d22920, type: 2}
   group: {fileID: 11400000, guid: 10c652f3a6f8fd14eaa76544ccc6d24c, type: 2}
-  aerial: 1
   skill: 0
-  rule: {fileID: 11400000, guid: 597c0e4fb4f5eb447ba0056f74ff5d17, type: 2}
-  staminaCost: 10
+  StaminaCost: 0
